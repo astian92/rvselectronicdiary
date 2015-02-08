@@ -26,5 +26,10 @@ namespace RED.Controllers
 
             return View();
         }
+
+        public ActionResult Break()
+        {
+            throw new NullReferenceException("There is something fishy. NOW LOGG ME !");
+        }
     }
 }
