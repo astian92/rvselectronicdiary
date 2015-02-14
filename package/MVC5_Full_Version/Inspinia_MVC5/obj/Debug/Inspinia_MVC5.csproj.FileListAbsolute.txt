@@ -1,0 +1,74 @@
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Inspinia_MVC5.dll.config
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Inspinia_MVC5.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Inspinia_MVC5.pdb
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Antlr3.Runtime.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Microsoft.Web.Infrastructure.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Newtonsoft.Json.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Helpers.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Mvc.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Optimization.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Razor.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.Deployment.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.Razor.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\WebGrease.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Helpers.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Mvc.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Optimization.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.Razor.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.Deployment.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\System.Web.WebPages.Razor.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Newtonsoft.Json.xml
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\Antlr3.Runtime.pdb
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.Helpers.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.Mvc.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.Optimization.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.Razor.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.WebPages.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.WebPages.Deployment.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\pl\System.Web.WebPages.Razor.resources.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.csprojResolveAssemblyReference.cache
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.dll
+c:\users\sony1\documents\visual studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.pdb
+C:\Users\Sony1\Documents\Visual Studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\EntityFramework.dll
+C:\Users\Sony1\Documents\Visual Studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\EntityFramework.SqlServer.dll
+C:\Users\Sony1\Documents\Visual Studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\EntityFramework.xml
+C:\Users\Sony1\Documents\Visual Studio 2013\Projects\Inspinia_MVC5\Inspinia_MVC5\bin\EntityFramework.SqlServer.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Inspinia_MVC5.dll.config
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Inspinia_MVC5.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Inspinia_MVC5.pdb
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Antlr3.Runtime.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\EntityFramework.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\EntityFramework.SqlServer.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Microsoft.Web.Infrastructure.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Newtonsoft.Json.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Helpers.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Mvc.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Optimization.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Razor.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.Deployment.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.Razor.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\WebGrease.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Antlr3.Runtime.pdb
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\EntityFramework.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\EntityFramework.SqlServer.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\Newtonsoft.Json.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Helpers.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Mvc.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Optimization.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.Razor.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.Deployment.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\System.Web.WebPages.Razor.xml
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.Helpers.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.Mvc.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.Optimization.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.Razor.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.WebPages.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.WebPages.Deployment.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\bin\pl\System.Web.WebPages.Razor.resources.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.csprojResolveAssemblyReference.cache
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.dll
+D:\Programing\RED\package\MVC5_Full_Version\Inspinia_MVC5\obj\Debug\Inspinia_MVC5.pdb
