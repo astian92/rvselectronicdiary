@@ -10,6 +10,7 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
+            var user = HttpContext.User;
             return View();
         }
 

@@ -12,17 +12,18 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Role
     {
-        public System.Guid Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Position { get; set; }
-        public Nullable<System.Guid> RoleId { get; set; }
+        public Role()
+        {
+            this.RolesFeatures = new HashSet<RolesFeature>();
+            this.Users = new HashSet<User>();
+        }
     
-        public virtual Role Role { get; set; }
+        public System.Guid Id { get; set; }
+        public string DisplayName { get; set; }
+    
+        public virtual ICollection<RolesFeature> RolesFeatures { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

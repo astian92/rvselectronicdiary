@@ -9,11 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RED.Models;
+using RED.Models.Account;
+using RED.Models.ControllerBases;
+using System.Web.Security;
+using RED.Models.Responses;
 
 namespace RED.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase<AccountRepository>
     {
         public AccountController()
         {
@@ -33,27 +37,15 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            ActionResponse response = Rep.Authenticate(model.Username, model.Password);
+
+            if (ModelState.IsValid && response.IsSuccess)
             {
-                return View(model);
+                FormsAuthentication.SetAuthCookie(model.Username, false);
+                return RedirectToAction("Index", "Home");
             }
 
-            //// This doesn't count login failures towards account lockout
-            //// To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
+
 
             return View(model);
         }
@@ -73,8 +65,6 @@ namespace RED.Controllers
         {
             //if (ModelState.IsValid)
             //{
-            //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            //    var result = await UserManager.CreateAsync(user, model.Password);
             //    if (result.Succeeded)
             //    {
             //        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -90,7 +80,7 @@ namespace RED.Controllers
             //    AddErrors(result);
             //}
 
-            // If we got this far, something failed, redisplay form
+             //If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -99,7 +89,7 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            //AuthenticationManager.SignOut();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
     }

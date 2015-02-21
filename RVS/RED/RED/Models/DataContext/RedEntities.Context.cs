@@ -13,10 +13,10 @@ namespace RED.Models.DataContext
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class REDEntities : DbContext
+    public partial class RedDataEntities : DbContext
     {
-        public REDEntities()
-            : base("name=REDEntities")
+        public RedDataEntities()
+            : base("name=RedDataEntities")
         {
         }
     
@@ -25,6 +25,9 @@ namespace RED.Models.DataContext
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<RolesFeature> RolesFeatures { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
