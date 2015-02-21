@@ -33,10 +33,10 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             //// This doesn't count login failures towards account lockout
             //// To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -54,7 +54,8 @@ namespace RED.Controllers
             //        ModelState.AddModelError("", "Invalid login attempt.");
             //        return View(model);
             //}
-            return null;
+
+            return View(model);
         }
 
         // GET: /Account/Register
