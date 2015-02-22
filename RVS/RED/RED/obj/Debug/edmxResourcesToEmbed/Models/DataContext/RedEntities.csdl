@@ -40,6 +40,7 @@
     <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RoleId" Type="Guid" />
     <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="ActionLogs" Relationship="RedDataModel.FK_ActionLogs_Users" FromRole="User" ToRole="ActionLog" />
   </EntityType>
   <Association Name="FK_RolesFeatures_Features">
     <End Role="Features" Type="Self.Feature" Multiplicity="1">
@@ -98,5 +99,95 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="ActionLogProperties" EntityType="RedDataModel.ActionLogProperty" />
+    <EntitySet Name="ActionTypes" EntityType="RedDataModel.ActionType" />
+    <EntitySet Name="ActionLogs" EntityType="RedDataModel.ActionLog" />
+    <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="RedDataModel.FK_ActionLogProperties_ToTable">
+      <End Role="ActionLog" EntitySet="ActionLogs" />
+      <End Role="ActionLogProperty" EntitySet="ActionLogProperties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_ToTable" Association="RedDataModel.FK_ActionLogs_ToTable">
+      <End Role="ActionType" EntitySet="ActionTypes" />
+      <End Role="ActionLog" EntitySet="ActionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_Users" Association="RedDataModel.FK_ActionLogs_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ActionLog" EntitySet="ActionLogs" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="ActionLogProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LogId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="OldValue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NewValue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ActionLog" Relationship="RedDataModel.FK_ActionLogProperties_ToTable" FromRole="ActionLogProperty" ToRole="ActionLog" />
+  </EntityType>
+  <EntityType Name="ActionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="ActionLogs" Relationship="RedDataModel.FK_ActionLogs_ToTable" FromRole="ActionType" ToRole="ActionLog" />
+    <Property Name="TypeNameBg" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ActionLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="TableName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="FullTableName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="On" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ActionTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ActionLogProperties" Relationship="RedDataModel.FK_ActionLogProperties_ToTable" FromRole="ActionLog" ToRole="ActionLogProperty" />
+    <NavigationProperty Name="ActionType" Relationship="RedDataModel.FK_ActionLogs_ToTable" FromRole="ActionLog" ToRole="ActionType" />
+    <NavigationProperty Name="User" Relationship="RedDataModel.FK_ActionLogs_Users" FromRole="ActionLog" ToRole="User" />
+    <Property Name="TableNameBg" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_ActionLogProperties_ToTable">
+    <End Type="RedDataModel.ActionLog" Role="ActionLog" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RedDataModel.ActionLogProperty" Role="ActionLogProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionLog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogProperty">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_ToTable">
+    <End Type="RedDataModel.ActionType" Role="ActionType" Multiplicity="1" />
+    <End Type="RedDataModel.ActionLog" Role="ActionLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLog">
+        <PropertyRef Name="ActionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_Users">
+    <End Type="RedDataModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RedDataModel.ActionLog" Role="ActionLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

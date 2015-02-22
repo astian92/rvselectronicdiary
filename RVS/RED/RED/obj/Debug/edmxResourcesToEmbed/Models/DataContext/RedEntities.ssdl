@@ -1,5 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RedDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActionLogProperties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogId" Type="int" Nullable="false" />
+    <Property Name="PropertyName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="OldValue" Type="nvarchar" MaxLength="100" />
+    <Property Name="NewValue" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ActionLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TableName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="FullTableName" Type="nvarchar" MaxLength="80" Nullable="false" />
+    <Property Name="On" Type="datetime" Nullable="false" />
+    <Property Name="ActionTypeId" Type="int" Nullable="false" />
+    <Property Name="TableNameBg" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ActionTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="TypeNameBg" Type="nchar" MaxLength="20" />
+  </EntityType>
   <EntityType Name="Features">
     <Key>
       <PropertyRef Name="Id" />
@@ -18,7 +48,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="FeatureId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
@@ -35,6 +65,46 @@
     <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="RoleId" Type="uniqueidentifier" />
   </EntityType>
+  <Association Name="FK_ActionLogProperties_ToTable">
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActionLogProperties" Type="Self.ActionLogProperties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionLogs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogProperties">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_ActionTypes">
+    <End Role="ActionTypes" Type="Self.ActionTypes" Multiplicity="1" />
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogs">
+        <PropertyRef Name="ActionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogs">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RolesFeatures_Features">
     <End Role="Features" Type="Self.Features" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -76,10 +146,25 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="RedDataModelStoreContainer">
+    <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="Self.FK_ActionLogProperties_ToTable">
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+      <End Role="ActionLogProperties" EntitySet="ActionLogProperties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_ActionTypes" Association="Self.FK_ActionLogs_ActionTypes">
+      <End Role="ActionTypes" EntitySet="ActionTypes" />
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_Users" Association="Self.FK_ActionLogs_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+    </AssociationSet>
     <AssociationSet Name="FK_RolesFeatures_Features" Association="Self.FK_RolesFeatures_Features">
       <End Role="Features" EntitySet="Features" />
       <End Role="RolesFeatures" EntitySet="RolesFeatures" />

@@ -12,18 +12,14 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class ActionLogProperty
     {
-        public Role()
-        {
-            this.RolesFeatures = new HashSet<RolesFeature>();
-            this.Users = new HashSet<User>();
-        }
+        public int Id { get; set; }
+        public int LogId { get; set; }
+        public string PropertyName { get; set; }
+        public string OldValue { get; set; }
+        public string NewValue { get; set; }
     
-        public System.Guid Id { get; set; }
-        public string DisplayName { get; set; }
-    
-        public virtual ICollection<RolesFeature> RolesFeatures { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ActionLog ActionLog { get; set; }
     }
 }

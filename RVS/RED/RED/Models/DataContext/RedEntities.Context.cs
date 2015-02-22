@@ -29,5 +29,8 @@ namespace RED.Models.DataContext
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolesFeature> RolesFeatures { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ActionLogProperty> ActionLogProperties { get; set; }
+        public virtual DbSet<ActionType> ActionTypes { get; set; }
+        public virtual DbSet<ActionLog> ActionLogs { get; set; }
     }
 }

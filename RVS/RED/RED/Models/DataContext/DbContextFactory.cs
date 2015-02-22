@@ -7,14 +7,14 @@ namespace RED.Models.DataContext
 {
     public static class DbContextFactory
     {
-        private static RedDataEntities DataContext { get; set; }
+        private static RvsDbContext DataContext { get; set; }
 
-        public static RedDataEntities GetDbContext() 
+        public static RvsDbContext GetDbContext() 
         {
-            return new RedDataEntities();
+            return new RvsDbContext();
         }
 
-        public static RedDataEntities GetPersistentContext()
+        public static RvsDbContext GetPersistentContext()
         {
             if (DataContext != null)
             {
@@ -22,7 +22,7 @@ namespace RED.Models.DataContext
             }
             else
             {
-                DataContext = new RedDataEntities();
+                DataContext = new RvsDbContext();
                 return DataContext;
             }
         }

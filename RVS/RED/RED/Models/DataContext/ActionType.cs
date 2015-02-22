@@ -12,23 +12,17 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class ActionType
     {
-        public User()
+        public ActionType()
         {
             this.ActionLogs = new HashSet<ActionLog>();
         }
     
-        public System.Guid Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Position { get; set; }
-        public Nullable<System.Guid> RoleId { get; set; }
+        public int Id { get; set; }
+        public string TypeName { get; set; }
+        public string TypeNameBg { get; set; }
     
-        public virtual Role Role { get; set; }
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
     }
 }

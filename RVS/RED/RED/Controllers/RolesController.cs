@@ -12,7 +12,7 @@ namespace RED.Controllers
 {
     public class RolesController : Controller
     {
-        private RedDataEntities db = new RedDataEntities();
+        private RvsDbContext db = DbContextFactory.GetDbContext();
 
         // GET: Roles
         public ActionResult Index()

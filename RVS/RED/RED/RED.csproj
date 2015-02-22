@@ -180,10 +180,21 @@
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\RvsPrincipal.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
+    <Compile Include="Models\DataContext\ActionLog.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\ActionLogProperty.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\ActionType.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\DbContextFactory.cs" />
     <Compile Include="Models\DataContext\Feature.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\Logging\ActionTypesEnum.cs" />
+    <Compile Include="Models\DataContext\Logging\TableNameToBg.cs" />
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,10 +216,12 @@
     <Compile Include="Models\DataContext\RolesFeature.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\RvsDbContext.cs" />
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Logs\DbLogger.cs" />
     <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
     <Compile Include="Models\Responses\ActionError.cs" />
     <Compile Include="Models\Responses\ActionResponse.cs" />

@@ -12,7 +12,7 @@ namespace RED.Controllers
 {
     public class UsersController : Controller
     {
-        private RedDataEntities db = new RedDataEntities();
+        private RvsDbContext db = DbContextFactory.GetDbContext();
 
         // GET: Users
         public ActionResult Index()

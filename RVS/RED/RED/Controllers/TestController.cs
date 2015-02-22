@@ -1,5 +1,6 @@
 ﻿using RED.Models;
 using RED.Models.ControllerBases;
+using RED.Models.Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,14 @@ namespace RED.Controllers
         public ActionResult Exception()
         {
             throw new Exception("EXCEPTION TEXT");
+        }
+
+        public ActionResult Log()
+        {
+            DbLogger logger = new DbLogger();
+            logger.Log();
+
+            return null;
         }
     }
 }

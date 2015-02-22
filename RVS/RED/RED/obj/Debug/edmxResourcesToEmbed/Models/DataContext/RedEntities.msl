@@ -40,5 +40,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ActionLogProperties">
+      <EntityTypeMapping TypeName="RedDataModel.ActionLogProperty">
+        <MappingFragment StoreEntitySet="ActionLogProperties">
+          <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+          <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+          <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActionTypes">
+      <EntityTypeMapping TypeName="RedDataModel.ActionType">
+        <MappingFragment StoreEntitySet="ActionTypes">
+          <ScalarProperty Name="TypeNameBg" ColumnName="TypeNameBg" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActionLogs">
+      <EntityTypeMapping TypeName="RedDataModel.ActionLog">
+        <MappingFragment StoreEntitySet="ActionLogs">
+          <ScalarProperty Name="TableNameBg" ColumnName="TableNameBg" />
+          <ScalarProperty Name="ActionTypeId" ColumnName="ActionTypeId" />
+          <ScalarProperty Name="On" ColumnName="On" />
+          <ScalarProperty Name="FullTableName" ColumnName="FullTableName" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
