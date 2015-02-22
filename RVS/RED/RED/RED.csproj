@@ -166,16 +166,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardsController.cs" />
+    <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\Account\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
-    <Compile Include="Models\Account\RvsPrinciple.cs" />
+    <Compile Include="Models\Account\RvsPrincipal.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
     <Compile Include="Models\DataContext\DbContextFactory.cs" />
     <Compile Include="Models\DataContext\Feature.cs">
@@ -229,6 +232,7 @@
     <Content Include="Content\patterns\otis_redding.png" />
     <Content Include="Content\patterns\shattered.png" />
     <Content Include="Content\patterns\triangular.png" />
+    <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
@@ -239,6 +243,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\a4.jpg" />
     <Content Include="Images\a7.jpg" />
+    <Content Include="Images\default_small.png" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\profile_small.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -410,6 +415,7 @@
     <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\plugins\toastr\toastr.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -467,10 +473,26 @@
     <Content Include="Views\Graphs\Peity.cshtml" />
     <Content Include="Views\Graphs\Rickshaw.cshtml" />
     <Content Include="Views\Graphs\Sparkline.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Features\Create.cshtml" />
+    <Content Include="Views\Features\Delete.cshtml" />
+    <Content Include="Views\Features\Details.cshtml" />
+    <Content Include="Views\Features\Edit.cshtml" />
+    <Content Include="Views\Features\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\plugins\" />
+    <Folder Include="Content\plugins\gritter\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -164,3 +164,4 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Elmah.dll
+D:\Programing\RED\RVS\RED\RED\bin\Elmah.dll

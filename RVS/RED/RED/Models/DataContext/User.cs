@@ -11,16 +11,24 @@ namespace RED.Models.DataContext
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class User
     {
         public System.Guid Id { get; set; }
+        [Required(ErrorMessage="Задължително")]
+        [Display(Name="Потребителско име")]
         public string Username { get; set; }
+        [Required(ErrorMessage = "Задължително")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "Задължително")]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        [Required(ErrorMessage = "Задължително")]
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Задължително")]
         public string Position { get; set; }
+        [Required(ErrorMessage = "Задължително")]
         public Nullable<System.Guid> RoleId { get; set; }
     
         public virtual Role Role { get; set; }

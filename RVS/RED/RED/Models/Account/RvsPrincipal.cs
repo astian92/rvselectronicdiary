@@ -59,5 +59,20 @@ namespace RED.Models.Account
                 return false;
             }
         }
+
+        public User GetUserData()
+        {
+            User user = new User();
+            var context = DbContextFactory.GetDbContext();
+            user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
+
+            if (user == null)
+            {
+                user = new User();
+                user.FirstName = "Unknown";
+            }
+
+            return user;
+        }
     }
 }

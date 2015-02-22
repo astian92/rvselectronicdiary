@@ -37,15 +37,20 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            ActionResponse response = Rep.Authenticate(model.Username, model.Password);
-
-            if (ModelState.IsValid && response.IsSuccess)
+            if (ModelState.IsValid)
             {
-                FormsAuthentication.SetAuthCookie(model.Username, false);
-                return RedirectToAction("Index", "Home");
+                ActionResponse response = Rep.Authenticate(model.Username, model.Password);
+
+                if(response.IsSuccess)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Username, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                   ModelState.AddModelError("Error", response.Error.ErrorText);
+                }
             }
-
-
 
             return View(model);
         }
@@ -91,6 +96,11 @@ namespace RED.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Profile()
+        {
+            return View();
         }
     }
 }

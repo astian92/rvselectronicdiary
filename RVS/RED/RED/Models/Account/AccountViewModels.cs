@@ -6,12 +6,13 @@ namespace RED.Models
 {
     public class LoginViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Потребителското име е задължително.")]
+        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 5)]
         [Display(Name = "Потребителско име")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Паролата е задължителна.")]
+        [StringLength(100, ErrorMessage = "Паролата трябва да бъде поне 6 символа.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Парола")]
         public string Password { get; set; }
@@ -19,17 +20,18 @@ namespace RED.Models
 
     public class RegisterViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Потребителското име е задължително.")]
+        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 5)]
         [Display(Name = "Потребителско име")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Паролата е задължителна.")]
         [StringLength(100, ErrorMessage = "Паролата трябва да бъде поне 6 символа.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Потвърждаването на паролата е задължително.")]
         [DataType(DataType.Password)]
         [Display(Name = "Потвърди парола")]
         [Compare("Password", ErrorMessage = "Паролата и потвърждението и не съвпадат!")]

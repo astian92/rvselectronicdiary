@@ -16,14 +16,27 @@
         </div>
         <h3>Добре дошли</h3>
         <p>в Електрронния дневник</p>
+        @*@foreach (var item in ViewData.ModelState)
+        {
+            if (item.Value.Errors.Any())
+            {
+                foreach (ModelError e in item.Value.Errors)
+                {
+                    <div style="border: 1px solid red;margin-bottom:5px;">
+                        @e.ErrorMessage
+                    </div>
+                }
+            }
+        }*@
         @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "m-t", role = "form" }))
         {
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Потребителско име" })
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Парола" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Парола" })
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Вход</button>
         }
