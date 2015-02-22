@@ -20,22 +20,7 @@ namespace RED.Controllers
             var users = db.Users.Include(u => u.Role);
             return View(users.ToList());
         }
-
-        // GET: Users/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
+        
         // GET: Users/Create
         public ActionResult Create()
         {
@@ -107,6 +92,9 @@ namespace RED.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Request.IsAjaxRequest())
+                return PartialView(user);
             return View(user);
         }
 

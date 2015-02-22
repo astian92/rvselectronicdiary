@@ -5,6 +5,24 @@
  *   Copyright 2014 Webapplayers.com
  *
 */
+
+a {
+    color:#1ab394;
+}
+
+a:hover{
+    color:#18a689;
+}
+
+a:focus {
+  color: #18a689;
+}
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 h1,
 h2,
 h3,

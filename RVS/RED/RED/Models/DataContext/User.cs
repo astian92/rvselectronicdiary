@@ -16,19 +16,28 @@ namespace RED.Models.DataContext
     public partial class User
     {
         public System.Guid Id { get; set; }
-        [Required(ErrorMessage="Задължително")]
+        [Required(ErrorMessage = "Потребителско име е задължително")]
+        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 5 символа.", MinimumLength = 5)]
         [Display(Name="Потребителско име")]
         public string Username { get; set; }
-        [Required(ErrorMessage = "Задължително")]
+        [Required(ErrorMessage = "Паролата е задължителна")]
+        [StringLength(100, ErrorMessage = "Паролата трябва да бъде поне 6 символа.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Задължително")]
+        [Required(ErrorMessage = "Името е задължително")]
+        [Display(Name = "Име")]
         public string FirstName { get; set; }
+        [Display(Name = "Презиме")]
         public string MiddleName { get; set; }
-        [Required(ErrorMessage = "Задължително")]
+        [Required(ErrorMessage = "Фамилията е задължителна")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Задължително")]
+        [Required(ErrorMessage = "Длъжността е задължителна")]
+        [Display(Name = "Длъжност")]
         public string Position { get; set; }
-        [Required(ErrorMessage = "Задължително")]
+        [Required(ErrorMessage = "Ролята е задължителна")]
+        [Display(Name = "Роля")]
         public Nullable<System.Guid> RoleId { get; set; }
     
         public virtual Role Role { get; set; }

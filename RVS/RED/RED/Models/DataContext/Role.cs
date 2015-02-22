@@ -11,6 +11,7 @@ namespace RED.Models.DataContext
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Role
     {
@@ -19,8 +20,11 @@ namespace RED.Models.DataContext
             this.RolesFeatures = new HashSet<RolesFeature>();
             this.Users = new HashSet<User>();
         }
-    
+
+        [Display(Name = "Роля")]
         public System.Guid Id { get; set; }
+        [Required(ErrorMessage="Името на ролята е задължително")]
+        [Display(Name = "Име")]
         public string DisplayName { get; set; }
     
         public virtual ICollection<RolesFeature> RolesFeatures { get; set; }

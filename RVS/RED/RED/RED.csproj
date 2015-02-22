@@ -243,6 +243,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\a4.jpg" />
     <Content Include="Images\a7.jpg" />
+    <Content Include="Images\default_large.png" />
     <Content Include="Images\default_small.png" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\profile_small.jpg" />
@@ -476,7 +477,6 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />

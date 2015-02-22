@@ -1,9 +1,27 @@
-﻿@{
+﻿@using RED.Models.DataContext;
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>RED</h2>
+@{
+    RedDataEntities db = new RedDataEntities();
+}
+<div class="row border-bottom">
+    <div class="col-xs-12">
+        <h2>Здравей, @HttpContext.Current.User.Identity.Name</h2>
+        <small>You have 16 messages and 8 notifications.</small>
+    </div>
+    <div class="col-lg-3">
+        <div class="widget style1 navy-bg">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-users fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Потребители </span>
+                    <h2 class="font-bold">@db.Users.Count()</h2>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -13,6 +13,8 @@ using RED.Models.Account;
 using RED.Models.ControllerBases;
 using System.Web.Security;
 using RED.Models.Responses;
+using System.Net;
+using RED.Models.DataContext;
 
 namespace RED.Controllers
 {
@@ -98,9 +100,21 @@ namespace RED.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Profile()
+        public ActionResult Profile(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RedDataEntities db = new RedDataEntities();
+            RED.Models.DataContext.User user = db.Users.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
+            return View(user);
         }
     }
 }
