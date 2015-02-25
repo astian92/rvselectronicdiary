@@ -8,7 +8,7 @@ namespace RED.Models.RepositoryBases
 {
     public abstract class RepositoryBase
     {
-        protected RedDataEntities db { get; set; }
+        protected RvsDbContext db { get; set; }
 
         public RepositoryBase()
         {

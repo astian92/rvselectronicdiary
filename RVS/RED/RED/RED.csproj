@@ -179,6 +179,8 @@
     <Compile Include="Models\Account\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\RvsPrincipal.cs" />
+    <Compile Include="Models\Admin\AdminRepository.cs" />
+    <Compile Include="Models\Admin\Roles\RoleW.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
     <Compile Include="Models\DataContext\ActionLog.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
@@ -494,7 +496,6 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Views\Roles\Delete.cshtml" />
-    <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Features\Create.cshtml" />
@@ -506,6 +507,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
+    <Folder Include="Models\Admin\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

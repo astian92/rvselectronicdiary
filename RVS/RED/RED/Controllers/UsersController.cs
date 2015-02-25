@@ -7,10 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RED.Models.DataContext;
+using RED.Models.Admin;
+using RED.Models.ControllerBases;
 
 namespace RED.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : ControllerBase<AdminRepository>
     {
         private RvsDbContext db = DbContextFactory.GetDbContext();
 

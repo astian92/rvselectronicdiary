@@ -122,42 +122,42 @@ namespace RED.Models.DataContext
 
         public override int SaveChanges()
         {
-            try
-            {
-                string username = HttpContext.Current.User.Identity.Name;
-                var user = this.Users.FirstOrDefault(u => u.Username == username);
+            //try
+            //{
+            //    string username = HttpContext.Current.User.Identity.Name;
+            //    var user = this.Users.FirstOrDefault(u => u.Username == username);
 
-                if (user == null)
-                {
-                    throw new NotSupportedException("The action could not be performed for a not authenticated user!");
-                }
+            //    if (user == null)
+            //    {
+            //        throw new NotSupportedException("The action could not be performed for a not authenticated user!");
+            //    }
 
-                this.ChangeTracker.DetectChanges();
+            //    this.ChangeTracker.DetectChanges();
 
-                var added = GetAdded(user);
-                var edited = GetEdited(user);
-                var deleted = GetDeleted(user);
+            //    var added = GetAdded(user);
+            //    var edited = GetEdited(user);
+            //    var deleted = GetDeleted(user);
 
-                if (added.Count() > 0)
-                {
-                    this.ActionLogs.AddRange(added);
-                }
+            //    if (added.Count() > 0)
+            //    {
+            //        this.ActionLogs.AddRange(added);
+            //    }
 
-                if (edited.Count() > 0)
-                {
-                    this.ActionLogs.AddRange(edited);
-                }
+            //    if (edited.Count() > 0)
+            //    {
+            //        this.ActionLogs.AddRange(edited);
+            //    }
 
-                if (deleted.Count() > 0)
-                {
-                    this.ActionLogs.AddRange(deleted);
-                }
-            }
-            catch (Exception exc)
-            {
-                var exception = new Exception("There was a problem with the logging. See inner exception for more details", exc);
-                Elmah.ErrorSignal.FromCurrentContext().Raise(exception);
-            }
+            //    if (deleted.Count() > 0)
+            //    {
+            //        this.ActionLogs.AddRange(deleted);
+            //    }
+            //}
+            //catch (Exception exc)
+            //{
+            //    var exception = new Exception("There was a problem with the logging. See inner exception for more details", exc);
+            //    Elmah.ErrorSignal.FromCurrentContext().Raise(exception);
+            //}
 
             return base.SaveChanges();
         }

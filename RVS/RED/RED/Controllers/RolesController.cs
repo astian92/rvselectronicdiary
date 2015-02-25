@@ -7,32 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RED.Models.DataContext;
+using RED.Models.Admin;
+using RED.Models.ControllerBases;
+using RED.Models.Admin.Roles;
 
 namespace RED.Controllers
 {
-    public class RolesController : Controller
+    public class RolesController : ControllerBase<AdminRepository>
     {
-        private RvsDbContext db = DbContextFactory.GetDbContext();
-
-        // GET: Roles
         public ActionResult Index()
         {
-            return View(db.Roles.ToList());
-        }
-
-        // GET: Roles/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Role role = db.Roles.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            return View(Rep.GetRoles());
         }
 
         // GET: Roles/Create
@@ -42,17 +27,13 @@ namespace RED.Controllers
         }
 
         // POST: Roles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DisplayName")] Role role)
+        public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role)
         {
             if (ModelState.IsValid)
             {
-                role.Id = Guid.NewGuid();
-                db.Roles.Add(role);
-                db.SaveChanges();
+                Rep.AddRole(role);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +47,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Role role = db.Roles.Find(id);
+            RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
@@ -75,16 +56,13 @@ namespace RED.Controllers
         }
 
         // POST: Roles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DisplayName")] Role role)
+        public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(role).State = EntityState.Modified;
-                db.SaveChanges();
+                Rep.EditRole(role);
                 return RedirectToAction("Index");
             }
             return View(role);
@@ -97,7 +75,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Role role = db.Roles.Find(id);
+            RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
@@ -110,19 +88,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Role role = db.Roles.Find(id);
-            db.Roles.Remove(role);
-            db.SaveChanges();
+            Rep.DeleteRole(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
