@@ -161,5 +161,7 @@ namespace RED.Models.DataContext
 
             return base.SaveChanges();
         }
+
+        public System.Data.Entity.DbSet<RED.Models.Logs.ActionLogW> ActionLogWs { get; set; }
     }
 }

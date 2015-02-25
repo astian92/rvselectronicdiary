@@ -8,7 +8,7 @@ namespace RED.Models.DataContext.Logging
     public enum ActionTypesEnum
     {
         Add = 1,
-        Edit,
-        Delete
+        Edit = 2,
+        Delete = 3
     }
 }

@@ -169,6 +169,7 @@
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -224,6 +225,8 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs\DbLogger.cs" />
+    <Compile Include="Models\Logs\ActionLogW.cs" />
+    <Compile Include="Models\Logs\LogRepository.cs" />
     <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
     <Compile Include="Models\Responses\ActionError.cs" />
     <Compile Include="Models\Responses\ActionResponse.cs" />
@@ -503,6 +506,7 @@
     <Content Include="Views\Features\Details.cshtml" />
     <Content Include="Views\Features\Edit.cshtml" />
     <Content Include="Views\Features\Index.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
