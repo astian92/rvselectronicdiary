@@ -1,9 +1,11 @@
 ﻿using RED.Models.Admin.Roles;
+using RED.Models.Admin.Users;
 using RED.Models.DataContext;
 using RED.Models.RepositoryBases;
 using RED.Models.Responses;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -51,7 +53,50 @@ namespace RED.Models.Admin
             db.SaveChanges();
         }
 
+        public User GetBaseUser(Guid id)
+        {
+            return db.Users.FirstOrDefault(x => x.Id == id);
+        }
 
+        public UserW GetUser(Guid id)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Id == id);
+            return new UserW(user);
+        }
 
+        public IEnumerable<UserW> GetUsers()
+        {
+            var users = db.Users.Include(x => x.Role).ToList();
+            return users.Select(u => new UserW(u));
+        }
+
+        public void AddUser(UserW user)
+        {
+            user.Id = Guid.NewGuid();
+            db.Users.Add(user.ToBase());
+            db.SaveChanges();
+        }
+
+        public void EditUser(UserW user)
+        {
+            var dbUser = this.GetBaseUser(user.Id);
+            dbUser.Username = user.Username;
+            dbUser.Password = user.Password;
+            dbUser.FirstName = user.FirstName;
+            dbUser.MiddleName = user.MiddleName;
+            dbUser.LastName = user.LastName;
+            dbUser.Position = user.Position;
+            dbUser.RoleId = user.RoleId;
+            dbUser.Role = user.Role;
+
+            db.SaveChanges();
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            User user = this.GetBaseUser(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+        }
     }
 }

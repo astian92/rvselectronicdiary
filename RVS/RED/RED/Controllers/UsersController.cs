@@ -9,24 +9,22 @@ using System.Web.Mvc;
 using RED.Models.DataContext;
 using RED.Models.Admin;
 using RED.Models.ControllerBases;
+using RED.Models.Admin.Users;
 
 namespace RED.Controllers
 {
     public class UsersController : ControllerBase<AdminRepository>
     {
-        private RvsDbContext db = DbContextFactory.GetDbContext();
-
-        // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role);
-            return View(users.ToList());
+            var users = Rep.GetUsers();
+            return View(users);
         }
         
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName");
+            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName");
             return View();
         }
 
@@ -35,17 +33,15 @@ namespace RED.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] User user)
+        public ActionResult Create([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] UserW user)
         {
             if (ModelState.IsValid)
             {
-                user.Id = Guid.NewGuid();
-                db.Users.Add(user);
-                db.SaveChanges();
+                Rep.AddUser(user);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -56,12 +52,12 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserW user = Rep.GetUser(id.Value);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -70,15 +66,14 @@ namespace RED.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] UserW user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                Rep.EditUser(user);
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -89,7 +84,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            UserW user = Rep.GetUser(id.Value);
             if (user == null)
             {
                 return HttpNotFound();
@@ -105,19 +100,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            Rep.DeleteUser(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
