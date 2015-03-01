@@ -18,6 +18,13 @@
         <AssociationConnector Association="RedDataModel.FK_ActionLogProperties_ToTable" />
         <AssociationConnector Association="RedDataModel.FK_ActionLogs_ToTable" />
         <AssociationConnector Association="RedDataModel.FK_ActionLogs_Users" />
+        <EntityTypeShape EntityType="RedDataModel.AcredetationLevel" Width="1.5" PointX="5.375" PointY="1.25" />
+        <EntityTypeShape EntityType="RedDataModel.Client" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="RedDataModel.TestCategory" Width="1.5" PointX="5.375" PointY="10.375" />
+        <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="7.625" PointY="1" />
+        <AssociationConnector Association="RedDataModel.FK_Tests_AcredetationLevels" />
+        <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

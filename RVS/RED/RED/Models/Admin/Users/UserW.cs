@@ -40,7 +40,7 @@ namespace RED.Models.Admin.Users
             this.ActionLogs = new HashSet<ActionLog>();
         }
 
-        public UserW(User user) : base()
+        public UserW(User user) : this()
         {
             this.Id = user.Id;
             this.Username = user.Username;

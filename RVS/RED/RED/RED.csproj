@@ -184,6 +184,9 @@
     <Compile Include="Models\Admin\Roles\RoleW.cs" />
     <Compile Include="Models\Admin\Users\UserW.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
+    <Compile Include="Models\DataContext\AcredetationLevel.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\ActionLog.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -191,6 +194,9 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\ActionType.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\Client.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\DbContextFactory.cs" />
@@ -201,6 +207,9 @@
     <Compile Include="Models\DataContext\Logging\ActionTypesEnum.cs" />
     <Compile Include="Models\DataContext\Logging\Logger.cs" />
     <Compile Include="Models\DataContext\Logging\TableNameToBg.cs" />
+    <Compile Include="Models\DataContext\Product.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -223,6 +232,12 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\RvsDbContext.cs" />
+    <Compile Include="Models\DataContext\Test.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\TestCategory.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

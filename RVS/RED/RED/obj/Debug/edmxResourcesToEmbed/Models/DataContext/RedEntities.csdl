@@ -114,6 +114,19 @@
       <End Role="User" EntitySet="Users" />
       <End Role="ActionLog" EntitySet="ActionLogs" />
     </AssociationSet>
+    <EntitySet Name="AcredetationLevels" EntityType="RedDataModel.AcredetationLevel" />
+    <EntitySet Name="Clients" EntityType="RedDataModel.Client" />
+    <EntitySet Name="Products" EntityType="RedDataModel.Product" />
+    <EntitySet Name="TestCategories" EntityType="RedDataModel.TestCategory" />
+    <EntitySet Name="Tests" EntityType="RedDataModel.Test" />
+    <AssociationSet Name="FK_Tests_AcredetationLevels" Association="RedDataModel.FK_Tests_AcredetationLevels">
+      <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tests_TestCategories" Association="RedDataModel.FK_Tests_TestCategories">
+      <End Role="TestCategory" EntitySet="TestCategories" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="ActionLogProperty">
     <Key>
@@ -187,6 +200,73 @@
       </Principal>
       <Dependent Role="ActionLog">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcredetationLevel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Level" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tests" Relationship="RedDataModel.FK_Tests_AcredetationLevels" FromRole="AcredetationLevel" ToRole="Test" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TestCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tests" Relationship="RedDataModel.FK_Tests_TestCategories" FromRole="TestCategory" ToRole="Test" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="TestCategoryId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TestMethods" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="AcredetationLevel" Relationship="RedDataModel.FK_Tests_AcredetationLevels" FromRole="Test" ToRole="AcredetationLevel" />
+    <NavigationProperty Name="TestCategory" Relationship="RedDataModel.FK_Tests_TestCategories" FromRole="Test" ToRole="TestCategory" />
+  </EntityType>
+  <Association Name="FK_Tests_AcredetationLevels">
+    <End Type="RedDataModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
+    <End Type="RedDataModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcredetationLevel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="AcredetationLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tests_TestCategories">
+    <End Type="RedDataModel.TestCategory" Role="TestCategory" Multiplicity="1" />
+    <End Type="RedDataModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="TestCategoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
