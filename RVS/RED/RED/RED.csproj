@@ -196,7 +196,9 @@
     <Compile Include="Models\DataContext\Feature.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\Logging\LogW.cs" />
     <Compile Include="Models\DataContext\Logging\ActionTypesEnum.cs" />
+    <Compile Include="Models\DataContext\Logging\Logger.cs" />
     <Compile Include="Models\DataContext\Logging\TableNameToBg.cs" />
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
