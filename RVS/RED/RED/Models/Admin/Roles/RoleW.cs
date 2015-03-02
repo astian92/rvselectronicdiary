@@ -11,8 +11,8 @@ namespace RED.Models.Admin.Roles
     {
         public Guid Id { get; set; }
 
+        [Required(ErrorMessage = "Името на ролята е задължително.")]
         [Display(Name="Име")]
-        [DataType(DataType.Text)]
         public string DisplayName { get; set; }
 
         public RoleW()

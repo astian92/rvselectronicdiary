@@ -1,17 +1,17 @@
-﻿@model RED.Models.DataContext.Role
+﻿@model RED.Models.Admin.Roles.RoleW
 
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Създай</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Role</h4>
+        <h4>Роля</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -21,15 +21,37 @@
                 @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            <ul class="todo-list m-t ui-sortable">
+            @foreach (var item in ViewBag.Features)
+            {
+                <li>
+                    <div class="icheckbox_square-green" style="position: relative; cursor:pointer;">
+                        <input type="checkbox" value="@item.Id" name="features" class="i-checks" style="position: absolute; opacity:0;">
+                    </div>
+                    <span class="m-l-xs">@item.DisplayName</span>
+                </li>
+            }
+            </ul>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <a href="/Roles/Index" class="btn btn-default">Отказ</a>
+                <input type="submit" value="Създай" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script>
+    $('.icheckbox_square-green').click(function () {
+        if ($(this).children('input').is(":checked")) {
+            $(this).addClass('checked');
+        }
+        else {
+            $(this).removeClass('checked');
+        }
+    });
+
+</script>

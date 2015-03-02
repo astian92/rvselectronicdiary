@@ -98,5 +98,10 @@ namespace RED.Models.Admin
             db.Users.Remove(user);
             db.SaveChanges();
         }
+
+        public IEnumerable<Feature> GetFeatures()
+        {
+            return db.Features.ToList();
+        }
     }
 }

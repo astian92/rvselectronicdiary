@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RED.Models.DataContext;
+using RED.Filters;
 
 namespace RED.Controllers
 {
+    [RoleFilter()]
     public class FeaturesController : Controller
     {
         private RvsDbContext db = DbContextFactory.GetDbContext();

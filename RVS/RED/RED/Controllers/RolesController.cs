@@ -10,9 +10,11 @@ using RED.Models.DataContext;
 using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Roles;
+using RED.Filters;
 
 namespace RED.Controllers
 {
+    [RoleFilter("fd76464d-8e9c-4176-ab40-e372084d79ad")]
     public class RolesController : ControllerBase<AdminRepository>
     {
         public ActionResult Index()
@@ -23,13 +25,14 @@ namespace RED.Controllers
         // GET: Roles/Create
         public ActionResult Create()
         {
+            ViewBag.Features = Rep.GetFeatures();
             return View();
         }
 
         // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role)
+        public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +83,9 @@ namespace RED.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Request.IsAjaxRequest())
+                return PartialView(role);
             return View(role);
         }
 

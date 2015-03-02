@@ -21,7 +21,7 @@
 
     <link href="~/Content/animate.css" rel="stylesheet">
     <link href="~/Content/style.css" rel="stylesheet">
-
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
     <!-- Mainly scripts -->
     <script src="~/Scripts/jquery-2.1.1.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -29,7 +29,8 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
     <script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    </head>
+    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+</head>
 <body class="pace-done">
     <div class="pace pace-inactive">
         <div class="pace-progress" data--progress-text="100%" date-progress="99" style="width:100%">
@@ -44,23 +45,20 @@
         @Html.Partial("_Navigation")
 
         <!-- Page wraper -->
-        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+        <div id="page-wrapper" class="white-bg @ViewBag.SpecialClass">
 
             <!-- Top Navbar -->
             @Html.Partial("_TopNavbar")
 
-            <div class="wrapper wrapper-content  animated fadeInRight">
-
-                <div class="row col-lg-12">
-                    <!-- Main view  -->
-                    @RenderBody()
-                    </div>
-                </div>
+            <div class="row wrapper border-bottom animated fadeInRight">
+                <!-- Main view  -->
+                @RenderBody()
                 <div class="clearfix"></div>
-                    <!-- Footer -->
-                    @Html.Partial("_Footer")
+            </div>
+            <!-- Footer -->
+            @Html.Partial("_Footer")
 
-                </div>
+        </div>
                 <!-- End page wrapper-->
 
             </div>

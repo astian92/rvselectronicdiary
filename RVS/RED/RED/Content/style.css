@@ -215,6 +215,7 @@ h5 {
 }
 .nav.navbar-top-links a {
   font-size: 14px;
+  font-weight:600;
 }
 .navbar-form-custom .form-control {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
@@ -2862,7 +2863,7 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 0px 10px 40px;
 }
 #page-wrapper {
   padding: 0 15px;

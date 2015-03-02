@@ -16,7 +16,7 @@ namespace RED.Models.Account
 
             if (user != null)
             {
-                return user.RoleId ?? Guid.Empty;
+                return user.RoleId.Value;
             }
             else
             {
@@ -32,6 +32,7 @@ namespace RED.Models.Account
 
         public override bool IsInRole(string role)
         {
+            //DO NOT USE THIS METHOD
             var context = DbContextFactory.GetDbContext();
             var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
 
@@ -50,7 +51,8 @@ namespace RED.Models.Account
         {
             var context = DbContextFactory.GetDbContext();
             
-            if (context.RolesFeatures.Any(f => f.RoleId == GetRoleId() && f.FeatureId == featureId))
+            var roleId = GetRoleId();
+            if (context.RolesFeatures.Any(f => f.RoleId == roleId && f.FeatureId == featureId))
             {
                 return true;
             }
@@ -58,6 +60,44 @@ namespace RED.Models.Account
             {
                 return false;
             }
+        }
+
+        public bool IsAuthorize(string featureId = null)
+        {
+            try
+            {
+                if (!IsGod())
+                {
+                    if (featureId == null || HasFeature(Guid.Parse(featureId)) == false)
+                    {
+                        return false;
+                    }
+                 }
+            }
+            catch (Exception ex)
+            {
+                var exception = new Exception("There was a problem with filtering " + HttpContext.Current.User.Identity.Name + "'s role. See inner exception for more details", ex);
+                Elmah.ErrorSignal.FromCurrentContext().Raise(exception);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsGod()
+        {
+            var context = DbContextFactory.GetDbContext();
+            var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
+
+            if (user != null)
+            {
+                if (user.Id.ToString() == "613b0faa-8828-44a9-8bbe-09ba68cc33ae")
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public User GetUserData()

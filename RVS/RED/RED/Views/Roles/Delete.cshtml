@@ -4,29 +4,32 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Затвори</span></button>
+    <i class="fa fa-users modal-icon"></i>
+    <h4 class="modal-title">Изтрий</h4>
+    <small class="font-bold">Сигурен ли сте, че изкате да изтриете тази роля?</small>
+</div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DisplayName)
+            </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Role</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DisplayName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DisplayName)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+            <dd>
+                @Html.DisplayFor(model => model.DisplayName)
+            </dd>
+        </dl>
+    </div>
+<div class="modal-footer">
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <button type="button" class="btn btn-white" data-dismiss="modal">Отказ</button>
+            <input type="submit" value="Изтрий" class="btn btn-primary" />
         </div>
     }
 </div>
+

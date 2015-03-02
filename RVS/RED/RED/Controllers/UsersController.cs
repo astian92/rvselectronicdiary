@@ -10,9 +10,11 @@ using RED.Models.DataContext;
 using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Users;
+using RED.Filters;
 
 namespace RED.Controllers
 {
+    [RoleFilter("fd76464d-8e9c-4176-ab40-e372084d79ad")]
     public class UsersController : ControllerBase<AdminRepository>
     {
         public ActionResult Index()

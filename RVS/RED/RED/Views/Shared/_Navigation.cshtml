@@ -2,8 +2,8 @@
 @using RED.Models.Account
 
 @{
-    RvsPrincipal context = new RvsPrincipal(HttpContext.Current.User.Identity);
-    var user = context.GetUserData();
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    var user = principal.GetUserData();
 }
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -41,12 +41,28 @@
                     </i> <span class="nav-label">Администратор</span>
                     <span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level collapse">
-                    <li><a href="/Users/Index">Потребители</a></li>
-                    <li><a href="/Roles/Index">Роли</a></li>
-                    <li><a href="/Features/Index">Права</a></li>
+                <ul class="nav nav-second-level collapse nav-admin">
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Users/Index">Потребители</a></li>
+                    }
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Roles/Index">Роли</a></li>
+                    }
+                    @if (principal.IsAuthorize())
+                    {
+                        <li><a href="/Features/Index">Права</a></li>
+                    }
                 </ul>
             </li>
         </ul>
     </div>
 </nav>
+<script>
+    $('.nav-second-level').each(function () {
+        if($(this).children().length == 0){
+            $(this).parent().remove();
+        }
+    });
+</script>
