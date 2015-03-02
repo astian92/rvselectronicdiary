@@ -25,6 +25,17 @@
         <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="7.625" PointY="1" />
         <AssociationConnector Association="RedDataModel.FK_Tests_AcredetationLevels" />
         <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
+        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="9.625" PointY="13" />
+        <EntityTypeShape EntityType="RedDataModel.DiaryProduct" Width="1.5" PointX="11.875" PointY="14" />
+        <EntityTypeShape EntityType="RedDataModel.DiarySampleAcceptor" Width="1.5" PointX="11.875" PointY="11" />
+        <EntityTypeShape EntityType="RedDataModel.DiaryTest" Width="1.5" PointX="11.875" PointY="7.625" />
+        <AssociationConnector Association="RedDataModel.FK_Diary_Clients" />
+        <AssociationConnector Association="RedDataModel.FK_DiaryProducts_Diary" />
+        <AssociationConnector Association="RedDataModel.FK_DiarySampleAcceptors_Diary" />
+        <AssociationConnector Association="RedDataModel.FK_DiaryTests_Diary" />
+        <AssociationConnector Association="RedDataModel.FK_DiaryProducts_Products" />
+        <AssociationConnector Association="RedDataModel.FK_DiarySampleAcceptors_Users" />
+        <AssociationConnector Association="RedDataModel.FK_DiaryTests_Tests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

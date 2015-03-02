@@ -12,16 +12,13 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class DiaryProduct
     {
-        public Product()
-        {
-            this.DiaryProducts = new HashSet<DiaryProduct>();
-        }
+        public int Id { get; set; }
+        public System.Guid DiaryId { get; set; }
+        public System.Guid ProductId { get; set; }
     
-        public System.Guid Id { get; set; }
-        public string Name { get; set; }
-    
-        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
+        public virtual Diary Diary { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

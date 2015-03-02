@@ -17,6 +17,7 @@ namespace RED.Models.DataContext
         public User()
         {
             this.ActionLogs = new HashSet<ActionLog>();
+            this.DiarySampleAcceptors = new HashSet<DiarySampleAcceptor>();
         }
     
         public System.Guid Id { get; set; }
@@ -30,5 +31,6 @@ namespace RED.Models.DataContext
     
         public virtual Role Role { get; set; }
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
+        public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
     }
 }

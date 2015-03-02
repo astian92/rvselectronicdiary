@@ -14,7 +14,14 @@ namespace RED.Models.DataContext
     
     public partial class Client
     {
+        public Client()
+        {
+            this.Diaries = new HashSet<Diary>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+    
+        public virtual ICollection<Diary> Diaries { get; set; }
     }
 }

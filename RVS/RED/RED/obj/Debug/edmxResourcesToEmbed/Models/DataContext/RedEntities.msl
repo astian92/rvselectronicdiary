@@ -117,5 +117,45 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Diaries">
+      <EntityTypeMapping TypeName="RedDataModel.Diary">
+        <MappingFragment StoreEntitySet="Diary">
+          <ScalarProperty Name="ProtocolCreationDate" ColumnName="ProtocolCreationDate" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="Contractor" ColumnName="Contractor" />
+          <ScalarProperty Name="TypeNumberDate" ColumnName="TypeNumberDate" />
+          <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiaryProducts">
+      <EntityTypeMapping TypeName="RedDataModel.DiaryProduct">
+        <MappingFragment StoreEntitySet="DiaryProducts">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiarySampleAcceptors">
+      <EntityTypeMapping TypeName="RedDataModel.DiarySampleAcceptor">
+        <MappingFragment StoreEntitySet="DiarySampleAcceptors">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiaryTests">
+      <EntityTypeMapping TypeName="RedDataModel.DiaryTest">
+        <MappingFragment StoreEntitySet="DiaryTests">
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

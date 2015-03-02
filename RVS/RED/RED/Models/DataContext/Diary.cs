@@ -12,16 +12,26 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Diary
     {
-        public Product()
+        public Diary()
         {
             this.DiaryProducts = new HashSet<DiaryProduct>();
+            this.DiarySampleAcceptors = new HashSet<DiarySampleAcceptor>();
+            this.DiaryTests = new HashSet<DiaryTest>();
         }
     
         public System.Guid Id { get; set; }
-        public string Name { get; set; }
+        public int Number { get; set; }
+        public System.DateTime AcceptanceDateAndTime { get; set; }
+        public string TypeNumberDate { get; set; }
+        public string Contractor { get; set; }
+        public System.Guid ClientId { get; set; }
+        public Nullable<System.DateTime> ProtocolCreationDate { get; set; }
     
+        public virtual Client Client { get; set; }
         public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
+        public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
+        public virtual ICollection<DiaryTest> DiaryTests { get; set; }
     }
 }

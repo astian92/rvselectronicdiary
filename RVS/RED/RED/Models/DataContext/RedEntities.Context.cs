@@ -37,5 +37,9 @@ namespace RED.Models.DataContext
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<TestCategory> TestCategories { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<Diary> Diaries { get; set; }
+        public virtual DbSet<DiaryProduct> DiaryProducts { get; set; }
+        public virtual DbSet<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
+        public virtual DbSet<DiaryTest> DiaryTests { get; set; }
     }
 }

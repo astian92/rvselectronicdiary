@@ -200,6 +200,18 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\DbContextFactory.cs" />
+    <Compile Include="Models\DataContext\Diary.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\DiaryProduct.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\DiarySampleAcceptor.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\DiaryTest.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\Feature.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

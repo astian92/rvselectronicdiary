@@ -14,6 +14,11 @@ namespace RED.Models.DataContext
     
     public partial class Test
     {
+        public Test()
+        {
+            this.DiaryTests = new HashSet<DiaryTest>();
+        }
+    
         public System.Guid Id { get; set; }
         public System.Guid TestCategoryId { get; set; }
         public string Name { get; set; }
@@ -22,5 +27,6 @@ namespace RED.Models.DataContext
     
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestCategory TestCategory { get; set; }
+        public virtual ICollection<DiaryTest> DiaryTests { get; set; }
     }
 }
