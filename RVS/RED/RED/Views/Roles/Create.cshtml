@@ -22,17 +22,15 @@
             </div>
         </div>
         <div class="form-group">
-            <ul class="todo-list m-t ui-sortable">
-            @foreach (var item in ViewBag.Features)
-            {
-                <li>
-                    <div class="icheckbox_square-green" style="position: relative; cursor:pointer;">
-                        <input type="checkbox" value="@item.Id" name="features" class="i-checks" style="position: absolute; opacity:0;">
+            <div class="col-md-10 col-md-offset-2">
+                @foreach (var item in ViewBag.Features)
+                {
+                    <div class="col-lg-3 col-md-6 border-left-right" style="padding:15px;">
+                        <input type="checkbox" value="@item.Id" name="features" class="i-checks" />
+                        <span class="m-l-xs">@item.DisplayName</span>
                     </div>
-                    <span class="m-l-xs">@item.DisplayName</span>
-                </li>
-            }
-            </ul>
+                }
+            </div>
         </div>
 
         <div class="form-group">
@@ -45,13 +43,8 @@
 }
 
 <script>
-    $('.icheckbox_square-green').click(function () {
-        if ($(this).children('input').is(":checked")) {
-            $(this).addClass('checked');
-        }
-        else {
-            $(this).removeClass('checked');
-        }
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
     });
-
 </script>

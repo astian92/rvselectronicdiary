@@ -21,7 +21,10 @@ namespace RED.Models.Admin
         public RoleW GetRole(Guid id)
         {
             var dbRole = db.Roles.FirstOrDefault(r => r.Id == id);
-            return new RoleW(dbRole);
+            RoleW role = new RoleW(dbRole);
+            role.Connections = db.RolesFeatures.Where(x => x.RoleId == id).ToList();
+            
+            return role;
         }
 
         public IEnumerable<RoleW> GetRoles()
@@ -30,17 +33,20 @@ namespace RED.Models.Admin
             return roles.Select(r => new RoleW(r));
         }
 
-        public void AddRole(RoleW role)
+        public void AddRole(RoleW role, string[] features)
         {
             role.Id = Guid.NewGuid();
             db.Roles.Add(role.ToBase());
+            MakeRoleFeatureConnections(role.Id, features);
+
             db.SaveChanges();
         }
 
-        public void EditRole(RoleW role)
+        public void EditRole(RoleW role, string[] features)
         {
             var dbRole = this.GetBaseRole(role.Id);
             dbRole.DisplayName = role.DisplayName;
+            MakeRoleFeatureConnections(dbRole.Id, features);
 
             db.SaveChanges();
         }
@@ -102,6 +108,30 @@ namespace RED.Models.Admin
         public IEnumerable<Feature> GetFeatures()
         {
             return db.Features.ToList();
+        }
+
+        private void MakeRoleFeatureConnections(Guid roleId, string[] features)
+        {
+            if (features.Count() > 0)
+            {
+                db.RolesFeatures.RemoveRange(db.RolesFeatures.Where(x => x.RoleId == roleId));
+
+                foreach (var item in features)
+                {
+                    bool isParseable = false;
+                    Guid featureId;
+                    isParseable = Guid.TryParse(item, out featureId);
+                    if (isParseable)
+                    {
+                        RolesFeature con = new RolesFeature();
+                        con.RoleId = roleId;
+                        con.FeatureId = featureId;
+                        db.RolesFeatures.Add(con);
+                    }
+                }
+
+                db.SaveChanges();
+            }
         }
     }
 }

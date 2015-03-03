@@ -36,7 +36,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddRole(role);
+                Rep.AddRole(role, features);
                 return RedirectToAction("Index");
             }
 
@@ -55,17 +55,18 @@ namespace RED.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Features = Rep.GetFeatures();
             return View(role);
         }
 
         // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role)
+        public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
             {
-                Rep.EditRole(role);
+                Rep.EditRole(role, features);
                 return RedirectToAction("Index");
             }
             return View(role);

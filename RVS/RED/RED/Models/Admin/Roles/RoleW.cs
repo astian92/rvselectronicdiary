@@ -15,6 +15,8 @@ namespace RED.Models.Admin.Roles
         [Display(Name="Име")]
         public string DisplayName { get; set; }
 
+        public List<RolesFeature> Connections = new List<RolesFeature>();
+
         public RoleW()
         {
 
