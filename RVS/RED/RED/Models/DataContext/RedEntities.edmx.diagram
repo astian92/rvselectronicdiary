@@ -5,30 +5,30 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="aa3fe06f1e6e4515af35fe0dbc3b4daa" Name="Diagram1">
-        <EntityTypeShape EntityType="RedDataModel.Feature" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.Role" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.RolesFeature" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.User" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedDataModel.Feature" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedDataModel.Role" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedDataModel.RolesFeature" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="RedDataModel.User" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
         <AssociationConnector Association="RedDataModel.FK_RolesFeatures_Features" ManuallyRouted="false" />
         <AssociationConnector Association="RedDataModel.FK_RolesFeatures_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="RedDataModel.FK_Users_Roles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RedDataModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="6.25" />
-        <EntityTypeShape EntityType="RedDataModel.ActionType" Width="1.5" PointX="3" PointY="9.25" />
-        <EntityTypeShape EntityType="RedDataModel.ActionLog" Width="1.625" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="RedDataModel.ActionLogProperty" Width="1.5" PointX="10.625" PointY="8.875" />
+        <EntityTypeShape EntityType="RedDataModel.ActionType" Width="1.5" PointX="6" PointY="14.125" />
+        <EntityTypeShape EntityType="RedDataModel.ActionLog" Width="1.625" PointX="8.25" PointY="8.5" />
         <AssociationConnector Association="RedDataModel.FK_ActionLogProperties_ToTable" />
         <AssociationConnector Association="RedDataModel.FK_ActionLogs_ToTable" />
         <AssociationConnector Association="RedDataModel.FK_ActionLogs_Users" />
-        <EntityTypeShape EntityType="RedDataModel.AcredetationLevel" Width="1.5" PointX="5.375" PointY="1.25" />
-        <EntityTypeShape EntityType="RedDataModel.Client" Width="1.5" PointX="7.375" PointY="9.75" />
-        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="9.375" PointY="9.75" />
-        <EntityTypeShape EntityType="RedDataModel.TestCategory" Width="1.5" PointX="5.375" PointY="10.375" />
-        <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="7.625" PointY="1" />
+        <EntityTypeShape EntityType="RedDataModel.AcredetationLevel" Width="1.5" PointX="0.75" PointY="12.5" />
+        <EntityTypeShape EntityType="RedDataModel.Client" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="RedDataModel.TestCategory" Width="1.5" PointX="0.75" PointY="15" />
+        <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="3" PointY="13.25" />
         <AssociationConnector Association="RedDataModel.FK_Tests_AcredetationLevels" />
         <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
-        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="9.625" PointY="13" />
-        <EntityTypeShape EntityType="RedDataModel.DiaryProduct" Width="1.5" PointX="11.875" PointY="14" />
-        <EntityTypeShape EntityType="RedDataModel.DiarySampleAcceptor" Width="1.5" PointX="11.875" PointY="11" />
-        <EntityTypeShape EntityType="RedDataModel.DiaryTest" Width="1.5" PointX="11.875" PointY="7.625" />
+        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="RedDataModel.DiaryProduct" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="RedDataModel.DiarySampleAcceptor" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="RedDataModel.DiaryTest" Width="1.5" PointX="5.25" PointY="4.5" />
         <AssociationConnector Association="RedDataModel.FK_Diary_Clients" />
         <AssociationConnector Association="RedDataModel.FK_DiaryProducts_Diary" />
         <AssociationConnector Association="RedDataModel.FK_DiarySampleAcceptors_Diary" />

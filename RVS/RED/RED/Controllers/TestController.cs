@@ -27,12 +27,6 @@ namespace RED.Controllers
             throw new Exception("EXCEPTION TEXT");
         }
 
-        public ActionResult Log()
-        {
-            DbLogger logger = new DbLogger();
-            logger.Log();
-
-            return null;
-        }
+      
     }
 }

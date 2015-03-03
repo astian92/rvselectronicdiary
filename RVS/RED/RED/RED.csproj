@@ -166,6 +166,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardsController.cs" />
+    <Compile Include="Controllers\DiaryController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -254,8 +255,11 @@
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
+    <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
+    <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
+    <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Logs\DbLogger.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
     <Compile Include="Models\Logs\LogRepository.cs" />
     <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
@@ -546,6 +550,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
+    <Folder Include="Views\Diary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
