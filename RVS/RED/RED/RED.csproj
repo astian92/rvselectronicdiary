@@ -255,9 +255,11 @@
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
+    <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />

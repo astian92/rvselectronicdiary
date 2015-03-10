@@ -56,6 +56,23 @@
                     }
                 </ul>
             </li>
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-area-chart">
+                    </i> <span class="nav-label">Изследвания</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Users/Index">Категории</a></li>
+                    }
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Roles/Index">Тестове</a></li>
+                    }
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

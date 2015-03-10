@@ -1,6 +1,7 @@
 ﻿using RED.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,53 @@ namespace RED.Models.ElectronicDiary
             this.DiaryProducts = new List<DiaryProduct>();
             this.DiarySampleAcceptors = new List<DiarySampleAcceptor>();
             this.DiaryTests = new List<DiaryTest>();
+        }
+
+        public string QueryNumber
+        {
+            get
+            {
+                return this.Number + "/" + this.AcceptanceDateAndTime.ToString("dd.MM.yy", CultureInfo.InvariantCulture);
+            }
+        }
+
+        public string ProtocolNumberCreationDate
+        {
+            get
+            {
+                string result = this.Number + "/";
+                if (this.ProtocolCreationDate.HasValue)
+                {
+                    result += this.ProtocolCreationDate.Value.ToString("dd.MM.yy", CultureInfo.InvariantCulture);
+                }
+
+                return result;
+            }
+        }
+
+        public string Remark
+        {
+            get
+            {
+                var acreditedTests = this.DiaryTests.Where(t => t.Test.AcredetationLevel.Level == ((char)AcredetationLevels.Acredited).ToString());
+
+                var notAcreditedTests = this.DiaryTests.Where(t => t.Test.AcredetationLevel.Level == ((char)AcredetationLevels.NotAcredited).ToString());
+
+                if (acreditedTests.Count() > 0 && notAcreditedTests.Count() > 0)
+                {
+                    return "A/B";
+                }
+                else if (acreditedTests.Count() > 0)
+                {
+                    return "A";
+                }
+                else if (notAcreditedTests.Count() > 0)
+                {
+                    return "B";
+                }
+
+                return "";
+            }
         }
 
         public DiaryW(Diary diary)
