@@ -173,6 +173,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -260,6 +261,7 @@
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
+    <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
@@ -548,6 +550,11 @@
     <Content Include="Views\Features\Edit.cshtml" />
     <Content Include="Views\Features\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\Tests\Categories.cshtml" />
+    <Content Include="Views\Tests\DeleteCategory.cshtml" />
+    <Content Include="Views\Tests\EditCategory.cshtml" />
+    <Content Include="Views\Tests\CreateCategory.cshtml" />
+    <Content Include="Views\Tests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

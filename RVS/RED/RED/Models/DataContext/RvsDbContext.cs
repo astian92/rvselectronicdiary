@@ -61,5 +61,9 @@ namespace RED.Models.DataContext
             return changesCount;
         }
 
+        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Tests.TestW> TestWs { get; set; }
+
+        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Tests.TestCategoryW> TestCategoryWs { get; set; }
+
     }
 }
