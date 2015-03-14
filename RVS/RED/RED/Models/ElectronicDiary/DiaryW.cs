@@ -1,6 +1,7 @@
 ﻿using RED.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -13,11 +14,17 @@ namespace RED.Models.ElectronicDiary
         public int Number { get; set; }
         public DateTime AcceptanceDateAndTime { get; set; }
         public string TypeNumberDate { get; set; }
+        [Required]
+        [Display(Name="Възложител")]
         public string Contractor { get; set; }
+
+        [Required]
+        [Display(Name = "Клиент")]
         public Guid ClientId { get; set; }
         public Nullable<DateTime> ProtocolCreationDate { get; set; }
 
         public virtual Client Client { get; set; }
+        [Display(Name = "Продукти")]
         public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
         public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
         public virtual ICollection<DiaryTest> DiaryTests { get; set; }

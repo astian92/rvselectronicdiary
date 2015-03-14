@@ -271,10 +271,20 @@
     <Compile Include="Models\Responses\ActionResponse.cs" />
     <Compile Include="Models\Responses\ErrorFactory.cs" />
     <Compile Include="Models\TestRepository.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\RED.dll" />
+    <Content Include="bin\RED.pdb" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -363,6 +373,10 @@
       <DependentUpon>RedEntities.edmx</DependentUpon>
       <LastGenOutput>RedEntities.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -550,16 +564,17 @@
     <Content Include="Views\Features\Edit.cshtml" />
     <Content Include="Views\Features\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\Diary\Index.cshtml" />
+    <Content Include="Views\Diary\Create.cshtml" />
     <Content Include="Views\Tests\Categories.cshtml" />
+    <Content Include="Views\Tests\CreateCategory.cshtml" />
     <Content Include="Views\Tests\DeleteCategory.cshtml" />
     <Content Include="Views\Tests\EditCategory.cshtml" />
-    <Content Include="Views\Tests\CreateCategory.cshtml" />
     <Content Include="Views\Tests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
-    <Folder Include="Views\Diary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

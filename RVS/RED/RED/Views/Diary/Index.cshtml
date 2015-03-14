@@ -1,0 +1,99 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Дневник</h2>
+
+<p>
+    <a href="/Diary/Create">
+        <i class="fa fa-plus"></i>
+        Добави писмо
+    </a>
+</p>
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="collapsed">
+                       №: @item.Number / @item.TypeNumberDate /
+                       Клиент:  @item.Client.Name
+                    </a>
+                </h5>
+            </div>
+            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h5>От:
+                                        <strong>@item.Client.Name</strong><br>
+                                    </h5>
+                                    <h5>
+                                        Възложител:
+                                        <strong>@Html.DisplayFor(modelItem => item.Contractor)</strong><br>
+                                    </h5>
+                                </div>
+
+                                <div class="col-sm-6 text-right">
+                                    <h4>№: @item.Number</h4>
+                                    <h4 class="text-navy">@item.TypeNumberDate</h4>
+                                    <p>
+                                        <span><strong>Заявка № дата:</strong> @item.AcceptanceDateAndTime.ToString("dd MMMM, yyyy", CultureInfo.InvariantCulture)</span><br>
+                                        <span><strong>Протокол № дата на издаване:</strong> @(item.ProtocolCreationDate != null ? item.ProtocolCreationDate.Value.ToString("dd MMMM, yyyy", CultureInfo.InvariantCulture) : "")</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row table-responsive m-t p-lg">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left col-xs-4">Наименoвание</th>
+                                            <th class="text-center">Показател за изпитване</th>
+                                            <th class="text-center">Приел пробата и заявката</th>
+                                            <th class="text-center">Получил протокола</th>
+                                            <th class="text-right">Забележка</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @foreach (var product in item.DiaryProducts)
+                                                {
+                                                    <span>@product.Product.Name</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => item.DiaryTests)</td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => item.DiarySampleAcceptors)</td>
+                                            <td class="text-center">
+                                                Pesho
+                                            </td>
+                                            <td class ="text-right">
+                                                A
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /table-responsive -->
+                            <div class="text-right">
+                                <button class="btn btn-primary"><i class="fa fa-dollar"></i> Добави фактура</button>
+                                <button class="btn btn-primary"><i class="fa fa-dollar"></i> Направи заявка</button>
+                                <button class="btn btn-primary"><i class="fa fa-dollar"></i> Издай протокол</button>
+                            </div>
+
+                            <div class="well m-t">
+                                <strong>Бележка:</strong>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

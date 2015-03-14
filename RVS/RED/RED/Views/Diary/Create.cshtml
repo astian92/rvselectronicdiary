@@ -1,0 +1,58 @@
+﻿@model RED.Models.ElectronicDiary.DiaryW
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Добави</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Писмо</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contractor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="RoleId">Клиент</label>
+            <div class="col-md-10">
+                @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="RoleId">Продукт</label>
+            <div class="col-md-7">
+                <input class="form-control text-box single-line" id="Product" name="Product" type="text" value="">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary add-product">Добави</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="/Diary/Index" class="btn btn-default">Отказ</a>
+                <input type="submit" value="Създай" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@*<script>
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+</script>*@
+

@@ -13,7 +13,31 @@ namespace RED.Controllers
         // GET: Diary
         public ActionResult Index()
         {
+            var diaryEntries = Rep.GetDiaryEntries();
+            return View(diaryEntries);
+        }
+
+        // GET: Diary/Create
+        public ActionResult Create()
+        {
+            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
             return View();
+        }
+
+        // POST: Diary/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Number,AcceptanceDateAndTime,TypeNumberDate,Contractor,ClientId")] DiaryW diary)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.AddLetter(diary);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
+
+            return View(diary);
         }
 
         public ActionResult GetAllDiaryEntries()
