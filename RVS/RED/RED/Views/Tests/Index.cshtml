@@ -68,7 +68,7 @@
 <script>
         $('.btn-delete').click(function () {
             var id = $(this).attr('href');
-            var url = '/Tests/DeleteCategory?id=' + id;
+            var url = '/Tests/Delete?id=' + id;
             $.ajax({
                 type: "GET",
                 url: url,

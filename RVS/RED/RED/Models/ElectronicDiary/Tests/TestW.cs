@@ -1,6 +1,7 @@
 ﻿using RED.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,9 +10,19 @@ namespace RED.Models.ElectronicDiary.Tests
     public class TestW
     {
         public Guid Id { get; set; }
+
+        [Display(Name = "Категория")]
         public Guid TestCategoryId { get; set; }
+
+        [Required(ErrorMessage = "Името е задължително!")]
+        [Display(Name = "Име")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Полето Методи е задължително!")]
+        [Display(Name = "Методи")]
         public string TestMethods { get; set; }
+
+        [Display(Name = "Вид Акредитация")]
         public Guid AcredetationLevelId { get; set; }
 
         public virtual AcredetationLevel AcredetationLevel { get; set; }

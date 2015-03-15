@@ -165,6 +165,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardsController.cs" />
     <Compile Include="Controllers\DiaryController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
@@ -257,6 +258,7 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
+    <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
@@ -571,6 +573,13 @@
     <Content Include="Views\Tests\DeleteCategory.cshtml" />
     <Content Include="Views\Tests\EditCategory.cshtml" />
     <Content Include="Views\Tests\Index.cshtml" />
+    <Content Include="Views\Tests\Create.cshtml" />
+    <Content Include="Views\Tests\Edit.cshtml" />
+    <Content Include="Views\Tests\Delete.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Clients\Create.cshtml" />
+    <Content Include="Views\Clients\Edit.cshtml" />
+    <Content Include="Views\Clients\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

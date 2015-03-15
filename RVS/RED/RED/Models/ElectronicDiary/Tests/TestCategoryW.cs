@@ -12,7 +12,6 @@ namespace RED.Models.ElectronicDiary.Tests
         public System.Guid Id { get; set; }
 
         [Required(ErrorMessage = "Името е задължително!")]
-        [StringLength(100, ErrorMessage = "Името трябва да бъде поне 2 символа.", MinimumLength = 2)]
         [Display(Name = "Име")]
         public string Name { get; set; }
 
