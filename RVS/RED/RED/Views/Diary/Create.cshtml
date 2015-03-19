@@ -29,31 +29,21 @@
                 @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
-            <label class="control-label col-md-2" for="RoleId">Продукт</label>
-            <div class="col-md-7">
-                <input class="form-control text-box single-line" id="Product" name="Product" type="text" value="">
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary add-product">Добави</button>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="RoleId">Продукт</label>
+            <label class="control-label col-md-2" for="Products">Продукт</label>
             <div class="col-md-10">
                 <div class="input-group" style="width:100%;">
-                    <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:100%;" tabindex="4">
-                        <option value="">Select</option>
-                        <option value="United States">United States</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="Afghanistan">Afghanistan</option>
-                        <option value="Aland Islands">Aland Islands</option>
-                    </select>
+                    <div style="margin-bottom:15px;">
+                        <input type="text" placeholder="Въведи..." id="Products" class="form-control text-box single-line" tabindex="4">
+                        <div class="clearfix"></div>
+                    </div>
+                    <ol class="product-list dd-list">
+                    </ol>
                 </div>
             </div>
         </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -68,15 +58,21 @@
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 
 <script>
-    var config = {
-        '.chosen-select': {},
-        '.chosen-select-deselect': { allow_single_deselect: true },
-        '.chosen-select-no-single': { disable_search_threshold: 10 },
-        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-        '.chosen-select-width': { width: "95%" }
-    }
-    for (var selector in config) {
-        $(selector).chosen(config[selector]);
-    }
+    $('#Products').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) 
+        {
+            var html = $('.product-list').html();
+
+            html += '<li class="dd-item" data-id="3"><div class="dd-handle"><span class="pull-right remove-choice">x</span><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>';
+            $('.product-list').html(html);
+            $('#Products').val('');
+            return false;
+        }
+    });
+
+    $('.remove-choice').click(function () {
+        $(this).parent().remove();
+    });
 </script>
 
