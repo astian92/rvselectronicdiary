@@ -301,6 +301,9 @@
     <Content Include="Content\patterns\otis_redding.png" />
     <Content Include="Content\patterns\shattered.png" />
     <Content Include="Content\patterns\triangular.png" />
+    <Content Include="Content\plugins\chosen\chosen-sprite%402x.png" />
+    <Content Include="Content\plugins\chosen\chosen-sprite.png" />
+    <Content Include="Content\plugins\chosen\chosen.css" />
     <Content Include="Content\plugins\iCheck\custom.css" />
     <Content Include="Content\plugins\iCheck\green%402x.png" />
     <Content Include="Content\plugins\iCheck\green.png" />
@@ -388,6 +391,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
     <Content Include="Scripts\plugins\flot\curvedLines.js" />
     <Content Include="Scripts\plugins\flot\excanvas.min.js" />
     <Content Include="Scripts\plugins\iCheck\icheck.min.js" />

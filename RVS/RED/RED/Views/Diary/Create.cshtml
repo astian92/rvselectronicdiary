@@ -41,6 +41,21 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2" for="RoleId">Продукт</label>
+            <div class="col-md-10">
+                <div class="input-group" style="width:100%;">
+                    <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:100%;" tabindex="4">
+                        <option value="">Select</option>
+                        <option value="United States">United States</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Aland Islands">Aland Islands</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <a href="/Diary/Index" class="btn btn-default">Отказ</a>
                 <input type="submit" value="Създай" class="btn btn-primary" />
@@ -49,10 +64,19 @@
     </div>
 }
 
-@*<script>
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
-    });
-</script>*@
+<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+
+<script>
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>
 
