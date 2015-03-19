@@ -64,15 +64,22 @@
         {
             var html = $('.product-list').html();
 
-            html += '<li class="dd-item" data-id="3"><div class="dd-handle"><span class="pull-right remove-choice">x</span><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>';
-            $('.product-list').html(html);
+            var liHolder = $('<li class="dd-item" data-id="3"><div class="dd-handle"><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>');
+            var x = $('<span class="pull-right remove-choice"><i class="fa fa-times"></i></span>');
+
+            x.on('click', function () {
+                $(this).parent().parent().remove();
+            })
+
+            liHolder.find('.dd-handle').append(x);
+
+            //html += '<li class="dd-item" data-id="3"><div class="dd-handle"><span class="pull-right remove-choice"><i class="fa fa-times"></i></span><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>';
+            //$('.product-list').html(html);
+
+            $('.product-list').append(liHolder);
             $('#Products').val('');
             return false;
         }
-    });
-
-    $('.remove-choice').click(function () {
-        $(this).parent().remove();
     });
 </script>
 
