@@ -16,9 +16,9 @@ namespace RED.Models.DataContext
     {
         public Diary()
         {
-            this.DiaryProducts = new HashSet<DiaryProduct>();
             this.DiarySampleAcceptors = new HashSet<DiarySampleAcceptor>();
             this.DiaryTests = new HashSet<DiaryTest>();
+            this.Products = new HashSet<Product>();
         }
     
         public System.Guid Id { get; set; }
@@ -30,8 +30,8 @@ namespace RED.Models.DataContext
         public Nullable<System.DateTime> ProtocolCreationDate { get; set; }
     
         public virtual Client Client { get; set; }
-        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
         public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
         public virtual ICollection<DiaryTest> DiaryTests { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

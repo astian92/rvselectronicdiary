@@ -52,24 +52,16 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
-    <Property Name="TypeNumberDate" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="TypeNumberDate" Type="nvarchar" MaxLength="120" />
     <Property Name="Contractor" Type="nvarchar" MaxLength="50" />
     <Property Name="ClientId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProtocolCreationDate" Type="date" />
-  </EntityType>
-  <EntityType Name="DiaryProducts">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="DiarySampleAcceptors">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
@@ -77,7 +69,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
@@ -93,6 +85,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
@@ -192,32 +185,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DiaryProducts_Diary">
-    <End Role="Diary" Type="Self.Diary" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="DiaryProducts" Type="Self.DiaryProducts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Diary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DiaryProducts">
-        <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DiaryProducts_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="DiaryProducts" Type="Self.DiaryProducts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DiaryProducts">
-        <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_DiarySampleAcceptors_Diary">
     <End Role="Diary" Type="Self.Diary" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -267,6 +234,20 @@
       </Principal>
       <Dependent Role="DiaryTests">
         <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Diary">
+    <End Role="Diary" Type="Self.Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="DiaryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -341,7 +322,6 @@
     <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Diary" EntityType="Self.Diary" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="DiaryProducts" EntityType="Self.DiaryProducts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DiarySampleAcceptors" EntityType="Self.DiarySampleAcceptors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DiaryTests" EntityType="Self.DiaryTests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
@@ -367,14 +347,6 @@
       <End Role="Clients" EntitySet="Clients" />
       <End Role="Diary" EntitySet="Diary" />
     </AssociationSet>
-    <AssociationSet Name="FK_DiaryProducts_Diary" Association="Self.FK_DiaryProducts_Diary">
-      <End Role="Diary" EntitySet="Diary" />
-      <End Role="DiaryProducts" EntitySet="DiaryProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DiaryProducts_Products" Association="Self.FK_DiaryProducts_Products">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="DiaryProducts" EntitySet="DiaryProducts" />
-    </AssociationSet>
     <AssociationSet Name="FK_DiarySampleAcceptors_Diary" Association="Self.FK_DiarySampleAcceptors_Diary">
       <End Role="Diary" EntitySet="Diary" />
       <End Role="DiarySampleAcceptors" EntitySet="DiarySampleAcceptors" />
@@ -390,6 +362,10 @@
     <AssociationSet Name="FK_DiaryTests_Tests" Association="Self.FK_DiaryTests_Tests">
       <End Role="Tests" EntitySet="Tests" />
       <End Role="DiaryTests" EntitySet="DiaryTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Diary" Association="Self.FK_Products_Diary">
+      <End Role="Diary" EntitySet="Diary" />
+      <End Role="Products" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="FK_RolesFeatures_Features" Association="Self.FK_RolesFeatures_Features">
       <End Role="Features" EntitySet="Features" />

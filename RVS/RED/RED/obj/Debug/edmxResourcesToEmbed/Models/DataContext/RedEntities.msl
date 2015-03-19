@@ -90,14 +90,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Products">
-      <EntityTypeMapping TypeName="RedDataModel.Product">
-        <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TestCategories">
       <EntityTypeMapping TypeName="RedDataModel.TestCategory">
         <MappingFragment StoreEntitySet="TestCategories">
@@ -130,15 +122,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DiaryProducts">
-      <EntityTypeMapping TypeName="RedDataModel.DiaryProduct">
-        <MappingFragment StoreEntitySet="DiaryProducts">
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="DiarySampleAcceptors">
       <EntityTypeMapping TypeName="RedDataModel.DiarySampleAcceptor">
         <MappingFragment StoreEntitySet="DiarySampleAcceptors">
@@ -152,6 +135,15 @@
       <EntityTypeMapping TypeName="RedDataModel.DiaryTest">
         <MappingFragment StoreEntitySet="DiaryTests">
           <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="RedDataModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

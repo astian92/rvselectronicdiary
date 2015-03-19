@@ -117,7 +117,6 @@
     </AssociationSet>
     <EntitySet Name="AcredetationLevels" EntityType="RedDataModel.AcredetationLevel" />
     <EntitySet Name="Clients" EntityType="RedDataModel.Client" />
-    <EntitySet Name="Products" EntityType="RedDataModel.Product" />
     <EntitySet Name="TestCategories" EntityType="RedDataModel.TestCategory" />
     <EntitySet Name="Tests" EntityType="RedDataModel.Test" />
     <AssociationSet Name="FK_Tests_AcredetationLevels" Association="RedDataModel.FK_Tests_AcredetationLevels">
@@ -129,16 +128,11 @@
       <End Role="Test" EntitySet="Tests" />
     </AssociationSet>
     <EntitySet Name="Diaries" EntityType="RedDataModel.Diary" />
-    <EntitySet Name="DiaryProducts" EntityType="RedDataModel.DiaryProduct" />
     <EntitySet Name="DiarySampleAcceptors" EntityType="RedDataModel.DiarySampleAcceptor" />
     <EntitySet Name="DiaryTests" EntityType="RedDataModel.DiaryTest" />
     <AssociationSet Name="FK_Diary_Clients" Association="RedDataModel.FK_Diary_Clients">
       <End Role="Client" EntitySet="Clients" />
       <End Role="Diary" EntitySet="Diaries" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DiaryProducts_Diary" Association="RedDataModel.FK_DiaryProducts_Diary">
-      <End Role="Diary" EntitySet="Diaries" />
-      <End Role="DiaryProduct" EntitySet="DiaryProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_DiarySampleAcceptors_Diary" Association="RedDataModel.FK_DiarySampleAcceptors_Diary">
       <End Role="Diary" EntitySet="Diaries" />
@@ -148,10 +142,6 @@
       <End Role="Diary" EntitySet="Diaries" />
       <End Role="DiaryTest" EntitySet="DiaryTests" />
     </AssociationSet>
-    <AssociationSet Name="FK_DiaryProducts_Products" Association="RedDataModel.FK_DiaryProducts_Products">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="DiaryProduct" EntitySet="DiaryProducts" />
-    </AssociationSet>
     <AssociationSet Name="FK_DiarySampleAcceptors_Users" Association="RedDataModel.FK_DiarySampleAcceptors_Users">
       <End Role="User" EntitySet="Users" />
       <End Role="DiarySampleAcceptor" EntitySet="DiarySampleAcceptors" />
@@ -159,6 +149,11 @@
     <AssociationSet Name="FK_DiaryTests_Tests" Association="RedDataModel.FK_DiaryTests_Tests">
       <End Role="Test" EntitySet="Tests" />
       <End Role="DiaryTest" EntitySet="DiaryTests" />
+    </AssociationSet>
+    <EntitySet Name="Products" EntityType="RedDataModel.Product" />
+    <AssociationSet Name="FK_Products_Diary" Association="RedDataModel.FK_Products_Diary">
+      <End Role="Diary" EntitySet="Diaries" />
+      <End Role="Product" EntitySet="Products" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="ActionLogProperty">
@@ -253,14 +248,6 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Diaries" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Client" ToRole="Diary" />
   </EntityType>
-  <EntityType Name="Product">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="DiaryProducts" Relationship="RedDataModel.FK_DiaryProducts_Products" FromRole="Product" ToRole="DiaryProduct" />
-  </EntityType>
   <EntityType Name="TestCategory">
     <Key>
       <PropertyRef Name="Id" />
@@ -313,24 +300,14 @@
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="Number" Type="Int32" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="TypeNumberDate" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="TypeNumberDate" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
     <Property Name="Contractor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ClientId" Type="Guid" Nullable="false" />
     <Property Name="ProtocolCreationDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="Client" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
-    <NavigationProperty Name="DiaryProducts" Relationship="RedDataModel.FK_DiaryProducts_Diary" FromRole="Diary" ToRole="DiaryProduct" />
     <NavigationProperty Name="DiarySampleAcceptors" Relationship="RedDataModel.FK_DiarySampleAcceptors_Diary" FromRole="Diary" ToRole="DiarySampleAcceptor" />
     <NavigationProperty Name="DiaryTests" Relationship="RedDataModel.FK_DiaryTests_Diary" FromRole="Diary" ToRole="DiaryTest" />
-  </EntityType>
-  <EntityType Name="DiaryProduct">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="DiaryId" Type="Guid" Nullable="false" />
-    <Property Name="ProductId" Type="Guid" Nullable="false" />
-    <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_DiaryProducts_Diary" FromRole="DiaryProduct" ToRole="Diary" />
-    <NavigationProperty Name="Product" Relationship="RedDataModel.FK_DiaryProducts_Products" FromRole="DiaryProduct" ToRole="Product" />
+    <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
   </EntityType>
   <EntityType Name="DiarySampleAcceptor">
     <Key>
@@ -364,20 +341,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DiaryProducts_Diary">
-    <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="RedDataModel.DiaryProduct" Role="DiaryProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Diary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DiaryProduct">
-        <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_DiarySampleAcceptors_Diary">
     <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -406,18 +369,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DiaryProducts_Products">
-    <End Type="RedDataModel.Product" Role="Product" Multiplicity="1" />
-    <End Type="RedDataModel.DiaryProduct" Role="DiaryProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="DiaryProduct">
-        <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_DiarySampleAcceptors_Users">
     <End Type="RedDataModel.User" Role="User" Multiplicity="1" />
     <End Type="RedDataModel.DiarySampleAcceptor" Role="DiarySampleAcceptor" Multiplicity="*" />
@@ -439,6 +390,29 @@
       </Principal>
       <Dependent Role="DiaryTest">
         <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="DiaryId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
+  </EntityType>
+  <Association Name="FK_Products_Diary">
+    <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="RedDataModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="DiaryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

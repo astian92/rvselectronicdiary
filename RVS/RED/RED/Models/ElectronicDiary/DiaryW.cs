@@ -25,13 +25,13 @@ namespace RED.Models.ElectronicDiary
 
         public virtual Client Client { get; set; }
         [Display(Name = "Продукти")]
-        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
         public virtual ICollection<DiaryTest> DiaryTests { get; set; }
 
         public DiaryW()
         {
-            this.DiaryProducts = new List<DiaryProduct>();
+            this.Products = new List<Product>();
             this.DiarySampleAcceptors = new List<DiarySampleAcceptor>();
             this.DiaryTests = new List<DiaryTest>();
         }
@@ -94,7 +94,7 @@ namespace RED.Models.ElectronicDiary
             this.ProtocolCreationDate = diary.ProtocolCreationDate;
 
             this.Client = diary.Client;
-            this.DiaryProducts = diary.DiaryProducts;
+            this.Products = diary.Products;
             this.DiarySampleAcceptors = diary.DiarySampleAcceptors;
             this.DiaryTests = diary.DiaryTests;
         }
@@ -112,7 +112,7 @@ namespace RED.Models.ElectronicDiary
             diary.ProtocolCreationDate = this.ProtocolCreationDate;
 
             diary.Client = this.Client;
-            diary.DiaryProducts = this.DiaryProducts;
+            diary.Products = this.Products;
             diary.DiarySampleAcceptors = this.DiarySampleAcceptors;
             diary.DiaryTests = this.DiaryTests;
 

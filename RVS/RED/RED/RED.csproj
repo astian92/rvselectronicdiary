@@ -207,9 +207,6 @@
     <Compile Include="Models\DataContext\Diary.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext\DiaryProduct.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataContext\DiarySampleAcceptor.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

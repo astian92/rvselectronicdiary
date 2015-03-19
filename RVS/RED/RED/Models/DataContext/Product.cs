@@ -14,14 +14,10 @@ namespace RED.Models.DataContext
     
     public partial class Product
     {
-        public Product()
-        {
-            this.DiaryProducts = new HashSet<DiaryProduct>();
-        }
-    
         public System.Guid Id { get; set; }
+        public System.Guid DiaryId { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
+        public virtual Diary Diary { get; set; }
     }
 }

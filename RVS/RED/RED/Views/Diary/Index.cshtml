@@ -63,9 +63,9 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                @foreach (var product in item.DiaryProducts)
+                                                @foreach (var product in item.Products)
                                                 {
-                                                    <span>@product.Product.Name</span>
+                                                    <span>@product.Name</span>
                                                 }
                                             </td>
                                             <td class="text-center">@Html.DisplayFor(modelItem => item.DiaryTests)</td>
