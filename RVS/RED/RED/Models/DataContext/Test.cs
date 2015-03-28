@@ -16,7 +16,7 @@ namespace RED.Models.DataContext
     {
         public Test()
         {
-            this.DiaryTests = new HashSet<DiaryTest>();
+            this.Products = new HashSet<Product>();
         }
     
         public System.Guid Id { get; set; }
@@ -24,9 +24,10 @@ namespace RED.Models.DataContext
         public string Name { get; set; }
         public string TestMethods { get; set; }
         public System.Guid AcredetationLevelId { get; set; }
+        public string Temperature { get; set; }
     
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestCategory TestCategory { get; set; }
-        public virtual ICollection<DiaryTest> DiaryTests { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

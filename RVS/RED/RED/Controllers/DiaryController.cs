@@ -27,7 +27,7 @@ namespace RED.Controllers
         // POST: Diary/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Number,AcceptanceDateAndTime,TypeNumberDate,Contractor,ClientId")] DiaryW diary)
+        public ActionResult Create(DiaryW diary)
         {
             if (ModelState.IsValid)
             {

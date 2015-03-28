@@ -98,44 +98,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tests">
-      <EntityTypeMapping TypeName="RedDataModel.Test">
-        <MappingFragment StoreEntitySet="Tests">
-          <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
-          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Diaries">
       <EntityTypeMapping TypeName="RedDataModel.Diary">
         <MappingFragment StoreEntitySet="Diary">
-          <ScalarProperty Name="ProtocolCreationDate" ColumnName="ProtocolCreationDate" />
           <ScalarProperty Name="ClientId" ColumnName="ClientId" />
           <ScalarProperty Name="Contractor" ColumnName="Contractor" />
-          <ScalarProperty Name="TypeNumberDate" ColumnName="TypeNumberDate" />
+          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+          <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
           <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
           <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DiarySampleAcceptors">
-      <EntityTypeMapping TypeName="RedDataModel.DiarySampleAcceptor">
-        <MappingFragment StoreEntitySet="DiarySampleAcceptors">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DiaryTests">
-      <EntityTypeMapping TypeName="RedDataModel.DiaryTest">
-        <MappingFragment StoreEntitySet="DiaryTests">
-          <ScalarProperty Name="TestId" ColumnName="TestId" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -143,8 +114,40 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="RedDataModel.Product">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Protocols">
+      <EntityTypeMapping TypeName="RedDataModel.Protocol">
+        <MappingFragment StoreEntitySet="Protocols">
+          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="RedDataModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tests">
+      <EntityTypeMapping TypeName="RedDataModel.Test">
+        <MappingFragment StoreEntitySet="Tests">
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
+          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

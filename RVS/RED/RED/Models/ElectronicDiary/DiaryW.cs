@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace RED.Models.ElectronicDiary
@@ -11,9 +12,15 @@ namespace RED.Models.ElectronicDiary
     public class DiaryW
     {
         public Guid Id { get; set; }
+        [Required]
         public int Number { get; set; }
+
         public DateTime AcceptanceDateAndTime { get; set; }
-        public string TypeNumberDate { get; set; }
+
+        public int LetterNumber { get; set; }
+
+        public DateTime LetterDate { get; set; }
+
         [Required]
         [Display(Name="Възложител")]
         public string Contractor { get; set; }
@@ -21,40 +28,22 @@ namespace RED.Models.ElectronicDiary
         [Required]
         [Display(Name = "Клиент")]
         public Guid ClientId { get; set; }
-        public Nullable<DateTime> ProtocolCreationDate { get; set; }
 
         public virtual Client Client { get; set; }
+
         [Display(Name = "Продукти")]
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
-        public virtual ICollection<DiaryTest> DiaryTests { get; set; }
 
         public DiaryW()
         {
             this.Products = new List<Product>();
-            this.DiarySampleAcceptors = new List<DiarySampleAcceptor>();
-            this.DiaryTests = new List<DiaryTest>();
         }
 
-        public string QueryNumber
+        public string LetterInfo
         {
             get
             {
-                return this.Number + "/" + this.AcceptanceDateAndTime.ToString("dd.MM.yy", CultureInfo.InvariantCulture);
-            }
-        }
-
-        public string ProtocolNumberCreationDate
-        {
-            get
-            {
-                string result = this.Number + "/";
-                if (this.ProtocolCreationDate.HasValue)
-                {
-                    result += this.ProtocolCreationDate.Value.ToString("dd.MM.yy", CultureInfo.InvariantCulture);
-                }
-
-                return result;
+                return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
             }
         }
 
@@ -62,24 +51,23 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                var acreditedTests = this.DiaryTests.Where(t => t.Test.AcredetationLevel.Level == ((char)AcredetationLevels.Acredited).ToString());
+                StringBuilder remark = new StringBuilder();
 
-                var notAcreditedTests = this.DiaryTests.Where(t => t.Test.AcredetationLevel.Level == ((char)AcredetationLevels.NotAcredited).ToString());
-
-                if (acreditedTests.Count() > 0 && notAcreditedTests.Count() > 0)
+                if (this.Products.Any(p => p.Test.AcredetationLevel.Level == AcredetationLevels.Acredited.ToString()))
                 {
-                    return "A/B";
-                }
-                else if (acreditedTests.Count() > 0)
-                {
-                    return "A";
-                }
-                else if (notAcreditedTests.Count() > 0)
-                {
-                    return "B";
+                    remark.Append("A");
                 }
 
-                return "";
+                if (this.Products.Any(p => p.Test.AcredetationLevel.Level == AcredetationLevels.NotAcredited.ToString()))
+                {
+                    if (remark.Length > 0)
+                    {
+                        remark.Append("/");
+                    }
+                    remark.Append("B");
+                }
+
+                return remark.ToString();
             }
         }
 
@@ -87,16 +75,14 @@ namespace RED.Models.ElectronicDiary
         {
             this.Id = diary.Id;
             this.Number = diary.Number;
+            this.LetterNumber = diary.LetterNumber;
+            this.LetterDate = diary.LetterDate;
             this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            this.TypeNumberDate = diary.TypeNumberDate;
             this.Contractor = diary.Contractor;
             this.ClientId = diary.ClientId;
-            this.ProtocolCreationDate = diary.ProtocolCreationDate;
 
             this.Client = diary.Client;
             this.Products = diary.Products;
-            this.DiarySampleAcceptors = diary.DiarySampleAcceptors;
-            this.DiaryTests = diary.DiaryTests;
         }
 
         public Diary ToBase()
@@ -105,16 +91,14 @@ namespace RED.Models.ElectronicDiary
 
             diary.Id = this.Id;
             diary.Number = this.Number;
+            diary.LetterNumber = this.LetterNumber;
+            diary.LetterDate = this.LetterDate;
             diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
-            diary.TypeNumberDate = this.TypeNumberDate;
             diary.Contractor = this.Contractor;
             diary.ClientId = this.ClientId;
-            diary.ProtocolCreationDate = this.ProtocolCreationDate;
 
             diary.Client = this.Client;
             diary.Products = this.Products;
-            diary.DiarySampleAcceptors = this.DiarySampleAcceptors;
-            diary.DiaryTests = this.DiaryTests;
 
             return diary;
         }

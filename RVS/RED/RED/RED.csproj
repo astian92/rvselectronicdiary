@@ -207,12 +207,6 @@
     <Compile Include="Models\DataContext\Diary.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext\DiarySampleAcceptor.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataContext\DiaryTest.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataContext\Feature.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -221,6 +215,9 @@
     <Compile Include="Models\DataContext\Logging\Logger.cs" />
     <Compile Include="Models\DataContext\Logging\TableNameToBg.cs" />
     <Compile Include="Models\DataContext\Product.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\Protocol.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
@@ -237,6 +234,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RedEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\Request.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\Role.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>

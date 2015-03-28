@@ -16,22 +16,20 @@ namespace RED.Models.DataContext
     {
         public Diary()
         {
-            this.DiarySampleAcceptors = new HashSet<DiarySampleAcceptor>();
-            this.DiaryTests = new HashSet<DiaryTest>();
             this.Products = new HashSet<Product>();
+            this.Requests = new HashSet<Request>();
         }
     
         public System.Guid Id { get; set; }
         public int Number { get; set; }
         public System.DateTime AcceptanceDateAndTime { get; set; }
-        public string TypeNumberDate { get; set; }
+        public int LetterNumber { get; set; }
+        public System.DateTime LetterDate { get; set; }
         public string Contractor { get; set; }
         public System.Guid ClientId { get; set; }
-        public Nullable<System.DateTime> ProtocolCreationDate { get; set; }
     
         public virtual Client Client { get; set; }
-        public virtual ICollection<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
-        public virtual ICollection<DiaryTest> DiaryTests { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

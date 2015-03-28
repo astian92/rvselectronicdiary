@@ -24,7 +24,7 @@ namespace RED.Models.ElectronicDiary
             diary.Id = Guid.NewGuid();
             diary.Number = db.Diaries.Count() + 1;
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
-            diary.TypeNumberDate = "Писмо №123 " + diary.AcceptanceDateAndTime.ToLocalTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+           
             db.Diaries.Add(diary.ToBase());
             db.SaveChanges();
         }

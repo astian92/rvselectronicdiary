@@ -35,10 +35,10 @@ namespace RED.Models.DataContext
         public virtual DbSet<AcredetationLevel> AcredetationLevels { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<TestCategory> TestCategories { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
-        public virtual DbSet<DiarySampleAcceptor> DiarySampleAcceptors { get; set; }
-        public virtual DbSet<DiaryTest> DiaryTests { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
     }
 }
