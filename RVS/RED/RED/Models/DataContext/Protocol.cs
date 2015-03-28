@@ -12,13 +12,10 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class DiarySampleAcceptor
+    public partial class Protocol
     {
-        public int Id { get; set; }
-        public System.Guid DiaryId { get; set; }
-        public System.Guid UserId { get; set; }
-    
-        public virtual Diary Diary { get; set; }
-        public virtual User User { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid RequestId { get; set; }
+        public System.DateTime IssuedDate { get; set; }
     }
 }

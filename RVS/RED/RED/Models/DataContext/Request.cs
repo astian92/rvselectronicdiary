@@ -12,13 +12,14 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class DiaryTest
+    public partial class Request
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public System.Guid DiaryId { get; set; }
-        public System.Guid TestId { get; set; }
+        public System.DateTime Date { get; set; }
+        public Nullable<System.Guid> AcceptedBy { get; set; }
     
         public virtual Diary Diary { get; set; }
-        public virtual Test Test { get; set; }
+        public virtual User User { get; set; }
     }
 }
