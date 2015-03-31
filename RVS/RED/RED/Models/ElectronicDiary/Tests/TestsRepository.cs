@@ -86,6 +86,7 @@ namespace RED.Models.ElectronicDiary.Tests
             test.TestCategoryId = testW.TestCategoryId;
             test.TestMethods = testW.TestMethods;
             test.AcredetationLevelId = testW.AcredetationLevelId;
+            test.Temperature = testW.Temperature;
 
             db.SaveChanges();
         }

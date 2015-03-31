@@ -19,6 +19,12 @@ namespace RED.Models.DataContext.Logging
                 case "Role":
                     result = "Роля";
                     break;
+                case "Test":
+                    result = "Изследване";
+                    break;
+                case "TestCategory":
+                    result = "Категория (изследване)";
+                    break;
                 default:
                     result = string.Empty;
                     break;

@@ -22,6 +22,9 @@
                 @*@Html.DisplayNameFor(model => model.AcredetationLevel.Level)*@
                 Ниво
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Temperature)
+            </th>
             <th></th>
         </tr>
 
@@ -33,7 +36,7 @@
         @foreach (var category in categories)
         {
             <tr>
-               <td colspan="4">
+               <td colspan="5">
                    <span style="font-weight: bold">@category.Name</span>
                </td> 
             </tr>
@@ -49,6 +52,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.AcredetationLevel.Level)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Temperature)
                     </td>
                     <td>
                         <a href="/Tests/Edit?id=@item.Id">

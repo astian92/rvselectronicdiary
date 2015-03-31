@@ -101,6 +101,7 @@
     <EntitySetMapping Name="Diaries">
       <EntityTypeMapping TypeName="RedDataModel.Diary">
         <MappingFragment StoreEntitySet="Diary">
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
           <ScalarProperty Name="ClientId" ColumnName="ClientId" />
           <ScalarProperty Name="Contractor" ColumnName="Contractor" />
           <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
@@ -114,6 +115,8 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="RedDataModel.Product">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="QuantityLabel" ColumnName="QuantityLabel" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
@@ -133,6 +136,7 @@
     <EntitySetMapping Name="Requests">
       <EntityTypeMapping TypeName="RedDataModel.Request">
         <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
           <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />

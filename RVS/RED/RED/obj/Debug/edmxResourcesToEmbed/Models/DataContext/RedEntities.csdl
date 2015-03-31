@@ -266,6 +266,7 @@
     <NavigationProperty Name="Client" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
     <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
     <NavigationProperty Name="Requests" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -277,6 +278,8 @@
     <Property Name="TestId" Type="Guid" />
     <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
     <NavigationProperty Name="Test" Relationship="RedDataModel.FK_Products_Tests" FromRole="Product" ToRole="Test" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="QuantityLabel" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Protocol">
     <Key>
@@ -296,6 +299,7 @@
     <Property Name="AcceptedBy" Type="Guid" />
     <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
     <NavigationProperty Name="User" Relationship="RedDataModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
+    <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Test">
     <Key>

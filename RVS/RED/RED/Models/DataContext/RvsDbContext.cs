@@ -67,5 +67,7 @@ namespace RED.Models.DataContext
 
         public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Clients.ClientW> ClientWs { get; set; }
 
+        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Requests.RequestW> RequestWs { get; set; }
+
     }
 }

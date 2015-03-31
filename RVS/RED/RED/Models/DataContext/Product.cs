@@ -18,6 +18,8 @@ namespace RED.Models.DataContext
         public System.Guid DiaryId { get; set; }
         public string Name { get; set; }
         public Nullable<System.Guid> TestId { get; set; }
+        public int Quantity { get; set; }
+        public string QuantityLabel { get; set; }
     
         public virtual Diary Diary { get; set; }
         public virtual Test Test { get; set; }

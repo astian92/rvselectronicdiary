@@ -1,0 +1,40 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Заявки</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateStr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HourStr)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateStr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourStr)
+        </td>
+        <td>
+            @Html.ActionLink("Виж", "Edit", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
