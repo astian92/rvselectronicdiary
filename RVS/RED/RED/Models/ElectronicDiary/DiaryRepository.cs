@@ -1,4 +1,6 @@
-﻿using RED.Models.ElectronicDiary.Clients;
+﻿using RED.Models.DataContext;
+using RED.Models.ElectronicDiary.Clients;
+using RED.Models.ElectronicDiary.Tests;
 using RED.Models.RepositoryBases;
 using System;
 using System.Collections.Generic;
@@ -33,6 +35,12 @@ namespace RED.Models.ElectronicDiary
         {
             var roles = db.Clients.ToList();
             return roles.Select(r => new ClientW(r));
+        }
+        
+        public IEnumerable<TestW> GetTests()
+        {
+            var tests = db.Tests.ToList();
+            return tests.Select(x => new TestW(x));
         }
     }
 }

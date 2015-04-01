@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aa3fe06f1e6e4515af35fe0dbc3b4daa" Name="Diagram1">
+      <Diagram DiagramId="aa3fe06f1e6e4515af35fe0dbc3b4daa" Name="Diagram1" ZoomLevel="47">
         <EntityTypeShape EntityType="RedDataModel.Feature" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="RedDataModel.Role" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="RedDataModel.RolesFeature" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
@@ -21,17 +21,17 @@
         <EntityTypeShape EntityType="RedDataModel.AcredetationLevel" Width="1.5" PointX="0.75" PointY="12.5" />
         <EntityTypeShape EntityType="RedDataModel.Client" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="RedDataModel.TestCategory" Width="1.5" PointX="0.75" PointY="15" />
-        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="3.375" PointY="4.5" />
-        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="5.625" PointY="7.875" />
         <EntityTypeShape EntityType="RedDataModel.Protocol" Width="1.5" PointX="0.75" PointY="1.375" />
         <EntityTypeShape EntityType="RedDataModel.Request" Width="1.5" PointX="8.625" PointY="5.25" />
         <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="RedDataModel.FK_Tests_AcredetationLevels" />
+        <AssociationConnector Association="RedDataModel.FK_Requests_Users" />
+        <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
+        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="3.125" PointY="13.125" />
+        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="5.75" PointY="7.25" />
         <AssociationConnector Association="RedDataModel.FK_Diary_Clients" />
         <AssociationConnector Association="RedDataModel.FK_Products_Diary" />
         <AssociationConnector Association="RedDataModel.FK_Requests_Diary" />
-        <AssociationConnector Association="RedDataModel.FK_Requests_Users" />
-        <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
         <AssociationConnector Association="RedDataModel.FK_Products_Tests" />
         </Diagram>
     </edmx:Diagrams>

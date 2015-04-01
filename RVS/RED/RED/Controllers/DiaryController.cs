@@ -1,4 +1,5 @@
 ﻿using RED.Models.ControllerBases;
+using RED.Models.DataContext;
 using RED.Models.ElectronicDiary;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,11 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
             return View();
         }
 
-        // POST: Diary/Create
+        // POST: Diary/Create , Product[] bindedProducts
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(DiaryW diary)

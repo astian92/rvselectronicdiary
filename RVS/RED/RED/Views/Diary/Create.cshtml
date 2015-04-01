@@ -29,22 +29,53 @@
                 @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Products">Продукт</label>
-            <div class="col-md-10">
-                <div class="input-group" style="width:100%;">
-                    <div style="margin-bottom:15px;">
-                        <input type="text" placeholder="Въведи..." id="Products" class="form-control text-box single-line" tabindex="4">
-                        <div class="clearfix"></div>
-                    </div>
-                    <ol class="product-list dd-list">
-                    </ol>
+        <div class="ibox float-e-margins col-md-10 col-md-offset-2">
+            <div class="ibox-title">
+                <h5>Продукт за изпитване</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
                 </div>
             </div>
+            <div class="ibox-content" style="border-bottom: 1px solid #e7eaec;">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Products">Наименование</label>
+                    <div class="col-md-10">
+                        <input type="text" placeholder="Въведи..." id="Products" class="form-control text-box single-line" tabindex="4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Quantity">Количество</label>
+                    <div class="col-md-10">
+                        <input type="text" placeholder="Въведи..." id="Quantity" class="form-control text-box single-line" tabindex="4">
+                        <input type="text" placeholder="Въведи..." id="QuantityLabel" class="form-control text-box single-line" tabindex="4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Products">Изследване</label>
+                    <div class="col-md-10">
+                        <select data-placeholder="Choose a Country..." class="chosen-select" style="width: 350px; /* display: none; */" tabindex="-1">
+                            @foreach (var item in ViewBag.Tests)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                                
+                            }
+                        </select>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Добави" class="add-product-btn btn btn-primary" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <ul class="product-list">
+            </ul>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <a href="/Diary/Index" class="btn btn-default">Отказ</a>
@@ -58,28 +89,31 @@
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 
 <script>
-    $('#Products').keypress(function (e) {
-        var key = e.which;
-        if (key == 13) 
-        {
-            var html = $('.product-list').html();
+    var count = 0;
 
-            var liHolder = $('<li class="dd-item" data-id="3"><div class="dd-handle"><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>');
-            var x = $('<span class="pull-right remove-choice"><i class="fa fa-times"></i></span>');
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    
+    $('.add-product-btn').click(function () {
+        var html = $('.product-list').html();
 
-            x.on('click', function () {
-                $(this).parent().parent().remove();
-            })
-
-            liHolder.find('.dd-handle').append(x);
-
-            //html += '<li class="dd-item" data-id="3"><div class="dd-handle"><span class="pull-right remove-choice"><i class="fa fa-times"></i></span><span class="label label-info" style="margin-right:8px;"><i class="fa fa-bolt"></i></span>' + $('#Products').val() + '</div></li>';
-            //$('.product-list').html(html);
-
-            $('.product-list').append(liHolder);
-            $('#Products').val('');
-            return false;
-        }
+        html += '<li>';
+        html += '<span>' + $('#Products').val() + '</span>';
+        html += '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name">';
+        html += '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity">';
+        html += '<input type="hidden" value="' + $('#QuantityLabel').val() + '" name="Products[' + count + '].QuantityLabel">';
+        html += '<input type="hidden" value="' + $('.chosen-select').val() + '" name="Products[' + count + '].Test.Id">';
+        html += '</li>';
+        $('.product-list').html(html);
+        count++;
     });
 </script>
 

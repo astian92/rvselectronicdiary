@@ -19,7 +19,7 @@
             <div class="panel-heading">
                 <h5 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="collapsed">
-                       №: @item.Number / @item.TypeNumberDate /
+                       №: @item.Number / @item.LetterInfo /
                        Клиент:  @item.Client.Name
                     </a>
                 </h5>
@@ -41,10 +41,10 @@
 
                                 <div class="col-sm-6 text-right">
                                     <h4>№: @item.Number</h4>
-                                    <h4 class="text-navy">@item.TypeNumberDate</h4>
+                                    <h4 class="text-navy">@item.LetterInfo</h4>
                                     <p>
                                         <span><strong>Заявка № дата:</strong> @item.AcceptanceDateAndTime.ToString("dd MMMM, yyyy", CultureInfo.InvariantCulture)</span><br>
-                                        <span><strong>Протокол № дата на издаване:</strong> @(item.ProtocolCreationDate != null ? item.ProtocolCreationDate.Value.ToString("dd MMMM, yyyy", CultureInfo.InvariantCulture) : "")</span>
+                                        <span><strong>Протокол № дата на издаване:</strong> </span>
                                     </p>
                                 </div>
                             </div>
@@ -68,8 +68,6 @@
                                                     <span>@product.Name</span>
                                                 }
                                             </td>
-                                            <td class="text-center">@Html.DisplayFor(modelItem => item.DiaryTests)</td>
-                                            <td class="text-center">@Html.DisplayFor(modelItem => item.DiarySampleAcceptors)</td>
                                             <td class="text-center">
                                                 Pesho
                                             </td>

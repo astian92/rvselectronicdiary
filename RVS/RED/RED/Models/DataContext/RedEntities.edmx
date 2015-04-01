@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="RedDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RedDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AcredetationLevels">
           <Key>
             <PropertyRef Name="Id" />
@@ -97,7 +97,6 @@
           <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="AcceptedBy" Type="uniqueidentifier" />
-          <Property Name="IsAccepted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -502,8 +501,6 @@
           <EntitySet Name="AcredetationLevels" EntityType="RedDataModel.AcredetationLevel" />
           <EntitySet Name="Clients" EntityType="RedDataModel.Client" />
           <EntitySet Name="TestCategories" EntityType="RedDataModel.TestCategory" />
-          <EntitySet Name="Diaries" EntityType="RedDataModel.Diary" />
-          <EntitySet Name="Products" EntityType="RedDataModel.Product" />
           <EntitySet Name="Protocols" EntityType="RedDataModel.Protocol" />
           <EntitySet Name="Requests" EntityType="RedDataModel.Request" />
           <EntitySet Name="Tests" EntityType="RedDataModel.Test" />
@@ -511,6 +508,16 @@
             <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
             <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
+          <AssociationSet Name="FK_Requests_Users" Association="RedDataModel.FK_Requests_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_TestCategories" Association="RedDataModel.FK_Tests_TestCategories">
+            <End Role="TestCategory" EntitySet="TestCategories" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <EntitySet Name="Diaries" EntityType="RedDataModel.Diary" />
+          <EntitySet Name="Products" EntityType="RedDataModel.Product" />
           <AssociationSet Name="FK_Diary_Clients" Association="RedDataModel.FK_Diary_Clients">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Diary" EntitySet="Diaries" />
@@ -522,14 +529,6 @@
           <AssociationSet Name="FK_Requests_Diary" Association="RedDataModel.FK_Requests_Diary">
             <End Role="Diary" EntitySet="Diaries" />
             <End Role="Request" EntitySet="Requests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Requests_Users" Association="RedDataModel.FK_Requests_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Request" EntitySet="Requests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tests_TestCategories" Association="RedDataModel.FK_Tests_TestCategories">
-            <End Role="TestCategory" EntitySet="TestCategories" />
-            <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Tests" Association="RedDataModel.FK_Products_Tests">
             <End Role="Test" EntitySet="Tests" />
@@ -636,35 +635,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tests" Relationship="RedDataModel.FK_Tests_TestCategories" FromRole="TestCategory" ToRole="Test" />
         </EntityType>
-        <EntityType Name="Diary">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Number" Type="Int32" Nullable="false" />
-          <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LetterNumber" Type="Int32" Nullable="false" />
-          <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Contractor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ClientId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Client" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
-          <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
-          <NavigationProperty Name="Requests" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="DiaryId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
-          <Property Name="TestId" Type="Guid" />
-          <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
-          <NavigationProperty Name="Test" Relationship="RedDataModel.FK_Products_Tests" FromRole="Product" ToRole="Test" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="QuantityLabel" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Protocol">
           <Key>
             <PropertyRef Name="Id" />
@@ -681,9 +651,8 @@
           <Property Name="DiaryId" Type="Guid" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AcceptedBy" Type="Guid" />
-          <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
           <NavigationProperty Name="User" Relationship="RedDataModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
-          <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -711,6 +680,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Requests_Users">
+          <End Type="RedDataModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="AcceptedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_TestCategories">
+          <End Type="RedDataModel.TestCategory" Role="TestCategory" Multiplicity="1" />
+          <End Type="RedDataModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="TestCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Diary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LetterNumber" Type="Int32" Nullable="false" />
+          <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Contractor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientId" Type="Guid" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
+          <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
+          <NavigationProperty Name="Requests" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="DiaryId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="TestId" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="QuantityLabel" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
+          <NavigationProperty Name="Test" Relationship="RedDataModel.FK_Products_Tests" FromRole="Product" ToRole="Test" />
+        </EntityType>
         <Association Name="FK_Diary_Clients">
           <End Type="RedDataModel.Client" Role="Client" Multiplicity="1" />
           <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="*" />
@@ -746,30 +768,6 @@
             </Principal>
             <Dependent Role="Request">
               <PropertyRef Name="DiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Requests_Users">
-          <End Type="RedDataModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="AcceptedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tests_TestCategories">
-          <End Type="RedDataModel.TestCategory" Role="TestCategory" Multiplicity="1" />
-          <End Type="RedDataModel.Test" Role="Test" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TestCategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Test">
-              <PropertyRef Name="TestCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -888,6 +886,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Protocols">
+            <EntityTypeMapping TypeName="RedDataModel.Protocol">
+              <MappingFragment StoreEntitySet="Protocols">
+                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="RedDataModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="RedDataModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
+                <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Diaries">
             <EntityTypeMapping TypeName="RedDataModel.Diary">
               <MappingFragment StoreEntitySet="Diary">
@@ -910,38 +939,6 @@
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Protocols">
-            <EntityTypeMapping TypeName="RedDataModel.Protocol">
-              <MappingFragment StoreEntitySet="Protocols">
-                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Requests">
-            <EntityTypeMapping TypeName="RedDataModel.Request">
-              <MappingFragment StoreEntitySet="Requests">
-                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-                <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tests">
-            <EntityTypeMapping TypeName="RedDataModel.Test">
-              <MappingFragment StoreEntitySet="Tests">
-                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
-                <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
-                <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
