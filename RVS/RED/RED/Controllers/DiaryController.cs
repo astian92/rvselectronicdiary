@@ -38,6 +38,7 @@ namespace RED.Controllers
             }
 
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
 
             return View(diary);
         }

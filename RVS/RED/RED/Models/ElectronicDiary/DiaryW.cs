@@ -17,11 +17,16 @@ namespace RED.Models.ElectronicDiary
 
         public DateTime AcceptanceDateAndTime { get; set; }
 
+        [Required(ErrorMessage = "Номерът на писмото е задължителен")]
+        [Range(0, int.MaxValue, ErrorMessage = "Невалиден номер")]
+        [Display(Name = "Писмо №")]
         public int LetterNumber { get; set; }
 
+        [Required(ErrorMessage = "Датата на писмото е задължителна")]
+        [Display(Name = "Писмо дата")]
         public DateTime LetterDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Възложителя е задължителен")]
         [Display(Name="Възложител")]
         public string Contractor { get; set; }
 

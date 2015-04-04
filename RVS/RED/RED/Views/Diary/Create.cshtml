@@ -1,8 +1,12 @@
 ﻿@model RED.Models.ElectronicDiary.DiaryW
-
+@using System.Globalization;
+<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Create";
 }
+
+
 
 <h2>Добави</h2>
 
@@ -15,6 +19,24 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
+            @*<label class="control-label col-md-2" for="@Model.LetterNumber">Писмо №</label>*@
+            @Html.LabelFor(model => model.LetterNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LetterNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LetterNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" id="data_1">
+            @Html.LabelFor(model => model.LetterDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(model => model.Contractor, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
@@ -23,7 +45,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="RoleId">Клиент</label>
+            <label class="control-label col-md-2" for="ClientId">Клиент</label>
             <div class="col-md-10">
                 @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
@@ -42,20 +64,23 @@
                 <div class="form-group">
                     <label class="control-label col-md-2" for="Products">Наименование</label>
                     <div class="col-md-10">
-                        <input type="text" placeholder="Въведи..." id="Products" class="form-control text-box single-line" tabindex="4">
+                        <input placeholder="Име на продукта"  type="text" id="Products" class="form-control text-box single-line" tabindex="1">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2" for="Quantity">Количество</label>
-                    <div class="col-md-10">
-                        <input type="text" placeholder="Въведи..." id="Quantity" class="form-control text-box single-line" tabindex="4">
-                        <input type="text" placeholder="Въведи..." id="QuantityLabel" class="form-control text-box single-line" tabindex="4">
+                    <div class="col-md-2">
+                        <input placeholder="Брой" class="form-control text-box single-line" data-val="true" data-val-number="Полето трябва да е число" data-val-range="Невалидно число" data-val-range-max="2147483647" data-val-range-min="0" id="Quantity" name="Quantity" type="number" tabindex="2">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-md-8">
+                        <input placeholder="Пояснение" class="form-control text-box single-line" id="QuantityLabel" name="QuantityLabel" type="text" tabindex="3">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2" for="Products">Изследване</label>
+                    <label class="control-label col-md-2" for="Test">Изследване</label>
                     <div class="col-md-10">
-                        <select data-placeholder="Choose a Country..." class="chosen-select" style="width: 350px; /* display: none; */" tabindex="-1">
+                        <select id="Test" data-placeholder="Choose a Country..." class="form-control chosen-select" tabindex="4" >
                             @foreach (var item in ViewBag.Tests)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -67,14 +92,15 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="button" value="Добави" class="add-product-btn btn btn-primary" />
+                        <input type="button" value="Добави" class="add-product-btn btn btn-primary" tabindex="5" />
                     </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
 
-            <ul class="product-list">
-            </ul>
+            <table class="table table-hover product-list-table">
+                <tbody></tbody>
+            </table>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -85,11 +111,20 @@
     </div>
 }
 
-<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
-<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 
+<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script>
     var count = 0;
+
+    $('#data_1 .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
 
     var config = {
         '.chosen-select': {},
@@ -103,17 +138,53 @@
     }
     
     $('.add-product-btn').click(function () {
-        var html = $('.product-list').html();
 
-        html += '<li>';
-        html += '<span>' + $('#Products').val() + '</span>';
-        html += '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name">';
-        html += '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity">';
-        html += '<input type="hidden" value="' + $('#QuantityLabel').val() + '" name="Products[' + count + '].QuantityLabel">';
-        html += '<input type="hidden" value="' + $('.chosen-select').val() + '" name="Products[' + count + '].Test.Id">';
-        html += '</li>';
-        $('.product-list').html(html);
+        if ($('#Products').val() == '') {
+            return false;
+        }
+
+        if($('#Quantity').val() == '') {
+            return false;
+        }
+
+        if($('#QuantityLabel').val() == ''){
+            return false;
+        }
+
+        //var html = $('.product-list').html();
+
+        //html += '<li>';
+        //html += '<span>' + $('#Products').val() + '</span>';
+        //html += '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name">';
+        //html += '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity">';
+        //html += '<input type="hidden" value="' + $('#QuantityLabel').val() + '" name="Products[' + count + '].QuantityLabel">';
+        //html += '<input type="hidden" value="' + $('.chosen-select').val() + '" name="Products[' + count + '].Test.Id">';
+        //html += '</li>';
+        //$('.product-list').html(html);
+
+        var content = '<tr><td class="col-md-2"><span class="label label-primary">Добавен</span></td>' +
+            '<td class="issue-info">' +
+                $('#Products').val() +
+                '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name"></td><td class="col-md-2">' +
+                $('#Quantity').val() + ' ' + $('#QuantityLabel').val() +
+                '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity"><input type="hidden" value="' + $('#QuantityLabel').val() + '" name="Products[' + count + '].QuantityLabel"></td><td>' +
+                $('.chosen-select option:selected').text() +
+                '<input type="hidden" value="' + $('.chosen-select').val() + '" name="Products[' + count + '].TestId"></td><td class="col-md-1 text-center"><a class="delete-product" onclick="deleteProduct(this)" ><h3>x</h3></a></td></tr>';
+
+        $('.product-list-table tbody').append(content);
+
+
         count++;
+
+        $('#Products').val('');
+        $('#Quantity').val('');
+        $('#QuantityLabel').val('');
     });
+
+    function deleteProduct(e) {
+        //var event = e.target || e.srcElement;
+        $(e).parent().parent().remove();
+    }
+
 </script>
 

@@ -26,7 +26,14 @@ namespace RED.Models.ElectronicDiary
             diary.Id = Guid.NewGuid();
             diary.Number = db.Diaries.Count() + 1;
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
-           
+
+            foreach (var item in diary.Products)
+            {
+                item.Id = Guid.NewGuid();
+                item.DiaryId = diary.Id;
+                item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
+            }
+
             db.Diaries.Add(diary.ToBase());
             db.SaveChanges();
         }
