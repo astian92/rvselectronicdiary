@@ -118,7 +118,6 @@
     <EntitySet Name="AcredetationLevels" EntityType="RedDataModel.AcredetationLevel" />
     <EntitySet Name="Clients" EntityType="RedDataModel.Client" />
     <EntitySet Name="TestCategories" EntityType="RedDataModel.TestCategory" />
-    <EntitySet Name="Protocols" EntityType="RedDataModel.Protocol" />
     <EntitySet Name="Tests" EntityType="RedDataModel.Test" />
     <AssociationSet Name="FK_Tests_AcredetationLevels" Association="RedDataModel.FK_Tests_AcredetationLevels">
       <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
@@ -133,23 +132,28 @@
       <End Role="Client" EntitySet="Clients" />
       <End Role="Diary" EntitySet="Diaries" />
     </AssociationSet>
-    <EntitySet Name="Products" EntityType="RedDataModel.Product" />
     <EntitySet Name="Requests" EntityType="RedDataModel.Request" />
-    <AssociationSet Name="FK_Products_Diary" Association="RedDataModel.FK_Products_Diary">
-      <End Role="Diary" EntitySet="Diaries" />
-      <End Role="Product" EntitySet="Products" />
-    </AssociationSet>
     <AssociationSet Name="FK_Requests_Diary" Association="RedDataModel.FK_Requests_Diary">
       <End Role="Diary" EntitySet="Diaries" />
       <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Users" Association="RedDataModel.FK_Requests_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <EntitySet Name="Products" EntityType="RedDataModel.Product" />
+    <AssociationSet Name="FK_Products_Diary" Association="RedDataModel.FK_Products_Diary">
+      <End Role="Diary" EntitySet="Diaries" />
+      <End Role="Product" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="FK_Products_Tests" Association="RedDataModel.FK_Products_Tests">
       <End Role="Test" EntitySet="Tests" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK_Requests_Users" Association="RedDataModel.FK_Requests_Users">
-      <End Role="User" EntitySet="Users" />
+    <EntitySet Name="Protocols" EntityType="RedDataModel.Protocol" />
+    <AssociationSet Name="FK_Protocols_Requests" Association="RedDataModel.FK_Protocols_Requests">
       <End Role="Request" EntitySet="Requests" />
+      <End Role="Protocol" EntitySet="Protocols" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="ActionLogProperty">
@@ -252,14 +256,6 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Tests" Relationship="RedDataModel.FK_Tests_TestCategories" FromRole="TestCategory" ToRole="Test" />
   </EntityType>
-  <EntityType Name="Protocol">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="RequestId" Type="Guid" Nullable="false" />
-    <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
-  </EntityType>
   <EntityType Name="Test">
     <Key>
       <PropertyRef Name="Id" />
@@ -311,8 +307,8 @@
     <Property Name="ClientId" Type="Guid" Nullable="false" />
     <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Client" Relationship="RedDataModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
-    <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
     <NavigationProperty Name="Requests" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
+    <NavigationProperty Name="Products" Relationship="RedDataModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
   </EntityType>
   <Association Name="FK_Diary_Clients">
     <End Type="RedDataModel.Client" Role="Client" Multiplicity="1" />
@@ -323,6 +319,43 @@
       </Principal>
       <Dependent Role="Diary">
         <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="DiaryId" Type="Guid" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AcceptedBy" Type="Guid" />
+    <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
+    <NavigationProperty Name="User" Relationship="RedDataModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
+    <NavigationProperty Name="Protocols" Relationship="RedDataModel.FK_Protocols_Requests" FromRole="Request" ToRole="Protocol" />
+  </EntityType>
+  <Association Name="FK_Requests_Diary">
+    <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1" />
+    <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="DiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Users">
+    <End Type="RedDataModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="AcceptedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -339,18 +372,6 @@
     <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
     <NavigationProperty Name="Test" Relationship="RedDataModel.FK_Products_Tests" FromRole="Product" ToRole="Test" />
   </EntityType>
-  <EntityType Name="Request">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="DiaryId" Type="Guid" Nullable="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="AcceptedBy" Type="Guid" />
-    <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Diary" Relationship="RedDataModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
-    <NavigationProperty Name="User" Relationship="RedDataModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
-  </EntityType>
   <Association Name="FK_Products_Diary">
     <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -361,18 +382,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Product">
-        <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Requests_Diary">
-    <End Type="RedDataModel.Diary" Role="Diary" Multiplicity="1" />
-    <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Diary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Request">
         <PropertyRef Name="DiaryId" />
       </Dependent>
     </ReferentialConstraint>
@@ -389,15 +398,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Requests_Users">
-    <End Type="RedDataModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="RedDataModel.Request" Role="Request" Multiplicity="*" />
+  <EntityType Name="Protocol">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="RequestId" Type="Guid" Nullable="false" />
+    <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Request" Relationship="RedDataModel.FK_Protocols_Requests" FromRole="Protocol" ToRole="Request" />
+  </EntityType>
+  <Association Name="FK_Protocols_Requests">
+    <End Type="RedDataModel.Request" Role="Request" Multiplicity="1" />
+    <End Type="RedDataModel.Protocol" Role="Protocol" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
+      <Principal Role="Request">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Request">
-        <PropertyRef Name="AcceptedBy" />
+      <Dependent Role="Protocol">
+        <PropertyRef Name="RequestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

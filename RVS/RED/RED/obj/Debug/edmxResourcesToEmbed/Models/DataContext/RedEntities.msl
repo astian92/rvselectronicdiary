@@ -98,15 +98,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Protocols">
-      <EntityTypeMapping TypeName="RedDataModel.Protocol">
-        <MappingFragment StoreEntitySet="Protocols">
-          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tests">
       <EntityTypeMapping TypeName="RedDataModel.Test">
         <MappingFragment StoreEntitySet="Tests">
@@ -133,6 +124,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="RedDataModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="RedDataModel.Product">
         <MappingFragment StoreEntitySet="Products">
@@ -145,13 +147,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="RedDataModel.Request">
-        <MappingFragment StoreEntitySet="Requests">
-          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+    <EntitySetMapping Name="Protocols">
+      <EntityTypeMapping TypeName="RedDataModel.Protocol">
+        <MappingFragment StoreEntitySet="Protocols">
+          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

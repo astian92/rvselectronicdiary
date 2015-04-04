@@ -16,8 +16,8 @@ namespace RED.Models.DataContext
     {
         public Diary()
         {
-            this.Products = new HashSet<Product>();
             this.Requests = new HashSet<Request>();
+            this.Products = new HashSet<Product>();
         }
     
         public System.Guid Id { get; set; }
@@ -30,7 +30,7 @@ namespace RED.Models.DataContext
         public string Comment { get; set; }
     
         public virtual Client Client { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

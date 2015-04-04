@@ -58,7 +58,7 @@ namespace RED.Models.ElectronicDiary.Requests
             {
                 if (this.User != null)
                 {
-                    return this.User.FirstName.Substring(0, 1) + "." + this.User.LastName;
+                    return this.User.FirstName.Substring(0, 1) + ". " + this.User.LastName;
                 }
 
                 return "";

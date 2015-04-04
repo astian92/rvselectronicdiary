@@ -14,6 +14,11 @@ namespace RED.Models.DataContext
     
     public partial class Request
     {
+        public Request()
+        {
+            this.Protocols = new HashSet<Protocol>();
+        }
+    
         public System.Guid Id { get; set; }
         public System.Guid DiaryId { get; set; }
         public System.DateTime Date { get; set; }
@@ -22,5 +27,6 @@ namespace RED.Models.DataContext
     
         public virtual Diary Diary { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Protocol> Protocols { get; set; }
     }
 }

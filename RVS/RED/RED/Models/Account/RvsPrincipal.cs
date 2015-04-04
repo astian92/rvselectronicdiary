@@ -114,5 +114,19 @@ namespace RED.Models.Account
 
             return user;
         }
+
+        public Guid GetId()
+        {
+            User user = new User();
+            var context = DbContextFactory.GetDbContext();
+            user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
+
+            if (user == null)
+            {
+                return Guid.Empty;
+            }
+
+            return user.Id;
+        }
     }
 }

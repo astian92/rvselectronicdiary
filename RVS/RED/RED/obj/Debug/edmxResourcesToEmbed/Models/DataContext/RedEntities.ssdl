@@ -218,6 +218,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Protocols_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="Protocols" Type="Self.Protocols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Protocols">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Requests_Diary">
     <End Role="Diary" Type="Self.Diary" Multiplicity="1" />
     <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
@@ -345,6 +357,10 @@
     <AssociationSet Name="FK_Products_Tests" Association="Self.FK_Products_Tests">
       <End Role="Tests" EntitySet="Tests" />
       <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Protocols" EntitySet="Protocols" />
     </AssociationSet>
     <AssociationSet Name="FK_Requests_Diary" Association="Self.FK_Requests_Diary">
       <End Role="Diary" EntitySet="Diary" />

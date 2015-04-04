@@ -1,0 +1,66 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
+@using RED.Models.Account
+
+<div class="panel-group" id="accordion_@ViewBag.Label">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion_@ViewBag.Label" href="#@item.Id" aria-expanded="false" class="collapsed text-muted">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        Заявка №@item.Number / Дата @item.DateStr / Час @item.HourStr
+                        @if (item.AcceptedBy == ((RvsPrincipal)HttpContext.Current.User).GetId())
+                        {
+                           <i class="fa fa-user pull-right"></i>
+                        }
+                    </h5>
+                    
+                </div>
+            </a>
+            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-left">Наименoвание</th>
+                                                    <th class="text-center">Количество</th>
+                                                    <th class="text-right">Показател за изпитване</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var product in item.Diary.Products)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <span>@product.Name</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span>@product.Quantity @product.QuantityLabel</span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span>@product.Test.Name</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <h5>Срок на изпитване (дни): <strong></strong></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
