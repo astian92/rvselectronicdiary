@@ -51,14 +51,16 @@
                 <small>
 
                     <strong>Documentation created:</strong> 10/12/2014<br/>
-                    <strong>Latest update:</strong> 30/01/2015<br/>
+                    <strong>Latest update:</strong> 30/03/2015<br/>
                     <strong>By:</strong> WebAppLayers Team<br/>
+                    <strong>Theme version:</strong> 2.0<br/>
 
                 </small>
                 <br/>
                 <small>
                     For HTML/CSS documentation go to: <a href="index.html">Static HTML/CSS documentation.</a><br/>
-                    For AngularJS documentation go to: <a href="angular.html">AngularJS documentation.</a>
+                    For AngularJS documentation go to: <a href="angular.html">AngularJS documentation.</a><br/>
+                    For Ruby on Rails documentation go to: <a href="rails.html">RAILS documentation.</a>
                 </small>
             </div>
             <div class="col-md-6">
@@ -92,12 +94,15 @@
                     <li><a href="#fixed_footer">Fixed footer</a></li>
                     <li><a href="#rtl_support">RTL support</a></li>
                     <li><a href="#layout_2">Layout 2</a></li>
+                    <li><a href="#off_canvas_menu">Off canvas menu</a></li>
                     <li><a href="#skins">Skins</a></li>
                     <li><a href="#themeconfig">Theme config</a></li>
                 </ul>
             </li>
             <li><a href="#scaffolding">CodeTemplates and Scaffolding</a></li>
             <li><a href="#seed_project">Seed Project</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.2.0</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.1.9.2</a></li>
             <li><a href="#change_log">Change log v.1.8 -> v.1.9</a></li>
             <li><a href="#contact">Contacts</a></li>
 
@@ -249,6 +254,9 @@
     &lt;/div&gt;
     &lt;!-- End page wrapper--&gt;
 
+    &lt;!-- Right Sidebar --&gt;
+    @Html.Partial("_RightSidebar")
+
 &lt;/div&gt;
 &lt;!-- End wrapper--&gt;
             </pre>
@@ -327,7 +335,7 @@
 
             // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
-                      "~/fonts/font-awesome/css/font-awesome.min.css"));
+                      "~/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -583,6 +591,19 @@
             bundles.Add(new StyleBundle("~/Content/plugins/jsTree").Include(
                       "~/Content/plugins/jsTree/style.css"));
 
+            // Diff
+            bundles.Add(new ScriptBundle("~/plugins/diff").Include(
+                      "~/Scripts/plugins/diff_match_patch/javascript/diff_match_patch.js",
+                      "~/Scripts/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js"));
+
+            // Idle timer
+            bundles.Add(new ScriptBundle("~/plugins/idletimer").Include(
+                      "~/Scripts/plugins/idle-timer/idle-timer.min.js"));
+
+            // Tinycon
+            bundles.Add(new ScriptBundle("~/plugins/tinycon").Include(
+                      "~/Scripts/plugins/tinycon/tinycon.min.js"));
+
 </pre>
 
 
@@ -598,6 +619,7 @@
     <li>Fixed footer</li>
     <li>RTL support</li>
     <li>Layout 2 (top navigation)</li>
+    <li>Off canvas menu</li>
     <li>Skins</li>
 </ul>
 
@@ -781,6 +803,19 @@
 
 <img class="img-responsive" src="img/Dashboard_4.png" alt="">
 
+    <a name="off_canvas_menu" class="anchor"></a>
+    <h4>Off canvas menu</h4>
+
+    <p>
+        Off canvas menu is a menu that not change the width of main wrapper page. It appear on top of the page.
+
+    </p>
+
+    <p>
+        To use off canvas menu you just need to use _Layout4.cshtml. The body has special <code>.canvas-manu</code> class and it include special _NavigationOffCanvas.
+
+    </p>
+
 
 <a name="skins" class="anchor"></a>
 <h4>Skins</h4>
@@ -894,6 +929,99 @@
 
 
 <a name="change_log" class="anchor"></a>
+
+
+    <h3>Change log 1.9 -> 2.0</h3>
+
+    <ul>
+
+        <strong>New view files</strong>
+        <li> Views/AppViews/Article.cshtml </li>
+        <li> Views/AppViews/Blog.cshtml </li>
+        <li> Views/AppViews/Clients.cshtml </li>
+        <li> Views/AppViews/IssueTracker.cshtml </li>
+        <li> Views/AppViews/OutlookView.cshtml </li>
+        <li> Views/AppViews/TeamsBoard.cshtml </li>
+        <li> Views/Layouts/OffCanvas.cshtml </li>
+        <li> Views/Miscellaneous/AgileBoard.cshtml </li>
+        <li> Views/Miscellaneous/Diff.cshtml </li>
+        <li> Views/Miscellaneous/IdleTimer.cshtml </li>
+        <li> Views/Miscellaneous/LiveFavicon.cshtml </li>
+        <li> Views/Miscellaneous/Spinners.cshtml </li>
+        <li> Views/Pages/ForgotPassword.cshtml </li>
+        <li> Views/Shared/_Layout_3.cshtml </li>
+        <li> Views/Shared/_Layout_4.cshtml </li>
+        <li> Views/Shared/_NavigationOffCanvas.cshtml </li>
+        <li> Views/Shared/_RightSidebar.cshtml </li>
+
+        <hr>
+        <strong>Changed views files</strong>
+        <li> Views/Shared/_Layout.cshtml  - Add new right sidebar (@Html.Partial("_RightSidebar"))</li>
+        <li> Views/Shared/_Navigation.cshtml  - Add new menu elements</li>
+        <li> Views/Shared/_TopNavbar.cshtml - Add new menu element for right sidebar</li>
+        <li> Views/Dashboards/Dashboard_1.cshtml - Add small-chat element</li>
+        <li> Views/Dashboards/Dashboard_2.cshtml - Add small-chat element</li>
+        <li> Views/Dashboards/Dashboard_3.cshtml - Add small-chat element</li>
+        <li> Views/Dashboards/Dashboard_4_1.cshtml - Add small-chat element</li>
+        <li> Views/AppViews/Faq.cshtml - Fix the collapse effect - Create new div element <code>.faq-answer</code> before <code>p</code> answer. </li>
+
+        <hr>
+        <strong>New Inspinia js files</strong>
+        <li> <span class="text-muted">No new files</span> </li>
+
+        <hr>
+        <strong>Changed Inspinia js files</strong>
+        <li> inspinia.js - Update fix_height function, add local storage handler, add functions for small-chat and right-sidebar  </li>
+
+        <hr>
+        <strong>Updates</strong>
+        <li> Scripts/plugins/pace - update Pace to 1.0 </li>
+        <li> Scripts/morris/morris.js - update to 0.5 </li>
+        <li> bootstrap - update to 3.3.4 </li>
+
+        <hr>
+        <strong>New plugins</strong>
+        <li> Scripts/plugins/diff_match_patch - Google algorithm for diff functionality </li>
+        <li> Scripts/plugins/preetyTextDiff - jQuery plugin for dif</li>
+        <li> Scripts/plugins/idle_timer</li>
+        <li> Scripts/plugins/tinycon</li>
+
+        <hr>
+        <strong>New images</strong>
+        <li> img/full_height.jpg</li>
+        <li> img/off_canvas.jpg</li>
+
+        <hr>
+        <strong>CSS/SCSS/SASS</strong>
+        <li> Add styles for new pages </li>
+        <li> Improve btn-link </li>
+        <li> Add colapsed class for initial collapsed ibox </li>
+        <li> Fix margins for footer with sidebar fixed  </li>
+        <li> Fix responsive in login page   </li>
+
+        <hr>
+        <strong>New Controllers</strong>
+        <li> <span class="text-muted">No new files</span> </li>
+
+        <hr>
+        <strong>Update Controllers</strong>
+        <li> Controllers/AppViews.cs - add new pages for views</li>
+        <li> Controllers/Pages.cs - add new pages for views</li>
+        <li> Controllers/Miscellaneous.cs - add new pages for views</li>
+        <li> Controllers/Layouts.cs - add new pages for views</li>
+
+        <hr>
+        <strong>Updates Bundle</strong>
+        <li> App_start/BundleConfig.cs - Add bundle for new plugins, Update Font Awesome bundle</li>
+
+    </ul>
+
+
+<h3>Change log 1.9 -> 1.9.2</h3>
+
+<strong>Version 1.9.2 is mainly focused on Ruby on Rails to provide Rails version.</strong>
+<p>Please stay tuned for 2.0 version to get new features for Angular version.</p>
+
 <h3>Change log 1.8 -> 1.9</h3>
 
 

@@ -63,5 +63,31 @@ namespace Inspinia_MVC5.Controllers
         {
             return View();
         }
+
+        public ActionResult AgileBoard()
+        {
+            return View();
+        }
+
+        public ActionResult Diff()
+        {
+            return View();
+        }
+
+        public ActionResult IdleTimer()
+        {
+            return View();
+        }
+
+        public ActionResult Spinners()
+        {
+            return View();
+        }
+
+        public ActionResult LiveFavicon()
+        {
+            return View();
+        }
+
 	}
 }

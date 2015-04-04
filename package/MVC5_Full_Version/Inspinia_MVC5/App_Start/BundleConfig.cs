@@ -17,7 +17,7 @@ namespace Inspinia_MVC5
 
             // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
-                      "~/fonts/font-awesome/css/font-awesome.min.css"));
+                      "~/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -272,6 +272,20 @@ namespace Inspinia_MVC5
             // jsTree styles
             bundles.Add(new StyleBundle("~/Content/plugins/jsTree").Include(
                       "~/Content/plugins/jsTree/style.css"));
+
+            // Diff
+            bundles.Add(new ScriptBundle("~/plugins/diff").Include(
+                      "~/Scripts/plugins/diff_match_patch/javascript/diff_match_patch.js",
+                      "~/Scripts/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js"));
+
+            // Idle timer
+            bundles.Add(new ScriptBundle("~/plugins/idletimer").Include(
+                      "~/Scripts/plugins/idle-timer/idle-timer.min.js"));
+
+            // Tinycon
+            bundles.Add(new ScriptBundle("~/plugins/tinycon").Include(
+                      "~/Scripts/plugins/tinycon/tinycon.min.js"));
+
         }
     }
 }

@@ -1,25 +1,39 @@
 /**
  * INSPINIA - Responsive Admin Theme
- * Copyright 2014 Webapplayers.com
+ * 2.0
  *
  * Custom scripts
  */
+
 $(document).ready(function () {
 
-    // Full height of sidebar
+
+    // Full height
     function fix_height() {
         var heightWithoutNavbar = $("body > #wrapper").height() - 61;
         $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
-        var windowWidth = $( window ).height();
-        $("#page-wrapper").css("min-height", windowWidth + 'px');
+
+        var navbarHeigh = $('nav.navbar-default').height();
+        var wrapperHeigh = $('#page-wrapper').height();
+
+        if(navbarHeigh > wrapperHeigh){
+            $('#page-wrapper').css("min-height", navbarHeigh + "px");
+        }
+
+        if(navbarHeigh < wrapperHeigh){
+            $('#page-wrapper').css("min-height", $(window).height()  + "px");
+        }
     }
-    $(window).bind("load resize click scroll", function() {
+
+    $(window).bind("load resize scroll", function() {
         if(!$("body").hasClass('body-small')) {
             fix_height();
         }
     })
-    fix_height();
 
+    setTimeout(function(){
+        fix_height();
+    })
 });
 
 // Minimalize menu when screen is less than 768px
@@ -31,4 +45,4 @@ $(function() {
             $('body').removeClass('body-small')
         }
     })
-})
+});

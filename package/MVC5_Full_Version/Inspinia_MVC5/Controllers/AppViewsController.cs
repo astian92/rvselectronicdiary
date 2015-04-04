@@ -54,5 +54,35 @@ namespace Inspinia_MVC5.Controllers
             return View();
         }
 
+        public ActionResult TeamsBoard()
+        {
+            return View();
+        }
+
+        public ActionResult Clients()
+        {
+            return View();
+        }
+
+        public ActionResult OutlookView()
+        {
+            return View();
+        }
+
+        public ActionResult IssueTracker()
+        {
+            return View();
+        }
+
+        public ActionResult Blog()
+        {
+            return View();
+        }
+
+        public ActionResult Article()
+        {
+            return View();
+        }
+
 	}
 }

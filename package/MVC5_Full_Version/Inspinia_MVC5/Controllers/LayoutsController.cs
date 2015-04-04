@@ -13,5 +13,10 @@ namespace Inspinia_MVC5.Controllers
         {
             return View();
         }
+
+        public ActionResult OffCanvas()
+        {
+            return View();
+        }
 	}
 }

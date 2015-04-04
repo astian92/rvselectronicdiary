@@ -42,8 +42,9 @@ namespace Inspinia_MVC5_SeedProject
                       "~/Content/bootstrap.min.css",
                       "~/Content/style.css"));
 
+            // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
-                      "~/fonts/font-awesome/css/font-awesome.min.css"));
+                      "~/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
         }
     }

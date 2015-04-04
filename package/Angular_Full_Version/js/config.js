@@ -7,7 +7,12 @@
  * Initial there are written state for all view in theme.
  *
  */
-function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdleProvider, KeepaliveProvider) {
+
+    // Configure Idle settings
+    IdleProvider.idle(5); // in seconds
+    IdleProvider.timeout(120); // in seconds
+
     $urlRouterProvider.otherwise("/dashboards/dashboard_1");
 
     $ocLazyLoadProvider.config({
@@ -59,7 +64,14 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                             files: [ 'js/plugins/flot/jquery.flot.js', 'js/plugins/flot/jquery.flot.time.js', 'js/plugins/flot/jquery.flot.tooltip.min.js', 'js/plugins/flot/jquery.flot.spline.js', 'js/plugins/flot/jquery.flot.resize.js', 'js/plugins/flot/jquery.flot.pie.js', 'js/plugins/flot/curvedLines.js', 'js/plugins/flot/angular-flot.js', ]
                         },
                         {
-                            files: ['js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js','js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js']
+                            files: ['js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js']
+                        },
+                        {
+                            files: ['js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js']
+                        },
+                        {
+                            name: 'ui.checkbox',
+                            files: ['js/bootstrap/angular-bootstrap-checkbox.js']
                         }
                     ]);
                 }
@@ -502,6 +514,31 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: "views/invoice.html",
             data: { pageTitle: 'Invoice' }
         })
+        .state('app.blog', {
+            url: "/blog",
+            templateUrl: "views/blog.html",
+            data: { pageTitle: 'Blog' }
+        })
+        .state('app.article', {
+            url: "/article",
+            templateUrl: "views/article.html",
+            data: { pageTitle: 'Article' }
+        })
+        .state('app.issue_tracker', {
+            url: "/issue_tracker",
+            templateUrl: "views/issue_tracker.html",
+            data: { pageTitle: 'Issue Tracker' }
+        })
+        .state('app.clients', {
+            url: "/clients",
+            templateUrl: "views/clients.html",
+            data: { pageTitle: 'Clients' }
+        })
+        .state('app.teams_board', {
+            url: "/teams_board",
+            templateUrl: "views/teams_board.html",
+            data: { pageTitle: 'Teams board' }
+        })
         .state('pages', {
             abstract: true,
             url: "/pages",
@@ -556,6 +593,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             url: "/video",
             templateUrl: "views/video.html",
             data: { pageTitle: 'Responsible Video' }
+        })
+        .state('ui.draggable', {
+            url: "/draggable",
+            templateUrl: "views/draggable.html",
+            data: { pageTitle: 'Draggable panels' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            name: 'ui.sortable',
+                            files: ['js/plugins/ui-sortable/sortable.js']
+                        }
+                    ]);
+                }
+            }
         })
         .state('grid_options', {
             url: "/grid_options",
@@ -660,6 +712,78 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: "views/forum_post_view.html",
             data: { pageTitle: 'Forum - post view' }
         })
+        .state('miscellaneous.diff', {
+            url: "/diff",
+            templateUrl: "views/diff.html",
+            data: { pageTitle: 'Text Diff' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            files: ['js/plugins/diff_match_patch/javascript/diff_match_patch.js']
+                        },
+                        {
+                            name: 'diff-match-patch',
+                            files: ['js/plugins/angular-diff-match-patch/angular-diff-match-patch.js']
+                        }
+                    ]);
+                }
+            }
+        })
+        .state('miscellaneous.idle_timer', {
+            url: "/idle_timer",
+            templateUrl: "views/idle_timer.html",
+            data: { pageTitle: 'Idle timer' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            name: 'cgNotify',
+                            files: ['css/plugins/angular-notify/angular-notify.min.css','js/plugins/angular-notify/angular-notify.min.js']
+                        }
+                    ]);
+                }
+            }
+        })
+        .state('miscellaneous.live_favicon', {
+            url: "/live_favicon",
+            templateUrl: "views/live_favicon.html",
+            data: { pageTitle: 'Live favicon' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            files: ['js/plugins/tinycon/tinycon.min.js']
+                        }
+                    ]);
+                }
+            }
+        })
+        .state('miscellaneous.spinners', {
+            url: "/spinners",
+            templateUrl: "views/spinners.html",
+            data: { pageTitle: 'Spinners' }
+        })
+        .state('miscellaneous.validation', {
+            url: "/validation",
+            templateUrl: "views/validation.html",
+            data: { pageTitle: 'Validation' }
+        })
+        .state('miscellaneous.agile_board', {
+            url: "/agile_board",
+            templateUrl: "views/agile_board.html",
+            data: { pageTitle: 'Agile board' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            name: 'ui.sortable',
+                            files: ['js/plugins/ui-sortable/sortable.js']
+                        }
+                    ]);
+                }
+            }
+        })
         .state('tables', {
             abstract: true,
             url: "/tables",
@@ -692,7 +816,10 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     return $ocLazyLoad.load([
                         {
                             seria: true,
-                            files: ['css/plugins/dataTables/dataTables.bootstrap.css','js/plugins/dataTables/jquery.dataTables.js','js/plugins/dataTables/dataTables.bootstrap.js']
+                            files: ['js/plugins/dataTables/jquery.dataTables.js','css/plugins/dataTables/dataTables.bootstrap.css']
+                        },
+                        {
+                            files: ['js/plugins/dataTables/dataTables.bootstrap.js']
                         },
                         {
                             name: 'datatables',

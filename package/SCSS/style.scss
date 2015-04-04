@@ -1,41 +1,49 @@
 /*
+ *
  *   INSPINIA - Responsive Admin Theme
- *   Copyright 2014 Webapplayers.com
+ *   version 2.0
+ *
  */
 
 // Google Fonts
-@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amplang=en");
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
+
+// Bootstra
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 // Variables, Mixins
-@import "variables";
-@import "mixins";
+@import "base/variables";
+@import "base/mixins";
 
 // INSPINIA Theme Elements
-@import "typography";
-@import "navigation";
-@import "top_navigation";
-@import "buttons";
-@import "badgets_labels";
-@import "elements";
-@import "sidebar";
-@import "base";
-@import "pages";
+@import "base/typography";
+@import "base/navigation";
+@import "base/top_navigation";
+@import "base/buttons";
+@import "base/badgets_labels";
+@import "base/elements";
+@import "base/sidebar";
+@import "base/base";
+@import "base/pages";
+@import "base/chat";
+@import "base/spinners";
 
 // RTL Support
-@import "rtl";
+@import "base/rtl";
 
 // For demo only - config box style
-@import "theme-config";
+@import "base/theme-config";
 
 // INSPINIA Skins
-@import "skins";
+@import "base/skins";
 
 // Media query style
-@import "media";
+@import "base/media";
 
 // Custom style
 // Your custom style to override base style
-@import "custom";
+@import "base/custom";
 
 
 

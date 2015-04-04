@@ -55,14 +55,16 @@
                 <small>
 
                     <strong>Documentation created:</strong> 02/09/2014<br/>
-                    <strong>Latest update:</strong> 30/01/2015<br/>
+                    <strong>Latest update:</strong> 30/03/2015<br/>
                     <strong>By:</strong> WebAppLayers Team<br/>
+                    <strong>Theme version:</strong> 2.0<br/>
 
                 </small>
                 <br/>
                 <small>
                     For HTML/CSS documentation go to: <a href="index.html">Static HTML/CSS documentation.</a><br/>
-                    For ASP.NET MVC documentation go to: <a href="asp.net.mvc.html">ASP.NET MVC documentation.</a>
+                    For ASP.NET MVC documentation go to: <a href="asp.net.mvc.html">ASP.NET MVC documentation.</a><br/>
+                    For Ruby on Rails documentation go to: <a href="rails.html">RAILS documentation.</a>
                 </small>
             </div>
             <div class="col-md-6">
@@ -97,6 +99,7 @@
                     <li><a href="#fixed_footer">Fixed footer</a></li>
                     <li><a href="#rtl_support">RTL support</a></li>
                     <li><a href="#layout_2">Layout 2</a></li>
+                    <li><a href="#off_canvas_menu">Off canvas menu</a></li>
                     <li><a href="#skins">Skins</a></li>
                     <li><a href="#themeconfig">Theme config</a></li>
                 </ul>
@@ -105,6 +108,8 @@
             <li><a href="#grunt">Grunt Seed Project</a></li>
             <li><a href="#gulp">Gulp Seed Project</a></li>
             <li><a href="#meanjs">MEANJS Seed Project</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.2.0</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.1.9.2</a></li>
             <li><a href="#change_log">Change log v.1.8 -> v.1.9</a></li>
             <li><a href="#contact">Contacts</a></li>
 
@@ -151,6 +156,7 @@
     ├── 404.html
     ├── 500.html
     ├── index.html
+    ├── forgot_password.html
     ├── lockscreen.html
     ├── login.html
     ├── login_two_columns.html
@@ -443,6 +449,8 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
     <li>Fixed footer</li>
     <li>RTL support</li>
     <li>Layout 2 (top navigation)</li>
+    <li>Off canvas menu</li>
+    <li>Skins</li>
 </ul>
 
 </p>
@@ -654,6 +662,41 @@ function sideNavigation($timeout) {
     You have to remember that now your menu is located in views/common/top_navigation.html file.
 </p>
 
+    <a name="off_canvas_menu" class="anchor"></a>
+    <h4>Off canvas menu</h4>
+
+    <p>
+        Off canvas menu is a menu that not change the width of main wrapper page. It appear on top of the page.
+
+    </p>
+    <p>
+        To use off canvas menu you just need to add <code>.canvas-menu</code> to body element:
+
+    </p>
+    <pre class="prettyprint linenums">
+
+    &lt;body class="canvas-menu"&gt;
+
+</pre>
+
+    <p>And add extra directives in navigation.html. Firstly add <code>full-scroll</code> directive to <code>.sidebar-collapse</code> element like:</p>
+
+        <pre class="prettyprint linenums">
+
+    &lt;div class="sidebar-collapse" full-scroll&gt;
+
+</pre>
+
+    <p>Next add new <code>clos-off-canvas</code> directive after <code>.sidebar-collapse</code> element like:</p>
+
+        <pre class="prettyprint linenums">
+
+    &lt;div class="sidebar-collapse" full-scroll&gt;
+    &lt;span close-off-canvas&gt;&lt;/span&gt;
+
+</pre>
+
+
 <a name="skins" class="anchor"></a>
 <h4>Skins</h4>
 
@@ -829,8 +872,6 @@ bower install
     <li>
         <code>gulp serve:dist</code> to launch a server on your optimized application</li>
     <li>
-        <code>gulp wiredep</code> to fill bower dependencies in your <code>.html</code> file(s)</li>
-    <li>
         <code>gulp test</code> to launch your unit tests with Karma</li>
     <li>
         <code>gulp test:auto</code> to launch your unit tests with Karma in watch mode</li>
@@ -904,6 +945,85 @@ bower install
 
 
 <a name="change_log" class="anchor"></a>
+
+    <h3>Change log 1.9 -> 2.0</h3>
+
+    <ul>
+
+        <strong>New view files</strong>
+        <li> forgot_password.html </li>
+        <li> views/agile_board.html </li>
+        <li> views/article.html </li>
+        <li> views/blog.html </li>
+        <li> views/clients.html </li>
+        <li> views/diff.html </li>
+        <li> views/draggable.html </li>
+        <li> views/idle_timer.html </li>
+        <li> views/issue_tracker.html </li>
+        <li> views/live_favicon.html </li>
+        <li> views/spinners.html </li>
+        <li> views/teams_board.html </li>
+        <li> views/validation.html </li>
+        <li> views/content/right_sidebar.html </li>
+
+        <hr>
+        <strong>Changed views files</strong>
+        <li> index.html - add angular-idle scirpt</li>
+        <li> views/chat_view.html - Add new small-chat element</li>
+        <li> views/content.html - Add new right sidebar (ng-include)</li>
+        <li> views/navigation.html - Add new menu elements</li>
+        <li> views/topnavbar.html - Add new menu element for right sidebar</li>
+        <li> views/dashboard_1.html - Add small-chat element</li>
+        <li> views/dashboard_2.html - Add small-chat element</li>
+        <li> views/dashboard_3.html - Add small-chat element</li>
+        <li> views/dashboard_4_1.html - Add small-chat element</li>
+        <li> views/faq.html - Fix the collapse effect - Create new div element <code>.faq-answer</code> before <code>p</code> answer. </li>
+
+        <hr>
+        <strong>New Inspinia js files</strong>
+        <li> <span class="text-muted">No new files</span> </li>
+
+        <hr>
+        <strong>Changed js files</strong>
+        <li> js/app.js - Add new module ngIdle</li>
+        <li> js/config.js - New states for pages, add initial settings for Idle directive</li>
+        <li> js/controllers.js - Add new controllers:diff, idleTimer, liveFavicon, formValidation, agileBoard, draggablePanels </li>
+        <li> js/directives.js - Add new directives:chatSlimScroll, customValid, fullScroll, closeOffCanvas</li>
+        <li> js/inspinia.js - Improve fix_height function, add function for handle right-sidebar position on scroll</li>
+
+        <hr>
+        <strong>Updates</strong>
+        <li> js/plugins/pace - update Pace to 1.0 </li>
+        <li> js/morris/morris.js - update to 0.5 </li>
+        <li> bootstrap - update to 3.3.4 </li>
+
+        <hr>
+        <strong>New plugins</strong>
+        <li> js/plugins/diff_match_patch - Google algorithm for diff functionality </li>
+        <li> js/plugins/angular-diff-match-patch</li>
+        <li> js/plugins/angular-idle</li>
+        <li> js/plugins/tinycon</li>
+        <li> js/plugins/ui-sortable</li>
+
+        <hr>
+        <strong>New images</strong>
+        <li> img/full_height.jpg</li>
+        <li> img/off_canvas.jpg</li>
+
+        <hr>
+        <strong>CSS/SCSS/SASS</strong>
+        <li> Add styles for new pages </li>
+        <li> Improve btn-link </li>
+        <li> Add colapsed class for initial collapsed ibox </li>
+        <li> Fix margins for footer with sidebar fixed  </li>
+        <li> Fix responsive in login page   </li>
+    </ul>
+
+<h3>Change log 1.9 -> 1.9.2</h3>
+
+<strong>Version 1.9.2 is mainly focused on Ruby on Rails to provide Rails version.</strong>
+    <p>Please stay tuned for 2.0 version to get new features for Angular version.</p>
+
 <h3>Change log 1.8 -> 1.9</h3>
 
 

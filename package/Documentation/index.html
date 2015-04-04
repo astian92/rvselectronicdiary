@@ -49,14 +49,16 @@
                 <small>
 
                     <strong>Documentation created:</strong> 19/05/2014<br/>
-                    <strong>Latest update:</strong> 30/01/2015<br/>
+                    <strong>Latest update:</strong> 30/03/2015<br/>
                     <strong>By:</strong> WebAppLayers Team<br/>
+                    <strong>Theme Version:</strong> 2.0<br/>
 
                 </small>
                 <br/>
                 <small>
                     For AngularJs documentation go to: <a href="angular.html">Angular documentation.</a><br/>
-                    For ASP.NET MVC documentation go to: <a href="asp.net.mvc.html">ASP.NET MVC documentation.</a>
+                    For ASP.NET MVC documentation go to: <a href="asp.net.mvc.html">ASP.NET MVC documentation.</a><br/>
+                    For Ruby on Rails documentation go to: <a href="rails.html">RAILS documentation.</a>
                 </small>
             </div>
             <div class="col-md-6">
@@ -91,11 +93,14 @@
                     <li><a href="#fixed_footer">Fixed footer</a></li>
                     <li><a href="#rtl_support">RTL support</a></li>
                     <li><a href="#layout_2">Layout 2</a></li>
+                    <li><a href="#off_canvas_menu">Off canvas menu</a></li>
                     <li><a href="#skins">Skins</a></li>
                     <li><a href="#themeconfig">Theme config</a></li>
                 </ul>
             </li>
             <li><a href="#seed_project">Seed Project</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.2.0</a></li>
+            <li><a href="#change_log">Change log v.1.9 -> v.1.9.2</a></li>
             <li><a href="#change_log">Change log v.1.8 -> v.1.9</a></li>
             <li><a href="#contact">Contacts</a></li>
 
@@ -138,12 +143,16 @@
     ├── <strong>js/</strong>
     ├── 404.html
     ├── 500.html
+    ├── agile_board.html
+    ├── article.html
     ├── badges_labels.html
     ├── basic_gallery.html
+    ├── blog.html
     ├── buttons.html
     ├── calendar.html
     ├── carousel.html
     ├── chat_view.html
+    ├── clients.html
     ├── code_editor.html
     ├── contacts.html
     ├── css_animation.html
@@ -151,16 +160,20 @@
     ├── dashboard_3.html
     ├── dashboard_4.html
     ├── dashboard_4_1.html
+    ├── diff.html
     ├── draggable_panels.html
     ├── email_template.html
     ├── empy_page.html
     ├── faq.html
     ├── file_manager.html
+    ├── forgot_password.html
     ├── form_advanced.html
     ├── form_basic.html
     ├── form_editors.html
     ├── form_file_upload.html
     ├── form_wizard.html
+    ├── form_post.html
+    ├── full_height.html
     ├── google_maps.html
     ├── graph_chartjs.html
     ├── graph_flot.html
@@ -170,9 +183,11 @@
     ├── graph_sparkline.html
     ├── grid_options.html
     ├── icons.html
+    ├── idle_timer.html
     ├── index.html
     ├── invoice.html
     ├── invoice_print.html
+    ├── issue_tracker.html
     ├── jq_grid.html
     ├── layouts.html
     ├── lockscreen.html
@@ -184,6 +199,7 @@
     ├── modal_window.html
     ├── nestable_list.html
     ├── notifications.html
+    ├── off_canvas_menu.html
     ├── package.html
     ├── pin_board.html
     ├── profile.html
@@ -192,11 +208,14 @@
     ├── register.html
     ├── search_result.html
     ├── skin-config.html
+    ├── spinners.html
     ├── table_basic.html
     ├── table_data_tables.html
     ├── tabs_panels.html
+    ├── teams_board.html
     ├── timeline.html
     ├── timeline_2.html
+    ├── tinycon.html
     ├── toastr_notifications.html
     ├── tree_view.html
     ├── typography.html
@@ -468,27 +487,6 @@
 </pre>
 
 <p>
-    Next we will need to add slimScroll handle for sidebar. Go to js/inspinia.js file and find // Fixed Sidebar comment and uncomment function below it so it will look like this:
-
-</p>
-
-
-<pre class="prettyprint linenums">
-
-    // Fixed Sidebar
-    // unComment this only whe you have a fixed-sidebar
-    $(window).bind("load", function() {
-        if($("body").hasClass('fixed-sidebar')) {
-            $('.sidebar-collapse').slimScroll({
-                height: '100%',
-                railOpacity: 0.9,
-            });
-        }
-    })
-
-
-</pre>
-<p>
     Be sure that you have included this files to your index.html file:
 
     <pre class="prettyprint linenums">
@@ -609,8 +607,31 @@
 
 <img class="img-responsive" src="img/Dashboard_4.png" alt="">
 
+    <a name="off_canvas_menu" class="anchor"></a>
+    <h4>Off canvas menu</h4>
 
+    <p>
+        Off canvas menu is a menu that not change the width of main wrapper page. It appear on top of the page.
 
+    </p>
+
+    <p>
+        To use off canvas menu you just need to add <code>.canvas-menu</code> to body element:
+
+    </p>
+    <pre class="prettyprint linenums">
+
+    &lt;body class="canvas-menu"&gt;
+
+</pre>
+
+    <p>And in navigation after element with class <code>.sidebar-collapse</code> add special element to handle hide menu.</p>
+
+        <pre class="prettyprint linenums">
+
+            &lt;a class="close-canvas-menu"&gt;&lt;i class="fa fa-times"&gt;&lt;/i&gt;&lt;/a&gt;
+
+</pre>
 
 
 <a name="skins" class="anchor"></a>
@@ -664,6 +685,73 @@
 
 
 <a name="change_log" class="anchor"></a>
+
+    <h3>Change log 1.9 -> 2.0</h3>
+
+    <ul>
+
+        <strong>New view files</strong>
+        <li> agile_board.html </li>
+        <li> article.html </li>
+        <li> blog.html </li>
+        <li> clients.html </li>
+        <li> diff.html </li>
+        <li> forgot_password.html </li>
+        <li> full_height.html (Outlook view)</li>
+        <li> idle_timer.html </li>
+        <li> issue_tracker.html </li>
+        <li> off_canvas_menu.html </li>
+        <li> spinners.html </li>
+        <li> temas_board.html </li>
+        <li> tinycon.html </li>
+
+        <hr>
+        <strong>Changed views files</strong>
+        <li> All .html files was changed to add new menu elements</li>
+        <li> faq.html - Fix the collapse effect - Create new div element <code>.faq-answer</code> before <code>p</code> answer. </li>
+        <li> chat.html - Add new small-chat element</li>
+
+        <hr>
+        <strong>New Inspinia js files</strong>
+        <li> <span class="text-muted">No new files</span> </li>
+
+        <hr>
+        <strong>Changed Inspinia js files</strong>
+        <li> inspinia.js - Update fix_height function, add local storage handler, add functions for small-chat and right-sidebar  </li>
+
+        <hr>
+        <strong>Updates</strong>
+        <li> js/plugins/pace - update Pace to 1.0 </li>
+        <li> bootstrap - update to 3.3.4 </li>
+        <li> js/morris/morris.js - update to 0.5 </li>
+
+        <hr>
+        <strong>New plugins</strong>
+        <li> js/plugins/diff_match_patch - Google algorithm for diff functionality </li>
+        <li> js/plugins/preetyTextDiff - jQuery plugin for dif</li>
+        <li> js/plugins/idle_timer</li>
+        <li> js/plugins/tinycon</li>
+
+        <hr>
+        <strong>New images</strong>
+        <li> img/full_height.jpg</li>
+        <li> img/off_canvas.jpg</li>
+
+        <hr>
+        <strong>CSS/SCSS/SASS</strong>
+        <li> Add styles for new pages </li>
+        <li> Improve btn-link </li>
+        <li> Add colapsed class for initial collapsed ibox </li>
+        <li> Fix margins for footer with sidebar fixed  </li>
+        <li> Fix responsive in login page   </li>
+    </ul>
+
+
+<h3>Change log 1.9 -> 1.9.2</h3>
+
+<strong>Version 1.9.2 is mainly focused on Ruby on Rails to provide Rails version.</strong>
+<p>Please stay tuned for 2.0 version to get new features.</p>
+
 <h3>Change log 1.8 -> 1.9</h3>
 
 

@@ -56,10 +56,10 @@
                 <li>
                     <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="index.html">Dashboard v.1</a></li>
-                        <li><a href="dashboard_2.html">Dashboard v.2</a></li>
-                        <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-                        <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
+                        <li ><a href="index.html">Dashboard v.1</a></li>
+                        <li ><a href="dashboard_2.html">Dashboard v.2</a></li>
+                        <li ><a href="dashboard_3.html">Dashboard v.3</a></li>
+                        <li ><a href="dashboard_4_1.html">Dashboard v.4</a></li>
                     </ul>
                 </li>
                 <li>
@@ -105,8 +105,14 @@
                         <li><a href="profile.html">Profile</a></li>
                         <li><a href="projects.html">Projects</a></li>
                         <li><a href="project_detail.html">Project detail</a></li>
+                        <li><a href="teams_board.html">Teams board</a></li>
+                        <li><a href="clients.html">Clients</a></li>
+                        <li><a href="full_height.html">Outlook view</a></li>
                         <li><a href="file_manager.html">File manager</a></li>
                         <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="issue_tracker.html">Issue tracker</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="article.html">Article</a></li>
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="timeline.html">Timeline</a></li>
                         <li><a href="pin_board.html">Pin board</a></li>
@@ -120,6 +126,7 @@
                         <li><a href="invoice.html">Invoice</a></li>
                         <li><a href="login.html">Login</a></li>
                         <li><a href="login_two_columns.html">Login v.2</a></li>
+                        <li><a href="forgot_password.html">Forget password</a></li>
                         <li><a href="register.html">Register</a></li>
                         <li><a href="404.html">404 Page</a></li>
                         <li><a href="500.html">500 Page</a></li>
@@ -131,11 +138,16 @@
                     <ul class="nav nav-second-level">
                         <li><a href="toastr_notifications.html">Notification</a></li>
                         <li><a href="nestable_list.html">Nestable list</a></li>
+                        <li><a href="agile_board.html">Agile board</a></li>
                         <li><a href="timeline_2.html">Timeline v.2</a></li>
-                        <li><a href="forum_main.html">Forum view</a></li>
+                        <li><a href="diff.html">Diff</a></li>
+                        <li><a href="idle_timer.html">Idle timer</a></li>
+                        <li><a href="spinners.html">Spinners</a></li>
+                        <li><a href="tinycon.html">Live favicon</a></li>
                         <li><a href="google_maps.html">Google maps</a></li>
                         <li><a href="code_editor.html">Code editor</a></li>
                         <li><a href="modal_window.html">Modal window</a></li>
+                        <li><a href="forum_main.html">Forum view</a></li>
                         <li><a href="validation.html">Validation</a></li>
                         <li><a href="tree_view.html">Tree view</a></li>
                         <li><a href="chat_view.html">Chat view</a></li>
@@ -218,7 +230,7 @@
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+            <form role="search" class="navbar-form-custom" action="search_results.html">
                 <div class="form-group">
                     <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
                 </div>
@@ -335,141 +347,179 @@
         </nav>
         </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="wrapper wrapper-content animated fadeInRight">
 
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox">
-                        <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
 
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="text-center m-t-lg">
-                                        <img src="img/angular_logo.png" alt="AngularJS">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="text-center m-t-lg">
+                                            <img src="img/angular_logo.png" alt="AngularJS">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="text-center m-t-lg">
-                                        <img src="img/mvc_logo.png" alt="MVC" style="width: 120px">
+                                    <div class="col-lg-3">
+                                        <div class="text-center m-t-lg">
+                                            <img src="img/mvc_logo.png" alt="MVC" style="width: 120px">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="text-center m-t-lg">
-                                        <img src="img/html_logo.png" alt="HTML" style="width: 100px">
+                                    <div class="col-lg-3">
+                                        <div class="text-center m-t-lg">
+                                            <img src="img/html_logo.png" alt="HTML" style="width: 100px">
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-
-                            <div class="col-lg-4">
-
-                                <div class="text-center m-t-lg">
-                                    <h1>Inspinia <span class="text-navy">AngularJs</span></h1>
-                                    <small>Supported AngularJs version</small>
-                                </div>
-                                <div>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="text-center p-lg">
-                                        <p>
-                                            <strong>Inspinia <span class="text-navy">AngularJs</span></strong> is supported AngularJS version of INSPINIA theme.<br/>
-                                            This version contains a number of controllers and directives written specifically to support angular framework.
-                                            <br/>
-                                            <strong>Angular version is writen with Opinionated AngularJS styleguide for teams</strong>. (https://github.com/toddmotto/angularjs-styleguide).
-                                            <br/>
-                                            In project folder you find also <strong class="text-navy">SeedProject</strong> It is an application skeleton for a typical AngularJS web app. You can use it
-                                            to quickly bootstrap your angular
-                                            webapp projects and dev environment for these projects.
-                                        </p>
-
-                                        <p class="text-center m-t-md">
-                                            <a target="_blank" href="Angular/" class="btn btn-primary">Live AngularJS version</a>
-                                        </p>
-                                    </div>
-                                    <div>
-
-                                        <div class="text-center">
-                                            <small>If you need any help feel free to write to us on support@webapplayers.com.
-                                            </small>
+                                    <div class="col-lg-3">
+                                        <div class="text-center m-t-lg">
+                                            <img src="img/rails_logo.png" alt="HTML" style="width: 80px">
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
-                                <div class="col-lg-4">
 
-                                    <div class="text-center m-t-lg">
-                                        <h1>Inspinia <span class="text-success">ASP.NET MVC5</span></h1>
-                                        <small>Supported ASP.NET MVC5 version</small>
-                                    </div>
-                                    <div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="text-center p-lg">
-                                            <p>
-                                                <strong>Inspinia <span class="text-success">MVC5</span></strong> is supported ASP.NET MVC5 version of INSPINIA theme.<br/>
-                                                This version contains a ASP.NET MVC5 project written in Visual Studio 2013 for .net developers.
-                                                <br/>
+                                <div class="row">
 
-                                                Project has implemented all the plug-ins and it is created in accordance with the convention MVC5.
-                                                In addition, this version has a scaffolding templates that will help you quickly write applications using Entity Framework.
-                                                This version also has <strong class="text-success">SeedProject</strong>  -  a skeleton application that halp you easy start a new project.
-                                            </p>
+                                    <div class="col-lg-3">
 
-                                            <p class="text-center m-t-md">
-                                                <a target="_blank" href="http://208.43.255.210/" class="btn btn-success">Live ASP 4.5.1 MVC5 version</a><br/>
-                                            </p>
+                                        <div class="text-center m-t-lg">
+                                            <h1>Inspinia <span class="text-navy"> <br/>AngularJs</span></h1>
+                                            <small>Supported AngularJs version</small>
                                         </div>
                                         <div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="text-center p-lg">
+                                                <p>
+                                                    <strong>Inspinia <span class="text-navy">AngularJs</span></strong> is supported AngularJS version of INSPINIA theme.<br/>
+                                                    This version contains a number of controllers and directives written specifically to support angular framework.
+                                                    <br/>
+                                                    <strong>Angular version is writen with Opinionated AngularJS styleguide for teams</strong>. (https://github.com/toddmotto/angularjs-styleguide).
+                                                    <br/>
+                                                    In project folder you find also <strong class="text-navy">SeedProject</strong> It is an application skeleton for a typical AngularJS web app. You can use it
+                                                    to quickly bootstrap your angular
+                                                    webapp projects and dev environment for these projects.
+                                                </p>
 
-                                            <div class="text-center">
-                                                <small>If you need any help feel free to write to us on support@webapplayers.com.
-                                                </small>
+                                                <p class="text-center m-t-md">
+                                                    <a target="_blank" href="Angular/" class="btn btn-primary">Live AngularJS version</a>
+                                                </p>
+                                            </div>
+                                            <div>
+
+                                                <div class="text-center">
+                                                    <small>If you need any help feel free to write to us on support@webapplayers.com.
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
+                                    <div class="col-lg-3">
 
-                                </div>
-                                <div class="col-lg-4">
-
-                                    <div class="text-center m-t-lg">
-                                        <h1>Inspinia <span class="text-danger">Static HTML/JS</span></h1>
-                                        <small>Static HTML/JS version</small>
-                                    </div>
-                                    <div>
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="text-center p-lg">
-                                            <p>
-                                                <strong>Inspinia <span class="text-danger">HTML/JS</span></strong> is static version of INSPINIA theme.<br/>
-                                                This version contains all components and plugin created with strict HTML and jQuery.
-                                                <br/>
-                                                This version is great if you are a PHP or JAVA programmer.
-                                                As each page is created separately it allows you to quickly implement it for your project by including needed resources.
-                                                The code is clean and clear so you should not have any problems with its implementation.
-                                                Like in all is has also implemented more than 30 plugins which allow you to give your application a great new functionality.
-                                            </p>
-
-                                            <p class="text-center m-t-md">
-                                                <a target="_blank" href="index.html" class="btn btn-danger">Live HTML/JS version</a>
-                                            </p>
+                                        <div class="text-center m-t-lg">
+                                            <h1>Inspinia <span class="text-success"><br/>ASP.NET MVC5</span></h1>
+                                            <small>Supported ASP.NET MVC5 version</small>
                                         </div>
                                         <div>
-                                            <div class="text-center">
-                                                <small>If you need any help feel free to write to us on support@webapplayers.com.
-                                                </small>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="text-center p-lg">
+                                                <p>
+                                                    <strong>Inspinia <span class="text-success">MVC5</span></strong> is supported ASP.NET MVC5 version of INSPINIA theme.<br/>
+                                                    This version contains a ASP.NET MVC5 project written in Visual Studio 2013 for .net developers.
+                                                    <br/>
+
+                                                    Project has implemented all the plug-ins and it is created in accordance with the convention MVC5.
+                                                    In addition, this version has a scaffolding templates that will help you quickly write applications using Entity Framework.
+                                                    This version also has <strong class="text-success">SeedProject</strong>  -  a skeleton application that halp you easy start a new project.
+                                                </p>
+
+                                                <p class="text-center m-t-md">
+                                                    <a target="_blank" href="http://208.43.255.210/" class="btn btn-success">Live ASP 4.5.1 MVC5 version</a><br/>
+                                                    <!--<a target="_blank" href="#" class="btn btn-success"><small>(30 minutes break) <br/> server configuration</small></a><br/>-->
+                                                </p>
+                                            </div>
+                                            <div>
+
+                                                <div class="text-center">
+                                                    <small>If you need any help feel free to write to us on support@webapplayers.com.
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
+                                    <div class="col-lg-3">
+
+                                        <div class="text-center m-t-lg">
+                                            <h1>Inspinia <span class="text-danger"><br/>Static HTML/JS</span></h1>
+                                            <small>Static HTML/JS version</small>
+                                        </div>
+                                        <div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="text-center p-lg">
+                                                <p>
+                                                    <strong>Inspinia <span class="text-danger">HTML/JS</span></strong> is static version of INSPINIA theme.<br/>
+                                                    This version contains all components and plugin created with strict HTML and jQuery.
+                                                    <br/>
+                                                    This version is great if you are a PHP or JAVA programmer.
+                                                    As each page is created separately it allows you to quickly implement it for your project by including needed resources.
+                                                    The code is clean and clear so you should not have any problems with its implementation.
+                                                    Like in all is has also implemented more than 30 plugins which allow you to give your application a great new functionality.
+                                                </p>
+
+                                                <p class="text-center m-t-md">
+                                                    <a target="_blank" href="index.html" class="btn btn-danger">Live HTML/JS version</a>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <div class="text-center">
+                                                    <small>If you need any help feel free to write to us on support@webapplayers.com.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+
+                                        <div class="text-center m-t-lg">
+                                            <h1>Inspinia <span class="text-warning"><br/> Ruby on Rails</span></h1>
+                                            <small>Ruby on Rails version</small>
+                                        </div>
+                                        <div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="text-center p-lg">
+                                                <p>
+                                                    <strong>Inspinia <span class="text-warning">Rails</span></strong> is Ruby on Rails version of INSPINIA theme.<br/>
+                                                    This version contains Ruby on Rails project with all designs from Inspinia static version.
+                                                    <br/>
+
+                                                    This version is great if you are a Ruby on Rails programmer.
+                                                    It is created with elementary Rails controllers to demonstrate skeleton Rails app with all views and components.
+                                                    Like other versions this version also has <span class="text-warning"><strong>SeedProject</strong></span>  - a skeleton application that halp you easy start a new Rails app.
+                                                </p>
+
+                                                <p class="text-center m-t-md">
+                                                    <a target="_blank" href="http://104.236.128.25/" class="btn btn-warning">Live Ruby on Rails version</a>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <div class="text-center">
+                                                    <small>If you need any help feel free to write to us on support@webapplayers.com.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
         <div class="footer">
             <div class="pull-right">
                 10GB of <strong>250GB</strong> Free.

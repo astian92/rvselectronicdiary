@@ -60,6 +60,11 @@ namespace Inspinia_MVC5.Controllers
             return View();
         }
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
        
 	}
 }

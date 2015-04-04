@@ -148,6 +148,19 @@ function minimalizaSidebar($timeout) {
     };
 };
 
+
+function closeOffCanvas() {
+    return {
+        restrict: 'A',
+        template: '<a class="close-canvas-menu" ng-click="closeOffCanvas()"><i class="fa fa-times"></i></a>',
+        controller: function ($scope, $element) {
+            $scope.closeOffCanvas = function () {
+                $("body").toggleClass("mini-navbar");
+            }
+        }
+    };
+}
+
 /**
  * vectorMap - Directive for Vector map plugin
  */
@@ -290,6 +303,68 @@ function dropZone() {
 }
 
 /**
+ * chatSlimScroll - Directive for slim scroll for small chat
+ */
+function chatSlimScroll($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element) {
+            $timeout(function(){
+                element.slimscroll({
+                    height: '234px',
+                    railOpacity: 0.4
+                });
+
+            });
+        }
+    };
+}
+
+/**
+ * customValid - Directive for custom validation example
+ */
+function customValid(){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, c) {
+            scope.$watch(attrs.ngModel, function() {
+
+                // You can call a $http method here
+                // Or create custom validation
+
+                var validText = "Inspinia";
+
+                if(scope.extras == validText) {
+                    c.$setValidity('cvalid', true);
+                } else {
+                    c.$setValidity('cvalid', false);
+                }
+
+            });
+        }
+    }
+}
+
+
+/**
+ * fullScroll - Directive for slimScroll with 100%
+ */
+function fullScroll($timeout){
+    return {
+        restrict: 'A',
+        link: function(scope, element) {
+            $timeout(function(){
+                element.slimscroll({
+                    height: '100%',
+                    railOpacity: 0.9
+                });
+
+            });
+        }
+    };
+}
+
+/**
  *
  * Pass all functions into module
  */
@@ -305,3 +380,7 @@ angular
     .directive('ionRangeSlider', ionRangeSlider)
     .directive('dropZone', dropZone)
     .directive('responsiveVideo', responsiveVideo)
+    .directive('chatSlimScroll', chatSlimScroll)
+    .directive('customValid', customValid)
+    .directive('fullScroll', fullScroll)
+    .directive('closeOffCanvas', closeOffCanvas)
