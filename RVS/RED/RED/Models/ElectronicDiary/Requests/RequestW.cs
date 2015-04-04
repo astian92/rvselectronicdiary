@@ -76,7 +76,7 @@ namespace RED.Models.ElectronicDiary.Requests
             this.DiaryId = request.DiaryId;
             this.Date = request.Date;
             this.AcceptedBy = request.AcceptedBy;
-            //this.IsAccepted = request.IsAccepted;
+            this.IsAccepted = request.IsAccepted;
 
             this.Diary = request.Diary;
             this.User = request.User;
@@ -90,7 +90,7 @@ namespace RED.Models.ElectronicDiary.Requests
             request.DiaryId = this.DiaryId;
             request.Date = this.Date;
             request.AcceptedBy = this.AcceptedBy;
-            //request.IsAccepted = this.IsAccepted;
+            request.IsAccepted = this.IsAccepted;
 
             request.Diary = this.Diary;
             request.User = this.User;

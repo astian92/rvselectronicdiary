@@ -18,8 +18,9 @@ namespace RED.Models.DataContext
         public System.Guid DiaryId { get; set; }
         public System.DateTime Date { get; set; }
         public Nullable<System.Guid> AcceptedBy { get; set; }
+        public bool IsAccepted { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Diary Diary { get; set; }
+        public virtual User User { get; set; }
     }
 }

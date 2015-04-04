@@ -107,16 +107,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="RedDataModel.Request">
-        <MappingFragment StoreEntitySet="Requests">
-          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tests">
       <EntityTypeMapping TypeName="RedDataModel.Test">
         <MappingFragment StoreEntitySet="Tests">
@@ -150,6 +140,17 @@
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="RedDataModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

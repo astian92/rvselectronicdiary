@@ -34,7 +34,11 @@ namespace RED.Models.ElectronicDiary
         [Display(Name = "Клиент")]
         public Guid ClientId { get; set; }
 
+        [Display(Name = "Клиент")]
         public virtual Client Client { get; set; }
+
+        [Display(Name = "Заявка")]
+        public virtual Request Request { get; set; }
 
         [Display(Name = "Продукти")]
         public virtual ICollection<Product> Products { get; set; }
@@ -87,6 +91,7 @@ namespace RED.Models.ElectronicDiary
             this.ClientId = diary.ClientId;
 
             this.Client = diary.Client;
+            this.Request = diary.Requests.FirstOrDefault();
             this.Products = diary.Products;
         }
 
@@ -103,6 +108,7 @@ namespace RED.Models.ElectronicDiary
             diary.ClientId = this.ClientId;
 
             diary.Client = this.Client;
+            diary.Requests.Add(this.Request);
             diary.Products = this.Products;
 
             return diary;

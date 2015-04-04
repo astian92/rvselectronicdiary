@@ -49,5 +49,31 @@ namespace RED.Models.ElectronicDiary
             var tests = db.Tests.ToList();
             return tests.Select(x => new TestW(x));
         }
+
+        public bool GenerateRequest(Guid diaryId)
+        {
+            if(db.Diaries.Any(x => x.Id == diaryId))
+            {
+                Request request = new Request();
+                request.Id = Guid.NewGuid();
+                request.Date = DateTime.Now.ToUniversalTime();
+                request.DiaryId = diaryId;
+
+                try
+                {
+                    db.Requests.Add(request);
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    return false;
+                }
+            }
+
+            return false;
+        }
     }
 }

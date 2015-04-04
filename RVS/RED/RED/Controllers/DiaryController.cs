@@ -60,6 +60,17 @@ namespace RED.Controllers
             return Json(pagedEntries, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GenerateRequest(Guid? diaryId)
+        {
+            if(diaryId != null)
+            {
+                bool isGenerated = Rep.GenerateRequest(diaryId.Value);
 
+                if(isGenerated)
+                    return Json("Ok", JsonRequestBehavior.AllowGet);  
+            }
+
+            return Json("Failed", JsonRequestBehavior.AllowGet);  
+        }
     }
 }

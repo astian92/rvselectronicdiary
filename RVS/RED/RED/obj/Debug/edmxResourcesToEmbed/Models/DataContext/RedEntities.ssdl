@@ -92,6 +92,7 @@
     <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="AcceptedBy" Type="uniqueidentifier" />
+    <Property Name="IsAccepted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -206,14 +207,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Products_Tests">
-    <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Tests" Multiplicity="0..1" />
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tests">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Products">
-        <PropertyRef Name="DiaryId" />
+        <PropertyRef Name="TestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
