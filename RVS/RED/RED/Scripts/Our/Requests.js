@@ -30,6 +30,10 @@ $(document).ready(function () {
             url: "/Requests/GetNotAcceptedRequests",
             success: function (result) {
                 $('.not-accepted-requests').html(result);
+                if (requestIdToOpen) {
+                    $('a[href="#' + requestIdToOpen + '"]').click();
+                    requestIdToOpen = undefined;
+                }
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
@@ -169,5 +173,43 @@ function AcceptRequest(btn) {
         error: function (error) {
             $('.ui-state-error-text').append('<p>Възникна грешка при опит за приемане на заявката</p>');
         }
-    })
+    });
+}
+
+function ConfirmDenyRequest(btn) {
+    var id = $(btn).attr('id');
+
+    var url = '/Requests/ConfirmDenyRequest?requestId=' + id;
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (view) {
+            $('.modal-content').html(view);
+        }
+    });
+}
+
+function DenyRequest(btn) {
+    var id = $(btn).attr('id');
+
+    var promise = $.ajax({
+        type: "POST",
+        url: "DenyRequest",
+        data: { requestId: id },
+        success: function (result) {
+            if (result == "True") {
+                //do the actual stuff
+                requestIdToOpen = id;
+                $('.not-accepted-tab-btn').click();
+            }
+            else {
+                $('.ui-state-error-text').append('<p>Възникна грешка при опит за отказване на заявката</p>');
+            }
+        },
+        error: function (error) {
+            $('.ui-state-error-text').append('<p>Възникна грешка при опит за отказване на заявката</p>');
+        }
+    });
 }

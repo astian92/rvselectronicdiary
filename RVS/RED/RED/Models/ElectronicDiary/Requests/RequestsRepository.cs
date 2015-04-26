@@ -9,7 +9,7 @@ namespace RED.Models.ElectronicDiary.Requests
 {
     public class RequestsRepository : RepositoryBase
     {
-        public RequestW GetRequst(Guid id)
+        public RequestW GetRequest(Guid id)
         {
             var request = db.Requests.Single(r => r.Id == id);
             return new RequestW(request);
@@ -59,6 +59,29 @@ namespace RED.Models.ElectronicDiary.Requests
 
                 request.AcceptedBy = userId;
                 request.IsAccepted = true;
+                db.SaveChanges();
+
+                issSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                issSuccess = false;
+            }
+
+            return issSuccess;
+        }
+
+        public bool DenyRequest(Guid requestId)
+        {
+            var issSuccess = false;
+            try
+            {
+                var request = db.Requests.Single(r => r.Id == requestId);
+                //var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
+
+                request.AcceptedBy = null;
+                request.IsAccepted = false;
                 db.SaveChanges();
 
                 issSuccess = true;

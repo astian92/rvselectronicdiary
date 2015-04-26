@@ -55,5 +55,19 @@ namespace RED.Controllers
             var result = Rep.AcceptRequest(requestId);
             return result;
         }
+
+        [HttpGet]
+        public PartialViewResult ConfirmDenyRequest(Guid requestId)
+        {
+            var request = Rep.GetRequest(requestId);
+            return PartialView("Delete", request);
+        }
+
+        [HttpPost]
+        public bool DenyRequest(Guid requestId)
+        {
+            var result = Rep.DenyRequest(requestId);
+            return result;
+        }
     }
 }
