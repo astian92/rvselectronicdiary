@@ -4,37 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aa3fe06f1e6e4515af35fe0dbc3b4daa" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="RedDataModel.Feature" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.Role" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.RolesFeature" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="RedDataModel.User" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
-        <AssociationConnector Association="RedDataModel.FK_RolesFeatures_Features" ManuallyRouted="false" />
-        <AssociationConnector Association="RedDataModel.FK_RolesFeatures_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="RedDataModel.FK_Users_Roles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RedDataModel.ActionLogProperty" Width="1.5" PointX="10.625" PointY="8.875" />
-        <EntityTypeShape EntityType="RedDataModel.ActionType" Width="1.5" PointX="6" PointY="14.125" />
-        <EntityTypeShape EntityType="RedDataModel.ActionLog" Width="1.625" PointX="8.25" PointY="8.5" />
-        <AssociationConnector Association="RedDataModel.FK_ActionLogProperties_ToTable" />
-        <AssociationConnector Association="RedDataModel.FK_ActionLogs_ToTable" />
-        <AssociationConnector Association="RedDataModel.FK_ActionLogs_Users" />
-        <EntityTypeShape EntityType="RedDataModel.AcredetationLevel" Width="1.5" PointX="0.75" PointY="12.5" />
-        <EntityTypeShape EntityType="RedDataModel.Client" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="RedDataModel.TestCategory" Width="1.5" PointX="0.75" PointY="15" />
-        <EntityTypeShape EntityType="RedDataModel.Test" Width="1.5" PointX="3.375" PointY="0.75" />
-        <AssociationConnector Association="RedDataModel.FK_Tests_AcredetationLevels" />
-        <AssociationConnector Association="RedDataModel.FK_Tests_TestCategories" />
-        <EntityTypeShape EntityType="RedDataModel.Diary" Width="1.5" PointX="3.125" PointY="13.125" />
-        <AssociationConnector Association="RedDataModel.FK_Diary_Clients" />
-        <EntityTypeShape EntityType="RedDataModel.Request" Width="1.5" PointX="8.375" PointY="13.125" />
-        <AssociationConnector Association="RedDataModel.FK_Requests_Diary" />
-        <AssociationConnector Association="RedDataModel.FK_Requests_Users" />
-        <EntityTypeShape EntityType="RedDataModel.Product" Width="1.5" PointX="5.625" PointY="7.25" />
-        <AssociationConnector Association="RedDataModel.FK_Products_Diary" />
-        <AssociationConnector Association="RedDataModel.FK_Products_Tests" />
-        <EntityTypeShape EntityType="RedDataModel.Protocol" Width="1.5" PointX="10.625" PointY="13.5" />
-        <AssociationConnector Association="RedDataModel.FK_Protocols_Requests" />
-        </Diagram>
+      <Diagram DiagramId="47f97ac36b3d47c6b69d736989fb9157" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" Width="1.5" PointX="6" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionType" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Client" Width="1.5" PointX="3.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Diary" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Feature" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Product" Width="1.5" PointX="10.5" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProtocolResult" Width="1.5" PointX="12.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Protocol" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Request" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Role" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.RolesFeature" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.TestCategory" Width="1.5" PointX="6" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Test" Width="1.5" PointX="8.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.User" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogProperties_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_ActionTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Diary_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Products_Diary" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Requests_Diary" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_RolesFeatures_Features" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Products_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Protocols_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Requests_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_RolesFeatures_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

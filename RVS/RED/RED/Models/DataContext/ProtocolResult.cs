@@ -12,22 +12,15 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class ProtocolResult
     {
-        public Product()
-        {
-            this.ProtocolResults = new HashSet<ProtocolResult>();
-        }
-    
         public System.Guid Id { get; set; }
-        public System.Guid DiaryId { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.Guid> TestId { get; set; }
-        public int Quantity { get; set; }
-        public string QuantityLabel { get; set; }
+        public System.Guid ProtocolId { get; set; }
+        public System.Guid ProductId { get; set; }
+        public string Results { get; set; }
+        public string MethodValue { get; set; }
     
-        public virtual Diary Diary { get; set; }
-        public virtual Test Test { get; set; }
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Protocol Protocol { get; set; }
     }
 }

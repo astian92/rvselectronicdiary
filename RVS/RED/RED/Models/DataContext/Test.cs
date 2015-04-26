@@ -27,7 +27,7 @@ namespace RED.Models.DataContext
         public string Temperature { get; set; }
     
         public virtual AcredetationLevel AcredetationLevel { get; set; }
-        public virtual TestCategory TestCategory { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+        public virtual TestCategory TestCategory { get; set; }
     }
 }

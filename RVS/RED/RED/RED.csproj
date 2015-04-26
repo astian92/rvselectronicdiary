@@ -172,6 +172,7 @@
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\ProtocolsController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -221,6 +222,9 @@
     <Compile Include="Models\DataContext\Protocol.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\ProtocolResult.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -260,6 +264,8 @@
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
+    <Compile Include="Models\ElectronicDiary\Protocols\ProtocolsRepository.cs" />
+    <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
@@ -293,6 +299,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\email.css" />
+    <Content Include="Content\Our\shared.css" />
     <Content Include="Content\Our\tabs-changes.css" />
     <Content Include="Content\patterns\congruent_pentagon.png" />
     <Content Include="Content\patterns\header-profile-skin-1.png" />
@@ -593,6 +600,7 @@
     <Content Include="Views\Requests\Index.cshtml" />
     <Content Include="Views\Requests\Requests.cshtml" />
     <Content Include="Views\Requests\Delete.cshtml" />
+    <Content Include="Views\Protocols\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

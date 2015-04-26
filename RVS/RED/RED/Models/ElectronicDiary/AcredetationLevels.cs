@@ -5,9 +5,9 @@ using System.Web;
 
 namespace RED.Models.ElectronicDiary
 {
-    public enum AcredetationLevels
+    public static class AcredetationLevels
     {
-        Acredited = 'A',
-        NotAcredited = 'B'
+        public static string Acredited = "A";
+        public static string NotAcredited = "B";
     }
 }

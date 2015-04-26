@@ -65,12 +65,12 @@ namespace RED.Models.ElectronicDiary
             {
                 StringBuilder remark = new StringBuilder();
 
-                if (this.Products.Any(p => p.Test.AcredetationLevel.Level == AcredetationLevels.Acredited.ToString()))
+                if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
                 {
                     remark.Append("A");
                 }
 
-                if (this.Products.Any(p => p.Test.AcredetationLevel.Level == AcredetationLevels.NotAcredited.ToString()))
+                if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
                 {
                     if (remark.Length > 0)
                     {

@@ -25,20 +25,21 @@ namespace RED.Models.DataContext
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AcredetationLevel> AcredetationLevels { get; set; }
+        public virtual DbSet<ActionLogProperty> ActionLogProperties { get; set; }
+        public virtual DbSet<ActionLog> ActionLogs { get; set; }
+        public virtual DbSet<ActionType> ActionTypes { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
+        public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolesFeature> RolesFeatures { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ActionLogProperty> ActionLogProperties { get; set; }
-        public virtual DbSet<ActionType> ActionTypes { get; set; }
-        public virtual DbSet<ActionLog> ActionLogs { get; set; }
-        public virtual DbSet<AcredetationLevel> AcredetationLevels { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<TestCategory> TestCategories { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
-        public virtual DbSet<Diary> Diaries { get; set; }
-        public virtual DbSet<Request> Requests { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -14,10 +14,16 @@ namespace RED.Models.DataContext
     
     public partial class Protocol
     {
+        public Protocol()
+        {
+            this.ProtocolResults = new HashSet<ProtocolResult>();
+        }
+    
         public System.Guid Id { get; set; }
         public System.Guid RequestId { get; set; }
         public System.DateTime IssuedDate { get; set; }
     
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
         public virtual Request Request { get; set; }
     }
 }

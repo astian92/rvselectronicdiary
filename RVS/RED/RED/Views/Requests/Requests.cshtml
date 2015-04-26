@@ -70,7 +70,7 @@
                                         @if (ViewBag.Label == "mine")
                                         {
                                             <div class="status-container">
-                                                <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-check-square-o"></i> Изпълни заявка</button>
+                                                <a id="@item.Id" href="/Protocols/Create?requestId=@item.Id" class="btn btn-primary btn-request"><i class="fa fa-check-square-o"></i> Изпълни заявка</a>
                                                 <button id="@item.Id" class="btn btn-default" onclick="ConfirmDenyRequest(this)"><i class="fa fa-ban"></i> Откажи заявка</button>
                                             </div>
                                         }
