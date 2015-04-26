@@ -50,59 +50,55 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="row">
-                                        <h4 class="text-navy text-center">Заяква №: @item.Number</h4>
-                                    </div>
-                                    <div class="row">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-left">Наименoвание</th>
-                                                    <th class="text-left">Количество</th>
-                                                    <th class="text-right">Показател за изпитване</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var product in item.Products)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <span>@product.Name</span>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span>@product.Quantity @product.QuantityLabel</span>
-                                                        </td>
-                                                        <td class ="text-right">
-                                                            <span>@product.Test.Name</span>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-
-                                        <h5>Срок на изпитване (дни): <strong></strong></h5>
-
-                                        <div class="status-container">
-                                            @if(item.Request == null)
+                                    <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Наименoвание</th>
+                                                <th class="text-left">Количество</th>
+                                                <th class="text-right">Показател за изпитване</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var product in item.Products)
                                             {
-                                                <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                                <tr>
+                                                    <td>
+                                                        <span>@product.Name</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span>@product.Quantity @product.QuantityLabel</span>
+                                                    </td>
+                                                    <td class ="text-right">
+                                                        <span>@product.Test.Name</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    <h5>Срок на изпитване (дни): <strong></strong></h5>
+
+                                    <div class="status-container">
+                                        @if(item.Request == null)
+                                        {
+                                            <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                        }
+                                        else
+                                        {
+                                            if(item.Request.IsAccepted)
+                                            {
+                                                string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
+                                                <h5>Приел пробата: <strong>@name</strong></h5>
+                                                <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
                                             }
                                             else
                                             {
-                                                if(item.Request.IsAccepted)
-                                                {
-                                                    string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
-                                                    <h5>Приел пробата: <strong>@name</strong></h5>
-                                                    <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
-                                                }
-                                                else
-                                                {
-                                                    <div class="alert alert-success">
-                                                        Заявката е в очакване да бъде приета.
-                                                    </div>
-                                                }
+                                                <div class="alert alert-success">
+                                                    Заявката е в очакване да бъде приета.
+                                                </div>
                                             }
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -111,10 +107,28 @@
                                 @*<button class="btn btn-primary"><i class="fa fa-dollar"></i> Добави фактура</button>
                                 <button class="btn btn-primary"><i class="fa fa-dollar"></i> Издай протокол</button>*@
                             </div>
-
-                            <div class="well m-t">
-                                <strong>Бележка:</strong>
-                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
+                            <div class="ibox-content comment-container">
+                                @if (item.Comment != null)
+                                {
+                                    <div class="well m-t">
+                                        <strong>Бележка:</strong>
+                                        <span>
+                                            @item.Comment
+                                        </span>
+                                        <a class="edit-comment pull-right" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-11 no-padding">
+                                            <textarea class="comment form-control message-input" name="Comment" placeholder="Въведи бележка"></textarea>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a class="save-comment btn btn-primary" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i></a>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -124,23 +138,87 @@
     }
 </div>
 <script>
+    var spiner = '<div class="spiner-example" style="height:auto; padding-top:0;">\
+                <div class="sk-spinner sk-spinner-cube-grid">\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                </div>\
+            </div>';
+
     $('.btn-request').click(function () {
         var diaryId = $(this).attr('id');
+
+        $('.status-container').html(spiner);
         $.ajax({
             type: "POST",
             url: '/Diary/GenerateRequest?diaryId=' + diaryId,
+            data: {diaryId : diaryId, comment : "asdfasdf"},
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-
+                var html = '';
                 if (data == 'Ok') {
-                    var html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.</div>';
+                    html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.</div>';
                 }
                 else {
-                    var html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
+                    html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
                 }
 
                 $('.status-container').html(html);
             }
         });
     });
+
+    function saveComment(diaryId) {
+        var comment = $('#' + diaryId + ' .comment').val();
+
+        $('#' + diaryId + ' .comment-container').html(spiner);
+        $.ajax({
+            type: "POST",
+            url: '/Diary/AddComment',
+            data: { diaryId: diaryId, comment: comment },
+            contentType: "text/html; charset=utf-8",
+            success: function (data) {
+                var html = '';
+                if (data == 'Ok') {
+                    html = '<div class="well m-t">\
+                                    <strong>Бележка:</strong>\
+                                    ' + comment + ' \
+                                    <a class="edit-comment pull-right" onclick="editComment(\'' + diaryId + '\')"><i class="fa fa-edit"></i></a> \
+                                </div>';
+                }
+                else {
+                    html = '<div class="alert alert-danger">Възникна грешка при запазването на коментара.</div>';
+                }
+
+                $('#' + diaryId + ' .comment-container').html(html);
+            }
+        });
+
+        return false;
+    }
+
+    function editComment(diaryId) {
+        var comment = $('#' + diaryId + ' .well span').val();
+
+        var commentHtml = '<div class="form-group">\
+                                <div class="col-md-11 no-padding">\
+                                    <textarea class="comment form-control message-input" name="Comment">' + comment + '</textarea>\
+                                </div>\
+                                <div class="col-md-1">\
+                                    <a onclick="saveComment(\'' + diaryId + '\')" class="save-comment btn btn-primary"><i class="fa fa-save"></i></a>\
+                                    <a onclick="closeComment(\'' + diaryId + '\')" class="close-comment btn btn-primary"><i class="fa fa-times-circle"></i></a>\
+                                </div>\
+                            </div>';
+
+        $('#' + diaryId + ' .comment-container').html(commentHtml);
+
+        return false;
+    }
 </script>

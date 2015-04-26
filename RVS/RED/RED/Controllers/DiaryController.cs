@@ -26,12 +26,12 @@ namespace RED.Controllers
             return View();
         }
 
-        // POST: Diary/Create , Product[] bindedProducts
+        // POST: Diary/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(DiaryW diary)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && diary.Products.Count > 0)
             {
                 Rep.AddLetter(diary);
                 return RedirectToAction("Index");
@@ -71,6 +71,20 @@ namespace RED.Controllers
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);  
+        }
+
+        [HttpPost]
+        public JsonResult AddComment(Guid diaryId, string comment)
+        {
+            if (comment != "")
+            {
+                bool isSaved = Rep.AddComment(diaryId, comment);
+
+                if (isSaved)
+                    return Json("Ok", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
     }
 }

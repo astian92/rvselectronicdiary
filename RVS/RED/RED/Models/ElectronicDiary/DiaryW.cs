@@ -30,6 +30,9 @@ namespace RED.Models.ElectronicDiary
         [Display(Name="Възложител")]
         public string Contractor { get; set; }
 
+        [Display(Name = "Бележка")]
+        public string Comment { get; set; }
+
         [Required]
         [Display(Name = "Клиент")]
         public Guid ClientId { get; set; }
@@ -89,6 +92,7 @@ namespace RED.Models.ElectronicDiary
             this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
             this.Contractor = diary.Contractor;
             this.ClientId = diary.ClientId;
+            this.Comment = diary.Comment;
 
             this.Client = diary.Client;
             this.Request = diary.Requests.FirstOrDefault();
@@ -106,6 +110,7 @@ namespace RED.Models.ElectronicDiary
             diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
             diary.Contractor = this.Contractor;
             diary.ClientId = this.ClientId;
+            diary.Comment = this.Comment;
 
             diary.Client = this.Client;
             diary.Requests.Add(this.Request);

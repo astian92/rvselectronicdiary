@@ -69,7 +69,27 @@ namespace RED.Models.ElectronicDiary
                 catch(Exception ex)
                 {
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        public bool AddComment(Guid diaryId, string comment)
+        {
+            var diary = db.Diaries.FirstOrDefault(x => x.Id == diaryId);
+            if(diary != null)
+            {
+                diary.Comment = comment;
+
+                try
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 }
             }
 
