@@ -21,7 +21,7 @@ namespace RED.Models.ElectronicDiary.Requests
         { 
             get
             {
-                return this.Date.ToString("dd.MM.yyyy");
+                return this.Date.ToLocalTime().ToString("dd.MM.yyyy");
             }
         }
 
@@ -30,7 +30,7 @@ namespace RED.Models.ElectronicDiary.Requests
         {
             get
             {
-                return this.Date.ToString("hh:mm");
+                return this.Date.ToLocalTime().ToString("hh:mm");
             }
         }
 
@@ -65,6 +65,8 @@ namespace RED.Models.ElectronicDiary.Requests
             }
         }
 
+        public ICollection<Protocol> Protocols { get; set; }
+
         public RequestW()
         {
 
@@ -80,6 +82,7 @@ namespace RED.Models.ElectronicDiary.Requests
 
             this.Diary = request.Diary;
             this.User = request.User;
+            this.Protocols = request.Protocols;
         }
 
         public Request ToBase()
@@ -94,6 +97,7 @@ namespace RED.Models.ElectronicDiary.Requests
 
             request.Diary = this.Diary;
             request.User = this.User;
+            request.Protocols = this.Protocols;
 
             return request;
         }

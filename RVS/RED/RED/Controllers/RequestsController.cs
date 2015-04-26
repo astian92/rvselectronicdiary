@@ -41,5 +41,19 @@ namespace RED.Controllers
             var requests = Rep.GetCompletedRequests();
             return PartialView("Requests", requests);
         }
+
+        public ActionResult GetAllRequests()
+        {
+            ViewBag.Label = "all";
+
+            var requests = Rep.GetAllRequests();
+            return PartialView("Requests", requests);
+        }
+
+        public bool AcceptRequest(Guid requestId)
+        {
+            var result = Rep.AcceptRequest(requestId);
+            return result;
+        }
     }
 }

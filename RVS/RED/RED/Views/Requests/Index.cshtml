@@ -24,6 +24,9 @@
                     <li class="">
                         <a data-toggle="tab" href="#tab-3" class="completed-tab-btn">Изпълнени</a>
                     </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-4" class="all-tab-btn">Всички</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -41,6 +44,10 @@
 
                 <div id="tab-3" class="tab-pane completed-requests">
                     @* @{ Html.RenderAction("GetMyRequests"); }*@
+                </div>
+
+                <div id="tab-4" class="tab-pane all-requests">
+                    @* @{ Html.RenderAction("GetAllRequests"); }*@
                 </div>
             </div>
 

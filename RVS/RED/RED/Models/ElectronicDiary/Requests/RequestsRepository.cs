@@ -17,7 +17,9 @@ namespace RED.Models.ElectronicDiary.Requests
 
         public IEnumerable<RequestW> GetNotAcceptedRequests()
         {
-            var notAccepted = db.Requests.Where(r => r.AcceptedBy == null && r.IsAccepted == false).ToList();
+            var notAccepted = db.Requests.Where(r => r.AcceptedBy == null && r.IsAccepted == false)
+                .OrderByDescending(r => r.Date)
+                .ToList();
             return notAccepted.Select(r => new RequestW(r));
         }
 
@@ -26,15 +28,48 @@ namespace RED.Models.ElectronicDiary.Requests
             var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
 
             var myRequests = db.Requests.Where(r => r.IsAccepted == true &&
-                r.AcceptedBy == userId &&
-                r.Protocols.Any() == false).ToList(); //that were not completed
+                        r.AcceptedBy == userId &&
+                        r.Protocols.Any() == false)
+                .OrderByDescending(r => r.Date)
+                .ToList(); //that were not completed
             return myRequests.Select(r => new RequestW(r));
         }
 
         public IEnumerable<RequestW> GetCompletedRequests()
         {
-            var requests = db.Requests.Where(r => r.Protocols.Any() == true).ToList();
+            var requests = db.Requests.Where(r => r.Protocols.Any() == true)
+                .OrderByDescending(r => r.Date)
+                .ToList();
             return requests.Select(r => new RequestW(r));
+        }
+
+        public IEnumerable<RequestW> GetAllRequests()
+        {
+            var requests = db.Requests.OrderByDescending(r => r.Date).ToList();
+            return requests.Select(r => new RequestW(r));
+        }
+
+        public bool AcceptRequest(Guid requestId)
+        {
+            var issSuccess = false;
+            try
+            {
+                var request = db.Requests.Single(r => r.Id == requestId);
+                var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
+
+                request.AcceptedBy = userId;
+                request.IsAccepted = true;
+                db.SaveChanges();
+
+                issSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                issSuccess = false;
+            }
+
+            return issSuccess;
         }
     }
 }
