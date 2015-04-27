@@ -4,6 +4,7 @@ using RED.Models.ElectronicDiary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -43,6 +44,71 @@ namespace RED.Controllers
             return View(diary);
         }
 
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+
+            DiaryW diary = Rep.GetDiary(id.Value);
+            if (diary == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+
+            return View(diary);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(DiaryW diary)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.Edit(diary);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+
+            return View(diary);
+        }
+
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            DiaryW client = Rep.GetDiary(id.Value);
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(client);
+            }
+
+            return View(client);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            Rep.Delete(id);
+            return RedirectToAction("Index");
+        }
+
         public ActionResult GetAllDiaryEntries()
         {
             //All diary entries - problem is that to get them as DiaryW (wrapped) I have to enumerate them!
@@ -74,11 +140,11 @@ namespace RED.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddComment(Guid diaryId, string comment)
+        public JsonResult AddComment(Guid? diaryId, string comment)
         {
-            if (comment != "")
+            if (diaryId != null && comment != null && comment != "")
             {
-                bool isSaved = Rep.AddComment(diaryId, comment);
+                bool isSaved = Rep.AddComment(diaryId.Value, comment);
 
                 if (isSaved)
                     return Json("Ok", JsonRequestBehavior.AllowGet);

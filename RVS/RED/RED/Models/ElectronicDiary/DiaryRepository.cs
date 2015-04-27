@@ -21,6 +21,40 @@ namespace RED.Models.ElectronicDiary
             return wrapped;
         }
 
+        public DiaryW GetDiary(Guid diaryId)
+        {
+            var diary = db.Diaries.Single(c => c.Id == diaryId);
+            return new DiaryW(diary);
+        }
+
+        public void Edit(DiaryW diaryW)
+        {
+            var diary = db.Diaries.Single(c => c.Id == diaryW.Id);
+            diary.LetterNumber = diaryW.LetterNumber;
+            diary.LetterDate = diaryW.LetterDate;
+            diary.Contractor = diaryW.Contractor;
+            diary.ClientId = diaryW.ClientId;
+            
+            diary.Products.Clear();
+            foreach (var item in diaryW.Products)
+            {
+                item.Id = Guid.NewGuid();
+                item.DiaryId = diary.Id;
+                item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
+                diary.Products.Add(item);
+            }
+
+            db.SaveChanges();
+        }
+
+        public void Delete(Guid diaryId)
+        {
+            var diary = db.Diaries.Single(c => c.Id == diaryId);
+            db.Diaries.Remove(diary);
+
+            db.SaveChanges();
+        }
+
         public void AddLetter(DiaryW diary)
         {
             diary.Id = Guid.NewGuid();

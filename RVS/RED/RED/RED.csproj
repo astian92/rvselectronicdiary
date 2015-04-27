@@ -222,9 +222,7 @@
     <Compile Include="Models\DataContext\Protocol.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext\ProtocolResult.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\DataContext\ProtocolResult.cs" />
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -512,9 +510,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -599,6 +595,8 @@
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Requests\Index.cshtml" />
     <Content Include="Views\Requests\Requests.cshtml" />
+    <Content Include="Views\Diary\Edit.cshtml" />
+    <Content Include="Views\Diary\Delete.cshtml" />
     <Content Include="Views\Requests\Delete.cshtml" />
     <Content Include="Views\Protocols\Create.cshtml" />
   </ItemGroup>
