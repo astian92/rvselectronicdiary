@@ -159,8 +159,8 @@
         $.ajax({
             type: "POST",
             url: '/Diary/GenerateRequest?diaryId=' + diaryId,
-            data: {diaryId : diaryId, comment : "asdfasdf"},
-            contentType: "application/json; charset=utf-8",
+            //data: { diaryId : diaryId, comment : "asdfasdf"},
+            //contentType: "application/json; charset=utf-8",
             success: function (data) {
                 var html = '';
                 if (data == 'Ok') {
