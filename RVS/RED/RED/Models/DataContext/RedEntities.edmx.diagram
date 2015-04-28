@@ -37,6 +37,12 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_RolesFeatures_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Users_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" Width="1.5" PointX="8.375" PointY="1" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" Width="1.5" PointX="10.625" PointY="1.375" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="12.875" PointY="1.5" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProducts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

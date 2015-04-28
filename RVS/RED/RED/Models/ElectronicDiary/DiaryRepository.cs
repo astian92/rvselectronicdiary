@@ -36,12 +36,15 @@ namespace RED.Models.ElectronicDiary
             diary.ClientId = diaryW.ClientId;
             
             diary.Products.Clear();
+            int i = 1;
             foreach (var item in diaryW.Products)
             {
                 item.Id = Guid.NewGuid();
                 item.DiaryId = diary.Id;
+                item.Number = i;
                 item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
                 diary.Products.Add(item);
+                i++;
             }
 
             db.SaveChanges();
@@ -61,11 +64,14 @@ namespace RED.Models.ElectronicDiary
             diary.Number = db.Diaries.Count() + 1;
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
 
+            int i = 1;
             foreach (var item in diary.Products)
             {
                 item.Id = Guid.NewGuid();
+                item.Number = i;
                 item.DiaryId = diary.Id;
                 item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
+                i++;
             }
 
             db.Diaries.Add(diary.ToBase());
