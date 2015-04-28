@@ -21,6 +21,15 @@
                     <h5 class="panel-title">
                            №: @item.Number / @item.LetterInfo /
                            Клиент:  @item.Client.Name
+                        @if(item.Request != null && item.Request.IsAccepted == true)
+                        {
+                            <i class="fa fa-tag pull-right"></i>
+                            
+                            if(item.Request.Protocols.Count > 0)
+                            {
+                                <i class="fa fa-clipboard pull-right"></i>
+                            }
+                        }
                     </h5>
                 </div>
             </a>

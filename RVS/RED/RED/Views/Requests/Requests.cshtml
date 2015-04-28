@@ -71,7 +71,11 @@
                                         {
                                             <div class="status-container">
                                                 <a id="@item.Id" href="/Protocols/Create?requestId=@item.Id" class="btn btn-primary btn-request"><i class="fa fa-check-square-o"></i> Изпълни заявка</a>
-                                                <button id="@item.Id" class="btn btn-default" onclick="ConfirmDenyRequest(this)"><i class="fa fa-ban"></i> Откажи заявка</button>
+                                                <button id="@item.Id" class="btn btn-default" onclick="ConfirmDenyRequest(this)" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Откажи заявка</button>
+                                                @*<a class="btn-delete btn btn-default" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                                    <i class="fa fa-trash"></i>
+                                                    Изтрий писмото
+                                                </a>*@
                                             </div>
                                         }
                                         @if (ViewBag.Label == "completed" || ViewBag.Label == "all")
