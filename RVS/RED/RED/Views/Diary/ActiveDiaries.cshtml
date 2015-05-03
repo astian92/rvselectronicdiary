@@ -53,15 +53,17 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
+                                                <th></th>
                                                 <th class="text-left">Наименoвание</th>
                                                 <th class="text-left">Количество</th>
                                                 <th class="text-right">Показател за изпитване</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var product in item.Products)
+                                            @foreach (var product in item.Products.OrderBy(p => p.Number))
                                             {
                                                 <tr>
+                                                    <td>@product.Number</td>
                                                     <td>
                                                         <span>@product.Name</span>
                                                     </td>

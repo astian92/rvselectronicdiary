@@ -61,7 +61,7 @@
                                                 <td>@result.Product.Test.Name</td>
                                                 <td>@result.Product.Test.TestMethods</td>
                                                 <td>
-                                                    @(wrappedDiary.Remark + wrappedDiary.Number + "-" + result.Product.Number + (result.ResultNumber != null ? result.ResultNumber : ""))
+                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
                                                 </td>
                                                 <td>@result.Results</td>
                                                 <td>@result.MethodValue</td>
