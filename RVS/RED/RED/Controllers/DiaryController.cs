@@ -15,8 +15,20 @@ namespace RED.Controllers
         // GET: Diary
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult ActiveDiaries()
+        {
             var diaryEntries = Rep.GetDiaryEntries();
-            return View(diaryEntries);
+            return PartialView(diaryEntries);
+        }
+
+        public ActionResult ArchivedDiaries()
+        {
+            //var archivedDiaries = Rep.GetArchivedDiaryEntries();
+            //return PartialView(archivedDiaries);
+            return null;
         }
 
         // GET: Diary/Create

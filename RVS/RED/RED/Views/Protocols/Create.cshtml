@@ -20,7 +20,7 @@
             var wrappedDiary = new DiaryW(Model.Diary); 
         }
 
-        @foreach (var item in Model.Diary.Products)
+        @foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
         {
             for (int j = 0; j < item.Quantity; j++)
             {
@@ -53,8 +53,11 @@
                         <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                     </label>
                     <label class="col-md-9 modified-label">
-                        @(wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (item.Quantity > 1 ? "-N" + (j+1) : ""))
-                    </label>
+                        @{
+                            var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (item.Quantity > 1 ? "-N" + (j+1) : "");
+                        }
+                        @number
+                        <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
                 </div>
                 <div class="form-group">
                     <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">

@@ -1,0 +1,145 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
+@using System.Globalization;
+
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        №: @item.Number / @item.LetterInfo /
+                        Клиент:  @item.Client.Name
+                        @if (item.Request != null && item.Request.IsAccepted == true)
+                        {
+                            <i class="fa fa-tag pull-right"></i>
+
+                            if (item.Request.Protocols.Count > 0)
+                            {
+                                <i class="fa fa-clipboard pull-right"></i>
+                            }
+                        }
+                    </h5>
+                </div>
+            </a>
+            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <h4 class="text-navy text-center">@item.LetterInfo</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h5>
+                                        От:
+                                        <strong>@item.Client.Name</strong><br>
+                                    </h5>
+                                    <h5>
+                                        Възложител:
+                                        <strong>@Html.DisplayFor(modelItem => item.Contractor)</strong><br>
+                                    </h5>
+                                </div>
+
+                                <div class="col-sm-6 text-right">
+                                    <h5>№: <strong>@item.Number</strong></h5>
+                                    <h5>Дата на приемане: <strong>@item.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom:20px;">
+                                <div class="col-md-6">
+                                    <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Наименoвание</th>
+                                                <th class="text-left">Количество</th>
+                                                <th class="text-right">Показател за изпитване</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var product in item.Products)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <span>@product.Name</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span>@product.Quantity @product.QuantityLabel</span>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span>@product.Test.Name</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    <h5>Срок на изпитване (дни): <strong></strong></h5>
+
+                                    <div class="status-container">
+                                        @if (item.Request == null)
+                                        {
+                                            <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                        }
+                                        else
+                                        {
+                                            if (item.Request.IsAccepted)
+                                            {
+                                                string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
+                                                <h5>Приел пробата: <strong>@name</strong></h5>
+                                                <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
+                                            }
+                                            else
+                                            {
+                                                <div class="alert alert-success">
+                                                    Заявката е в очакване да бъде приета.
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox-content comment-container" style="margin-bottom:10px;">
+                                <div class="form-group">
+                                    <div class="col-md-10 no-padding">
+                                        <textarea @(item.Comment == null ? "" : "disabled") class="comment form-control message-input" name="Comment" placeholder="Въведи бележка">@item.Comment</textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
+                                        <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:10px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"> Откажи</i></a>
+                                        <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row">
+                                <div class="text-right">
+                                    <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
+                                        <i class="fa fa-edit"></i>
+                                        Промени писмото
+                                    </a>
+                                    <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-trash"></i>
+                                        Изтрий писмото
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="~/Scripts/Our/Diaries.js"></script>
+
+@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>*@
