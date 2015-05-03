@@ -86,17 +86,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProtocolResults">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
-        <MappingFragment StoreEntitySet="ProtocolResults">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="Results" ColumnName="Results" />
-          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Protocols">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
         <MappingFragment StoreEntitySet="Protocols">
@@ -203,6 +192,18 @@
           <ScalarProperty Name="Results" ColumnName="Results" />
           <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
           <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProtocolResults">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
+        <MappingFragment StoreEntitySet="ProtocolResults">
+          <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
+          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+          <ScalarProperty Name="Results" ColumnName="Results" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

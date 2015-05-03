@@ -122,6 +122,7 @@
     <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
+    <Property Name="ResultNumber" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="Protocols">
     <Key>

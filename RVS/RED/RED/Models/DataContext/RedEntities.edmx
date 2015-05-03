@@ -127,6 +127,7 @@
           <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="ResultNumber" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Protocols">
           <Key>
@@ -623,20 +624,8 @@
           <Property Name="QuantityLabel" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Diary" Relationship="Self.FK_Products_Diary" FromRole="Products" ToRole="Diary" />
           <NavigationProperty Name="Test" Relationship="Self.FK_Products_Tests" FromRole="Products" ToRole="Tests" />
-          <NavigationProperty Name="ProtocolResults" Relationship="Self.FK_ProtocolResults_Products" FromRole="Products" ToRole="ProtocolResults" />
           <Property Name="Number" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProtocolResult">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
-          <Property Name="ProductId" Type="Guid" Nullable="false" />
-          <Property Name="Results" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MethodValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_ProtocolResults_Products" FromRole="ProtocolResults" ToRole="Products" />
-          <NavigationProperty Name="Protocol" Relationship="Self.FK_ProtocolResults_Protocols" FromRole="ProtocolResults" ToRole="Protocols" />
+          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="Product" ToRole="ProtocolResult" />
         </EntityType>
         <EntityType Name="Protocol">
           <Key>
@@ -645,8 +634,8 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="RequestId" Type="Guid" Nullable="false" />
           <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="ProtocolResults" Relationship="Self.FK_ProtocolResults_Protocols" FromRole="Protocols" ToRole="ProtocolResults" />
           <NavigationProperty Name="Request" Relationship="Self.FK_Protocols_Requests" FromRole="Protocols" ToRole="Requests" />
+          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="Protocol" ToRole="ProtocolResult" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
@@ -834,32 +823,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProtocolResults_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProtocolResults" Type="Self.ProtocolResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolResults">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProtocolResults_Protocols">
-          <End Role="Protocols" Type="Self.Protocol" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ProtocolResults" Type="Self.ProtocolResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Protocols">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolResults">
-              <PropertyRef Name="ProtocolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Protocols_Requests">
           <End Role="Requests" Type="Self.Request" Multiplicity="1" />
           <End Role="Protocols" Type="Self.Protocol" Multiplicity="*" />
@@ -931,7 +894,6 @@
           <EntitySet Name="Diaries" EntityType="Self.Diary" />
           <EntitySet Name="Features" EntityType="Self.Feature" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="ProtocolResults" EntityType="Self.ProtocolResult" />
           <EntitySet Name="Protocols" EntityType="Self.Protocol" />
           <EntitySet Name="Requests" EntityType="Self.Request" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -975,14 +937,6 @@
             <End Role="Tests" EntitySet="Tests" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProtocolResults_Products" Association="Self.FK_ProtocolResults_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ProtocolResults" EntitySet="ProtocolResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProtocolResults_Protocols" Association="Self.FK_ProtocolResults_Protocols">
-            <End Role="Protocols" EntitySet="Protocols" />
-            <End Role="ProtocolResults" EntitySet="ProtocolResults" />
-          </AssociationSet>
           <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
             <End Role="Requests" EntitySet="Requests" />
             <End Role="Protocols" EntitySet="Protocols" />
@@ -1017,6 +971,15 @@
           <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProducts" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProducts">
             <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
             <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
+          </AssociationSet>
+          <EntitySet Name="ProtocolResults" EntityType="DB_9BCA69_RedDbModel.ProtocolResult" />
+          <AssociationSet Name="FK_ProtocolResults_Products" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
+            <End Role="Protocol" EntitySet="Protocols" />
+            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ArchivedDiary">
@@ -1094,6 +1057,45 @@
             </Principal>
             <Dependent Role="ArchivedProtocolResult">
               <PropertyRef Name="ArchivedProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProtocolResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="Results" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MethodValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ResultNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProtocolResult" ToRole="Product" />
+          <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="ProtocolResult" ToRole="Protocol" />
+        </EntityType>
+        <Association Name="FK_ProtocolResults_Products">
+          <End Type="DB_9BCA69_RedDbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolResult">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProtocolResults_Protocols">
+          <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Protocol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolResult">
+              <PropertyRef Name="ProtocolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1185,17 +1187,6 @@
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="QuantityLabel" ColumnName="QuantityLabel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProtocolResults">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
-              <MappingFragment StoreEntitySet="ProtocolResults">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Results" ColumnName="Results" />
-                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1305,6 +1296,18 @@
                 <ScalarProperty Name="Results" ColumnName="Results" />
                 <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
                 <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProtocolResults">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
+              <MappingFragment StoreEntitySet="ProtocolResults">
+                <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
+                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+                <ScalarProperty Name="Results" ColumnName="Results" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -10,6 +10,14 @@ namespace RED.Models.ElectronicDiary.Protocols
 {
     public class ProtocolsRepository : RepositoryBase
     {
+        public IEnumerable<ProtocolW> GetProtocols()
+        {
+            var protocols = db.Protocols.ToList();
+            var result = protocols.Select(p => new ProtocolW(p));
+
+            return result;
+        }
+
         public RequestW GetRequest(Guid id)
         {
             var request = db.Requests.Single(r => r.Id == id);

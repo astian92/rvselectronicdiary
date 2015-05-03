@@ -12,7 +12,8 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var protocols = Rep.GetProtocols();
+            return View(protocols);
         }
 
         [HttpGet]

@@ -19,6 +19,7 @@ namespace RED.Models.DataContext
         public System.Guid ProductId { get; set; }
         public string Results { get; set; }
         public string MethodValue { get; set; }
+        public string ResultNumber { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Protocol Protocol { get; set; }

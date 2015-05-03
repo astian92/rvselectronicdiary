@@ -23,7 +23,7 @@ namespace RED.Models.DataContext
         public System.Guid RequestId { get; set; }
         public System.DateTime IssuedDate { get; set; }
     
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
         public virtual Request Request { get; set; }
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }
 }

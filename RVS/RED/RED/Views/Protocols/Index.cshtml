@@ -1,0 +1,81 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Protocols.ProtocolW>
+@using RED.Models.ElectronicDiary
+@using System.Collections.Generic
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Протоколи</h2>
+
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model)
+    {
+        var wrappedDiary = new DiaryW(item.Request.Diary);
+        
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        Протокол №: @item.Request.Diary.Number /
+                        Дата:  @item.IssuedDate.ToString("dd.MM.yyyy")
+                    </h5>
+                </div>
+            </a>
+            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Наименувание на показателя
+                                        </th>
+                                        <th> 
+                                            Методи
+                                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
+                                        </th>
+                                        <th>
+                                            № на образеца
+                                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                        </th>
+                                        <th>Резултати от изследването, неопределеност</th>
+                                        <th>
+                                            Стойност на показателя
+                                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
+                                        </th>
+                                        <th>Условия на заобикалящата среда</th>
+                                    </tr>
+
+                                    
+                                    @{
+                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ResultNumber);
+
+                                        foreach (var result in orderdProtocolRes)
+                                        {
+                                            <tr>
+                                                <td>@result.Product.Test.Name</td>
+                                                <td>@result.Product.Test.TestMethods</td>
+                                                <td>
+                                                    @(wrappedDiary.Remark + wrappedDiary.Number + "-" + result.Product.Number + (result.ResultNumber != null ? result.ResultNumber : ""))
+                                                </td>
+                                                <td>@result.Results</td>
+                                                <td>@result.MethodValue</td>
+                                                <td>@result.Product.Test.Temperature</td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
