@@ -12,20 +12,18 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductTest
+    public partial class ELMAH_Error
     {
-        public ProductTest()
-        {
-            this.ProtocolResults = new HashSet<ProtocolResult>();
-        }
-    
-        public System.Guid Id { get; set; }
-        public System.Guid ProductId { get; set; }
-        public System.Guid TestId { get; set; }
-        public int Units { get; set; }
-    
-        public virtual Test Test { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
+        public System.Guid ErrorId { get; set; }
+        public string Application { get; set; }
+        public string Host { get; set; }
+        public string Type { get; set; }
+        public string Source { get; set; }
+        public string Message { get; set; }
+        public string User { get; set; }
+        public int StatusCode { get; set; }
+        public System.DateTime TimeUtc { get; set; }
+        public int Sequence { get; set; }
+        public string AllXml { get; set; }
     }
 }

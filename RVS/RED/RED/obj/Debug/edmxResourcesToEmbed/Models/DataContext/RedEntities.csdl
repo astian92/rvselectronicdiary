@@ -386,8 +386,13 @@
       <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
       <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
-    <EntitySet Name="Products" EntityType="DB_9BCA69_RedDbModel.Product" />
+    <EntitySet Name="ELMAH_Error" EntityType="DB_9BCA69_RedDbModel.ELMAH_Error" />
     <EntitySet Name="ProductTests" EntityType="DB_9BCA69_RedDbModel.ProductTest" />
+    <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
+      <End Role="Test" EntitySet="Tests" />
+      <End Role="ProductTest" EntitySet="ProductTests" />
+    </AssociationSet>
+    <EntitySet Name="Products" EntityType="DB_9BCA69_RedDbModel.Product" />
     <EntitySet Name="ProtocolResults" EntityType="DB_9BCA69_RedDbModel.ProtocolResult" />
     <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
       <End Role="Diary" EntitySet="Diaries" />
@@ -395,10 +400,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_ProductTests_Products" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products">
       <End Role="Product" EntitySet="Products" />
-      <End Role="ProductTest" EntitySet="ProductTests" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
-      <End Role="Test" EntitySet="Tests" />
       <End Role="ProductTest" EntitySet="ProductTests" />
     </AssociationSet>
     <AssociationSet Name="FK_ProtocolResults_Products" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products">
@@ -488,6 +489,46 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ELMAH_Error">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="Guid" Nullable="false" />
+    <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="Int32" Nullable="false" />
+    <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ProductTest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="ProductId" Type="Guid" Nullable="false" />
+    <Property Name="TestId" Type="Guid" Nullable="false" />
+    <Property Name="Units" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
+    <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="ProductTest" ToRole="Product" />
+    <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProductTest" ToRole="ProtocolResult" />
+  </EntityType>
+  <Association Name="FK_ProductTests_Tests">
+    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Test">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTest">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
@@ -499,18 +540,6 @@
     <Property Name="Quantity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
     <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="Product" ToRole="ProductTest" />
-  </EntityType>
-  <EntityType Name="ProductTest">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="ProductId" Type="Guid" Nullable="false" />
-    <Property Name="TestId" Type="Guid" Nullable="false" />
-    <Property Name="Units" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="ProductTest" ToRole="Product" />
-    <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
-    <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProductTest" ToRole="ProtocolResult" />
   </EntityType>
   <EntityType Name="ProtocolResult">
     <Key>
@@ -550,18 +579,6 @@
       </Principal>
       <Dependent Role="ProductTest">
         <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProductTests_Tests">
-    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Test">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProductTest">
-        <PropertyRef Name="TestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

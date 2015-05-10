@@ -65,19 +65,19 @@ namespace RED.Models.ElectronicDiary
             {
                 StringBuilder remark = new StringBuilder();
 
-                if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
-                {
-                    remark.Append("A");
-                }
+                //if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
+                //{
+                //    remark.Append("A");
+                //}
 
-                if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
-                {
-                    if (remark.Length > 0)
-                    {
-                        remark.Append("/");
-                    }
-                    remark.Append("B");
-                }
+                //if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
+                //{
+                //    if (remark.Length > 0)
+                //    {
+                //        remark.Append("/");
+                //    }
+                //    remark.Append("B");
+                //}
 
                 return remark.ToString();
             }

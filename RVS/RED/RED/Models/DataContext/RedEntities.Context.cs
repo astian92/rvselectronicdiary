@@ -42,8 +42,9 @@ namespace RED.Models.DataContext
         public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<ProductTest> ProductTests { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
     }
 }

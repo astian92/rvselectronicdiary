@@ -42,7 +42,7 @@ namespace RED.Models.ElectronicDiary
                 item.Id = Guid.NewGuid();
                 item.DiaryId = diary.Id;
                 item.Number = i;
-                item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
+                //item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
                 diary.Products.Add(item);
                 i++;
             }
@@ -70,7 +70,7 @@ namespace RED.Models.ElectronicDiary
                 item.Id = Guid.NewGuid();
                 item.Number = i;
                 item.DiaryId = diary.Id;
-                item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
+                //item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
                 i++;
             }
 
