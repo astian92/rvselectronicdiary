@@ -16,19 +16,16 @@ namespace RED.Models.DataContext
     {
         public Product()
         {
-            this.ProtocolResults = new HashSet<ProtocolResult>();
+            this.ProductTests = new HashSet<ProductTest>();
         }
     
         public System.Guid Id { get; set; }
         public System.Guid DiaryId { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.Guid> TestId { get; set; }
-        public int Quantity { get; set; }
-        public string QuantityLabel { get; set; }
         public int Number { get; set; }
+        public string Name { get; set; }
+        public string Quantity { get; set; }
     
         public virtual Diary Diary { get; set; }
-        public virtual Test Test { get; set; }
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
+        public virtual ICollection<ProductTest> ProductTests { get; set; }
     }
 }

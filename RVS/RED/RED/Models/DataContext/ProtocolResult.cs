@@ -16,12 +16,12 @@ namespace RED.Models.DataContext
     {
         public System.Guid Id { get; set; }
         public System.Guid ProtocolId { get; set; }
-        public System.Guid ProductId { get; set; }
+        public System.Guid ProductTestId { get; set; }
+        public string ResultNumber { get; set; }
         public string Results { get; set; }
         public string MethodValue { get; set; }
-        public string ResultNumber { get; set; }
     
-        public virtual Product Product { get; set; }
+        public virtual ProductTest ProductTest { get; set; }
         public virtual Protocol Protocol { get; set; }
     }
 }

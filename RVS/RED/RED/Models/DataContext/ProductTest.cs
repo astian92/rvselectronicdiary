@@ -12,22 +12,20 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Test
+    public partial class ProductTest
     {
-        public Test()
+        public ProductTest()
         {
-            this.ProductTests = new HashSet<ProductTest>();
+            this.ProtocolResults = new HashSet<ProtocolResult>();
         }
     
         public System.Guid Id { get; set; }
-        public System.Guid TestCategoryId { get; set; }
-        public string Name { get; set; }
-        public string TestMethods { get; set; }
-        public System.Guid AcredetationLevelId { get; set; }
-        public string Temperature { get; set; }
+        public System.Guid ProductId { get; set; }
+        public System.Guid TestId { get; set; }
+        public int Units { get; set; }
     
-        public virtual AcredetationLevel AcredetationLevel { get; set; }
-        public virtual TestCategory TestCategory { get; set; }
-        public virtual ICollection<ProductTest> ProductTests { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Test Test { get; set; }
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }
 }

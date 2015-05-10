@@ -107,11 +107,18 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
-    <Property Name="TestId" Type="uniqueidentifier" />
-    <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="QuantityLabel" Type="nvarchar" MaxLength="30" />
     <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="Quantity" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="ProductTests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Units" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProtocolResults">
     <Key>
@@ -119,10 +126,10 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductTestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ResultNumber" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
-    <Property Name="ResultNumber" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="Protocols">
     <Key>
@@ -290,27 +297,41 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Products_Tests">
-    <End Role="Tests" Type="Self.Tests" Multiplicity="0..1" />
-    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+  <Association Name="FK_ProductTests_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTests">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTests_Tests">
+    <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tests">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Products">
+      <Dependent Role="ProductTests">
         <PropertyRef Name="TestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProtocolResults_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="1" />
     <End Role="ProtocolResults" Type="Self.ProtocolResults" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Products">
+      <Principal Role="ProductTests">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ProtocolResults">
-        <PropertyRef Name="ProductId" />
+        <PropertyRef Name="ProductTestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -442,6 +463,7 @@
     <EntitySet Name="Diary" EntityType="Self.Diary" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductTests" EntityType="Self.ProductTests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProtocolResults" EntityType="Self.ProtocolResults" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Protocols" EntityType="Self.Protocols" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
@@ -482,12 +504,16 @@
       <End Role="Diary" EntitySet="Diary" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK_Products_Tests" Association="Self.FK_Products_Tests">
-      <End Role="Tests" EntitySet="Tests" />
+    <AssociationSet Name="FK_ProductTests_Products" Association="Self.FK_ProductTests_Products">
       <End Role="Products" EntitySet="Products" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTests_Tests" Association="Self.FK_ProductTests_Tests">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
     </AssociationSet>
     <AssociationSet Name="FK_ProtocolResults_Products" Association="Self.FK_ProtocolResults_Products">
-      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
       <End Role="ProtocolResults" EntitySet="ProtocolResults" />
     </AssociationSet>
     <AssociationSet Name="FK_ProtocolResults_Protocols" Association="Self.FK_ProtocolResults_Protocols">
