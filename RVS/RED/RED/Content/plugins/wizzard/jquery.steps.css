@@ -93,9 +93,9 @@
     padding: 8px;
     text-decoration: none;
 
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .wizard > .steps .disabled a,
@@ -142,9 +142,9 @@
     position: relative;
     width: auto;
 
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .wizard-big.wizard > .content {
@@ -161,7 +161,7 @@
 .wizard > .content > .body
 {
     float: left;
-    position: absolute;
+    /*position: absolute;*/
     width: 95%;
     height: 95%;
     padding: 2.5%;
@@ -257,9 +257,9 @@
     padding: 0.5em 1em;
     text-decoration: none;
 
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .wizard > .actions .disabled a,

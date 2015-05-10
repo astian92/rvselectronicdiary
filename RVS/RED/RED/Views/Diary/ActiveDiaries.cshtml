@@ -68,10 +68,13 @@
                                                         <span>@product.Name</span>
                                                     </td>
                                                     <td class="text-center">
-                                                        <span>@product.Quantity @product.QuantityLabel</span>
+                                                        <span>@product.Quantity @product.Quantity</span>
                                                     </td>
                                                     <td class="text-right">
-                                                        <span>@product.Test.Name</span>
+                                                        @foreach(var test in product.ProductTests)
+                                                        {
+                                                            <span>@test.Test.Name</span>
+                                                        }
                                                     </td>
                                                 </tr>
                                             }
