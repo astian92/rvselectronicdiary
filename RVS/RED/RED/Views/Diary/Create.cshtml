@@ -82,22 +82,12 @@
                 </div>
             </div>
         </fieldset>
-    
-        <h1>Finish</h1>
+        <h1>Тестове</h1>
         <fieldset>
-            <h2>Terms and Conditions</h2>
-            <div class="form-group">
-                <label class="control-label" for="Test">Изследване</label>
-                <select id="Test" data-placeholder="Choose a Country..." class="form-control chosen-select" tabindex="4">
-                    @foreach (var item in ViewBag.Tests)
-                    {
-                        <option value="@item.Value">@item.Text</option>
+            <h2>Тестове на продуктите</h2>
+            <div class="products-tests">
 
-                    }
-                </select>
-                <div class="clearfix"></div>
             </div>
-            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
         </fieldset>
 }
 
@@ -107,6 +97,7 @@
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script>
     var count = 0;
+    var products = [];
 
     var config = {
         '.chosen-select': {},
@@ -131,6 +122,18 @@
             if (currentIndex == 1 && count == 0) {
                 $('.product-list-validation').removeClass('collapse');
                 return false;
+            }
+            
+            if (newIndex == 2) {
+                var url = '/Diary/ProductsTests';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: { products: products },
+                    success: function (view) {
+                        $('.products-tests').html(view);
+                    }
+                });
             }
 
             var form = $(this);
@@ -218,11 +221,11 @@
                 '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name"></td><td class="col-md-2">' +
                 $('#Quantity').val() +
                 '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity"></td><td class="text-right">' +
-                '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+                '<a class="delete-product" onclick="deleteProduct(this, ' + count + ')"><h3 style="margin: 0px">x</h3></a></td></tr>';
 
         $('.product-list-table tbody').append(content);
 
-
+        products[count] = $('#Products').val();
         count++;
 
         $('#Products').val('');
@@ -231,10 +234,11 @@
         $('.current').removeClass('error');
     });
 
-    function deleteProduct(e) {
+    function deleteProduct(e, number) {
         //var event = e.target || e.srcElement;
         $(e).parent().parent().remove();
         count--;
+        products.splice(number, 1)
     }
 
     function hideNameValidation() {

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<string>
+
+
+@foreach(var product in Model)
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>@product</h3>
+            <div class="form-group">
+                <label for="ClientId">Тест</label>
+                @Html.DropDownList("Tests", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="Units">Единици</label>
+                <input class="form-control text-box single-line valid" data-val-range="Невалиден номер" data-val-range-max="2147483647" data-val-range-min="0" id="Products[0].ProductTests[0].Units" name="LetterNumber" type="number" value="">
+                <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="units-name-validation collapse">Единиците са задължителни</span></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Добави" class="add-test-btn btn btn-primary" tabindex="5" />
+            </div>
+        </div>
+        <div class="col-lg-6 test-list-table-container">
+            <table class="table table-hover test-list-table" style="margin-top:23px;">
+                <tbody></tbody>
+            </table>
+            <span class="text-danger field-validation-error" data-valmsg-for="test-list-table" data-valmsg-replace="true"><span class="test-list-validation collapse">Въведете поне един тест!</span></span>
+        </div>
+    </div>
+}

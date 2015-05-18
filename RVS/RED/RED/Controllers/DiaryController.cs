@@ -35,7 +35,7 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            //ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
             return View();
         }
 
@@ -51,7 +51,7 @@ namespace RED.Controllers
             }
 
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            
 
             return View(diary);
         }
@@ -163,6 +163,16 @@ namespace RED.Controllers
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ProductsTests(string[] products)
+        {
+            if(products == null)
+                products = new string[0];
+
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+
+            return PartialView(products);
         }
     }
 }
