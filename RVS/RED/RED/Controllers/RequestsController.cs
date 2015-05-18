@@ -25,6 +25,14 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
+        public ActionResult GetAcceptedRequests()
+        {
+            ViewBag.Label = "accepted";
+
+            var requests = Rep.GetAcceptedRequests();
+            return PartialView("Requests", requests);
+        }
+
         public ActionResult GetMyRequests()
         {
             ViewBag.Mine = true;
@@ -42,11 +50,11 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
-        public ActionResult GetAllRequests()
+        public ActionResult GetArchivedRequests()
         {
             ViewBag.Label = "all";
 
-            var requests = Rep.GetAllRequests();
+            var requests = Rep.GetArchivedRequests();
             return PartialView("Requests", requests);
         }
 

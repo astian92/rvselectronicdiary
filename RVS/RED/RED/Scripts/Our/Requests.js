@@ -1,28 +1,31 @@
-﻿
+﻿var spinnerString = '<div class="ibox-content"> \
+                        <div class="spiner-example">\
+                            <div class="sk-spinner sk-spinner-cube-grid">\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                                <div class="sk-cube"></div>\
+                            </div>\
+                        </div>\
+                    </div>';
+
+
 var requestIdToOpen;
 
 $(document).ready(function () {
 
     $('.not-accepted-tab-btn').click(function () {
+        $('.accepted-requests').empty();
         $('.my-requests').empty();
         $('.completed-requests').empty();
-        $('.all-requests').empty();
+        $('.archived-requests').empty();
 
-        $('.not-accepted-requests').html('<div class="ibox-content"> \
-                                    <div class="spiner-example">\
-                                        <div class="sk-spinner sk-spinner-cube-grid">\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                        </div>\
-                                    </div>\
-                                </div>');
+        $('.not-accepted-requests').html(spinnerString);
 
         $.ajax({
             cache: false,
@@ -42,26 +45,40 @@ $(document).ready(function () {
         })
     });
 
+    $('.accepted-tab-btn').click(function () {
+        $('.not-accepted-requests').empty();
+        $('.my-requests').empty();
+        $('.completed-requests').empty();
+        $('.archived-requests').empty();
+
+
+        $('.accepted-requests').html(spinnerString);
+
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: "/Requests/GeAcceptedRequests",
+            success: function (result) {
+                $('.accepted-requests').html(result);
+                if (requestIdToOpen) {
+                    $('a[href="#' + requestIdToOpen + '"]').click();
+                    requestIdToOpen = undefined;
+                }
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+                $('.accepted-requests').html(errorMsg);
+            }
+        })
+    });
+
     $('.my-requests-tab-btn').click(function () {
         $('.not-accepted-requests').empty();
+        $('.accepted-requests').empty();
         $('.completed-requests').empty();
-        $('.all-requests').empty();
+        $('.archived-requests').empty();
 
-        $('.my-requests').html('<div class="ibox-content"> \
-                                    <div class="spiner-example">\
-                                        <div class="sk-spinner sk-spinner-cube-grid">\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                        </div>\
-                                    </div>\
-                                </div>');
+        $('.my-requests').html(spinnerString);
 
         $.ajax({
             cache: false,
@@ -83,24 +100,11 @@ $(document).ready(function () {
 
     $('.completed-tab-btn').click(function () {
         $('.not-accepted-requests').empty();
+        $('.accepted-requests').empty();
         $('.my-requests').empty();
-        $('.all-requests').empty();
+        $('.archived-requests').empty();
 
-        $('.completed-requests').html('<div class="ibox-content"> \
-                                    <div class="spiner-example">\
-                                        <div class="sk-spinner sk-spinner-cube-grid">\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                        </div>\
-                                    </div>\
-                                </div>');
+        $('.completed-requests').html(spinnerString);
 
         $.ajax({
             cache: false,
@@ -116,37 +120,24 @@ $(document).ready(function () {
         })
     });
 
-    $('.all-tab-btn').click(function () {
+    $('.archived-tab-btn').click(function () {
         $('.not-accepted-requests').empty();
+        $('.accepted-requests').empty();
         $('.my-requests').empty();
         $('.completed-requests').empty();
 
-        $('.all-requests').html('<div class="ibox-content"> \
-                                    <div class="spiner-example">\
-                                        <div class="sk-spinner sk-spinner-cube-grid">\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                            <div class="sk-cube"></div>\
-                                        </div>\
-                                    </div>\
-                                </div>');
+        $('.archived-requests').html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GetAllRequests",
+            url: "/Requests/GetArchivedRequests",
             success: function (result) {
-                $('.all-requests').html(result);
+                $('.archived-requests').html(result);
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.all-requests').html(errorMsg);
+                $('.archived-requests').html(errorMsg);
             }
         })
     });

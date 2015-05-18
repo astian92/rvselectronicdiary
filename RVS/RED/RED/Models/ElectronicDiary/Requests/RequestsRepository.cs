@@ -23,15 +23,23 @@ namespace RED.Models.ElectronicDiary.Requests
             return notAccepted.Select(r => new RequestW(r));
         }
 
+        public IEnumerable<RequestW> GetAcceptedRequests()
+        {
+            var accepted = db.Requests.Where(r => r.AcceptedBy != null && r.IsAccepted == true && r.Protocols.Any() == false)
+                .OrderByDescending(r => r.Date)
+                .ToList();
+            return accepted.Select(r => new RequestW(r));
+        }
+
         public IEnumerable<RequestW> GetMyRequests()
         {
             var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
 
             var myRequests = db.Requests.Where(r => r.IsAccepted == true &&
                         r.AcceptedBy == userId &&
-                        r.Protocols.Any() == false)
+                        r.Protocols.Any() == false) //that were not completed
                 .OrderByDescending(r => r.Date)
-                .ToList(); //that were not completed
+                .ToList(); 
             return myRequests.Select(r => new RequestW(r));
         }
 
@@ -43,10 +51,9 @@ namespace RED.Models.ElectronicDiary.Requests
             return requests.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<RequestW> GetAllRequests()
+        public IEnumerable<RequestW> GetArchivedRequests()
         {
-            var requests = db.Requests.OrderByDescending(r => r.Date).ToList();
-            return requests.Select(r => new RequestW(r));
+            throw new NotImplementedException("Archived Requests are not yet implemented!");
         }
 
         public bool AcceptRequest(Guid requestId)

@@ -18,14 +18,17 @@
                     <li class="active">
                         <a data-toggle="tab" href="#tab-1" class="not-accepted-tab-btn">Неприети</a>
                     </li>
-                    <li class="">
-                        <a data-toggle="tab" href="#tab-2" class="my-requests-tab-btn">Мои</a>
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-2" class="accepted-tab-btn">Приети</a>
                     </li>
                     <li class="">
-                        <a data-toggle="tab" href="#tab-3" class="completed-tab-btn">Изпълнени</a>
+                        <a data-toggle="tab" href="#tab-3" class="my-requests-tab-btn">Мои</a>
                     </li>
                     <li class="">
-                        <a data-toggle="tab" href="#tab-4" class="all-tab-btn">Всички</a>
+                        <a data-toggle="tab" href="#tab-4" class="completed-tab-btn">Изпълнени</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-5" class="archived-tab-btn">Архивирани</a>
                     </li>
                 </ul>
             </div>
@@ -38,16 +41,20 @@
                     @{ Html.RenderAction("GetNotAcceptedRequests"); }
                 </div>
 
-                <div id="tab-2" class="tab-pane my-requests">
+                <div id="tab-2" class="tab-pane accepted-requests">
                     @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
                 </div>
 
-                <div id="tab-3" class="tab-pane completed-requests">
+                <div id="tab-3" class="tab-pane my-requests">
                     @* @{ Html.RenderAction("GetMyRequests"); }*@
                 </div>
 
-                <div id="tab-4" class="tab-pane all-requests">
-                    @* @{ Html.RenderAction("GetAllRequests"); }*@
+                <div id="tab-4" class="tab-pane completed-requests">
+                    @* @{ Html.RenderAction("GetCompletedRequests"); }*@
+                </div>
+
+                <div id="tab-5" class="tab-pane archived-requests">
+                    @* @{ Html.RenderAction("GetArchivedRequests"); }*@
                 </div>
             </div>
 
