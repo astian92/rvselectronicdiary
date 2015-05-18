@@ -208,6 +208,9 @@
     <Compile Include="Models\DataContext\ArchivedProduct.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\ArchivedProductTest.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\ArchivedProtocolResult.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

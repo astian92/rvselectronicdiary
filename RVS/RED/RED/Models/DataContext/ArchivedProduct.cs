@@ -16,17 +16,16 @@ namespace RED.Models.DataContext
     {
         public ArchivedProduct()
         {
-            this.ArchivedProtocolResults = new HashSet<ArchivedProtocolResult>();
+            this.ArchivedProductTests = new HashSet<ArchivedProductTest>();
         }
     
         public System.Guid Id { get; set; }
         public System.Guid ArchivedDiaryId { get; set; }
         public string Name { get; set; }
-        public string Test { get; set; }
         public string Quantity { get; set; }
         public string Number { get; set; }
     
         public virtual ArchivedDiary ArchivedDiary { get; set; }
-        public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
+        public virtual ICollection<ArchivedProductTest> ArchivedProductTests { get; set; }
     }
 }

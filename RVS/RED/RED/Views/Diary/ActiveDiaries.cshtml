@@ -53,7 +53,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th></th>
+                                                <th>№</th>
                                                 <th class="text-left">Наименoвание</th>
                                                 <th class="text-left">Количество</th>
                                                 <th class="text-right">Показател за изпитване</th>
@@ -68,14 +68,28 @@
                                                         <span>@product.Name</span>
                                                     </td>
                                                     <td class="text-center">
-                                                        <span>@product.Quantity @product.Quantity</span>
+                                                        <span>@product.Quantity</span>
                                                     </td>
-                                                    <td class="text-right">
-                                                        @foreach(var test in product.ProductTests)
+                                                    @{ int i = 0; }
+                                                    @foreach(var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
+                                                    {
+                                                        if (i == 0)
                                                         {
-                                                            <span>@test.Test.Name</span>
+                                                            <td class="text-right">
+                                                                <span>@test.Test.Name</span>
+                                                            </td>
                                                         }
-                                                    </td>
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: right">
+                                                                    <span>@test.Test.Name</span>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                            
+                                                        i++;
+                                                    }
                                                 </tr>
                                             }
                                         </tbody>

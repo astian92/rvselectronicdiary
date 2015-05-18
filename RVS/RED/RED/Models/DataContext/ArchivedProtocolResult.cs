@@ -16,11 +16,11 @@ namespace RED.Models.DataContext
     {
         public System.Guid Id { get; set; }
         public System.Guid ArchivedDiaryId { get; set; }
-        public System.Guid ArchivedProductId { get; set; }
+        public System.Guid ArchivedProductTestId { get; set; }
         public string Results { get; set; }
         public string MethodValue { get; set; }
     
         public virtual ArchivedDiary ArchivedDiary { get; set; }
-        public virtual ArchivedProduct ArchivedProduct { get; set; }
+        public virtual ArchivedProductTest ArchivedProductTest { get; set; }
     }
 }

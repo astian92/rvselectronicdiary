@@ -58,14 +58,14 @@
                                         foreach (var result in orderdProtocolRes)
                                         {
                                             <tr>
-                                                <td>@result.Product.Test.Name</td>
-                                                <td>@result.Product.Test.TestMethods</td>
+                                                <td>@result.ProductTest.Test.Name</td>
+                                                <td>@result.ProductTest.Test.TestMethods</td>
                                                 <td>
                                                     @(result.ResultNumber != null ? result.ResultNumber : "")
                                                 </td>
                                                 <td>@result.Results</td>
                                                 <td>@result.MethodValue</td>
-                                                <td>@result.Product.Test.Temperature</td>
+                                                <td>@result.ProductTest.Test.Temperature</td>
                                             </tr>
                                         }
                                     }

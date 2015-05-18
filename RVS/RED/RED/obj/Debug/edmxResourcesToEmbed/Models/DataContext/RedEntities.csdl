@@ -7,7 +7,7 @@
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="Level" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_AcredetationLevels" FromRole="AcredetationLevels" ToRole="Tests" />
+    <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="AcredetationLevel" ToRole="Test" />
   </EntityType>
   <EntityType Name="ActionLogProperty">
     <Key>
@@ -124,21 +124,7 @@
     </Key>
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_TestCategories" FromRole="TestCategories" ToRole="Tests" />
-  </EntityType>
-  <EntityType Name="Test">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="TestCategoryId" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="TestMethods" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
-    <Property Name="Temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AcredetationLevel" Relationship="Self.FK_Tests_AcredetationLevels" FromRole="Tests" ToRole="AcredetationLevels" />
-    <NavigationProperty Name="TestCategory" Relationship="Self.FK_Tests_TestCategories" FromRole="Tests" ToRole="TestCategories" />
-    <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="Test" ToRole="ProductTest" />
+    <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" FromRole="TestCategory" ToRole="Test" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -156,18 +142,6 @@
     <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Users" FromRole="Users" ToRole="Requests" />
     <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
   </EntityType>
-  <Association Name="FK_Tests_AcredetationLevels">
-    <End Role="AcredetationLevels" Type="Self.AcredetationLevel" Multiplicity="1" />
-    <End Role="Tests" Type="Self.Test" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AcredetationLevels">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Tests">
-        <PropertyRef Name="AcredetationLevelId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ActionLogProperties_ToTable">
     <End Role="ActionLogs" Type="Self.ActionLog" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -296,18 +270,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tests_TestCategories">
-    <End Role="TestCategories" Type="Self.TestCategory" Multiplicity="1" />
-    <End Role="Tests" Type="Self.Test" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TestCategories">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Tests">
-        <PropertyRef Name="TestCategoryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="RedDataEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AcredetationLevels" EntityType="Self.AcredetationLevel" />
     <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperty" />
@@ -321,12 +283,7 @@
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeature" />
     <EntitySet Name="TestCategories" EntityType="Self.TestCategory" />
-    <EntitySet Name="Tests" EntityType="Self.Test" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK_Tests_AcredetationLevels" Association="Self.FK_Tests_AcredetationLevels">
-      <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />
-      <End Role="Tests" EntitySet="Tests" />
-    </AssociationSet>
     <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="Self.FK_ActionLogProperties_ToTable">
       <End Role="ActionLogs" EntitySet="ActionLogs" />
       <End Role="ActionLogProperties" EntitySet="ActionLogProperties" />
@@ -367,31 +324,9 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK_Tests_TestCategories" Association="Self.FK_Tests_TestCategories">
-      <End Role="TestCategories" EntitySet="TestCategories" />
-      <End Role="Tests" EntitySet="Tests" />
-    </AssociationSet>
     <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
-    <EntitySet Name="ArchivedProducts" EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" />
-    <EntitySet Name="ArchivedProtocolResults" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" />
-    <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
-      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-      <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
-      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-      <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProducts" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProducts">
-      <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
-      <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
-    </AssociationSet>
     <EntitySet Name="ELMAH_Error" EntityType="DB_9BCA69_RedDbModel.ELMAH_Error" />
     <EntitySet Name="ProductTests" EntityType="DB_9BCA69_RedDbModel.ProductTest" />
-    <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
-      <End Role="Test" EntitySet="Tests" />
-      <End Role="ProductTest" EntitySet="ProductTests" />
-    </AssociationSet>
     <EntitySet Name="Products" EntityType="DB_9BCA69_RedDbModel.Product" />
     <EntitySet Name="ProtocolResults" EntityType="DB_9BCA69_RedDbModel.ProtocolResult" />
     <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
@@ -409,6 +344,38 @@
     <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
       <End Role="Protocol" EntitySet="Protocols" />
       <End Role="ProtocolResult" EntitySet="ProtocolResults" />
+    </AssociationSet>
+    <EntitySet Name="ArchivedProducts" EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" />
+    <EntitySet Name="ArchivedProductTests" EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" />
+    <EntitySet Name="ArchivedProtocolResults" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" />
+    <EntitySet Name="Tests" EntityType="DB_9BCA69_RedDbModel.Test" />
+    <AssociationSet Name="FK_Tests_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels">
+      <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+      <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+      <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts">
+      <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
+      <End Role="ArchivedProductTest" EntitySet="ArchivedProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProductTests" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests">
+      <End Role="ArchivedProductTest" EntitySet="ArchivedProductTests" />
+      <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
+      <End Role="Test" EntitySet="Tests" />
+      <End Role="ProductTest" EntitySet="ProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tests_TestCategories" Association="DB_9BCA69_RedDbModel.FK_Tests_TestCategories">
+      <End Role="TestCategory" EntitySet="TestCategories" />
+      <End Role="Test" EntitySet="Tests" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="ArchivedDiary">
@@ -428,67 +395,6 @@
     <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
     <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
   </EntityType>
-  <EntityType Name="ArchivedProduct">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
-    <Property Name="Test" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Quantity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Number" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProduct" ToRole="ArchivedDiary" />
-    <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProducts" FromRole="ArchivedProduct" ToRole="ArchivedProtocolResult" />
-  </EntityType>
-  <EntityType Name="ArchivedProtocolResult">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
-    <Property Name="ArchivedProductId" Type="Guid" Nullable="false" />
-    <Property Name="Results" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
-    <Property Name="MethodValue" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
-    <NavigationProperty Name="ArchivedProduct" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProducts" FromRole="ArchivedProtocolResult" ToRole="ArchivedProduct" />
-  </EntityType>
-  <Association Name="FK_ArchivedProducts_ArchivedDiary">
-    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ArchivedDiary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArchivedProduct">
-        <PropertyRef Name="ArchivedDiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
-    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ArchivedDiary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArchivedProtocolResult">
-        <PropertyRef Name="ArchivedDiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ArchivedProtocolResults_ArchivedProducts">
-    <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ArchivedProduct">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArchivedProtocolResult">
-        <PropertyRef Name="ArchivedProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="ELMAH_Error">
     <Key>
       <PropertyRef Name="ErrorId" />
@@ -513,22 +419,10 @@
     <Property Name="ProductId" Type="Guid" Nullable="false" />
     <Property Name="TestId" Type="Guid" Nullable="false" />
     <Property Name="Units" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
     <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="ProductTest" ToRole="Product" />
     <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProductTest" ToRole="ProtocolResult" />
+    <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
   </EntityType>
-  <Association Name="FK_ProductTests_Tests">
-    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Test">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProductTest">
-        <PropertyRef Name="TestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
@@ -605,6 +499,145 @@
       </Principal>
       <Dependent Role="ProtocolResult">
         <PropertyRef Name="ProtocolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ArchivedProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProduct" ToRole="ArchivedDiary" />
+    <NavigationProperty Name="ArchivedProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" FromRole="ArchivedProduct" ToRole="ArchivedProductTest" />
+  </EntityType>
+  <EntityType Name="ArchivedProductTest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="ArchivedProductId" Type="Guid" Nullable="false" />
+    <Property Name="TestName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TestUnitName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="TestMethods" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TestAcredetationLevel" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Name="TestTemperature" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TestCategory" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="Units" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ArchivedProduct" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" FromRole="ArchivedProductTest" ToRole="ArchivedProduct" />
+    <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProductTest" ToRole="ArchivedProtocolResult" />
+  </EntityType>
+  <EntityType Name="ArchivedProtocolResult">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
+    <Property Name="ArchivedProductTestId" Type="Guid" Nullable="false" />
+    <Property Name="Results" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+    <Property Name="MethodValue" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
+    <NavigationProperty Name="ArchivedProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProtocolResult" ToRole="ArchivedProductTest" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="TestCategoryId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TestMethods" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
+    <Property Name="Temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UnitName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="Test" ToRole="AcredetationLevel" />
+    <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="Test" ToRole="ProductTest" />
+    <NavigationProperty Name="TestCategory" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" FromRole="Test" ToRole="TestCategory" />
+  </EntityType>
+  <Association Name="FK_Tests_AcredetationLevels">
+    <End Type="DB_9BCA69_RedDbModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcredetationLevel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="AcredetationLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProducts_ArchivedDiary">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProduct">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolResult">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProductTests_ArchivedProducts">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProductTest" Role="ArchivedProductTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProductTest">
+        <PropertyRef Name="ArchivedProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProtocolResults_ArchivedProductTests">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProductTest" Role="ArchivedProductTest" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedProductTest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolResult">
+        <PropertyRef Name="ArchivedProductTestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTests_Tests">
+    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Test">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTest">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tests_TestCategories">
+    <End Type="DB_9BCA69_RedDbModel.TestCategory" Role="TestCategory" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="TestCategoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

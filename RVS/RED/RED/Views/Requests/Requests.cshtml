@@ -49,11 +49,28 @@
                                                             <span>@product.Name</span>
                                                         </td>
                                                         <td class="text-center">
-                                                            <span>@product.Quantity @product.QuantityLabel</span>
+                                                            <span>@product.Quantity</span>
                                                         </td>
-                                                        <td class="text-right">
-                                                            <span>@product.Test.Name</span>
-                                                        </td>
+                                                        @{ int i = 0; }
+                                                        @foreach (var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
+                                                        {
+                                                            if (i == 0)
+                                                            {
+                                                                <td class="text-right">
+                                                                    <span>@test.Test.Name</span>
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: right">
+                                                                    <span>@test.Test.Name</span>
+                                                                </td>
+                                                            </tr>
+                                                            }
+
+                                                            i++;
+                                                        }
                                                     </tr>
                                                 }
                                             </tbody>

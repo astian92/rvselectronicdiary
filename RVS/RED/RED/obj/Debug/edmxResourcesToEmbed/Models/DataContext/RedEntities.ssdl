@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DB_9BCA69_RedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DB_9BCA69_RedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AcredetationLevels">
     <Key>
       <PropertyRef Name="Id" />
@@ -60,9 +60,22 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
-    <Property Name="Test" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Quantity" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Number" Type="nvarchar" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArchivedProductTests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="TestUnitName" Type="nvarchar" MaxLength="60" />
+    <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
+    <Property Name="TestAcredetationLevel" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="TestTemperature" Type="nvarchar" MaxLength="50" />
+    <Property Name="TestCategory" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="Units" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedProtocolResults">
     <Key>
@@ -70,7 +83,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ArchivedProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
   </EntityType>
@@ -197,6 +210,7 @@
     <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
     <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Temperature" Type="nvarchar" MaxLength="50" />
+    <Property Name="UnitName" Type="nvarchar" MaxLength="60" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -263,6 +277,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ArchivedProductTests_ArchivedProducts">
+    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="1" />
+    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProductTests">
+        <PropertyRef Name="ArchivedProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
     <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
     <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
@@ -275,15 +301,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ArchivedProtocolResults_ArchivedProducts">
-    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="1" />
+  <Association Name="FK_ArchivedProtocolResults_ArchivedProductTests">
+    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="1" />
     <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ArchivedProducts">
+      <Principal Role="ArchivedProductTests">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ArchivedProtocolResults">
-        <PropertyRef Name="ArchivedProductId" />
+        <PropertyRef Name="ArchivedProductTestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -474,6 +500,7 @@
     <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedDiary" EntityType="Self.ArchivedDiary" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedProducts" EntityType="Self.ArchivedProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedProductTests" EntityType="Self.ArchivedProductTests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedProtocolResults" EntityType="Self.ArchivedProtocolResults" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Diary" EntityType="Self.Diary" Schema="dbo" store:Type="Tables" />
@@ -505,12 +532,16 @@
       <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
       <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
     </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="Self.FK_ArchivedProductTests_ArchivedProducts">
+      <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
+      <End Role="ArchivedProductTests" EntitySet="ArchivedProductTests" />
+    </AssociationSet>
     <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="Self.FK_ArchivedProtocolResults_ArchivedDiary">
       <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
       <End Role="ArchivedProtocolResults" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
-    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProducts" Association="Self.FK_ArchivedProtocolResults_ArchivedProducts">
-      <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProductTests" Association="Self.FK_ArchivedProtocolResults_ArchivedProductTests">
+      <End Role="ArchivedProductTests" EntitySet="ArchivedProductTests" />
       <End Role="ArchivedProtocolResults" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
     <AssociationSet Name="FK_Diary_Clients" Association="Self.FK_Diary_Clients">

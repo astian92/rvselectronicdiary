@@ -28,6 +28,9 @@ namespace RED.Models.ElectronicDiary.Tests
         [Display(Name = "Температура")]
         public string Temperature { get; set; }
 
+        [Display(Name = "Единица на Величината")]
+        public string UnitName { get; set; }
+
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestCategory TestCategory { get; set; }
 
@@ -44,6 +47,7 @@ namespace RED.Models.ElectronicDiary.Tests
             this.TestMethods = test.TestMethods;
             this.AcredetationLevelId = test.AcredetationLevelId;
             this.Temperature = test.Temperature;
+            this.UnitName = test.UnitName;
 
             this.AcredetationLevel = test.AcredetationLevel;
             this.TestCategory = test.TestCategory;
@@ -59,6 +63,7 @@ namespace RED.Models.ElectronicDiary.Tests
             test.TestMethods = this.TestMethods;
             test.AcredetationLevelId = this.AcredetationLevelId;
             test.Temperature = this.Temperature;
+            test.UnitName = this.UnitName;
 
             test.AcredetationLevel = this.AcredetationLevel;
             test.TestCategory = this.TestCategory;
