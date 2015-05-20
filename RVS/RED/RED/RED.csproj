@@ -336,6 +336,11 @@
     <Content Include="Content\plugins\iCheck\green.png" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\plugins\wizzard\jquery.steps.css" />
+    <Content Include="Images\android-chrome-192x192.png" />
+    <Content Include="Images\favicon-16x16.png" />
+    <Content Include="Images\favicon-32x32.png" />
+    <Content Include="Images\favicon-96x96.png" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Scripts\plugins\staps\jquery.steps.min.js" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
