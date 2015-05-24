@@ -286,6 +286,7 @@
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
+    <Compile Include="Models\ElectronicDiary\SimpleProduct.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
@@ -336,11 +337,8 @@
     <Content Include="Content\plugins\iCheck\green.png" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\plugins\wizzard\jquery.steps.css" />
-    <Content Include="Images\android-chrome-192x192.png" />
-    <Content Include="Images\favicon-16x16.png" />
-    <Content Include="Images\favicon-32x32.png" />
-    <Content Include="Images\favicon-96x96.png" />
-    <Content Include="Images\favicon.ico" />
+    <Content Include="Scripts\Our\DiaryWizzard.js" />
+    <Content Include="Scripts\Our\Helpers.js" />
     <Content Include="Scripts\plugins\staps\jquery.steps.min.js" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
@@ -552,7 +550,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -637,7 +637,6 @@
     <Content Include="Views\Diary\ActiveDiaries.cshtml" />
     <Content Include="Views\Protocols\Index.cshtml" />
     <Content Include="Views\Diary\ProductsTests.cshtml" />
-    <Content Include="Views\Protocols\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

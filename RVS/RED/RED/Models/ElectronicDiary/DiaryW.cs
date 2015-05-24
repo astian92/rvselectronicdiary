@@ -63,23 +63,40 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                StringBuilder remark = new StringBuilder();
+                string remark = "";
+                bool hasAcredited = false;
+                bool hasNotAcredited = false;
 
-                //if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
-                //{
-                //    remark.Append("A");
-                //}
+                foreach (var product in this.Products)
+                {
+                    foreach (var ptest in product.ProductTests)
+                    {
+                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited)
+                        {
+                            hasAcredited = true;
+                        }
 
-                //if (this.Products.Any(p => p.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
-                //{
-                //    if (remark.Length > 0)
-                //    {
-                //        remark.Append("/");
-                //    }
-                //    remark.Append("B");
-                //}
+                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited)
+                        {
+                            hasNotAcredited = true;
+                        }
+                    }
+                }
 
-                return remark.ToString();
+                if (hasAcredited && hasNotAcredited)
+                {
+                    remark = AcredetationLevels.Acredited + "/" + AcredetationLevels.NotAcredited;
+                }
+                else if (hasAcredited)
+                {
+                    remark = AcredetationLevels.Acredited;
+                }
+                else if (hasNotAcredited)
+                {
+                    remark = AcredetationLevels.NotAcredited;
+                }
+
+                return remark;
             }
         }
 

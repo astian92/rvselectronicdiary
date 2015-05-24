@@ -165,13 +165,9 @@ namespace RED.Controllers
             return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ProductsTests(string[] products)
+        public ActionResult ProductsTests(SimpleProduct[] products)
         {
-            if(products == null)
-                products = new string[0];
-
             ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
-
             return PartialView(products);
         }
     }
