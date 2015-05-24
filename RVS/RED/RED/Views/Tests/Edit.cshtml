@@ -63,6 +63,12 @@
                 @Html.ValidationMessageFor(model => model.Temperature, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus()" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees()" />
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -72,3 +78,21 @@
         </div>
     </div>
 }
+
+<script>
+    function addPlusMinus() {
+        var value = $('#Temperature').val();
+
+        value += '±';
+
+        $('#Temperature').val(value);
+    }
+
+    function addDegrees() {
+        var value = $('#Temperature').val();
+
+        value += '°';
+
+        $('#Temperature').val(value);
+    }
+</script>

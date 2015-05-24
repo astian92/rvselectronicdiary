@@ -637,6 +637,7 @@
     <Content Include="Views\Diary\ActiveDiaries.cshtml" />
     <Content Include="Views\Protocols\Index.cshtml" />
     <Content Include="Views\Diary\ProductsTests.cshtml" />
+    <Content Include="Views\Protocols\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

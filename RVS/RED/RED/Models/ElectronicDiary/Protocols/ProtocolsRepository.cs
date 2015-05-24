@@ -32,5 +32,24 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             db.SaveChanges();
         }
+
+        public ProtocolW GetProtocol(Guid protocolId)
+        {
+            var protocol = db.Protocols.Single(x => x.Id == protocolId);
+            return new ProtocolW(protocol);
+        }
+
+        public void EditProtocol(ProtocolW protocolW)
+        {
+            var protocol = db.Protocols.Single(p => p.Id == protocolW.Id);
+
+            protocol.ProtocolResults.Clear();
+            //foreach (var item in protocolW.ProtocolResults)
+            //{
+            //    protocol.ProtocolResults.Add(item);
+            //}
+
+            db.SaveChanges();
+        }
     }
 }

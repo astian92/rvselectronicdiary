@@ -20,7 +20,7 @@ namespace RED.Controllers
         public ActionResult Create(Guid requestId)
         {
             var request = Rep.GetRequest(requestId);
-            ViewBag.request = request;
+            //ViewBag.request = request;
             
             return View(request);
         }
@@ -31,6 +31,27 @@ namespace RED.Controllers
         {
             Rep.Create(protocol);
             return RedirectToAction("Index", "Requests");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(Guid protocolId)
+        {
+            var protocol = Rep.GetProtocol(protocolId);
+            
+            return View(protocol);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProtocolW protocol)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.EditProtocol(protocol);
+                return RedirectToAction("Index");
+            }
+
+            return View(protocol);
         }
     }
 }

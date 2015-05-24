@@ -6,6 +6,7 @@
     ViewBag.Title = "Create";
 }
 
+<h2>Добави</h2>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -22,77 +23,80 @@
 
         @foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
         {
-            for (int j = 0; j < item.Quantity; j++)
-            {
-                <div class="form-group">
-                    <label class="control-label col-md-3">
-                        Наименование на показателя
-                    </label>
-                    <label class="col-md-9 modified-label">
-                        @item.Test.Name
-                    </label>
-                </div>
-                @*<div class="form-group">
-                        @Html.Label("unit", "Единица на величината", new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+            foreach (var test in item.ProductTests)
+	        {
+                for (int j = 0; j < test.Units; j++)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            Наименование на показателя
+                        </label>
+                        <label class="col-md-9 modified-label">
+                            @test.Test.Name
+                        </label>
+                    </div>
+                    @*<div class="form-group">
+                            @Html.Label("unit", "Единица на величината", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
 
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            Методи
+                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
+                        </label>
+                        <label class="col-md-9 modified-label-notbold">
+                            @test.Test.TestMethods
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="test-method" class="control-label col-md-3">
+                            № на образеца
+                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                        </label>
+                        <label class="col-md-9 modified-label">
+                            @{
+                                var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
+                            }
+                            @number
+                            <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">
+                            Резултати от изследването, неопределеност
+                        </label>
+                        <div class="col-md-9">
+                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { @class = "form-control", data_val = "true", data_val_required = "Резултатът е задължителен!" })
+                            @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
-                    </div>*@
-                <div class="form-group">
-                    <label class="control-label col-md-3">
-                        Методи
-                        <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                    </label>
-                    <label class="col-md-9 modified-label-notbold">
-                        @item.Test.TestMethods
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="test-method" class="control-label col-md-3">
-                        № на образеца
-                        <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                    </label>
-                    <label class="col-md-9 modified-label">
-                        @{
-                            var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (item.Quantity > 1 ? "-N" + (j+1) : "");
-                        }
-                        @number
-                        <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
-                </div>
-                <div class="form-group">
-                    <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">
-                        Резултати от изследването, неопределеност
-                    </label>
-                    <div class="col-md-9">
-                        @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { @class = "form-control", data_val = "true", data_val_required = "Резултатът е задължителен!" })
-                        @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
-                        Стойност на показателя
-                        <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                    </label>
-                    <div class="col-md-9">
-                        @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", null, new { @class = "form-control", data_val = "true", data_val_required = "Стойността е задължителна!" })
-                        @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
+                            Стойност на показателя
+                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
+                        </label>
+                        <div class="col-md-9">
+                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", null, new { @class = "form-control", data_val = "true", data_val_required = "Стойността е задължителна!" })
+                            @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="test-method" class="control-label col-md-3">
-                        Условия на заобикалящата среда
-                    </label>
-                    <label class="col-md-9 modified-label-notbold">
-                        @item.Test.Temperature
-                    </label>
-                </div>
+                    <div class="form-group">
+                        <label for="test-method" class="control-label col-md-3">
+                            Условия на заобикалящата среда
+                        </label>
+                        <label class="col-md-9 modified-label-notbold">
+                            @test.Test.Temperature
+                        </label>
+                    </div>
 
-                <input type="hidden" name="ProtocolResults[@(i - 1)].Id" value="@Guid.NewGuid()" />
-                <input type="hidden" name="ProtocolResults[@(i - 1)].ProductId" value="@item.Id" />
+                    <input type="hidden" name="ProtocolResults[@(i - 1)].Id" value="@Guid.NewGuid()" />
+                    <input type="hidden" name="ProtocolResults[@(i - 1)].ProductTestId" value="@test.Id" />
 
-                <hr />
-                i++;
-            }
+                    <hr />
+                    i++;
+                }
+	        }
         }
         
 
