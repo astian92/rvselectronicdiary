@@ -47,15 +47,15 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-bottom:20px;">
-                                <div class="col-md-6">
+                            <div class="row" >
+                                <div class="col-md-12">
                                     <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>№</th>
                                                 <th class="text-left">Наименoвание</th>
-                                                <th class="text-left">Количество</th>
+                                                <th class="text-center">Количество</th>
                                                 <th class="text-right">Показател за изпитване</th>
                                             </tr>
                                         </thead>
@@ -94,7 +94,11 @@
                                             }
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
 
+                            <div class="row" style="margin-bottom:20px;">
+                                <div class="col-md-6">
                                     <h5>Срок на изпитване (дни): <strong></strong></h5>
 
                                     <div class="status-container">
@@ -118,6 +122,15 @@
                                             }
                                         }
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    @if(item.Request != null)
+                                    {
+                                        var protocol = item.Request.Protocols.FirstOrDefault();
+                                        <h5 class="text-right">Протокол № / Дата на издаване: @item.Number / @(protocol != null ? protocol.IssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) : "") <strong></strong></h5>
+                                        <h5 class="text-right">Получил протокола: <strong></strong></h5>
+                                        <h5 class="text-right">Забележка: @item.Remark<strong></strong></h5>
+                                    }
                                 </div>
                             </div>
 

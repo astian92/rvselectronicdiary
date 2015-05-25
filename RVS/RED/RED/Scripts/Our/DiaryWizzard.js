@@ -64,6 +64,7 @@ $("#form").steps({
 
     },
     onFinishing: function (event, currentIndex) {
+
         //Get Products and tests and name them correctly
         var products = $('.product');
         
