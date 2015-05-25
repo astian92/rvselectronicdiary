@@ -43,11 +43,12 @@ namespace RED.Models.ElectronicDiary.Protocols
         {
             var protocol = db.Protocols.Single(p => p.Id == protocolW.Id);
 
+            db.ProtocolResults.RemoveRange(protocol.ProtocolResults);
             protocol.ProtocolResults.Clear();
-            //foreach (var item in protocolW.ProtocolResults)
-            //{
-            //    protocol.ProtocolResults.Add(item);
-            //}
+            foreach (var item in protocolW.ProtocolResults)
+            {
+                protocol.ProtocolResults.Add(item);
+            }
 
             db.SaveChanges();
         }

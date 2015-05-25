@@ -53,7 +53,7 @@
 
                                     
                                     @{
-                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ResultNumber);
+                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
 
                                         foreach (var result in orderdProtocolRes)
                                         {
