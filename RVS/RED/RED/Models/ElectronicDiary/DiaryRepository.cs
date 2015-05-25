@@ -61,7 +61,7 @@ namespace RED.Models.ElectronicDiary
         public void AddLetter(DiaryW diary)
         {
             diary.Id = Guid.NewGuid();
-            diary.Number = db.Diaries.Count() + 1;
+            diary.Number = db.Diaries.Max(d => d.Number) + 1;
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
 
             int i = 1;
@@ -72,6 +72,11 @@ namespace RED.Models.ElectronicDiary
                 item.DiaryId = diary.Id;
                 //item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
                 i++;
+
+                foreach (var pt in item.ProductTests)
+                {
+                    pt.Id = Guid.NewGuid();
+                }
             }
 
             db.Diaries.Add(diary.ToBase());

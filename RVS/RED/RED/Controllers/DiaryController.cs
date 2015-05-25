@@ -51,7 +51,6 @@ namespace RED.Controllers
             }
 
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
-            
 
             return View(diary);
         }

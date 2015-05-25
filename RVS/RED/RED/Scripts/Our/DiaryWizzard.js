@@ -74,11 +74,15 @@ $("#form").steps({
             product.parent().find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
 
             var tests = product.find('.test');
-            for (var j = 0; j < test.length; j++) {
-                ///...
+            for (var j = 0; j < tests.length; j++) {
+                var test = $(tests[j]);
+
+                var testId = test.find('.testId');
+                testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
+                var units = test.find('.units');
+                units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
             }
         }
-
 
 
         var form = $(this);
