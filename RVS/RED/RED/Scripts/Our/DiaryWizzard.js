@@ -11,7 +11,8 @@ $("#form").steps({
         }
 
         if (currentIndex == 1 && $('.product').length == 0) {
-            $('.product-list-validation').removeClass('collapse');
+            //$('.product-list-validation').removeClass('collapse');
+            $('.product-list-table tbody').append('<tr class="error-msg"><td><span style="color: red">Необходимо е да въведете поне един продукт!</span></td></tr>');
             return false;
         }
 
@@ -85,15 +86,26 @@ $("#form").steps({
             }
         }
 
+        var dataIsValid = true;
+        for (var k = 0; k < products.length; k++) {
+            product = $(products[k]);
+            var tests = product.find('.test');
+            if (tests.length < 1) {
+                dataIsValid = false;
+            }
+        }
+
+        if (dataIsValid == false) {
+            $('.current').addClass('error');
+            $('.test-list-table tbody').append('<tr class="error-msg"><td><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+        }
 
         var form = $(this);
-
         // Disable validation on fields that are disabled.
         // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
         form.validate().settings.ignore = ":disabled";
 
-        // Start validation; Prevent form submission if false
-        return form.valid();
+        return dataIsValid;
     },
     onFinished: function (event, currentIndex) {
         var form = $(this);
@@ -162,7 +174,8 @@ $('.add-product-btn').click(function () {
 
     $('#Products').val('');
     $('#Quantity').val('');
-    $('.product-list-validation').addClass('collapse');
+    //$('.product-list-validation').addClass('collapse');
+    $('.product-list-table tbody .error-msg').remove();
     $('.current').removeClass('error');
 });
 

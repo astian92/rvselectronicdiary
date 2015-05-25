@@ -68,9 +68,6 @@
     }
 
     $('.add-test-btn').on('click', function () {
-        //console.log(this);
-        //console.log($('.product'));
-
         var productKey = $(this).parent().attr('key');
         var testKey = guid();
 
@@ -115,7 +112,7 @@
 
         var product;
         var products = $('.product');
-        console.log(products);
+        
         for (var i = 0; i < products.length; i++)
         {
             var p = products[i];
@@ -128,6 +125,8 @@
 
         if (product) {
             $(product).append(testsHolder);
+            var errorMsg = groupParent.parent().find('.test-list-table .error-msg');
+            errorMsg.remove();
         }
     });
 
