@@ -1,0 +1,53 @@
+﻿@model IEnumerable<RED.Models.Logs.ActionLogW>
+
+@{
+    foreach (var item in Model)
+    {
+        <div class="feed-element">
+            <span class="pull-left text-navy" style="padding-top:5px;">
+                @{
+                    switch (item.ActionTypeId)
+                    {
+                        case 1:
+                            <i class="fa fa-plus fa-2x"></i>
+                            break;
+                        case 2:
+                            <i class="fa fa-pencil fa-2x"></i>
+                            break;
+                        case 3:
+                            <i class="fa fa-trash-o fa-2x"></i>
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            </span>
+            <div class="media-body ">
+                <span class="pull-right text-navy"><i class="fa fa-check"></i></span>
+                <strong>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </strong> 
+                    @{
+                        switch (item.ActionTypeId)
+                        {
+                            case 1:
+                                <span>създаде</span>
+                                break;
+                            case 2:
+                                <span>промени</span>
+                                break;
+                            case 3:
+                                <span>изтри</span>
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                <strong>
+                    @Html.DisplayFor(modelItem => item.TableNameBg)
+                </strong>. <br>
+                <small class="text-muted">@item.On.ToString("dd MMMM, yyyy H:mm")</small>
+            </div>
+        </div>
+    }
+}

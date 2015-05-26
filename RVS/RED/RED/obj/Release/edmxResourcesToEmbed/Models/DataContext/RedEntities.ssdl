@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_9BCA69_RedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AcredetationLevels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Level" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActionLogProperties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogId" Type="int" Nullable="false" />
+    <Property Name="PropertyName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="OldValue" Type="nvarchar" MaxLength="100" />
+    <Property Name="NewValue" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ActionLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TableName" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="FullTableName" Type="nvarchar" MaxLength="80" Nullable="false" />
+    <Property Name="On" Type="datetime" Nullable="false" />
+    <Property Name="ActionTypeId" Type="int" Nullable="false" />
+    <Property Name="TableNameBg" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ActionTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="TypeNameBg" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="ArchivedDiary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
+    <Property Name="LetterNumber" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="LetterDate" Type="datetime" Nullable="false" />
+    <Property Name="Contractor" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Client" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Comment" Type="ntext" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArchivedProducts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="Quantity" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArchivedProductTests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="TestUnitName" Type="nvarchar" MaxLength="60" />
+    <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
+    <Property Name="TestAcredetationLevel" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="TestTemperature" Type="nvarchar" MaxLength="50" />
+    <Property Name="TestCategory" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="Units" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArchivedProtocolResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Diary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
+    <Property Name="LetterNumber" Type="int" Nullable="false" />
+    <Property Name="LetterDate" Type="date" Nullable="false" />
+    <Property Name="Contractor" Type="nvarchar" MaxLength="50" />
+    <Property Name="ClientId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Comment" Type="ntext" />
+  </EntityType>
+  <EntityType Name="ELMAH_Error">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusCode" Type="int" Nullable="false" />
+    <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+    <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AllXml" Type="ntext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Features">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="Quantity" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="ProductTests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Units" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProtocolResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductTestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ResultNumber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Protocols">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="IssuedDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="AcceptedBy" Type="uniqueidentifier" />
+    <Property Name="IsAccepted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolesFeatures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FeatureId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestCategories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestCategoryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
+    <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Temperature" Type="nvarchar" MaxLength="50" />
+    <Property Name="UnitName" Type="nvarchar" MaxLength="60" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" />
+  </EntityType>
+  <Association Name="FK_ActionLogProperties_ToTable">
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActionLogProperties" Type="Self.ActionLogProperties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionLogs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogProperties">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_ActionTypes">
+    <End Role="ActionTypes" Type="Self.ActionTypes" Multiplicity="1" />
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogs">
+        <PropertyRef Name="ActionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionLogs_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ActionLogs">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProducts_ArchivedDiary">
+    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
+    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProducts">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProductTests_ArchivedProducts">
+    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="1" />
+    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProductTests">
+        <PropertyRef Name="ArchivedProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
+    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
+    <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolResults">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProtocolResults_ArchivedProductTests">
+    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="1" />
+    <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedProductTests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolResults">
+        <PropertyRef Name="ArchivedProductTestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Diary_Clients">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="Diary" Type="Self.Diary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Diary">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Diary">
+    <End Role="Diary" Type="Self.Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="DiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTests_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTests">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTests_Tests">
+    <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTests">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProtocolResults_Products">
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="1" />
+    <End Role="ProtocolResults" Type="Self.ProtocolResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolResults">
+        <PropertyRef Name="ProductTestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProtocolResults_Protocols">
+    <End Role="Protocols" Type="Self.Protocols" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProtocolResults" Type="Self.ProtocolResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Protocols">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolResults">
+        <PropertyRef Name="ProtocolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Protocols_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="Protocols" Type="Self.Protocols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Protocols">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Diary">
+    <End Role="Diary" Type="Self.Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="DiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="AcceptedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolesFeatures_Features">
+    <End Role="Features" Type="Self.Features" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RolesFeatures" Type="Self.RolesFeatures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Features">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolesFeatures">
+        <PropertyRef Name="FeatureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolesFeatures_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RolesFeatures" Type="Self.RolesFeatures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolesFeatures">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tests_AcredetationLevels">
+    <End Role="AcredetationLevels" Type="Self.AcredetationLevels" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcredetationLevels">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="AcredetationLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tests_TestCategories">
+    <End Role="TestCategories" Type="Self.TestCategories" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="TestCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_9BCA69_RedDbModelStoreContainer">
+    <EntitySet Name="AcredetationLevels" EntityType="Self.AcredetationLevels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedDiary" EntityType="Self.ArchivedDiary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedProducts" EntityType="Self.ArchivedProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedProductTests" EntityType="Self.ArchivedProductTests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedProtocolResults" EntityType="Self.ArchivedProtocolResults" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Diary" EntityType="Self.Diary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductTests" EntityType="Self.ProductTests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProtocolResults" EntityType="Self.ProtocolResults" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Protocols" EntityType="Self.Protocols" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestCategories" EntityType="Self.TestCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="Self.FK_ActionLogProperties_ToTable">
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+      <End Role="ActionLogProperties" EntitySet="ActionLogProperties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_ActionTypes" Association="Self.FK_ActionLogs_ActionTypes">
+      <End Role="ActionTypes" EntitySet="ActionTypes" />
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionLogs_Users" Association="Self.FK_ActionLogs_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ActionLogs" EntitySet="ActionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="Self.FK_ArchivedProducts_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
+      <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="Self.FK_ArchivedProductTests_ArchivedProducts">
+      <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
+      <End Role="ArchivedProductTests" EntitySet="ArchivedProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="Self.FK_ArchivedProtocolResults_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
+      <End Role="ArchivedProtocolResults" EntitySet="ArchivedProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedProductTests" Association="Self.FK_ArchivedProtocolResults_ArchivedProductTests">
+      <End Role="ArchivedProductTests" EntitySet="ArchivedProductTests" />
+      <End Role="ArchivedProtocolResults" EntitySet="ArchivedProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Diary_Clients" Association="Self.FK_Diary_Clients">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Diary" EntitySet="Diary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Diary" Association="Self.FK_Products_Diary">
+      <End Role="Diary" EntitySet="Diary" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTests_Products" Association="Self.FK_ProductTests_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTests_Tests" Association="Self.FK_ProductTests_Tests">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolResults_Products" Association="Self.FK_ProtocolResults_Products">
+      <End Role="ProductTests" EntitySet="ProductTests" />
+      <End Role="ProtocolResults" EntitySet="ProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolResults_Protocols" Association="Self.FK_ProtocolResults_Protocols">
+      <End Role="Protocols" EntitySet="Protocols" />
+      <End Role="ProtocolResults" EntitySet="ProtocolResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Protocols" EntitySet="Protocols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Diary" Association="Self.FK_Requests_Diary">
+      <End Role="Diary" EntitySet="Diary" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Users" Association="Self.FK_Requests_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolesFeatures_Features" Association="Self.FK_RolesFeatures_Features">
+      <End Role="Features" EntitySet="Features" />
+      <End Role="RolesFeatures" EntitySet="RolesFeatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolesFeatures_Roles" Association="Self.FK_RolesFeatures_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RolesFeatures" EntitySet="RolesFeatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tests_AcredetationLevels" Association="Self.FK_Tests_AcredetationLevels">
+      <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />
+      <End Role="Tests" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tests_TestCategories" Association="Self.FK_Tests_TestCategories">
+      <End Role="TestCategories" EntitySet="TestCategories" />
+      <End Role="Tests" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

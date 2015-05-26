@@ -35,7 +35,8 @@ namespace RED.Models.ElectronicDiary
             diary.Contractor = diaryW.Contractor;
             diary.ClientId = diaryW.ClientId;
             
-            diary.Products.Clear();
+            //diary.Products.Clear();
+            db.Products.RemoveRange(diary.Products);
             int i = 1;
             foreach (var item in diaryW.Products)
             {
@@ -43,8 +44,14 @@ namespace RED.Models.ElectronicDiary
                 item.DiaryId = diary.Id;
                 item.Number = i;
                 //item.Test = db.Tests.FirstOrDefault(x => x.Id == item.TestId);
-                diary.Products.Add(item);
                 i++;
+
+                foreach (var test in item.ProductTests)
+                {
+                    test.Id = Guid.NewGuid();
+                }
+
+                diary.Products.Add(item);
             }
 
             db.SaveChanges();

@@ -1,0 +1,48 @@
+﻿@model RED.Models.ElectronicDiary.Requests.RequestW
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Затвори</span></button>
+    <i class="fa fa-tags modal-icon"></i>
+    <h4 class="modal-title">Откажи</h4>
+    <small class="font-bold">Сигурни ли сте, че искате да откажете тази заявка?</small>
+</div>
+<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>
+            Заявка №
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt>
+            От
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diary.Client.Name)
+        </dd>
+        <dt>
+            Възложител
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diary.Contractor)
+        </dd>
+    </dl>
+</div>
+<div class="modal-footer">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input id="@Model.Id" type="button" value="Да" class="btn btn-primary btn-padding-lg" data-dismiss="modal" onclick="DenyRequest(this)" />
+            <button type="button" class="btn btn-white btn-padding-lg" data-dismiss="modal">Не</button>
+        </div>
+    }
+</div>
+
+
+    
+

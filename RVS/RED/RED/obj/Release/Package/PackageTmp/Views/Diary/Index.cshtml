@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Дневник</h2>
+
+<p>
+    <a href="/Diary/Create">
+        <i class="fa fa-plus"></i>
+        Добави писмо
+    </a>
+</p>
+
+<div class="row">
+    <div class="panel">
+
+        <div class="panel-heading">
+            <div class="panel-options">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" class="active-tab-btn">Активни</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-2" class="archived-tab-btn">Архивирани</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body my-tab-style">
+
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active not-accepted-requests">
+                    @{ Html.RenderAction("ActiveDiaries"); }
+                </div>
+
+                <div id="tab-2" class="tab-pane my-requests">
+                    @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>
+
+
+
