@@ -112,6 +112,15 @@ $("#form").steps({
 
         // Submit form input
         form.submit();
+    },
+    onCanceled: function () { 
+        window.location = "/Diary/Index";
+    },
+    labels: {
+        cancel: "Откажи",
+        finish: "Готово",
+        next: "Напред",
+        previous: "Назад"
     }
 })
 //.validate({

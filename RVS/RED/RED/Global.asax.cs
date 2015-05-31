@@ -3,7 +3,9 @@ using RED.Models.Account;
 using RED.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -20,7 +22,11 @@ namespace RED
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
         }
+
+        
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
