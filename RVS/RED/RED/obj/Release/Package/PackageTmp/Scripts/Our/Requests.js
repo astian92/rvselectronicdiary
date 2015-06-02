@@ -51,13 +51,12 @@ $(document).ready(function () {
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-
         $('.accepted-requests').html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GeAcceptedRequests",
+            url: "/Requests/GetAcceptedRequests",
             success: function (result) {
                 $('.accepted-requests').html(result);
                 if (requestIdToOpen) {

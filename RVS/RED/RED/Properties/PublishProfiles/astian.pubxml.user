@@ -67,7 +67,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2015 16:20:20</publishTime>
     </File>
     <File Include="bin/RED.dll">
-      <publishTime>05/27/2015 19:57:26</publishTime>
+      <publishTime>06/02/2015 23:03:31</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>02/07/2015 16:19:59</publishTime>
@@ -116,6 +116,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/email.css">
       <publishTime>02/15/2015 13:15:10</publishTime>
+    </File>
+    <File Include="Content/Our/protocols.css">
+      <publishTime>06/02/2015 22:44:09</publishTime>
     </File>
     <File Include="Content/Our/shared.css">
       <publishTime>04/26/2015 18:43:36</publishTime>
@@ -306,11 +309,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/a7.jpg">
       <publishTime>02/15/2015 13:15:09</publishTime>
     </File>
+    <File Include="Images/android-chrome-192x192.png">
+      <publishTime>05/24/2015 19:43:10</publishTime>
+    </File>
     <File Include="Images/default_large.png">
       <publishTime>02/22/2015 15:56:21</publishTime>
     </File>
     <File Include="Images/default_small.png">
       <publishTime>02/22/2015 15:56:21</publishTime>
+    </File>
+    <File Include="Images/favicon-16x16.png">
+      <publishTime>05/24/2015 19:43:10</publishTime>
+    </File>
+    <File Include="Images/favicon-32x32.png">
+      <publishTime>05/24/2015 19:43:10</publishTime>
+    </File>
+    <File Include="Images/favicon-96x96.png">
+      <publishTime>05/24/2015 19:43:10</publishTime>
+    </File>
+    <File Include="Images/favicon.ico">
+      <publishTime>05/24/2015 19:43:10</publishTime>
     </File>
     <File Include="Images/profile.jpg">
       <publishTime>02/15/2015 13:15:09</publishTime>
@@ -373,16 +391,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2015 16:20:01</publishTime>
     </File>
     <File Include="Scripts/Our/Diaries.js">
-      <publishTime>05/02/2015 16:51:53</publishTime>
+      <publishTime>06/02/2015 22:05:29</publishTime>
     </File>
     <File Include="Scripts/Our/DiaryWizzard.js">
-      <publishTime>05/26/2015 19:30:03</publishTime>
+      <publishTime>05/31/2015 21:40:05</publishTime>
     </File>
     <File Include="Scripts/Our/Helpers.js">
       <publishTime>05/20/2015 23:16:15</publishTime>
     </File>
     <File Include="Scripts/Our/Requests.js">
-      <publishTime>05/10/2015 17:33:09</publishTime>
+      <publishTime>05/31/2015 21:47:19</publishTime>
     </File>
     <File Include="Scripts/plugins/chosen/chosen.jquery.js">
       <publishTime>03/19/2015 19:33:42</publishTime>
@@ -799,7 +817,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2015 13:15:04</publishTime>
     </File>
     <File Include="Views/Diary/ActiveDiaries.cshtml">
-      <publishTime>05/25/2015 22:59:05</publishTime>
+      <publishTime>06/02/2015 22:05:55</publishTime>
     </File>
     <File Include="Views/Diary/Create.cshtml">
       <publishTime>05/26/2015 19:31:51</publishTime>
@@ -808,7 +826,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Diary/Edit.cshtml">
-      <publishTime>05/26/2015 20:01:31</publishTime>
+      <publishTime>05/27/2015 20:52:49</publishTime>
     </File>
     <File Include="Views/Diary/Index.cshtml">
       <publishTime>05/03/2015 16:00:30</publishTime>
@@ -862,13 +880,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/26/2015 00:08:50</publishTime>
     </File>
     <File Include="Views/Protocols/Create.cshtml">
-      <publishTime>05/24/2015 19:43:06</publishTime>
+      <publishTime>06/02/2015 22:54:20</publishTime>
     </File>
     <File Include="Views/Protocols/Edit.cshtml">
-      <publishTime>05/25/2015 22:11:31</publishTime>
+      <publishTime>06/02/2015 22:55:07</publishTime>
     </File>
     <File Include="Views/Protocols/Index.cshtml">
-      <publishTime>05/25/2015 22:11:31</publishTime>
+      <publishTime>06/02/2015 22:18:44</publishTime>
     </File>
     <File Include="Views/Requests/Delete.cshtml">
       <publishTime>05/24/2015 19:43:09</publishTime>
@@ -925,7 +943,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2015 19:43:08</publishTime>
     </File>
     <File Include="Views/Tests/Create.cshtml">
-      <publishTime>05/24/2015 19:43:08</publishTime>
+      <publishTime>06/02/2015 22:30:30</publishTime>
     </File>
     <File Include="Views/Tests/CreateCategory.cshtml">
       <publishTime>03/14/2015 14:28:37</publishTime>
@@ -937,7 +955,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2015 19:43:08</publishTime>
     </File>
     <File Include="Views/Tests/Edit.cshtml">
-      <publishTime>05/24/2015 19:43:08</publishTime>
+      <publishTime>06/02/2015 22:31:36</publishTime>
     </File>
     <File Include="Views/Tests/EditCategory.cshtml">
       <publishTime>03/14/2015 15:30:04</publishTime>
@@ -964,7 +982,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2015 16:19:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/26/2015 20:03:40</publishTime>
+      <publishTime>06/02/2015 23:03:32</publishTime>
     </File>
   </ItemGroup>
 </Project>

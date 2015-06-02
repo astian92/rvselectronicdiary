@@ -148,16 +148,29 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="row">
-                                <div class="text-right">
-                                    <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
-                                        <i class="fa fa-edit"></i>
-                                        Промени писмото
-                                    </a>
-                                    <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-trash"></i>
-                                        Изтрий писмото
-                                    </a>
-                                </div>
+                                @if (item.Request == null || !item.Request.IsAccepted)
+                                {
+                                    <div class="text-right">
+                                        <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
+                                            <i class="fa fa-edit"></i>
+                                            Промени
+                                        </a>
+                                        <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                            <i class="fa fa-trash"></i>
+                                            Изтрий
+                                        </a>
+                                    </div>
+                                }
+                                
+                                @if (item.Request != null && item.Request.Protocols.Any())
+                                {
+                                    <div class="text-right">
+                                        <a class="btn btn-primary btn-archive" href="/Diary/Archive?id=@item.Id">
+                                            <i class="fa fa-archive"></i>
+                                            Архивирай
+                                        </a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
