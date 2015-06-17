@@ -19,6 +19,7 @@ namespace RED.Models.DataContext
         public System.Guid ArchivedProductTestId { get; set; }
         public string Results { get; set; }
         public string MethodValue { get; set; }
+        public string ResultNumber { get; set; }
     
         public virtual ArchivedDiary ArchivedDiary { get; set; }
         public virtual ArchivedProductTest ArchivedProductTest { get; set; }

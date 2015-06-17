@@ -48,6 +48,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
           <Property Name="LetterNumber" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="LetterDate" Type="datetime" Nullable="false" />
@@ -57,6 +58,7 @@
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <EntityType Name="ArchivedProducts">
           <Key>
@@ -89,6 +91,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ResultNumber" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
           <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
         </EntityType>
@@ -1004,6 +1007,8 @@
           <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
           <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ELMAH_Error">
           <Key>
@@ -1151,6 +1156,7 @@
           <Property Name="MethodValue" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
           <NavigationProperty Name="ArchivedProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProtocolResult" ToRole="ArchivedProductTest" />
+          <Property Name="ResultNumber" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -1391,6 +1397,8 @@
           <EntitySetMapping Name="ArchivedDiaries">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
               <MappingFragment StoreEntitySet="ArchivedDiary">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
                 <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
@@ -1483,6 +1491,7 @@
           <EntitySetMapping Name="ArchivedProtocolResults">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolResult">
               <MappingFragment StoreEntitySet="ArchivedProtocolResults">
+                <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
                 <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
                 <ScalarProperty Name="Results" ColumnName="Results" />
                 <ScalarProperty Name="ArchivedProductTestId" ColumnName="ArchivedProductTestId" />

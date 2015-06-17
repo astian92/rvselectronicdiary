@@ -26,9 +26,8 @@ namespace RED.Controllers
 
         public ActionResult ArchivedDiaries()
         {
-            //var archivedDiaries = Rep.GetArchivedDiaryEntries();
-            //return PartialView(archivedDiaries);
-            return null;
+            var archivedDiaries = Rep.GetArchivedDiaryEntries();
+            return PartialView(archivedDiaries);
         }
 
         // GET: Diary/Create
@@ -168,6 +167,12 @@ namespace RED.Controllers
         {
             ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
             return PartialView(products);
+        }
+
+        public JsonResult ArchiveDiary(Guid diaryId)
+        {
+            var response = Rep.ArchiveDiary(diaryId);
+            return Json(response);
         }
     }
 }

@@ -30,6 +30,8 @@ namespace RED.Models.DataContext
         public System.DateTime RequestDate { get; set; }
         public string RequestAcceptedBy { get; set; }
         public System.DateTime ProtocolIssuedDate { get; set; }
+        public string Remark { get; set; }
+        public string Number { get; set; }
     
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }

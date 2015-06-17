@@ -157,11 +157,11 @@ function AcceptRequest(btn) {
                 $('.my-requests-tab-btn').click();
             }
             else {
-                $('.ui-state-error-text').append('<p>Възникна грешка при опит за приемане на заявката</p>');
+                $('#field-error-' + id).append('<p>Възникна грешка при опит за приемане на заявката</p>');
             }
         },
         error: function (error) {
-            $('.ui-state-error-text').append('<p>Възникна грешка при опит за приемане на заявката</p>');
+            $('#field-error-' + id).append('<p>Възникна грешка при опит за приемане на заявката</p>');
         }
     });
 }

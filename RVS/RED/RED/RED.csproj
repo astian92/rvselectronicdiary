@@ -278,12 +278,14 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
+    <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
+    <Compile Include="Models\ElectronicDiary\Requests\ArchivedRequest.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
     <Compile Include="Models\ElectronicDiary\SimpleProduct.cs" />
@@ -343,8 +345,10 @@
     <Content Include="Images\favicon-32x32.png" />
     <Content Include="Images\favicon-96x96.png" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Scripts\Our\Diaries.js" />
     <Content Include="Scripts\Our\DiaryWizzard.js" />
     <Content Include="Scripts\Our\Helpers.js" />
+    <Content Include="Scripts\Our\Protocols.js" />
     <Content Include="Scripts\plugins\staps\jquery.steps.min.js" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
@@ -434,7 +438,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Our\Diaries.js" />
+    <Content Include="Scripts\Our\ActiveDiaries.js" />
     <Content Include="Scripts\Our\Requests.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
@@ -641,6 +645,9 @@
     <Content Include="Views\Protocols\Edit.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Diary\ArchivedDiaries.cshtml" />
+    <Content Include="Views\Protocols\Delete.cshtml" />
+    <Content Include="Views\Requests\ArchivedRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

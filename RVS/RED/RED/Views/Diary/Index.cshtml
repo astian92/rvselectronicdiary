@@ -33,11 +33,11 @@
         <div class="panel-body my-tab-style">
 
             <div class="tab-content">
-                <div id="tab-1" class="tab-pane active not-accepted-requests">
+                <div id="tab-1" class="tab-pane active active-diaries">
                     @{ Html.RenderAction("ActiveDiaries"); }
                 </div>
 
-                <div id="tab-2" class="tab-pane my-requests">
+                <div id="tab-2" class="tab-pane archived-diaries">
                     @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
                 </div>
             </div>
@@ -48,12 +48,14 @@
 
 </div>
 
-<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+<script src="~/Scripts/Our/Diaries.js"></script>
+
+@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
         </div>
     </div>
-</div>
+</div>*@
 
 
 

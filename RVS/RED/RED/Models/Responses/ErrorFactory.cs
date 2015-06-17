@@ -9,7 +9,8 @@ namespace RED.Models.Responses
     {
         UnkownError = 0,
         InvalidUsernameOrPassword, 
-        ConnectingToDatabaseFailure
+        ConnectingToDatabaseFailure,
+        ServerError
     }
 
     public static class ErrorFactory
@@ -35,6 +36,14 @@ namespace RED.Models.Responses
             get
             {
                 return new ActionError("Грешка при свързване с базата данни", ErrorTypes.ConnectingToDatabaseFailure);
+            }
+        }
+
+        public static ActionError UnableToArchiveDiary
+        {
+            get
+            {
+                return new ActionError("Възникна грешка при опит за архивиране на дневник", ErrorTypes.ServerError);
             }
         }
         

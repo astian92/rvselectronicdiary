@@ -3,6 +3,7 @@ using RED.Models.ElectronicDiary.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,6 +53,30 @@ namespace RED.Controllers
             }
 
             return View(protocol);
+        }
+
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ProtocolW protocol = Rep.GetProtocol(id.Value);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(protocol);
+            }
+
+            return View(protocol);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            Rep.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

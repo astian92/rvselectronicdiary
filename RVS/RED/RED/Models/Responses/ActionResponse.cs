@@ -13,6 +13,8 @@ namespace RED.Models.Responses
 
         public ActionError Error { get; set; }
 
+        public object ResponseObject { get; set; }
+
         public ActionResponse()
         {
             this.Error = new ActionError();

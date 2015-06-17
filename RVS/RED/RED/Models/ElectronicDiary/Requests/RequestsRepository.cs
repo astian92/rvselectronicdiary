@@ -51,9 +51,13 @@ namespace RED.Models.ElectronicDiary.Requests
             return requests.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<RequestW> GetArchivedRequests()
+        public IEnumerable<ArchivedRequest> GetArchivedRequests()
         {
-            throw new NotImplementedException("Archived Requests are not yet implemented!");
+            var archivedDiaries = db.ArchivedDiaries
+                .OrderByDescending(r => r.RequestDate)
+                .ToList();
+
+            return archivedDiaries.Select(ad => new ArchivedRequest(ad));
         }
 
         public bool AcceptRequest(Guid requestId)

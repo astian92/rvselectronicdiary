@@ -52,10 +52,10 @@ namespace RED.Controllers
 
         public ActionResult GetArchivedRequests()
         {
-            ViewBag.Label = "all";
+            ViewBag.Label = "archived";
 
             var requests = Rep.GetArchivedRequests();
-            return PartialView("Requests", requests);
+            return PartialView("ArchivedRequests", requests);
         }
 
         public bool AcceptRequest(Guid requestId)

@@ -135,6 +135,8 @@
     <EntitySetMapping Name="ArchivedDiaries">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
         <MappingFragment StoreEntitySet="ArchivedDiary">
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
           <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
           <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
           <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
@@ -227,6 +229,7 @@
     <EntitySetMapping Name="ArchivedProtocolResults">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolResult">
         <MappingFragment StoreEntitySet="ArchivedProtocolResults">
+          <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
           <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
           <ScalarProperty Name="Results" ColumnName="Results" />
           <ScalarProperty Name="ArchivedProductTestId" ColumnName="ArchivedProductTestId" />
