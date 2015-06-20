@@ -1,0 +1,133 @@
+﻿@model RED.Models.ElectronicDiary.DiaryW
+@using System.Globalization;
+<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
+<link href="~/Content/plugins/wizzard/jquery.steps.css" rel="stylesheet" />
+<h2>Промени писмо</h2>
+
+@using (Html.BeginForm("Edit", "Diary", FormMethod.Post, new { @class = "wizard-big", @id = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.Id)
+    <h1>Писмо</h1>
+    <fieldset>
+        <h2>Информация за писмото</h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LetterNumber)
+                    @Html.EditorFor(model => model.LetterNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LetterNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group" id="data_1">
+                    @Html.LabelFor(model => model.LetterDate)
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@Model.LetterDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                    </div>
+                    @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Contractor)
+                    @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="ClientId">Клиент</label>
+                    @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="text-center">
+                    <div style="margin-top: 20px">
+                        <i class="fa fa-book" style="font-size: 180px;color: #e5e5e5 "></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <h1>Продукти</h1>
+    <fieldset>
+        <h2>Информация за продуктите</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label" for="Products">Наименование</label>
+                    <input type="text" id="Products" onchange="hideNameValidation()" class="form-control text-box single-line" tabindex="1">
+                    <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-name-validation collapse">Наименованието е задължително</span></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Quantity">Количество</label>
+                    @*<input placeholder="Брой" class="form-control text-box single-line" data-val="true" data-val-number="Полето трябва да е число" data-val-range="Невалидно число" data-val-range-max="2147483647" data-val-range-min="0" id="Quantity" name="Quantity" type="number" tabindex="2">*@
+                    <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2">
+                    <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-quantity-validation collapse">Количеството е задължително</span></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Добави" class="add-product-btn btn btn-primary" tabindex="5" />
+                </div>
+            </div>
+            <div class="col-lg-6 product-list-table-container">
+                <table class="table table-hover product-list-table" style="margin-top:23px;">
+                    <tbody>
+                        @foreach (var product in Model.Products.OrderBy(p => p.Number))
+                        {
+                            <tr>
+                                <td class="col-md-2">
+                                    <span class="label label-primary">Добавен</span>
+                                </td>
+                                <td class="issue-info product" key="@Guid.NewGuid()">
+                                    @product.Name
+                                    <input class="productName" type="hidden" value="@product.Name">
+                                    <input type="hidden" name="Product[].Id" value="@product.Id" />
+
+                                    @foreach (var test in product.ProductTests)
+                                    {
+                                        <span class="test" id="' + testKey + '">
+                                            <input type="hidden" class="testId" value="@test.TestId" />
+                                            <input type="hidden" class="units" value="@test.Units" />
+                                            <input type="hidden" class="name" value="@test.Test.Name" />
+                                        </span>
+                                    }
+                                </td>
+                                <td class="col-md-2">
+                                    @product.Quantity
+                                    <input class="productQuantity" type="hidden" value="@product.Quantity">
+                                </td>
+                                <td class="text-right">
+                                    <a class="delete-product" onclick="deleteProduct(this)">
+                                        <h3 style="margin: 0px">x</h3>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @*<span class="text-danger field-validation-error" data-valmsg-for="product-list-table" data-valmsg-replace="true"><span class="product-list-validation collapse">Въведете поне един продукт!</span></span>*@
+            </div>
+        </div>
+    </fieldset>
+    <h1>Тестове</h1>
+    <fieldset>
+        <h2>Тестове на продуктите</h2>
+        <div class="products-tests">
+
+        </div>
+    </fieldset>
+}
+
+<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+<script src="~/Scripts/plugins/staps/jquery.steps.min.js"></script>
+<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/Our/Helpers.js"></script>
+
+<script src="~/Scripts/Our/DiaryWizzard.js"></script>

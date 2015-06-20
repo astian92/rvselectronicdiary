@@ -67,12 +67,21 @@ namespace RED.Models.ElectronicDiary
             db.SaveChanges();
         }
 
-        public void Delete(Guid diaryId)
+        public bool Delete(Guid diaryId)
         {
             var diary = db.Diaries.Single(c => c.Id == diaryId);
             db.Diaries.Remove(diary);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void AddLetter(DiaryW diary)

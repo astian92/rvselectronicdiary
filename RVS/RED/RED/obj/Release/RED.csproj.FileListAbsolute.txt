@@ -53,3 +53,9 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.x
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Release\RED.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Release\RED.pdb
+D:\Programing\RED\RVS\RED\RED\bin\RED.dll.config
+D:\Programing\RED\RVS\RED\RED\bin\RED.dll
+D:\Programing\RED\RVS\RED\RED\bin\RED.pdb
+D:\Programing\RED\RVS\RED\RED\obj\Release\RED.dll
+D:\Programing\RED\RVS\RED\RED\obj\Release\RED.pdb
+D:\Programing\RED\RVS\RED\RED\obj\Release\RED.csprojResolveAssemblyReference.cache

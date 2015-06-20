@@ -46,12 +46,21 @@ namespace RED.Models.ElectronicDiary.Tests
             db.SaveChanges();
         }
         
-        public void DeleteCategory(Guid id)
+        public bool DeleteCategory(Guid id)
         {
             var category = db.TestCategories.Single(c => c.Id == id);
             db.TestCategories.Remove(category);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public TestW GetTest(Guid Id)
@@ -92,12 +101,21 @@ namespace RED.Models.ElectronicDiary.Tests
             db.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             var test = db.Tests.Single(c => c.Id == id);
             db.Tests.Remove(test);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

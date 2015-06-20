@@ -38,12 +38,21 @@ namespace RED.Models.ElectronicDiary.Clients
             db.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             var client = db.Clients.Single(c => c.Id == id);
             db.Clients.Remove(client);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Електронен дневник - РВС</title>
+
+    <link rel="icon" type="image/png" href="~/Images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="~/Images/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="~/Images/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="~/Images/favicon-16x16.png" sizes="16x16">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+         
+    <!-- Add jQuery Style direct - used for jQGrid plugin -->
+    <link href="@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet" />
+
+    <!-- Gritter 
+    <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">-->
+
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
+    <link href="~/Content/Our/shared.css" rel="stylesheet" />
+
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+    
+</head>
+<body class="pace-done">
+    <div class="pace pace-inactive">
+        <div class="pace-progress" data--progress-text="100%" date-progress="99" style="width:100%">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+    <!-- Wrapper-->
+    <div id="wrapper" >
+
+        <!-- Navigation -->
+        @Html.Partial("_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="white-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            @Html.Partial("_TopNavbar")
+
+            <div class="row wrapper border-bottom animated fadeInRight">
+                <!-- Main view  -->
+                @RenderBody()
+                <div class="clearfix"></div>
+            </div>
+        </div>
+                <!-- End page wrapper-->
+
+            </div>
+            
+            
+            <!-- Flot -->
+            <script src="~/Scripts/plugins/flot/jquery.flot.js"></script>
+            <script src="~/Scripts/plugins/flot/jquery.flot.tooltip.min.js"></script>
+            <script src="~/Scripts/plugins/flot/jquery.flot.spline.js"></script>
+            <script src="~/Scripts/plugins/flot/jquery.flot.resize.js"></script>
+            <script src="~/Scripts/plugins/flot/jquery.flot.pie.js"></script>
+            <!-- Peity
+        <script src="js/plugins/peity/jquery.peity.min.js"></script>
+        <script src="js/demo/peity-demo.js"></script> -->
+            <!-- Custom and plugin javascript -->
+            <script src="~/Scripts/plugins/pace/pace.min.js"></script>
+            <script src="~/Scripts/app/inspinia.js"></script>
+
+            <!-- jQuery UI -->
+            <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+            <!-- GITTER
+        <script src="js/plugins/gritter/jquery.gritter.min.js"></script> -->
+            <!-- Sparkline
+        <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>-->
+            <!-- Sparkline demo data
+        <script src="js/demo/sparkline-demo.js"></script> -->
+            <!-- ChartJS
+        <script src="js/plugins/chartJs/Chart.min.js"></script>-->
+            <!-- Toastr -->
+            <script src="~/Scripts/plugins/toastr/toastr.min.js"></script>
+            @*<script src="~/Scripts/jquery-2.1.1.intellisense.js"></script>*@
+</body>
+</html>

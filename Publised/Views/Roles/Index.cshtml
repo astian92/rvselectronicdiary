@@ -1,0 +1,66 @@
+﻿@model IEnumerable<RED.Models.Admin.Roles.RoleW>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Роли</h2>
+
+<p>
+    <a href="/Roles/Create">
+        <i class="fa fa-plus"></i>
+        Добави роля
+    </a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayName)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                <a href="/Roles/Edit?id=@item.Id">
+                    <i class="fa fa-edit"></i>
+                    Промени
+                </a>|
+                <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-trash"></i>
+                    Изтрий
+                </a>
+            </td>
+        </tr>
+    }
+
+    </table>
+</div>
+
+<script>
+    $('.btn-delete').click(function () {
+        var id = $(this).attr('href');
+        var url = '/Roles/Delete?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+
+    });
+</script>
+<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ namespace RED.Models
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Потребителското име е задължително.")]
-        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 5 символа.", MinimumLength = 5)]
         [Display(Name = "Потребителско име")]
         public string Username { get; set; }
 
@@ -21,7 +21,7 @@ namespace RED.Models
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Потребителското име е задължително.")]
-        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 6 символа.", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "Потребителското име трябва да бъде поне 5 символа.", MinimumLength = 5)]
         [Display(Name = "Потребителско име")]
         public string Username { get; set; }
 

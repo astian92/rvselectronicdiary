@@ -1,0 +1,13 @@
+﻿
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    border-bottom-color: white;
+}
+
+.req-error-msg { 
+    color: red;
+    font-weight: bold;
+}
+
+.icon-accordion i {
+    padding-left: 5px;
+}

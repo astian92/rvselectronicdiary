@@ -1,0 +1,102 @@
+﻿@model IEnumerable<RED.Models.Admin.Users.UserW>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Потребители</h2>
+
+<p>
+    <a href="/Users/Create" >
+        <i class="fa fa-user-plus"></i>
+        Довави потребител
+    </a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                Роля
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.DisplayName)
+            </td>
+            <td class="text-right">
+                <a href="/Users/Edit?id=@item.Id">
+                    <i class="fa fa-edit"></i>
+                    Промени
+                </a>|
+                <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-trash"></i>
+                    Изтрий
+                </a>
+            </td>
+        </tr>
+    }
+
+    </table>
+</div>
+
+<script>
+    $('.btn-delete').click(function () {
+        var id = $(this).attr('href');
+        var url = '/Users/Delete?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+
+    });
+</script>
+<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>

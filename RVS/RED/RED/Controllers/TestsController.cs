@@ -88,8 +88,12 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCategoryConfirmed(Guid id)
         {
-            Rep.DeleteCategory(id);
-            return RedirectToAction("Categories");
+            bool isdeleted = Rep.DeleteCategory(id);
+
+            if(isdeleted)
+                return RedirectToAction("Categories");
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Categories" });
         }
 
         public ActionResult Index()
@@ -174,8 +178,12 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Rep.Delete(id);
-            return RedirectToAction("Index");
+            bool isdeleted = Rep.Delete(id);
+
+            if(isdeleted)
+                return RedirectToAction("Index");
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Index" });
         }
     }
 }

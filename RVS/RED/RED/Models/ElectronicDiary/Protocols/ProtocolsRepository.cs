@@ -53,12 +53,21 @@ namespace RED.Models.ElectronicDiary.Protocols
             db.SaveChanges();
         }
 
-        public void Delete(Guid protocolId)
+        public bool Delete(Guid protocolId)
         {
             var protocol = db.Protocols.Single(p => p.Id == protocolId);
             db.Protocols.Remove(protocol);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

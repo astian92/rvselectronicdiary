@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="47f97ac36b3d47c6b69d736989fb9157" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="47f97ac36b3d47c6b69d736989fb9157" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" Width="1.5" PointX="6" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />

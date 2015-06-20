@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    var user = principal.GetUserData();
+}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a href="/Account/Profile?id=@user.Id">
+                    <span> 
+                        <img src="~/Images/default_small.png" alt="image" class="img-circle" />
+                    </span>
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@(user.FirstName + " " + user.LastName)</strong>
+                            </span> <span class="text-muted text-xs block">@user.Position</span>
+                        </span>
+                    </a>
+                    @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>*@
+                </div>
+                <div class="logo-element">
+                    РВС
+                </div>
+            </li>
+            <li class="">
+                <a href="/Home/Index">
+                    <i class="fa fa-th-large">
+                    </i> <span class="nav-label">Начало</span> 
+                    @*<span class="fa arrow"></span>*@
+                </a>
+            </li>
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-user-md">
+                    </i> <span class="nav-label">Администратор</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse nav-admin">
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Users/Index">Потребители</a></li>
+                    }
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Roles/Index">Роли</a></li>
+                    }
+                    @if (principal.IsAuthorize())
+                    {
+                        <li><a href="/Features/Index">Права</a></li>
+                    }
+                </ul>
+            </li>
+            <li class="">
+                <a href="/Diary/Index">
+                    <i class="fa fa-book">
+                    </i> <span class="nav-label">Дневник</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-area-chart">
+                    </i> <span class="nav-label">Изследвания</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Tests/Categories">Категории</a></li>
+                    }
+                    @if (principal.IsAuthorize("fd76464d-8e9c-4176-ab40-e372084d79ad"))
+                    {
+                        <li><a href="/Tests/Index">Тестове</a></li>
+                    }
+                </ul>
+            </li>
+            <li class="">
+                <a href="/Clients/Index">
+                    <i class="fa fa-users">
+                    </i> <span class="nav-label">Клиенти</span>
+                    @*<span class="fa arrow"></span>*@
+                </a>
+            </li>
+            <li class="">
+                <a href="/Requests/Index">
+                    <i class="fa fa-tags">
+                    </i> <span class="nav-label">Заявки</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="/Protocols/Index">
+                    <i class="fa fa-clipboard">
+                    </i> <span class="nav-label">Протоколи</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<script>
+    $('.nav-second-level').each(function () {
+        if($(this).children().length == 0){
+            $(this).parent().remove();
+        }
+    });
+</script>

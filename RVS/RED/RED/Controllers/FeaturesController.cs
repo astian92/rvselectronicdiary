@@ -114,7 +114,16 @@ namespace RED.Controllers
         {
             Feature feature = db.Features.Find(id);
             db.Features.Remove(feature);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Features/Index" });
+            }
+
             return RedirectToAction("Index");
         }
 

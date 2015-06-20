@@ -51,12 +51,21 @@ namespace RED.Models.Admin
             db.SaveChanges();
         }
 
-        public void DeleteRole(Guid id)
+        public bool DeleteRole(Guid id)
         {
             var dbRole = this.GetBaseRole(id);
             db.Roles.Remove(dbRole);
 
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public User GetBaseUser(Guid id)
@@ -98,11 +107,21 @@ namespace RED.Models.Admin
             db.SaveChanges();
         }
 
-        public void DeleteUser(Guid id)
+        public bool DeleteUser(Guid id)
         {
             User user = this.GetBaseUser(id);
             db.Users.Remove(user);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public IEnumerable<Feature> GetFeatures()

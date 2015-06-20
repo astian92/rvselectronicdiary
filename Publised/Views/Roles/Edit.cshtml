@@ -1,0 +1,51 @@
+﻿@model RED.Models.Admin.Roles.RoleW
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Промени</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Роля</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                @foreach (var item in ViewBag.Features)
+                {
+                    <div class="col-lg-3 col-md-6 border-left-right" style="padding:15px;">
+                        <input type="checkbox" value="@item.Id" name="features" class="i-checks" @(Model.Connections.Any(x => x.FeatureId == item.Id) ? "checked" : "") />
+                        <span class="m-l-xs">@item.DisplayName</span>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="/Roles/Index" class="btn btn-default">Отказ</a>
+                <input type="submit" value="Запази" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+</script>

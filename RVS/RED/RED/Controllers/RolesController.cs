@@ -95,8 +95,12 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Rep.DeleteRole(id);
-            return RedirectToAction("Index");
+            bool isdeleted = Rep.DeleteRole(id);
+
+            if(isdeleted)
+                return RedirectToAction("Index");
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Roles/Index" });
         }
     }
 }

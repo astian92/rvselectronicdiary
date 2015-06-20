@@ -1,0 +1,125 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
+@using RED.Models.Account
+
+<div class="panel-group" id="accordion_@ViewBag.Label">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion_@ViewBag.Label" href="#@item.Id" aria-expanded="false" class="collapsed text-muted">
+                <div class="panel-heading">
+                    <h5 class="panel-title icon-accordion">
+                        Заявка №@item.Number / Дата @item.DateStr / Час @item.HourStr
+                        @if (item.Protocols.Any())
+                        {
+                            <i class="fa fa-check-circle pull-right"></i>
+                        }
+                        @if (item.AcceptedBy == ((RvsPrincipal)HttpContext.Current.User).GetId())
+                        {
+                           <i class="fa fa-user pull-right"></i>
+                        }
+                    </h5>
+                    
+                </div>
+            </a>
+            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="text-left">Наименoвание</th>
+                                                    <th class="text-center">Количество</th>
+                                                    <th class="text-right">Показател за изпитване</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var product in item.Diary.Products.OrderBy(p => p.Number))
+                                                {
+                                                    <tr>
+                                                        <td>@product.Number</td>
+                                                        <td>
+                                                            <span>@product.Name</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span>@product.Quantity</span>
+                                                        </td>
+                                                        @{ int i = 0; }
+                                                        @foreach (var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
+                                                        {
+                                                            if (i == 0)
+                                                            {
+                                                                <td class="text-right">
+                                                                    <span>@test.Test.Name</span>
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: right">
+                                                                    <span>@test.Test.Name</span>
+                                                                </td>
+                                                            </tr>
+                                                            }
+
+                                                            i++;
+                                                        }
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <h5>Срок на изпитване (дни): <strong></strong></h5>
+                                        @if (ViewBag.Label == "notAccepted")
+                                        {
+                                            <div class="status-container">
+                                                <button id="@item.Id" class="btn btn-primary btn-request" onclick="AcceptRequest(this)">
+                                                    <i class="fa fa-share-square-o"></i> 
+                                                    Приеми заявка
+                                                </button>
+                                            </div>
+                                        }
+                                        @if (ViewBag.Label == "mine")
+                                        {
+                                            <div class="status-container">
+                                                <a id="@item.Id" href="/Protocols/Create?requestId=@item.Id" class="btn btn-primary btn-request"><i class="fa fa-check-square-o"></i> Изпълни заявка</a>
+                                                <button id="@item.Id" class="btn btn-default" onclick="ConfirmDenyRequest(this)" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Откажи заявка</button>
+                                                @*<a class="btn-delete btn btn-default" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                                    <i class="fa fa-trash"></i>
+                                                    Изтрий писмото
+                                                </a>*@
+                                            </div>
+                                        }
+                                        @if (ViewBag.Label == "completed" || ViewBag.Label == "all")
+                                        {
+                                            if (item.Protocols.Any())
+                                            {
+                                                <div class="status-container">
+                                                    <a href="/Protocols?Id=#@item.Protocols.FirstOrDefault().Id">
+                                                        <i class="fa fa-clipboard"></i>
+                                                        Виж протокол
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                        <div class="ui-state-error-text">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

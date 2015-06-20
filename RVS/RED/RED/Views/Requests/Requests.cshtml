@@ -17,6 +17,11 @@
                         {
                            <i class="fa fa-user pull-right"></i>
                         }
+                        else if(item.User != null)
+                        {
+                            string name = item.User.FirstName.Substring(0, 1) + ". " + item.User.LastName;
+                            <span class="pull-right">@name</span>
+                        }
                     </h5>
                     
                 </div>

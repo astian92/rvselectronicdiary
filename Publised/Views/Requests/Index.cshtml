@@ -1,0 +1,74 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Our/tabs-changes.css" rel="stylesheet" />
+
+<h2>Заявки</h2>
+
+<div class="row">
+    <div class="panel">
+
+        <div class="panel-heading">
+            <div class="panel-options">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" class="not-accepted-tab-btn">Неприети</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-2" class="accepted-tab-btn">Приети</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-3" class="my-requests-tab-btn">Мои</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-4" class="completed-tab-btn">Изпълнени</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-5" class="archived-tab-btn">Архивирани</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body my-tab-style">
+
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active not-accepted-requests">
+                    @{ Html.RenderAction("GetNotAcceptedRequests"); }
+                </div>
+
+                <div id="tab-2" class="tab-pane accepted-requests">
+                    @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
+                </div>
+
+                <div id="tab-3" class="tab-pane my-requests">
+                    @* @{ Html.RenderAction("GetMyRequests"); }*@
+                </div>
+
+                <div id="tab-4" class="tab-pane completed-requests">
+                    @* @{ Html.RenderAction("GetCompletedRequests"); }*@
+                </div>
+
+                <div id="tab-5" class="tab-pane archived-requests">
+                    @* @{ Html.RenderAction("GetArchivedRequests"); }*@
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/Scripts/Our/Requests.js"></script>
+
+<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>
