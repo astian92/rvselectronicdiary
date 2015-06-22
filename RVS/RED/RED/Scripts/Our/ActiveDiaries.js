@@ -1,4 +1,5 @@
 ﻿var savedComment = '';
+var savedCommentDiaryId = '';
 
 $(document).ready(function () {
     $('.btn-request').click(function () {
@@ -77,6 +78,7 @@ function saveComment(diaryId) {
 
 function editComment(diaryId) {
     savedComment = $('#' + diaryId + ' .comment').val();
+    savedCommentDiaryId = diaryId;
 
     $('#' + diaryId + ' .edit-comment').addClass('collapse');
     $('#' + diaryId + ' .save-comment').removeClass('collapse');
@@ -88,11 +90,13 @@ function editComment(diaryId) {
 }
 
 function closeComment(diaryId) {
-    $('#' + diaryId + ' .edit-comment').removeClass('collapse');
-    $('#' + diaryId + ' .save-comment').addClass('collapse');
-    $('#' + diaryId + ' .close-comment').addClass('collapse');
+    if (diaryId == savedCommentDiaryId) {
+        $('#' + diaryId + ' .edit-comment').removeClass('collapse');
+        $('#' + diaryId + ' .save-comment').addClass('collapse');
+        $('#' + diaryId + ' .close-comment').addClass('collapse');
 
-    $('#' + diaryId + ' .comment').val(savedComment);
-    $('#' + diaryId + ' .comment').attr('disabled', 'disabled');
+        $('#' + diaryId + ' .comment').val(savedComment);
+        $('#' + diaryId + ' .comment').attr('disabled', 'disabled');
+    }
 }
 

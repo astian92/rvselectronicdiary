@@ -15,6 +15,7 @@ namespace RED.Controllers
         // GET: Diary
         public ActionResult Index()
         {
+            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
             return View();
         }
 
