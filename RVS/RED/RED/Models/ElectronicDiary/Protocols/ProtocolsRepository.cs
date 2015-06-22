@@ -10,10 +10,18 @@ namespace RED.Models.ElectronicDiary.Protocols
 {
     public class ProtocolsRepository : RepositoryBase
     {
-        public IEnumerable<ProtocolW> GetProtocols()
+        public IEnumerable<ProtocolW> GetActiveProtocols()
         {
             var protocols = db.Protocols.ToList();
             var result = protocols.Select(p => new ProtocolW(p));
+
+            return result;
+        }
+
+        public IEnumerable<ArchivedProtocol> GetArchivedProtocols()
+        {
+            var adiaries = db.ArchivedDiaries.ToList();
+            var result = adiaries.Select(ad => new ArchivedProtocol(ad));
 
             return result;
         }

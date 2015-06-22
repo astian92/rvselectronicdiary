@@ -12,16 +12,12 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class ArchivedProtocolResult
+    public partial class sysdiagram
     {
-        public System.Guid Id { get; set; }
-        public System.Guid ArchivedDiaryId { get; set; }
-        public System.Guid ArchivedProductTestId { get; set; }
-        public string ResultNumber { get; set; }
-        public string Results { get; set; }
-        public string MethodValue { get; set; }
-    
-        public virtual ArchivedDiary ArchivedDiary { get; set; }
-        public virtual ArchivedProductTest ArchivedProductTest { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

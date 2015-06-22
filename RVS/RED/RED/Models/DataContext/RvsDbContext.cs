@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -42,7 +44,23 @@ namespace RED.Models.DataContext
 
             //save actual changes
             int changesCount = base.SaveChanges();
-
+            #region testProperties
+            //THIS IS A WAY TO TRACE THE VALIDATION FIELDS THAT GIVE PROBLEMS
+            //try
+            //{
+            //    changesCount = base.SaveChanges();
+            //}
+            //catch (DbEntityValidationException dbEx)
+            //{
+            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+            //    {
+            //        foreach (var validationError in validationErrors.ValidationErrors)
+            //        {
+            //            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+            //        }
+            //    }
+            //}
+            #endregion  
             //use the same context to commit the logs
             try
             {

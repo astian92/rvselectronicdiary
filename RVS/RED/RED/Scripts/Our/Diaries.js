@@ -77,7 +77,7 @@ function ArchiveDiary(btn) {
         success: function (response) {
             if (response.IsSuccess == true) {
                 //do the actual stuff
-                diaryIdtoOpen = id;
+                diaryIdtoOpen = response.ResponseObject;
                 $('.archived-tab-btn').click();
             }
             else {

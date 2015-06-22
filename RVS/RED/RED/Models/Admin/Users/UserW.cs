@@ -30,7 +30,7 @@ namespace RED.Models.Admin.Users
         [Display(Name = "Длъжност")]
         public string Position { get; set; }
         [Required]
-        public Nullable<Guid> RoleId { get; set; }
+        public Guid RoleId { get; set; }
     
         public virtual Role Role { get; set; }
         public virtual ICollection<ActionLog> ActionLogs { get; set; }

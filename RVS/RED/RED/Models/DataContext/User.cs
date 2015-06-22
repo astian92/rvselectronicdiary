@@ -27,7 +27,7 @@ namespace RED.Models.DataContext
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }
-        public Nullable<System.Guid> RoleId { get; set; }
+        public System.Guid RoleId { get; set; }
     
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
         public virtual ICollection<Request> Requests { get; set; }

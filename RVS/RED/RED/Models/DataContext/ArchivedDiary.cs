@@ -21,6 +21,7 @@ namespace RED.Models.DataContext
         }
     
         public System.Guid Id { get; set; }
+        public string Number { get; set; }
         public System.DateTime AcceptanceDateAndTime { get; set; }
         public string LetterNumber { get; set; }
         public System.DateTime LetterDate { get; set; }
@@ -31,7 +32,6 @@ namespace RED.Models.DataContext
         public string RequestAcceptedBy { get; set; }
         public System.DateTime ProtocolIssuedDate { get; set; }
         public string Remark { get; set; }
-        public string Number { get; set; }
     
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }

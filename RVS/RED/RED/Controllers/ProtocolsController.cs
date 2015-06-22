@@ -13,8 +13,23 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            var protocols = Rep.GetProtocols();
-            return View(protocols);
+            return View();
+        }
+
+        public ActionResult GetActiveProtocols()
+        {
+            ViewBag.Label = "active-protocols";
+
+            var protocols = Rep.GetActiveProtocols();
+            return PartialView("ActiveProtocols", protocols);
+        }
+
+        public ActionResult GetArchivedProtocols()
+        {
+            ViewBag.Label = "archived-protocols";
+
+            var protocols = Rep.GetArchivedProtocols();
+            return PartialView("ArchivedProtocols", protocols);
         }
 
         [HttpGet]

@@ -248,6 +248,7 @@ namespace RED.Models.ElectronicDiary
                 db.SaveChanges();
 
                 response.IsSuccess = true;
+                response.ResponseObject = archivedDiary.Id;
                 response.SuccessMsg = "Архивирането на дневник: " + diary.Number + " премина успешно.";
             }
             catch (Exception exc)

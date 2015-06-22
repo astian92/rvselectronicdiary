@@ -25,7 +25,7 @@ namespace RED.Models.DataContext
         public int Units { get; set; }
     
         public virtual Product Product { get; set; }
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
         public virtual Test Test { get; set; }
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }
 }

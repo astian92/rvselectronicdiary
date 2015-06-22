@@ -12,9 +12,7 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            //change later after we decide wether or not the requests will disappear after resolution
-            var requests = Rep.GetCompletedRequests();
-            return View(requests);
+            return View();
         }
 
         public ActionResult GetNotAcceptedRequests()

@@ -16,7 +16,7 @@ namespace RED.Models.Account
 
             if (user != null)
             {
-                return user.RoleId.Value;
+                return user.RoleId;
             }
             else
             {

@@ -5,91 +5,43 @@
     ViewBag.Title = "Index";
 }
 
-
 <h2>Протоколи</h2>
 
-<div class="panel-group" id="accordion">
-    @foreach (var item in Model)
-    {
-        var wrappedDiary = new DiaryW(item.Request.Diary);
-        
-        <div class="panel panel-default">
-            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                        Протокол №: @item.Request.Diary.Number /
-                        Дата:  @item.IssuedDate.ToString("dd.MM.yyyy")
-                    </h5>
-                </div>
-            </a>
-            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                <div class="panel-body">
-                    <div class="animated fadeInDown">
-                        <div class="ibox-content">
-                            <div class="row">
-                                <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th>
-                                            Наименувание на показателя
-                                        </th>
-                                        <th> 
-                                            Методи
-                                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                                        </th>
-                                        <th>
-                                            № на образеца
-                                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                                        </th>
-                                        <th>Резултати от изследването, неопределеност</th>
-                                        <th>
-                                            Стойност на показателя
-                                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                                        </th>
-                                        <th>Условия на заобикалящата среда</th>
-                                    </tr>
+<link href="~/Content/Our/tabs-changes.css" rel="stylesheet" />
 
-                                    
-                                    @{
-                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+<div class="row">
+    <div class="panel">
 
-                                        foreach (var result in orderdProtocolRes)
-                                        {
-                                            <tr>
-                                                <td>@result.ProductTest.Test.Name</td>
-                                                <td>@result.ProductTest.Test.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
-                                                <td>@result.ProductTest.Test.Temperature</td>
-                                            </tr>
-                                        }
-                                    }
-                                </table>
-                            </div>
+        <div class="panel-heading">
+            <div class="panel-options">
 
-                            <div class="row">
-                                <div class="text-right">
-                                    <a class="btn btn-primary" href="/Protocols/Edit?protocolId=@item.Id">
-                                        <i class="fa fa-edit"></i>
-                                        Промени
-                                    </a>
-                                    <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-trash"></i>
-                                        Изтрий
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" class="active-tab-btn">Активни</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-2" class="archived-tab-btn">Архивирани</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    }
+
+        <div class="panel-body my-tab-style">
+
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active active-protocols">
+                    @{ Html.RenderAction("GetActiveProtocols"); }
+                </div>
+
+                <div id="tab-2" class="tab-pane archived-protocols">
+                    @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script src="~/Scripts/Our/Protocols.js"></script>
