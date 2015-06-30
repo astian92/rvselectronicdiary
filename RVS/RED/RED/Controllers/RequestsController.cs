@@ -23,11 +23,32 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
+        public ActionResult FilterNotAcceptedRequests(int page, int pageSize,
+            int number, DateTime? fromDate, DateTime? toDate)
+        {
+            ViewBag.Label = "notAccepted";
+
+            var requests = Rep.GetNotAcceptedRequests(page, pageSize, number, fromDate, toDate);
+            return PartialView("Requests", requests);
+        }
+
         public ActionResult GetAcceptedRequests()
         {
             ViewBag.Label = "accepted";
 
             var requests = Rep.GetAcceptedRequests();
+            return PartialView("Requests", requests);
+        }
+
+        public ActionResult FilterAcceptedRequests(int page, int pageSize,
+            int number, DateTime? fromDate, DateTime? toDate)
+        {
+            ViewBag.Label = "accepted";
+
+            if(toDate != null)
+                toDate = new DateTime(toDate.Value.Year, toDate.Value.Month, toDate.Value.Day, 23, 59, 59);
+
+            var requests = Rep.GetAcceptedRequests(page, pageSize, number, fromDate, toDate);
             return PartialView("Requests", requests);
         }
 
@@ -40,11 +61,30 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
+        public ActionResult FilterMyRequests(int page, int pageSize,
+            int number, DateTime? fromDate, DateTime? toDate)
+        {
+            ViewBag.Mine = true;
+            ViewBag.Label = "mine";
+
+            var requests = Rep.GetMyRequests(page, pageSize, number, fromDate, toDate);
+            return PartialView("Requests", requests);
+        }
+
         public ActionResult GetCompletedRequests()
         {
             ViewBag.Label = "completed";
 
             var requests = Rep.GetCompletedRequests();
+            return PartialView("Requests", requests);
+        }
+
+        public ActionResult FilterCompletedRequests(int page, int pageSize,
+            int number, DateTime? fromDate, DateTime? toDate)
+        {
+            ViewBag.Label = "completed";
+
+            var requests = Rep.GetCompletedRequests(page, pageSize, number, fromDate, toDate);
             return PartialView("Requests", requests);
         }
 
@@ -54,6 +94,15 @@ namespace RED.Controllers
 
             var requests = Rep.GetArchivedRequests();
             return PartialView("ArchivedRequests", requests);
+        }
+
+        public ActionResult FilterArchivedRequests(int page, int pageSize,
+            int number, DateTime? fromDate, DateTime? toDate)
+        {
+            ViewBag.Label = "archived";
+
+            var requests = Rep.GetArchivedRequests(page, pageSize, number, fromDate, toDate);
+            return PartialView("Requests", requests);
         }
 
         public bool AcceptRequest(Guid requestId)

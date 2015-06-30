@@ -13,20 +13,36 @@ namespace RED.Models.ElectronicDiary
 {
     public class DiaryRepository : RepositoryBase
     {
-        public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10)
+        public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10,
+            int number = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
         {
-            var diaryEntries = db.Diaries.OrderByDescending(d => d.AcceptanceDateAndTime);
+            //Filter
+            var diaryEntries = db.Diaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number));
+            diaryEntries = diaryEntries.Where(d => d.ClientId == (client == Guid.Empty ? d.ClientId : client));
+            diaryEntries = diaryEntries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
+                                                   d.LetterDate <= (to == null ? d.LetterDate : to.Value));
+
+            //Order and paging
+            diaryEntries = diaryEntries.OrderByDescending(d => d.Number);
             var paged = diaryEntries.Skip((page - 1) * pageSize).Take(pageSize);
-            var wrapped = paged.ToList().Select(d => new DiaryW(d)).ToList();
+            var wrapped = paged.ToList().Select(d => new DiaryW(d));
             
             return wrapped;
         }
 
-        public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10)
+        public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10,
+            int number = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
         {
-            var adiaries = db.ArchivedDiaries.OrderByDescending(d => d.AcceptanceDateAndTime);
+            //Filter
+            var adiaries = db.ArchivedDiaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()));
+            adiaries = adiaries.Where(d => d.Client == (client == "Всички" ? d.Client : client));
+            adiaries = adiaries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
+                                                   d.LetterDate <= (to == null ? d.LetterDate : to.Value));
+
+            //Order and paging
+            adiaries = adiaries.OrderByDescending(d => d.Number);
             var paged = adiaries.Skip((page - 1) * pageSize).Take(pageSize);
-            var wrapped = paged.ToList().Select(d => new ArchivedDiaryW(d)).ToList();
+            var wrapped = paged.ToList().Select(d => new ArchivedDiaryW(d));
 
             return wrapped;
         }

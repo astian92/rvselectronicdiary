@@ -16,23 +16,28 @@
 
 
 var requestIdToOpen;
+var tabId = 'not-accepted-tab-btn';
+var url = '/Requests/GetNotAcceptedRequests';
 
 $(document).ready(function () {
 
     $('.not-accepted-tab-btn').click(function () {
+        tabId = 'not-accepted-requests';
+        url = '/Requests/FilterNotAcceptedRequests';
+
         $('.accepted-requests').empty();
         $('.my-requests').empty();
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.not-accepted-requests').html(spinnerString);
+        $('.' + tabId).html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: "/Requests/GetNotAcceptedRequests",
             success: function (result) {
-                $('.not-accepted-requests').html(result);
+                $('.' + tabId).html(result);
                 if (requestIdToOpen) {
                     $('a[href="#' + requestIdToOpen + '"]').click();
                     requestIdToOpen = undefined;
@@ -40,25 +45,28 @@ $(document).ready(function () {
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.not-accepted-requests').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
     $('.accepted-tab-btn').click(function () {
+        tabId = 'accepted-requests';
+        url = '/Requests/FilterAcceptedRequests';
+
         $('.not-accepted-requests').empty();
         $('.my-requests').empty();
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.accepted-requests').html(spinnerString);
+        $('.' + tabId).html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: "/Requests/GetAcceptedRequests",
             success: function (result) {
-                $('.accepted-requests').html(result);
+                $('.' + tabId).html(result);
                 if (requestIdToOpen) {
                     $('a[href="#' + requestIdToOpen + '"]').click();
                     requestIdToOpen = undefined;
@@ -66,25 +74,28 @@ $(document).ready(function () {
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.accepted-requests').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
     $('.my-requests-tab-btn').click(function () {
+        tabId = 'my-requests';
+        url = '/Requests/FilterMyRequests';
+
         $('.not-accepted-requests').empty();
         $('.accepted-requests').empty();
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.my-requests').html(spinnerString);
+        $('.' + tabId).html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: "/Requests/GetMyRequests",
             success: function (result) {
-                $('.my-requests').html(result);
+                $('.' + tabId).html(result);
                 if (requestIdToOpen) {
                     $('a[href="#' + requestIdToOpen + '"]').click();
                     requestIdToOpen = undefined;
@@ -92,51 +103,88 @@ $(document).ready(function () {
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.my-requests').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
     $('.completed-tab-btn').click(function () {
+        tabId = 'completed-requests';
+        url = '/Requests/FilterCompletedRequests';
+
         $('.not-accepted-requests').empty();
         $('.accepted-requests').empty();
         $('.my-requests').empty();
         $('.archived-requests').empty();
 
-        $('.completed-requests').html(spinnerString);
+        $('.' + tabId).html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: "/Requests/GetCompletedRequests",
             success: function (result) {
-                $('.completed-requests').html(result);
+                $('.' + tabId).html(result);
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.completed-requests').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
     $('.archived-tab-btn').click(function () {
+        tabId = 'archived-requests';
+        url = '/Requests/FilterArchivedRequests';
+
         $('.not-accepted-requests').empty();
         $('.accepted-requests').empty();
         $('.my-requests').empty();
         $('.completed-requests').empty();
 
-        $('.archived-requests').html(spinnerString);
+        $('.' + tabId).html(spinnerString);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: "/Requests/GetArchivedRequests",
             success: function (result) {
-                $('.archived-requests').html(result);
+                $('.' + tabId).html(result);
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
-                $('.archived-requests').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
+            }
+        })
+    });
+
+    $('#filter').click(function () {
+        $('.active-diaries').empty();
+        $('.archived-diaries').empty();
+
+        $('.' + tabId).html(spinnerString);
+
+        var page = 1;
+        var pageSize = 10;
+        var number = $('#RequestNumber').val();
+        if (number == '') {
+            number = -1;
+        }
+
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: url,
+            data: { page: page, pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate },
+            success: function (result) {
+                $('.' + tabId).html(result);
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+                $('.' + tabId).html(errorMsg);
             }
         })
     });

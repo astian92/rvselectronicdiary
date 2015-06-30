@@ -13,21 +13,27 @@
             </div>';
 
 var diaryIdtoOpen;
+var tabId = 'active-diaries';
+var url = '/Diary/FilterActiveDiaries';
+var isActiveTab = true;
 
 $(document).ready(function () {
 
     $('.active-tab-btn').click(function () {
+        tabId = 'active-diaries';
+        url = '/Diary/FilterActiveDiaries';
+        isActiveTab = true;
         $('.active-diaries').empty();
         $('.archived-diaries').empty();
 
-        $('.active-diaries').html(spiner);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Diary/ActiveDiaries",
+            url: '/Diary/ActiveDiaries',
             success: function (result) {
-                $('.active-diaries').html(result);
+                $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
                     $('a[href="#' + diaryIdtoOpen + '"]').click();
                     diaryIdtoOpen = undefined;
@@ -35,23 +41,26 @@ $(document).ready(function () {
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
-                $('.active-diaries').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
     $('.archived-tab-btn').click(function () {
+        tabId = 'archived-diaries';
+        url = '/Diary/FilterArchivedDiaries';
+        isActiveTab = false;
         $('.active-diaries').empty();
         $('.archived-diaries').empty();
 
-        $('.archived-diaries').html(spiner);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Diary/ArchivedDiaries",
+            url: '/Diary/ArchivedDiaries',
             success: function (result) {
-                $('.archived-diaries').html(result);
+                $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
                     $('a[href="#' + diaryIdtoOpen + '"]').click();
                     diaryIdtoOpen = undefined;
@@ -59,11 +68,55 @@ $(document).ready(function () {
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
-                $('.archived-diaries').html(errorMsg);
+                $('.' + tabId).html(errorMsg);
             }
         })
     });
 
+    $('#filter').click(function () {
+        $('.active-diaries').empty();
+        $('.archived-diaries').empty();
+
+        $('.' + tabId).html(spiner);
+
+        var page = 1;
+        var pageSize = 10;
+        var number = $('#LetterNumber').val();
+        if (number == '')
+        {
+            number = -1;
+        }
+
+        var client = '';
+        if (isActiveTab)
+        {
+            client = $('#ClientId').val();
+        }
+        else
+        {
+            client = $('#ClientId option:selected').text();
+        }
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: url,
+            data: { page: page, pageSize: pageSize, number: number, client: client, fromDate: fromDate, toDate: toDate },
+            success: function (result) {
+                $('.' + tabId).html(result);
+                if (diaryIdtoOpen) {
+                    $('a[href="#' + diaryIdtoOpen + '"]').click();
+                    diaryIdtoOpen = undefined;
+                }
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
+                $('.' + tabId).html(errorMsg);
+            }
+        })
+    });
 });
 
 function ArchiveDiary(btn) {

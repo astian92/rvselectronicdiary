@@ -1,6 +1,7 @@
 ﻿using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary;
+using RED.Models.ElectronicDiary.Clients;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,14 @@ namespace RED.Controllers
         // GET: Diary
         public ActionResult Index()
         {
-            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
+            var clients = Rep.GetClients();
+            var selectList = clients.ToList();
+
+            Client nullable = new Client();
+            nullable.Id = Guid.Empty;
+            nullable.Name = "Всички";
+            selectList.Insert(0, new ClientW(nullable));
+            ViewBag.ClientId = new SelectList(selectList, "Id", "Name");
             return View();
         }
 
@@ -25,10 +33,24 @@ namespace RED.Controllers
             return PartialView(diaryEntries);
         }
 
+        public ActionResult FilterActiveDiaries(int page, int pageSize,
+            int number, Guid client, DateTime? fromDate, DateTime? toDate)
+        {
+            var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, client, fromDate, toDate);
+            return PartialView("ActiveDiaries", diaryEntries);
+        }
+
         public ActionResult ArchivedDiaries()
         {
             var archivedDiaries = Rep.GetArchivedDiaryEntries();
             return PartialView(archivedDiaries);
+        }
+
+        public ActionResult FilterArchivedDiaries(int page, int pageSize,
+            int number, string client, DateTime? fromDate, DateTime? toDate)
+        {
+            var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, client, fromDate, toDate);
+            return PartialView("ArchivedDiaries", archivedDiaries);
         }
 
         // GET: Diary/Create

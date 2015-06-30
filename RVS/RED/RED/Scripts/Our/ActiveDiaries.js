@@ -39,12 +39,6 @@ $(document).ready(function () {
         });
 
     });
-
-    //$('.btn-archive').click(function (ev) {
-    //    alert('не е реализирано!');
-    //    ev.preventDefault();
-    //    return false;
-    //});
 });
 
 
