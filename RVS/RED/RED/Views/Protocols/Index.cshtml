@@ -34,7 +34,7 @@
                 </div>
 
                 <div id="tab-2" class="tab-pane archived-protocols">
-                    @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
+                    @*Html.RenderAction("GetArchivedProtocols");*@
                 </div>
             </div>
 
@@ -45,3 +45,21 @@
 </div>
 
 <script src="~/Scripts/Our/Protocols.js"></script>
+
+<script>
+    var isArchived = @(((bool)ViewBag.IsArchived).ToString().ToLower());
+
+    $(document).ready(function () { 
+        protocolIdToOpen = '@(ViewBag.IdToOpen)';
+
+        if (isArchived) { 
+            $('.archived-tab-btn').click();
+            window.location = "#" + protocolIdToOpen;
+        }
+        else {
+            $('.active-tab-btn').click();
+        }
+
+        
+    });
+</script>

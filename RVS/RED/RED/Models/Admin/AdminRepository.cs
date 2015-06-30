@@ -1,6 +1,7 @@
 ﻿using RED.Models.Admin.Roles;
 using RED.Models.Admin.Users;
 using RED.Models.DataContext;
+using RED.Models.Helpers;
 using RED.Models.RepositoryBases;
 using RED.Models.Responses;
 using System;
@@ -81,7 +82,9 @@ namespace RED.Models.Admin
 
         public IEnumerable<UserW> GetUsers()
         {
-            var users = db.Users.Include(x => x.Role).ToList();
+            var users = db.Users.Include(x => x.Role)
+                .OrderBy(u => u.Username)
+                .ToList();
             return users.Select(u => new UserW(u));
         }
 

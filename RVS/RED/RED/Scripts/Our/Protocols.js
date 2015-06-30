@@ -32,6 +32,9 @@ $(document).ready(function () {
                 $('.active-protocols').html(result);
                 if (protocolIdToOpen) {
                     $('a[href="#' + protocolIdToOpen + '"]').click();
+                    $('html, body').animate({
+                        scrollTop: $("#" + protocolIdToOpen).offset().top - 50
+                    }, 500);
                     protocolIdToOpen = undefined;
                 }
             },
@@ -56,6 +59,9 @@ $(document).ready(function () {
                 $('.archived-protocols').html(result);
                 if (protocolIdToOpen) {
                     $('a[href="#' + protocolIdToOpen + '"]').click();
+                    $('html, body').animate({
+                        scrollTop: $("#" + protocolIdToOpen).offset().top - 50
+                    }, 500);
                     protocolIdToOpen = undefined;
                 }
             },

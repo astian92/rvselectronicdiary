@@ -19,7 +19,13 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            return View(Rep.GetRoles());
+            return View();
+        }
+
+        public ActionResult GetRoles()
+        {
+            var roles = Rep.GetRoles();
+            return Json(new { data = roles });
         }
 
         // GET: Roles/Create

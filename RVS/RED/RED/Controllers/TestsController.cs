@@ -13,8 +13,13 @@ namespace RED.Controllers
     {
         public ActionResult Categories()
         {
+            return View();
+        }
+
+        public JsonResult GetCategories()
+        {
             var categories = Rep.GetCategories();
-            return View(categories);
+            return Json(new { data = categories });
         }
 
         public ActionResult CreateCategory()
@@ -100,6 +105,24 @@ namespace RED.Controllers
         {
             var tests = Rep.GetTests();
             return View(tests);
+        }
+
+        public JsonResult GetTests()
+        {
+            var tests = Rep.GetTests();
+
+            var jsonData = tests.Select(t => new
+            {
+                Name = t.Name,
+                TestMethods = t.TestMethods,
+                Level = t.AcredetationLevel.Level,
+                UnitName = t.UnitName,
+                Temperature = t.Temperature,
+                Category = t.TestCategory.Name,
+                Id = t.Id
+            });
+
+            return Json(new { data = jsonData });
         }
 
         public ActionResult Create()

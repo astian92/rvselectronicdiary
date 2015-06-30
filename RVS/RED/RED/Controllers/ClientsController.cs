@@ -13,8 +13,20 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public JsonResult GetClients()
+        {
             var clients = Rep.GetClients();
-            return View(clients);
+
+            var jsonData = clients.Select(c => new
+            {
+                Name = c.Name,
+                Id = c.Id
+            });
+
+            return Json(new { data = jsonData });
         }
 
         public ActionResult Create()

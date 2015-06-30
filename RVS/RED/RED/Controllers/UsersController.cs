@@ -19,8 +19,26 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
+            //var users = Rep.GetUsers();
+            return View();
+        }
+
+        public JsonResult GetUsers()
+        {
             var users = Rep.GetUsers();
-            return View(users);
+
+            var usersUnwrapped = users.Select(u => new
+            {
+                Username = u.Username,
+                FirstName = u.FirstName,
+                MiddleName = u.MiddleName,
+                LastName = u.LastName,
+                Position = u.Position,
+                RoleName = u.Role.DisplayName,
+                Id = u.Id
+            });
+
+            return Json(new { data = usersUnwrapped });
         }
         
         // GET: Users/Create

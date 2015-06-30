@@ -11,8 +11,10 @@ namespace RED.Controllers
 {
     public class ProtocolsController : ControllerBase<ProtocolsRepository>
     {
-        public ActionResult Index()
+        public ActionResult Index(Guid? idToOpen, bool IsArchived = false)
         {
+            ViewBag.IsArchived = IsArchived;
+            ViewBag.IdToOpen = idToOpen;
             return View();
         }
 

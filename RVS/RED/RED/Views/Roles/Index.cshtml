@@ -4,6 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
 <h2>Роли</h2>
 
 <p>
@@ -12,39 +23,68 @@
         Добави роля
     </a>
 </p>
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DisplayName)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisplayName)
-            </td>
-            <td>
-                <a href="/Roles/Edit?id=@item.Id">
-                    <i class="fa fa-edit"></i>
-                    Промени
-                </a>|
-                <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                    <i class="fa fa-trash"></i>
-                    Изтрий
-                </a>
-            </td>
-        </tr>
-    }
-
-    </table>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="RolesTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
-    $('.btn-delete').click(function () {
-        var id = $(this).attr('href');
+    Tables.CreateTable("#RolesTable", {
+        order: [],
+        lengthChange: false,
+        selectable: false,
+        paging: true,
+        pageLength: 10,
+        "language": {
+            "paginate": {
+                "previous": "Назад",
+                "next": "Напред"
+            },
+            "zeroRecords": "Няма налични данни",
+            "info": "Показва _START_ до _END_ от _MAX_ записа",
+            "infoFiltered": "(филтрирани от общо _MAX_)",
+            "infoEmpty": "Няма открити данни"
+        },
+        ajax: {
+            type: "POST",
+            url: "/Roles/GetRoles",
+        },
+        columns: [
+            { "data": "DisplayName" },
+            { "data": "Id" }
+        ],
+        columnDefs: [
+            {
+                targets: -1,
+                width: "25%",
+                sortable: false,
+                render: function (data, type, row) {
+                    return '<a href="/Roles/Edit?id=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                },
+                class: "text-center"
+            }
+        ]
+    });
+
+    function Delete(btn) {
+        var id = $(btn).attr('href');
         var url = '/Roles/Delete?id=' + id;
         $.ajax({
             type: "GET",
@@ -55,8 +95,7 @@
                 $('.modal-content').html(view);
             }
         });
-
-    });
+    }
 </script>
 <div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
     <div class="modal-dialog">
