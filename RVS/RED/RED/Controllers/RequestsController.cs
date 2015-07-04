@@ -1,4 +1,5 @@
-﻿using RED.Models.ControllerBases;
+﻿using RED.Filters;
+using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Requests;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
+    [RoleFilter("b93941bf-aa40-490e-9764-5aea1841de32")]
     public class RequestsController : ControllerBase<RequestsRepository>
     {
         public ActionResult Index()
@@ -102,9 +104,10 @@ namespace RED.Controllers
             ViewBag.Label = "archived";
 
             var requests = Rep.GetArchivedRequests(page, pageSize, number, fromDate, toDate);
-            return PartialView("Requests", requests);
+            return PartialView("ArchivedRequests", requests);
         }
 
+        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
         public bool AcceptRequest(Guid requestId)
         {
             var result = Rep.AcceptRequest(requestId);
@@ -112,6 +115,7 @@ namespace RED.Controllers
         }
 
         [HttpGet]
+        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
         public PartialViewResult ConfirmDenyRequest(Guid requestId)
         {
             var request = Rep.GetRequest(requestId);
@@ -119,6 +123,7 @@ namespace RED.Controllers
         }
 
         [HttpPost]
+        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
         public bool DenyRequest(Guid requestId)
         {
             var result = Rep.DenyRequest(requestId);

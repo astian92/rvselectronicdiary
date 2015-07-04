@@ -1,4 +1,5 @@
-﻿using RED.Models.ControllerBases;
+﻿using RED.Filters;
+using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Tests;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
+    [RoleFilter("0e161082-3d84-4887-8bef-968e1ca53256")]
     public class TestsController : ControllerBase<TestsRepository>
     {
         public ActionResult Categories()
@@ -22,6 +24,7 @@ namespace RED.Controllers
             return Json(new { data = categories });
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult CreateCategory()
         {
             return View();
@@ -29,6 +32,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult CreateCategory(TestCategoryW category)
         {
             if (ModelState.IsValid)
@@ -40,6 +44,7 @@ namespace RED.Controllers
             return View(category);
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult EditCategory(Guid? id)
         {
             if (id == null)
@@ -57,6 +62,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult EditCategory(TestCategoryW category)
         {
             if (ModelState.IsValid)
@@ -68,6 +74,7 @@ namespace RED.Controllers
             return View(category);
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult DeleteCategory(Guid? id)
         {
             if (id == null)
@@ -91,6 +98,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("DeleteCategory")]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult DeleteCategoryConfirmed(Guid id)
         {
             bool isdeleted = Rep.DeleteCategory(id);
@@ -125,6 +133,7 @@ namespace RED.Controllers
             return Json(new { data = jsonData });
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult Create()
         {
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name"); 
@@ -134,6 +143,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult Create(TestW test)
         {
             if (ModelState.IsValid)
@@ -145,6 +155,7 @@ namespace RED.Controllers
             return View(test);
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -165,6 +176,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult Edit(TestW test)
         {
             if (ModelState.IsValid)
@@ -176,6 +188,7 @@ namespace RED.Controllers
             return View(test);
         }
 
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -199,6 +212,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = Rep.Delete(id);

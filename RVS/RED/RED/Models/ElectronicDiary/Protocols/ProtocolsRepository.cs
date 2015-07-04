@@ -10,17 +10,36 @@ namespace RED.Models.ElectronicDiary.Protocols
 {
     public class ProtocolsRepository : RepositoryBase
     {
-        public IEnumerable<ProtocolW> GetActiveProtocols()
+        public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10,
+            int number = -1, DateTime? from = null, DateTime? to = null)
         {
-            var protocols = db.Protocols.ToList();
-            var result = protocols.Select(p => new ProtocolW(p));
+            //Filter
+            var protocols = db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number));
+            protocols = protocols.Where(d => d.IssuedDate >= (from == null ? d.IssuedDate : from.Value) &&
+                                                   d.IssuedDate <= (to == null ? d.IssuedDate : to.Value));
+
+            //Order and paging
+            var activeProtocols = protocols
+                .OrderByDescending(p => p.IssuedDate).Skip((page - 1) * pageSize).Take(pageSize)
+                .ToList();
+
+            var result = activeProtocols.Select(p => new ProtocolW(p));
 
             return result;
         }
 
-        public IEnumerable<ArchivedProtocol> GetArchivedProtocols()
+        public IEnumerable<ArchivedProtocol> GetArchivedProtocols(int page = 1, int pageSize = 10,
+            int number = -1, DateTime? from = null, DateTime? to = null)
         {
-            var adiaries = db.ArchivedDiaries.ToList();
+            //Filter
+            var protocols = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number.ToString()));
+            protocols = protocols.Where(d => d.ProtocolIssuedDate >= (from == null ? d.ProtocolIssuedDate : from.Value) &&
+                                                   d.ProtocolIssuedDate <= (to == null ? d.ProtocolIssuedDate : to.Value));
+
+            //Order and paging
+            var adiaries = protocols
+                .OrderByDescending(p => p.ProtocolIssuedDate).Skip((page - 1) * pageSize).Take(pageSize)
+                .ToList();
             var result = adiaries.Select(ad => new ArchivedProtocol(ad));
 
             return result;

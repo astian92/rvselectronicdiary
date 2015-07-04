@@ -1,4 +1,5 @@
-﻿using RED.Models.ControllerBases;
+﻿using RED.Filters;
+using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Clients;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
+    [RoleFilter("4177b39a-ddce-46ad-812b-55d5935012ed")]
     public class ClientsController : ControllerBase<ClientsRepository>
     {
         public ActionResult Index()
@@ -29,6 +31,7 @@ namespace RED.Controllers
             return Json(new { data = jsonData });
         }
 
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Create()
         {
             return View();
@@ -36,6 +39,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Create(ClientW client)
         {
             if (ModelState.IsValid)
@@ -47,6 +51,7 @@ namespace RED.Controllers
             return View(client);
         }
 
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -65,6 +70,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Edit(ClientW client)
         {
             if (ModelState.IsValid)
@@ -76,6 +82,7 @@ namespace RED.Controllers
             return View(client);
         }
 
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -99,6 +106,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = Rep.Delete(id);

@@ -1,4 +1,5 @@
-﻿using RED.Models.ControllerBases;
+﻿using RED.Filters;
+using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
+    [RoleFilter("fd53f97f-8bec-42ae-b17a-80cc7fee522f")]
     public class DiaryController : ControllerBase<DiaryRepository>
     {
         // GET: Diary
@@ -34,9 +36,9 @@ namespace RED.Controllers
         }
 
         public ActionResult FilterActiveDiaries(int page, int pageSize,
-            int number, Guid client, DateTime? fromDate, DateTime? toDate)
+            int number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
         {
-            var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, client, fromDate, toDate);
+            var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             return PartialView("ActiveDiaries", diaryEntries);
         }
 
@@ -47,13 +49,14 @@ namespace RED.Controllers
         }
 
         public ActionResult FilterArchivedDiaries(int page, int pageSize,
-            int number, string client, DateTime? fromDate, DateTime? toDate)
+            int number, int diaryNumber, string client, DateTime? fromDate, DateTime? toDate)
         {
-            var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, client, fromDate, toDate);
+            var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             return PartialView("ArchivedDiaries", archivedDiaries);
         }
 
         // GET: Diary/Create
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
@@ -64,6 +67,7 @@ namespace RED.Controllers
         // POST: Diary/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create(DiaryW diary)
         {
             if (ModelState.IsValid && diary.Products.Count > 0)
@@ -77,6 +81,7 @@ namespace RED.Controllers
             return View(diary);
         }
 
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -99,6 +104,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Edit(DiaryW diary)
         {
             if (ModelState.IsValid)
@@ -113,6 +119,7 @@ namespace RED.Controllers
             return View(diary);
         }
 
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -136,6 +143,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = Rep.Delete(id);
@@ -163,6 +171,7 @@ namespace RED.Controllers
             return Json(pagedEntries, JsonRequestBehavior.AllowGet);
         }
 
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult GenerateRequest(Guid? diaryId)
         {
             if(diaryId != null)
@@ -177,6 +186,7 @@ namespace RED.Controllers
         }
 
         [HttpPost]
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult AddComment(Guid? diaryId, string comment)
         {
             if (diaryId != null && comment != null && comment != "")
@@ -196,6 +206,7 @@ namespace RED.Controllers
             return PartialView(products);
         }
 
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult ArchiveDiary(Guid diaryId)
         {
             var response = Rep.ArchiveDiary(diaryId);

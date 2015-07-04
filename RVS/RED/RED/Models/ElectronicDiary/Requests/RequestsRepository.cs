@@ -88,9 +88,8 @@ namespace RED.Models.ElectronicDiary.Requests
                                                    d.RequestDate <= (to == null ? d.RequestDate : to.Value));
 
             //Order and paging
-            var archivedDiaries = db.ArchivedDiaries
-                .OrderByDescending(r => r.RequestDate).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
+            var archivedDiaries = requests.OrderByDescending(r => r.RequestDate).Skip((page - 1) * pageSize)
+                .Take(pageSize).ToList();
 
             return archivedDiaries.Select(ad => new ArchivedRequest(ad));
         }

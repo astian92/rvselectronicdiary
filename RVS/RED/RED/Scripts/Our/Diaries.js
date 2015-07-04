@@ -87,6 +87,11 @@ $(document).ready(function () {
             number = -1;
         }
 
+        var diaryNumber = $('#DiaryNumber').val();
+        if (diaryNumber == '') {
+            diaryNumber = -1;
+        }
+        
         var client = '';
         if (isActiveTab)
         {
@@ -103,7 +108,7 @@ $(document).ready(function () {
             cache: false,
             type: 'POST',
             url: url,
-            data: { page: page, pageSize: pageSize, number: number, client: client, fromDate: fromDate, toDate: toDate },
+            data: { page: page, pageSize: pageSize, number: number, diaryNumber: diaryNumber, client: client, fromDate: fromDate, toDate: toDate },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {

@@ -20,7 +20,6 @@ var tabId = 'not-accepted-tab-btn';
 var url = '/Requests/GetNotAcceptedRequests';
 
 $(document).ready(function () {
-
     $('.not-accepted-tab-btn').click(function () {
         tabId = 'not-accepted-requests';
         url = '/Requests/FilterNotAcceptedRequests';

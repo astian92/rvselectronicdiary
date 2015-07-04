@@ -38,7 +38,7 @@
                     <label>От Дата</label>
                     <div class="input-group date">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input id="fromDate" class="form-control text-box single-line" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                        <input id="fromDate" class="form-control text-box single-line" type="datetime" value="">
                     </div>
                 </div>
 
@@ -48,12 +48,12 @@
                     <label>До Дата</label>
                     <div class="input-group date">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input id="toDate" class="form-control text-box single-line" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                        <input id="toDate" class="form-control text-box single-line" type="datetime" value="">
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <button id="filter" class="btn btn-primary">Филтрирай</button>
+            <div class="col-xs-12 col-lg-4">
+                <button id="filter" class="btn btn-primary" style="margin-top:23px;">Филтрирай</button>
             </div>
         </div>
     </div>

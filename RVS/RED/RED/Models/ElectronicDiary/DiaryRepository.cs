@@ -14,10 +14,11 @@ namespace RED.Models.ElectronicDiary
     public class DiaryRepository : RepositoryBase
     {
         public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10,
-            int number = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
+            int number = -1, int diaryNumber = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var diaryEntries = db.Diaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number));
+            var diaryEntries = db.Diaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
+            diaryEntries = diaryEntries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number));
             diaryEntries = diaryEntries.Where(d => d.ClientId == (client == Guid.Empty ? d.ClientId : client));
             diaryEntries = diaryEntries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
                                                    d.LetterDate <= (to == null ? d.LetterDate : to.Value));
@@ -31,10 +32,11 @@ namespace RED.Models.ElectronicDiary
         }
 
         public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10,
-            int number = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
+            int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var adiaries = db.ArchivedDiaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()));
+            var adiaries = db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber.ToString())); 
+            adiaries = adiaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()));
             adiaries = adiaries.Where(d => d.Client == (client == "Всички" ? d.Client : client));
             adiaries = adiaries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
                                                    d.LetterDate <= (to == null ? d.LetterDate : to.Value));

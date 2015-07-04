@@ -22,7 +22,7 @@ namespace RED.Models.Logs
 
         }
 
-        public ActionLogW(ActionLog log)
+        public ActionLogW(ActionLog log, User user)
         {
             this.Id = log.Id;
             this.UserId = log.User.Id;
@@ -31,6 +31,7 @@ namespace RED.Models.Logs
             this.On = log.On;
             this.ActionTypeId = log.ActionTypeId;
             this.TableNameBg = log.TableNameBg;
+            this.UserName = user.Username;
         }
 
         public ActionLog ToBase()

@@ -14,7 +14,7 @@ using RED.Filters;
 
 namespace RED.Controllers
 {
-    [RoleFilter("fd76464d-8e9c-4176-ab40-e372084d79ad")]
+    [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
     public class RolesController : ControllerBase<AdminRepository>
     {
         public ActionResult Index()
@@ -29,6 +29,7 @@ namespace RED.Controllers
         }
 
         // GET: Roles/Create
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create()
         {
             ViewBag.Features = Rep.GetFeatures();
@@ -38,6 +39,7 @@ namespace RED.Controllers
         // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
@@ -50,6 +52,7 @@ namespace RED.Controllers
         }
 
         // GET: Roles/Edit/5
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -68,6 +71,7 @@ namespace RED.Controllers
         // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
@@ -78,7 +82,7 @@ namespace RED.Controllers
             return View(role);
         }
 
-        // GET: Roles/Delete/5
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -96,9 +100,9 @@ namespace RED.Controllers
             return View(role);
         }
 
-        // POST: Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = Rep.DeleteRole(id);

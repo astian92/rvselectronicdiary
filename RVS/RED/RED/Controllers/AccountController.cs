@@ -100,20 +100,18 @@ namespace RED.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Profile(Guid? id)
+        public ActionResult Profile(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             RedDataEntities db = new RedDataEntities();
-            RED.Models.DataContext.User user = db.Users.Find(id);
+            User user = db.Users.Find(id);
 
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
+
             return View(user);
         }
     }
