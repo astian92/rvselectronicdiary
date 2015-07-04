@@ -7,6 +7,8 @@
     RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
 }
 
+<link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
+
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
     {
@@ -202,11 +204,31 @@
     }
 </div>
 
-<script src="~/Scripts/Our/ActiveDiaries.js"></script>
+<div class="custom-pagination pull-right">
 
-@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-        </div>
-    </div>
-</div>*@
+</div>
+
+
+<script src="~/Scripts/Our/ActiveDiaries.js"></script>
+<script src="~/Scripts/Our/CustomPagination.js"></script>
+
+<script>
+    var pagination = new CustomPagination({
+        clickBack: function (arguments) {
+            var url = arguments[0];
+            var attribute = arguments[1];
+
+            alert(url + attribute);
+        },
+        clickBackArguments: ["http://prev", '1'],
+        clickNext: function (arguments) {
+            var url = arguments[0];
+            var attribute = arguments[1];
+
+            alert(url + attribute);
+        },
+        clickNextArguments: ["http://next", '2'],
+    });
+
+    pagination.Create(".custom-pagination");
+</script>

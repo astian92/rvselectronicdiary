@@ -4,6 +4,13 @@
     ViewBag.Title = "Tests";
 }
 
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
@@ -35,7 +42,10 @@
                         <th>Единица на величината</th>
                         <th>Температура</th>
                         <th>Категория</th>
-                        <th></th>
+                        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+                        {
+                            <th></th>
+                        }
                     </tr>
                 </thead>
             </table>
@@ -71,9 +81,17 @@
             { "data": "UnitName" },
             { "data": "Temperature" },
             { "data": "Category" },
+            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            {
+            <text>
             { "data": "Id" }
+            </text>
+            }
         ],
         columnDefs: [
+            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            {
+                <text>
             {
                 targets: -1,
                 sortable: false,
@@ -89,6 +107,8 @@
                 },
                 class: "text-center"
             },
+                </text>
+            }
             {
                 targets: -2,
                 visible: false

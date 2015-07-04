@@ -4,6 +4,13 @@
     ViewBag.Title = "Categories";
 }
 
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
@@ -30,7 +37,10 @@
                 <thead>
                     <tr>
                         <th>Име</th>
+                        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+                        {
                         <th></th>
+                        }
                     </tr>
                 </thead>
             </table>
@@ -61,8 +71,16 @@
         },
         columns: [
             { "data": "Name" },
+            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            {
+            <text>
             { "data": "Id" }
+            </text>
+            }
         ],
+        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+        {
+            <text>
         columnDefs: [
             {
                 targets: -1,
@@ -81,6 +99,8 @@
                 class: "text-center"
             }
         ]
+            </text>
+        }
     });
 
     function Delete(btn) {
