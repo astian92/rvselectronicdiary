@@ -3,16 +3,16 @@ var CustomPagination = function (Settings) {
     var self = this;
     this.settings = Settings;
     this.paginateElement;
+    this.startPage = Settings.startPage || 1;
 
     this.ClickPrevious = function () {
         var pageField = self.paginateElement.find('.pagination-page-field');
         var page = pageField.val();
 
-        if (page > 2) {
+        if (page >= 2) {
             page = page - 1;
+            pageField.val(page);
         }
-
-        pageField.val(page);
     }
 
     this.ClickNext = function () {
@@ -31,7 +31,7 @@ var CustomPagination = function (Settings) {
                                     '<a>Назад</a>' +
                                 '</li>' +
                                 '<li>' +
-                                    '<input type="number" class="pagination-page-field" value="1" />' +
+                                    '<input type="number" class="pagination-page-field" value="' + self.startPage + '" />' +
                                 '</li>' +
                                 '<li class="paginate_btn paginate_next">' +
                                     '<a>Напред</a>' +
@@ -42,21 +42,32 @@ var CustomPagination = function (Settings) {
         var prevBtn = self.paginateElement.find('.paginate_previous');
         prevBtn.on("click", function () {
             self.ClickPrevious();
+            var pageField = self.paginateElement.find('.pagination-page-field');
+            var page = pageField.val();
 
             if (self.settings.clickBack) {
-                self.settings.clickBack(self.settings.clickBackArguments);
+                self.settings.clickBack(self.settings.clickBackArguments, page);
             }
         });
 
         var nextBtn = self.paginateElement.find('.paginate_next');
         nextBtn.on("click", function () {
             self.ClickNext();
+            var pageField = self.paginateElement.find('.pagination-page-field');
+            var page = pageField.val();
 
             if (self.settings.clickNext) {
-                self.settings.clickNext(self.settings.clickNextArguments);
+                self.settings.clickNext(self.settings.clickNextArguments, page);
             }
         });
         
+        if (self.settings.onPageInputChange) {
+            var pageField = self.paginateElement.find('.pagination-page-field');
+            pageField.on('change', function () {
+                var page = $(this).val();
+                self.settings.onPageInputChange(self.settings.changePageFieldArguments, page);
+            });
+        }
 
         $(selectorToAppendTo).append(self.paginateElement);
     }

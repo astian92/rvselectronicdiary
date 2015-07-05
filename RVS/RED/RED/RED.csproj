@@ -297,7 +297,6 @@
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
-    <Compile Include="Models\Helpers\PageSizes.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
     <Compile Include="Models\Logs\LogRepository.cs" />
@@ -754,6 +753,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
+    <Folder Include="Models\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

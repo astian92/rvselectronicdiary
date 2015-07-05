@@ -13,6 +13,8 @@
     RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
 }
 
+<link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
+
 <h2>Дневник</h2>
 @if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
 {
@@ -108,7 +110,8 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active active-diaries">
-                    @{ Html.RenderAction("ActiveDiaries"); }
+                    @{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
+                    number = -1, diaryNumber = -1, client = Guid.Empty }); }
                 </div>
 
                 <div id="tab-2" class="tab-pane archived-diaries">
@@ -125,6 +128,7 @@
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/Our/Diaries.js"></script>
+
 <script>
     var config = {
         '.chosen-select': {},

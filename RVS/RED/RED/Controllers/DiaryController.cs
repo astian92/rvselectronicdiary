@@ -32,6 +32,7 @@ namespace RED.Controllers
         public ActionResult ActiveDiaries()
         {
             var diaryEntries = Rep.GetDiaryEntries();
+            ViewBag.page = 1;
             return PartialView(diaryEntries);
         }
 
@@ -39,6 +40,7 @@ namespace RED.Controllers
             int number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
         {
             var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
+            ViewBag.page = page;
             return PartialView("ActiveDiaries", diaryEntries);
         }
 
@@ -52,6 +54,7 @@ namespace RED.Controllers
             int number, int diaryNumber, string client, DateTime? fromDate, DateTime? toDate)
         {
             var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
+            ViewBag.page = page;
             return PartialView("ArchivedDiaries", archivedDiaries);
         }
 

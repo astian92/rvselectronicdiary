@@ -20,6 +20,7 @@ var isActiveTab = true;
 $(document).ready(function () {
 
     $('.active-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'active-diaries';
         url = '/Diary/FilterActiveDiaries';
         isActiveTab = true;
@@ -30,8 +31,12 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            type: 'GET',
-            url: '/Diary/ActiveDiaries',
+            type: 'POST',
+            data: {
+                page: 1, pageSize: 2, number: -1,
+                diaryNumber: -1, client: "00000000-0000-0000-0000-000000000000"
+            },
+            url: url,
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
@@ -47,6 +52,7 @@ $(document).ready(function () {
     });
 
     $('.archived-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'archived-diaries';
         url = '/Diary/FilterArchivedDiaries';
         isActiveTab = false;
@@ -57,8 +63,12 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            type: 'GET',
-            url: '/Diary/ArchivedDiaries',
+            type: 'POST',
+            data: {
+                page: 1, pageSize: 2, number: -1,
+                diaryNumber: -1, client: "Всички"
+            },
+            url: '/Diary/FilterArchivedDiaries',
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
@@ -79,42 +89,16 @@ $(document).ready(function () {
 
         $('.' + tabId).html(spiner);
 
-        var page = 1;
-        var pageSize = 10;
-        var number = $('#LetterNumber').val();
-        if (number == '')
-        {
-            number = -1;
-        }
-
-        var diaryNumber = $('#DiaryNumber').val();
-        if (diaryNumber == '') {
-            diaryNumber = -1;
-        }
+        var data = GetFilters();
+        data.page = 1;
         
-        var client = '';
-        if (isActiveTab)
-        {
-            client = $('#ClientId').val();
-        }
-        else
-        {
-            client = $('#ClientId option:selected').text();
-        }
-        var fromDate = $('#fromDate').val();
-        var toDate = $('#toDate').val();
-
         $.ajax({
             cache: false,
             type: 'POST',
             url: url,
-            data: { page: page, pageSize: pageSize, number: number, diaryNumber: diaryNumber, client: client, fromDate: fromDate, toDate: toDate },
+            data: data,
             success: function (result) {
                 $('.' + tabId).html(result);
-                if (diaryIdtoOpen) {
-                    $('a[href="#' + diaryIdtoOpen + '"]').click();
-                    diaryIdtoOpen = undefined;
-                }
             },
             error: function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
@@ -123,6 +107,41 @@ $(document).ready(function () {
         })
     });
 });
+
+function GetFilters() {
+    var pageSize = 2;
+    var number = $('#LetterNumber').val();
+    if (number == '') {
+        number = -1;
+    }
+
+    var diaryNumber = $('#DiaryNumber').val();
+    if (diaryNumber == '') {
+        diaryNumber = -1;
+    }
+
+    var client = '';
+    if (isActiveTab) {
+        client = $('#ClientId').val();
+    }
+    else {
+        client = $('#ClientId option:selected').text();
+    }
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+
+    return { pageSize: pageSize, number: number, diaryNumber: diaryNumber, client: client, fromDate: fromDate, toDate: toDate }
+}
+
+function ClearFilters() {
+    $('#LetterNumber').val('');
+    $('#DiaryNumber').val('');
+    $('#ClientId').val('00000000-0000-0000-0000-000000000000').change();
+    text = client = $('#ClientId option:selected').text();
+    $('#ClientId_chosen .chosen-single span').text(text);
+    $('#fromDate').val('');
+    var toDate = $('#toDate').val('');
+}
 
 function ArchiveDiary(btn) {
     //$('.ui-state-error-text').empty();
