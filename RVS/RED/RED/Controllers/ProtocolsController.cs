@@ -20,35 +20,37 @@ namespace RED.Controllers
             return View();
         }
 
-        public ActionResult GetActiveProtocols()
-        {
-            ViewBag.Label = "active-protocols";
+        //public ActionResult GetActiveProtocols()
+        //{
+        //    ViewBag.Label = "active-protocols";
 
-            var protocols = Rep.GetActiveProtocols();
-            return PartialView("ActiveProtocols", protocols);
-        }
+        //    var protocols = Rep.GetActiveProtocols();
+        //    return PartialView("ActiveProtocols", protocols);
+        //}
 
         public ActionResult FilterActiveProtocols(int page, int pageSize,
             int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "active-protocols";
+            ViewBag.page = page;
 
             var protocols = Rep.GetActiveProtocols(page, pageSize, number, fromDate, toDate);
             return PartialView("ActiveProtocols", protocols);
         }
 
-        public ActionResult GetArchivedProtocols()
-        {
-            ViewBag.Label = "archived-protocols";
+        //public ActionResult GetArchivedProtocols()
+        //{
+        //    ViewBag.Label = "archived-protocols";
 
-            var protocols = Rep.GetArchivedProtocols();
-            return PartialView("ArchivedProtocols", protocols);
-        }
+        //    var protocols = Rep.GetArchivedProtocols();
+        //    return PartialView("ArchivedProtocols", protocols);
+        //}
 
         public ActionResult FilterArchivedProtocols(int page, int pageSize,
             int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "archived-protocols";
+            ViewBag.page = page;
 
             var protocols = Rep.GetArchivedProtocols(page, pageSize, number, fromDate, toDate);
             return PartialView("ArchivedProtocols", protocols);

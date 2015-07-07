@@ -21,6 +21,7 @@ var url = '/Requests/GetNotAcceptedRequests';
 
 $(document).ready(function () {
     $('.not-accepted-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'not-accepted-requests';
         url = '/Requests/FilterNotAcceptedRequests';
 
@@ -33,8 +34,11 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            type: 'GET',
-            url: "/Requests/GetNotAcceptedRequests",
+            type: 'POST',
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (requestIdToOpen) {
@@ -50,6 +54,7 @@ $(document).ready(function () {
     });
 
     $('.accepted-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'accepted-requests';
         url = '/Requests/FilterAcceptedRequests';
 
@@ -63,7 +68,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GetAcceptedRequests",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (requestIdToOpen) {
@@ -79,6 +87,7 @@ $(document).ready(function () {
     });
 
     $('.my-requests-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'my-requests';
         url = '/Requests/FilterMyRequests';
 
@@ -92,7 +101,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GetMyRequests",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (requestIdToOpen) {
@@ -108,6 +120,7 @@ $(document).ready(function () {
     });
 
     $('.completed-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'completed-requests';
         url = '/Requests/FilterCompletedRequests';
 
@@ -121,7 +134,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GetCompletedRequests",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
             },
@@ -133,6 +149,7 @@ $(document).ready(function () {
     });
 
     $('.archived-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'archived-requests';
         url = '/Requests/FilterArchivedRequests';
 
@@ -146,7 +163,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Requests/GetArchivedRequests",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
             },
@@ -163,20 +183,14 @@ $(document).ready(function () {
 
         $('.' + tabId).html(spinnerString);
 
-        var page = 1;
-        var pageSize = 10;
-        var number = $('#RequestNumber').val();
-        if (number == '') {
-            number = -1;
-        }
-
-        var fromDate = $('#fromDate').val();
-        var toDate = $('#toDate').val();
-
+        var data = GetFilters();
+        data.page = 1;
+        
         $.ajax({
             cache: false,
             type: 'POST',
             url: url,
+            data: data,
             data: { page: page, pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -249,4 +263,23 @@ function DenyRequest(btn) {
             $('.ui-state-error-text').append('<p>Възникна грешка при опит за отказване на заявката</p>');
         }
     });
+}
+
+function GetFilters() {
+    var pageSize = 2;
+    var number = $('#RequestNumber').val();
+    if (number == '') {
+        number = -1;
+    }
+
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+
+    return { pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate };
+}
+
+function ClearFilters() {
+    $('#RequestNumber').val('');
+    $('#fromDate').val('');
+    $('#toDate').val('');
 }

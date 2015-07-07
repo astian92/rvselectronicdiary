@@ -94,3 +94,48 @@
     }
 
 </div>
+
+<div class="custom-pagination pull-right">
+
+</div>
+
+<script src="~/Scripts/Our/CustomPagination.js"></script>
+
+<script>
+    var pagination = new CustomPagination({
+        startPage: @ViewBag.page,
+        clickBack: function (arguments, page) {
+            changePage(page);
+        },
+        //clickBackArguments: ["http://prev", '1'],
+        clickNext: function (arguments, page) {
+            changePage(page);
+        },
+        //clickNextArguments: ["http://next", '2'],
+        onPageInputChange: function (arguments, page) {
+            changePage(page);
+        },
+        //changePageFieldArguments: ["argument1", "argument2" ...]
+    });
+
+    pagination.Create(".custom-pagination");
+
+    function changePage(page) {
+        var data = GetFilters();
+        data.page = page;
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (result) {
+                $('.' + tabId).html(result);
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+                $('.' + tabId).html(errorMsg);
+            }
+        });
+    }
+</script>

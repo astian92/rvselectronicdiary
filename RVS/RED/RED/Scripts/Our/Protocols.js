@@ -22,6 +22,7 @@ var isActiveTab = true;
 $(document).ready(function () {
 
     $('.active-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'active-protocols';
         url = '/Protocols/FilterActiveProtocols';
         isActiveTab = true;
@@ -34,7 +35,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Protocols/GetActiveProtocols",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (protocolIdToOpen) {
@@ -53,6 +57,7 @@ $(document).ready(function () {
     });
 
     $('.archived-tab-btn').click(function () {
+        ClearFilters();
         tabId = 'archived-protocols';
         url = '/Protocols/FilterArchivedProtocols';
         isActiveTab = false;
@@ -65,7 +70,10 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             type: 'GET',
-            url: "/Protocols/GetArchivedProtocols",
+            url: url,
+            data: {
+                page: 1, pageSize: 2, number: -1
+            },
             success: function (result) {
                 $('.' + tabId).html(result);
                 if (protocolIdToOpen) {
@@ -89,21 +97,14 @@ $(document).ready(function () {
 
         $('.' + tabId).html(spinnerString);
 
-        var page = 1;
-        var pageSize = 10;
-        var number = $('#ProtocolNumber').val();
-        if (number == '') {
-            number = -1;
-        }
-
-        var fromDate = $('#fromDate').val();
-        var toDate = $('#toDate').val();
+        var data = GetFilters();
+        data.page = 1;
 
         $.ajax({
             cache: false,
             type: 'POST',
             url: url,
-            data: { page: page, pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate },
+            data: data,
             success: function (result) {
                 $('.' + tabId).html(result);
             },
@@ -127,4 +128,23 @@ function DeleteProtocol(btn) {
             $('.modal-content').html(view);
         }
     });
+}
+
+function GetFilters() {
+    var pageSize = 2;
+    var number = $('#ProtocolNumber').val();
+    if (number == '') {
+        number = -1;
+    }
+
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+
+    return { pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate };
+}
+
+function ClearFilters() {
+    $('#ProtocolNumber').val('');
+    $('#fromDate').val('');
+    $('#toDate').val('');
 }

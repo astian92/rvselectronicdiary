@@ -6,6 +6,7 @@
 }
 
 <link href="~/Content/Our/tabs-changes.css" rel="stylesheet" />
+<link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
 
 <h2>Заявки</h2>
 <div class="ibox float-e-margins" style="margin-bottom:0;">
@@ -87,7 +88,12 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active not-accepted-requests">
-                    @{ Html.RenderAction("GetNotAcceptedRequests"); }
+                    @{ Html.RenderAction("FilterNotAcceptedRequests", new
+                       {
+                            page = 1,
+                            pageSize = 2,
+                            number = -1
+                       }); }
                 </div>
 
                 <div id="tab-2" class="tab-pane accepted-requests">

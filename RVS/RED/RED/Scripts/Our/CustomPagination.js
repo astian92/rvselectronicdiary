@@ -11,8 +11,10 @@ var CustomPagination = function (Settings) {
 
         if (page >= 2) {
             page = page - 1;
-            pageField.val(page);
+            //pageField.val(page);
         }
+
+        return page;
     }
 
     this.ClickNext = function () {
@@ -21,7 +23,8 @@ var CustomPagination = function (Settings) {
 
         page = Number(page) + 1;    
 
-        pageField.val(page);
+        //pageField.val(page);
+        return page;
     }
 
     this.Create = function (selectorToAppendTo) {
@@ -41,9 +44,9 @@ var CustomPagination = function (Settings) {
 
         var prevBtn = self.paginateElement.find('.paginate_previous');
         prevBtn.on("click", function () {
-            self.ClickPrevious();
+            var page = self.ClickPrevious();
             var pageField = self.paginateElement.find('.pagination-page-field');
-            var page = pageField.val();
+            //var page = pageField.val();
 
             if (self.settings.clickBack) {
                 self.settings.clickBack(self.settings.clickBackArguments, page);
@@ -52,9 +55,9 @@ var CustomPagination = function (Settings) {
 
         var nextBtn = self.paginateElement.find('.paginate_next');
         nextBtn.on("click", function () {
-            self.ClickNext();
+            var page = self.ClickNext();
             var pageField = self.paginateElement.find('.pagination-page-field');
-            var page = pageField.val();
+            //var page = pageField.val();
 
             if (self.settings.clickNext) {
                 self.settings.clickNext(self.settings.clickNextArguments, page);

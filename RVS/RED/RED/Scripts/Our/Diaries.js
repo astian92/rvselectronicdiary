@@ -140,7 +140,7 @@ function ClearFilters() {
     text = client = $('#ClientId option:selected').text();
     $('#ClientId_chosen .chosen-single span').text(text);
     $('#fromDate').val('');
-    var toDate = $('#toDate').val('');
+    $('#toDate').val('');
 }
 
 function ArchiveDiary(btn) {
