@@ -191,6 +191,8 @@
     <Compile Include="Models\Admin\Roles\RoleW.cs" />
     <Compile Include="Models\Admin\Users\UserW.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
+    <Compile Include="Models\Dashboard\DashboardRepository.cs" />
+    <Compile Include="Models\Dashboard\DashboardW.cs" />
     <Compile Include="Models\DataContext\AcredetationLevel.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -410,6 +412,7 @@
     <Content Include="Images\favicon-96x96.png" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Scripts\Our\CustomPagination.js" />
+    <Content Include="Scripts\Our\Dashboard.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.min.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.bootstrap.js" />
@@ -749,6 +752,7 @@
     <Content Include="Views\Protocols\ActiveProtocols.cshtml" />
     <Content Include="Views\Protocols\ArchivedProtocols.cshtml" />
     <Content Include="Views\Error\DeleteConflicted.cshtml" />
+    <Content Include="Views\Home\TestsReference.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -71,8 +71,8 @@
                         <div class="col-md-9">
                             @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
                             <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" />
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" />
+                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1"/>
+                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
                             </span>
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
@@ -85,8 +85,8 @@
                         <div class="col-md-9">
                             @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Стойността е задължителна!" })
                             <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" />
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" />
+                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
+                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
                             </span>
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
                         </div>

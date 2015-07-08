@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RED.Models.ControllerBases;
+using RED.Models.Dashboard;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,31 +8,16 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase<DashboardRepository>
     {
         public ActionResult Index()
         {
-            return View();
+            return View(Rep.GetDashboard());
         }
 
-        public ActionResult About()
+        public ActionResult TestsReference(int type)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return PartialView(Rep.GetTestsReference(type));
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Break()
-        {
-            throw new NullReferenceException("There is something fishy. NOW LOGG ME !");
-        }
-
     }
 }

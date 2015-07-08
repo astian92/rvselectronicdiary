@@ -1,0 +1,30 @@
+﻿@model RED.Models.ElectronicDiary.Protocols.ProtocolW
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Затвори</span></button>
+    <i class="fa fa-clipboard modal-icon"></i>
+    <h4 class="modal-title">Изтрий</h4>
+    <small class="font-bold">Сигурни ли сте, че искате да изтриете този протокол?</small>
+</div>
+@*<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>
+            Дата
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssuedDate)
+        </dd>
+    </dl>
+</div>*@
+<div class="modal-footer">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Да" class="btn btn-primary btn-padding-lg" />
+            <button type="button" class="btn btn-white btn-padding-lg" data-dismiss="modal">Не</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,147 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.ArchivedRequest>
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
+<div class="panel-group" id="accordion_@ViewBag.Label">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion_@ViewBag.Label" href="#@item.DiaryId" aria-expanded="false" class="collapsed text-muted">
+                <div class="panel-heading">
+                    <h5 class="panel-title icon-accordion">
+                        Заявка №@item.Number / Дата @item.DateStr / Час @item.HourStr
+                        @*<i class="fa fa-check-circle pull-right"></i>*@
+                        @*@if (item.AcceptedBy == ((RvsPrincipal)HttpContext.Current.User).Identity.Name)
+                        {
+                            <i class="fa fa-user pull-right"></i>
+                        }*@
+                        <i class="fa fa-archive pull-right"></i>
+                    </h5>
+
+                </div>
+            </a>
+            <div id="@item.DiaryId" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="animated fadeInDown">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="text-left">Наименoвание</th>
+                                                    <th class="text-center">Количество</th>
+                                                    <th class="text-right">Показател за изпитване</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var product in item.Diary.ArchivedProducts.OrderBy(p => p.Number))
+                                                {
+                                                    <tr>
+                                                        <td>@product.Number</td>
+                                                        <td>
+                                                            <span>@product.Name</span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span>@product.Quantity</span>
+                                                        </td>
+                                                        @{ int i = 0; }
+                                                        @foreach (var test in product.ArchivedProductTests.OrderBy(pt => pt.TestName))
+                                                        {
+                                                            if (i == 0)
+                                                            {
+                                                                <td class="text-right">
+                                                                    <span>@test.TestName</span>
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                            <tr>
+                                                                <td colspan="4" style="text-align: right">
+                                                                    <span>@test.TestName</span>
+                                                                </td>
+                                                            </tr>
+                                                            }
+
+                                                            i++;
+                                                        }
+                                                        </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <h5>Срок на изпитване (дни): <strong></strong></h5>
+                                        
+                                        @if (principal.IsAuthorize("93b1ccf0-c462-464a-9294-524e5088b93b")) //виждай протоколи
+                                        {
+                                        <div class="status-container">
+                                            <a href="/Protocols/Index?IsArchived=true&idToOpen=@item.DiaryId">
+                                                <i class="fa fa-clipboard"></i>
+                                                Виж протокол
+                                            </a>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="custom-pagination pull-right">
+
+</div>
+
+<script src="~/Scripts/Our/CustomPagination.js"></script>
+
+<script>
+    var pagination = new CustomPagination({
+        startPage: @ViewBag.page,
+        clickBack: function (arguments, page) {
+            changePage(page);
+        },
+        //clickBackArguments: ["http://prev", '1'],
+        clickNext: function (arguments, page) {
+            changePage(page);
+        },
+        //clickNextArguments: ["http://next", '2'],
+        onPageInputChange: function (arguments, page) {
+            changePage(page);
+        },
+        //changePageFieldArguments: ["argument1", "argument2" ...]
+    });
+
+    pagination.Create(".custom-pagination");
+
+    function changePage(page) {
+        var data = GetFilters();
+        data.page = page;
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (result) {
+                $('.' + tabId).html(result);
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+                $('.' + tabId).html(errorMsg);
+            }
+        });
+    }
+</script>

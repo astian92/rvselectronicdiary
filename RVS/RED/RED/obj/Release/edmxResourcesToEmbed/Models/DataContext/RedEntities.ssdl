@@ -43,6 +43,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
     <Property Name="LetterNumber" Type="nvarchar" MaxLength="40" Nullable="false" />
     <Property Name="LetterDate" Type="datetime" Nullable="false" />
@@ -52,6 +53,7 @@
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="8" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedProducts">
     <Key>
@@ -84,6 +86,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ResultNumber" Type="nvarchar" MaxLength="12" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
   </EntityType>
@@ -156,7 +159,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProductTestId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ResultNumber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="ResultNumber" Type="nchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
   </EntityType>
@@ -193,6 +196,16 @@
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="FeatureId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="TestCategories">
     <Key>
       <PropertyRef Name="Id" />
@@ -223,7 +236,7 @@
     <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="RoleId" Type="uniqueidentifier" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <Association Name="FK_ActionLogProperties_ToTable">
     <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="1">
@@ -482,7 +495,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Users_Roles">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
     <End Role="Users" Type="Self.Users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Roles">
@@ -513,6 +526,7 @@
     <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestCategories" EntityType="Self.TestCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />

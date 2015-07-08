@@ -4,91 +4,131 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<link href="~/Content/Our/tabs-changes.css" rel="stylesheet" />
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
 
 <h2>Протоколи</h2>
 
-<div class="panel-group" id="accordion">
-    @foreach (var item in Model)
-    {
-        var wrappedDiary = new DiaryW(item.Request.Diary);
-        
-        <div class="panel panel-default">
-            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                        Протокол №: @item.Request.Diary.Number /
-                        Дата:  @item.IssuedDate.ToString("dd.MM.yyyy")
-                    </h5>
-                </div>
+<div class="ibox float-e-margins" style="margin-bottom:0;">
+    <div class="ibox-title">
+        <div class="ibox-tools">
+            <a class="close-link">
+                <i class="fa fa-times"></i>
             </a>
-            <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                <div class="panel-body">
-                    <div class="animated fadeInDown">
-                        <div class="ibox-content">
-                            <div class="row">
-                                <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th>
-                                            Наименувание на показателя
-                                        </th>
-                                        <th> 
-                                            Методи
-                                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                                        </th>
-                                        <th>
-                                            № на образеца
-                                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                                        </th>
-                                        <th>Резултати от изследването, неопределеност</th>
-                                        <th>
-                                            Стойност на показателя
-                                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                                        </th>
-                                        <th>Условия на заобикалящата среда</th>
-                                    </tr>
+        </div>
+        <div class="collapse-link" style="cursor:pointer;">
+            <h5 class="">Филтри</h5>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: block;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-md-2 no-padding">Протокол №:</label>
+                    <input class="form-control text-box single-line" data-val="true"
+                           data-val-range-min="0" data-val-range-max="2147483647"
+                           id="ProtocolNumber" type="number" value="">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group" id="filter-date-from">
+                    <label>От Дата</label>
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="fromDate" class="form-control text-box single-line" type="datetime" value="">
+                    </div>
+                </div>
 
-                                    
-                                    @{
-                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
-
-                                        foreach (var result in orderdProtocolRes)
-                                        {
-                                            <tr>
-                                                <td>@result.ProductTest.Test.Name</td>
-                                                <td>@result.ProductTest.Test.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
-                                                <td>@result.ProductTest.Test.Temperature</td>
-                                            </tr>
-                                        }
-                                    }
-                                </table>
-                            </div>
-
-                            <div class="row">
-                                <div class="text-right">
-                                    <a class="btn btn-primary" href="/Protocols/Edit?protocolId=@item.Id">
-                                        <i class="fa fa-edit"></i>
-                                        Промени
-                                    </a>
-                                    <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-trash"></i>
-                                        Изтрий
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group" id="filter-date-to">
+                    <label>До Дата</label>
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="toDate" class="form-control text-box single-line" type="datetime" value="">
                     </div>
                 </div>
             </div>
+            <div class="col-xs-12 col-lg-4">
+                <button id="filter" class="btn btn-primary" style="margin-top:23px;">Филтрирай</button>
+            </div>
         </div>
-    }
+    </div>
+</div>
+<div class="row">
+    <div class="panel">
+
+        <div class="panel-heading">
+            <div class="panel-options">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" class="active-tab-btn">Активни</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-2" class="archived-tab-btn">Архивирани</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body my-tab-style">
+
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active active-protocols">
+                    @{ Html.RenderAction("FilterActiveProtocols", new { 
+                            page = 1,
+                            pageSize = 2,
+                            number = -1
+                       }); }
+                </div>
+
+                <div id="tab-2" class="tab-pane archived-protocols">
+                    @*Html.RenderAction("GetArchivedProtocols");*@
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/Our/Protocols.js"></script>
+
+<script>
+    var isArchived = @(((bool)ViewBag.IsArchived).ToString().ToLower());
+
+    $('#filter-date-from .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#filter-date-to .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $(document).ready(function () { 
+        protocolIdToOpen = '@(ViewBag.IdToOpen)';
+
+        if (isArchived) { 
+            $('.archived-tab-btn').click();
+            window.location = "#" + protocolIdToOpen;
+        }
+        else {
+            $('.active-tab-btn').click();
+        }
+    });
+</script>

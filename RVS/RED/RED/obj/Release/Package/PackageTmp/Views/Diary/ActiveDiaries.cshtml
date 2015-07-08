@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
 @using System.Globalization;
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
 
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
@@ -104,7 +110,10 @@
                                     <div class="status-container">
                                         @if (item.Request == null)
                                         {
-                                            <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                            if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                            {
+                                                <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                            }
                                         }
                                         else
                                         {
@@ -133,7 +142,8 @@
                                     }
                                 </div>
                             </div>
-
+                            @if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                            {
                             <div class="ibox-content comment-container" style="margin-bottom:10px;">
                                 <div class="form-group">
                                     <div class="col-md-10 no-padding">
@@ -147,8 +157,16 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                            }
+                            else
+                            {
+                                <div class="ibox-content comment-container" style="margin-bottom:10px;">
+                                    
+                                    <p>@item.Comment</p>
+                                </div>
+                            }
                             <div class="row">
-                                @if (item.Request == null || !item.Request.IsAccepted)
+                                @if ((item.Request == null || !item.Request.IsAccepted) && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                 {
                                     <div class="text-right">
                                         <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
@@ -162,13 +180,17 @@
                                     </div>
                                 }
                                 
-                                @if (item.Request != null && item.Request.Protocols.Any())
+                                @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                 {
                                     <div class="text-right">
-                                        <a class="btn btn-primary btn-archive" href="/Diary/Archive?id=@item.Id">
+                                        <button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
                                             <i class="fa fa-archive"></i>
                                             Архивирай
-                                        </a>
+                                        </button>
+
+                                    </div>
+                                    <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
+
                                     </div>
                                 }
                             </div>
@@ -180,11 +202,49 @@
     }
 </div>
 
-<script src="~/Scripts/Our/Diaries.js"></script>
+<div class="custom-pagination pull-right">
 
-@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-        </div>
-    </div>
-</div>*@
+</div>
+
+
+<script src="~/Scripts/Our/ActiveDiaries.js"></script>
+<script src="~/Scripts/Our/CustomPagination.js"></script>
+
+<script>
+    var pagination = new CustomPagination({
+        startPage: @ViewBag.page,
+        clickBack: function (arguments, page) {
+            changePage(page);
+        },
+        //clickBackArguments: ["http://prev", '1'],
+        clickNext: function (arguments, page) {
+            changePage(page);
+        },
+        //clickNextArguments: ["http://next", '2'],
+        onPageInputChange: function (arguments, page) { 
+            changePage(page);
+        },
+        //changePageFieldArguments: ["argument1", "argument2" ...]
+    });
+
+    pagination.Create(".custom-pagination");
+
+    function changePage(page) { 
+        var data = GetFilters();
+        data.page = page;
+        
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (result) {
+                $('.' + tabId).html(result);
+            },
+            error: function () {
+                var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
+                $('.' + tabId).html(errorMsg);
+            }
+        });
+    }
+</script>

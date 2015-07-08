@@ -1,16 +1,66 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
-
+@using System.Globalization;
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Index";
 }
 
 <link href="~/Content/Our/tabs-changes.css" rel="stylesheet" />
+<link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
 
 <h2>Заявки</h2>
+<div class="ibox float-e-margins" style="margin-bottom:0;">
+    <div class="ibox-title">
+        <div class="ibox-tools">
+            @*<a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>*@
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <div class="collapse-link" style="cursor:pointer;">
+            <h5 class="">Филтри</h5>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: block;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-md-2 no-padding">Заявка №:</label>
+                    <input class="form-control text-box single-line" data-val="true"
+                            data-val-range-min="0" data-val-range-max="2147483647"
+                            id="RequestNumber" type="number" value="">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group" id="filter-date-from">
+                    <label>От Дата</label>
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="fromDate" class="form-control text-box single-line" type="datetime" value="">
+                    </div>
+                </div>
 
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group" id="filter-date-to">
+                    <label>До Дата</label>
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="toDate" class="form-control text-box single-line" type="datetime" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-4">
+                <button id="filter" class="btn btn-primary" style="margin-top:23px;">Филтрирай</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="panel">
-
         <div class="panel-heading">
             <div class="panel-options">
 
@@ -38,7 +88,12 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active not-accepted-requests">
-                    @{ Html.RenderAction("GetNotAcceptedRequests"); }
+                    @{ Html.RenderAction("FilterNotAcceptedRequests", new
+                       {
+                            page = 1,
+                            pageSize = 2,
+                            number = -1
+                       }); }
                 </div>
 
                 <div id="tab-2" class="tab-pane accepted-requests">
@@ -64,11 +119,31 @@
 
 </div>
 
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/Our/Requests.js"></script>
 
-<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
         </div>
     </div>
-</div>
+</div>*@
+<script>
+    $('#filter-date-from .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#filter-date-to .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+</script>

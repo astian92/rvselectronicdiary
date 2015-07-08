@@ -4,6 +4,24 @@
     ViewBag.Title = "Tests";
 }
 
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
 <h2>Изследвания</h2>
 
 <p>
@@ -12,90 +30,120 @@
         Добави изследване
     </a>
 </p>
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TestMethods)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.AcredetationLevel.Level)*@
-                Ниво
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Temperature)
-            </th>
-            <th></th>
-        </tr>
-
-
-        @{
-            var categories = Model.Select(m => m.TestCategory).Distinct();
-        }
-
-        @foreach (var category in categories)
-        {
-            <tr>
-               <td colspan="6">
-                   <span style="font-weight: bold">@category.Name</span>
-               </td> 
-            </tr>
-            
-            foreach (var item in Model.Where(t => t.TestCategory == category))
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TestMethods)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AcredetationLevel.Level)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Temperature)
-                    </td>
-                    <td>
-                        <a href="/Tests/Edit?id=@item.Id">
-                            <i class="fa fa-edit"></i>
-                            Промени
-                        </a>|
-                        <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                            <i class="fa fa-trash"></i>
-                            Изтрий
-                        </a>
-                    </td>
-                </tr>
-            }
-        }
-
-    </table>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="TestsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Методи</th>
+                        <th>Ниво</th>
+                        <th>Единица на величината</th>
+                        <th>Температура</th>
+                        <th>Категория</th>
+                        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
+
 <script>
-        $('.btn-delete').click(function () {
-            var id = $(this).attr('href');
-            var url = '/Tests/Delete?id=' + id;
-            $.ajax({
-                type: "GET",
-                url: url,
-                contentType: "application/json; charset=utf-8",
-                dataType: "html",
-                success: function (view) {
-                    $('.modal-content').html(view);
+    Tables.CreateTable("#TestsTable", {
+        order: [],
+        lengthChange: false,
+        selectable: false,
+        paging: true,
+        pageLength: 10,
+        "language": {
+            "paginate": {
+                "previous": "Назад",
+                "next": "Напред"
+            },
+            "zeroRecords": "Няма налични данни",
+            "info": "Показва _START_ до _END_ от _MAX_ записа",
+            "infoFiltered": "(филтрирани от общо _MAX_)",
+            "infoEmpty": "Няма открити данни"
+        },
+        ajax: {
+            type: "POST",
+            url: "/Tests/GetTests",
+        },
+        columns: [
+            { "data": "Name" },
+            { "data": "TestMethods" },
+            { "data": "Level" },
+            { "data": "UnitName" },
+            { "data": "Temperature" },
+            { "data": "Category" },
+            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            {
+            <text>
+            { "data": "Id" }
+            </text>
+            }
+        ],
+        columnDefs: [
+            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            {
+                <text>
+            {
+                targets: -1,
+                sortable: false,
+                render: function (data, type, row) {
+                    return '<a href="/Tests/Edit?id=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                },
+                class: "text-center"
+            },
+                </text>
+            }
+            {
+                targets: -2,
+                visible: false
+            }
+        ],
+        "drawCallback": function (settings) {
+            var api = this.api();
+            var rows = api.rows({ page: 'current' }).nodes();
+            var last = null;
+
+            api.column(5, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td colspan="6">' + group + '</td></tr>'
+                    );
+
+                    last = group;
                 }
             });
+        }
+    });
 
+    function Delete(btn) {
+        var id = $(btn).attr('href');
+        var url = '/Tests/Delete?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
         });
+    }
 </script>
 <div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
     <div class="modal-dialog">
