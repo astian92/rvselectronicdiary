@@ -183,11 +183,14 @@
                                 @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                 {
                                     <div class="text-right">
-                                        <button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
+                                        <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
                                             <i class="fa fa-archive"></i>
                                             Архивирай
-                                        </button>
-
+                                        </a>
+                                        @*<button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
+                                            <i class="fa fa-archive"></i>
+                                            Архивирай
+                                        </button>*@
                                     </div>
                                     <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
 

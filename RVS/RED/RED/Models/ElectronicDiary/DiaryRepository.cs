@@ -202,7 +202,7 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.Id = Guid.NewGuid();
                 archivedDiary.Number = diary.Number;
                 archivedDiary.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-                archivedDiary.LetterNumber = diary.LetterNumber.ToString();
+                archivedDiary.LetterNumber = diary.LetterNumber != null ? diary.LetterNumber.ToString() : "";
                 archivedDiary.LetterDate = diary.LetterDate;
                 archivedDiary.Contractor = diary.Contractor;
                 archivedDiary.Client = diary.Client.Name;
@@ -284,7 +284,5 @@ namespace RED.Models.ElectronicDiary
 
             return response;
         }
-
-
     }
 }

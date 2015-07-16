@@ -39,6 +39,20 @@ $(document).ready(function () {
         });
 
     });
+
+    $('.btn-archive').click(function () {
+        var id = $(this).attr('buttonId');
+        var url = '/Diary/Archive?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+    });
 });
 
 

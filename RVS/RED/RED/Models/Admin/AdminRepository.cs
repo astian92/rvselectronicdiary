@@ -128,7 +128,7 @@ namespace RED.Models.Admin
 
         public IEnumerable<Feature> GetFeatures()
         {
-            return db.Features.ToList();
+            return db.Features.OrderBy(x => x.DisplayName).ToList();
         }
 
         private void MakeRoleFeatureConnections(Guid roleId, string[] features)

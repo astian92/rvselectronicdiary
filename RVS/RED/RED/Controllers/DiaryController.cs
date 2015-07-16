@@ -73,6 +73,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create(DiaryW diary)
         {
+            ModelState.Remove("LetterNumber");
             if (ModelState.IsValid && diary.Products.Count > 0)
             {
                 Rep.AddLetter(diary);
@@ -110,6 +111,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Edit(DiaryW diary)
         {
+            ModelState.Remove("LetterNumber");
             if (ModelState.IsValid)
             {
                 Rep.Edit(diary);
@@ -140,6 +142,21 @@ namespace RED.Controllers
             {
                 return PartialView(client);
             }
+
+            return View(client);
+        }
+
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        public ActionResult Archive(Guid id)
+        {
+            DiaryW client = Rep.GetDiary(id);
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Request.IsAjaxRequest())
+                return PartialView(client);
 
             return View(client);
         }

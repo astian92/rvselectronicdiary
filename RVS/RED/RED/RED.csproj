@@ -762,6 +762,7 @@
     <Content Include="Views\Protocols\ArchivedProtocols.cshtml" />
     <Content Include="Views\Error\DeleteConflicted.cshtml" />
     <Content Include="Views\Home\TestsReference.cshtml" />
+    <Content Include="Views\Diary\Archive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
