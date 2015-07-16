@@ -43,7 +43,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
     <Property Name="LetterNumber" Type="nvarchar" MaxLength="40" Nullable="false" />
     <Property Name="LetterDate" Type="datetime" Nullable="false" />
@@ -86,7 +86,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ResultNumber" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="ResultNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
   </EntityType>

@@ -109,3 +109,4 @@ D:\Programing\RED\RVS\RED\RED\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Programing\RED\RVS\RED\RED\bin\Microsoft.Owin.Security.Google.xml
 D:\Programing\RED\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Programing\RED\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Release\RED.csprojResolveAssemblyReference.cache

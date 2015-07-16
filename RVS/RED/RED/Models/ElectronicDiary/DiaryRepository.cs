@@ -35,7 +35,7 @@ namespace RED.Models.ElectronicDiary
             int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var adiaries = db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber.ToString())); 
+            var adiaries = db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
             adiaries = adiaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()));
             adiaries = adiaries.Where(d => d.Client == (client == "Всички" ? d.Client : client));
             adiaries = adiaries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
@@ -105,7 +105,13 @@ namespace RED.Models.ElectronicDiary
         public void AddLetter(DiaryW diary)
         {
             diary.Id = Guid.NewGuid();
-            diary.Number = db.Diaries.Max(d => d.Number) + 1;
+
+            int activeMax = db.Diaries.Max(d => d.Number);
+            //string archivedMaxStr = db.ArchivedDiaries.OrderByDescending(ad => ad.Number).First().Number;
+            int archivedMax = 0;
+            //int.TryParse(archivedMaxStr, out archivedMax);
+            diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
+
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
 
             int i = 1;
@@ -196,7 +202,7 @@ namespace RED.Models.ElectronicDiary
                 ArchivedDiary archivedDiary = new ArchivedDiary();
 
                 archivedDiary.Id = Guid.NewGuid();
-                archivedDiary.Number = diary.Number.ToString();
+                archivedDiary.Number = diary.Number;
                 archivedDiary.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
                 archivedDiary.LetterNumber = diary.LetterNumber.ToString();
                 archivedDiary.LetterDate = diary.LetterDate;

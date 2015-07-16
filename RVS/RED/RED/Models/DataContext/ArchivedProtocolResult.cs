@@ -21,7 +21,7 @@ namespace RED.Models.DataContext
         public string Results { get; set; }
         public string MethodValue { get; set; }
     
-        public virtual ArchivedDiary ArchivedDiary { get; set; }
         public virtual ArchivedProductTest ArchivedProductTest { get; set; }
+        public virtual ArchivedDiary ArchivedDiary { get; set; }
     }
 }

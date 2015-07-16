@@ -29,7 +29,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<ActionLogProperty> ActionLogProperties { get; set; }
         public virtual DbSet<ActionLog> ActionLogs { get; set; }
         public virtual DbSet<ActionType> ActionTypes { get; set; }
-        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
@@ -48,5 +47,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<TestCategory> TestCategories { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
     }
 }

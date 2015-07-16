@@ -44,25 +44,6 @@
     <Property Name="TypeNameBg" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
     <NavigationProperty Name="ActionLogs" Relationship="Self.FK_ActionLogs_ActionTypes" FromRole="ActionTypes" ToRole="ActionLogs" />
   </EntityType>
-  <EntityType Name="ArchivedDiary">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="LetterNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Contractor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Client" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="RequestAcceptedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="ArchivedProducts" Relationship="Self.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProducts" />
-    <NavigationProperty Name="ArchivedProtocolResults" Relationship="Self.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResults" />
-  </EntityType>
   <EntityType Name="ArchivedProduct">
     <Key>
       <PropertyRef Name="Id" />
@@ -72,8 +53,8 @@
     <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Number" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="ArchivedDiary" Relationship="Self.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProducts" ToRole="ArchivedDiary" />
     <NavigationProperty Name="ArchivedProductTests" Relationship="Self.FK_ArchivedProductTests_ArchivedProducts" FromRole="ArchivedProducts" ToRole="ArchivedProductTests" />
+    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProduct" ToRole="ArchivedDiary" />
   </EntityType>
   <EntityType Name="ArchivedProductTest">
     <Key>
@@ -101,8 +82,8 @@
     <Property Name="ResultNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Results" Type="String" MaxLength="800" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="ArchivedDiary" Relationship="Self.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResults" ToRole="ArchivedDiary" />
     <NavigationProperty Name="ArchivedProductTest" Relationship="Self.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProtocolResults" ToRole="ArchivedProductTests" />
+    <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
   </EntityType>
   <EntityType Name="Client">
     <Key>
@@ -332,30 +313,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ArchivedProducts_ArchivedDiary">
-    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
-    <End Role="ArchivedProducts" Type="Self.ArchivedProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ArchivedDiary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArchivedProducts">
-        <PropertyRef Name="ArchivedDiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
-    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
-    <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResult" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ArchivedDiary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArchivedProtocolResults">
-        <PropertyRef Name="ArchivedDiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ArchivedProductTests_ArchivedProducts">
     <End Role="ArchivedProducts" Type="Self.ArchivedProduct" Multiplicity="1" />
     <End Role="ArchivedProductTests" Type="Self.ArchivedProductTest" Multiplicity="*" />
@@ -553,7 +510,6 @@
     <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperty" />
     <EntitySet Name="ActionLogs" EntityType="Self.ActionLog" />
     <EntitySet Name="ActionTypes" EntityType="Self.ActionType" />
-    <EntitySet Name="ArchivedDiaries" EntityType="Self.ArchivedDiary" />
     <EntitySet Name="ArchivedProducts" EntityType="Self.ArchivedProduct" />
     <EntitySet Name="ArchivedProductTests" EntityType="Self.ArchivedProductTest" />
     <EntitySet Name="ArchivedProtocolResults" EntityType="Self.ArchivedProtocolResult" />
@@ -587,14 +543,6 @@
     <AssociationSet Name="FK_ActionLogs_Users" Association="Self.FK_ActionLogs_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="ActionLogs" EntitySet="ActionLogs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="Self.FK_ArchivedProducts_ArchivedDiary">
-      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-      <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="Self.FK_ArchivedProtocolResults_ArchivedDiary">
-      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-      <End Role="ArchivedProtocolResults" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
     <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="Self.FK_ArchivedProductTests_ArchivedProducts">
       <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
@@ -656,5 +604,57 @@
       <End Role="TestCategories" EntitySet="TestCategories" />
       <End Role="Tests" EntitySet="Tests" />
     </AssociationSet>
+    <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
+    <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+      <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+      <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="ArchivedDiary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Number" Type="Int32" Nullable="false" />
+    <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LetterNumber" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Contractor" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Client" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RequestAcceptedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Remark" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
+    <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
+  </EntityType>
+  <Association Name="FK_ArchivedProducts_ArchivedDiary">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProduct">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
+    <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolResult">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

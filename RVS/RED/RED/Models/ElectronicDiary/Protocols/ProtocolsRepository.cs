@@ -32,7 +32,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var protocols = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number.ToString()));
+            var protocols = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
             protocols = protocols.Where(d => d.ProtocolIssuedDate >= (from == null ? d.ProtocolIssuedDate : from.Value) &&
                                                    d.ProtocolIssuedDate <= (to == null ? d.ProtocolIssuedDate : to.Value));
 

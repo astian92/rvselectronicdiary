@@ -38,7 +38,7 @@ namespace RED.Models.ElectronicDiary.Requests
         public virtual ArchivedDiary Diary { get; set; }
 
         [Display(Name = "Номер")]
-        public string Number 
+        public int Number 
         { 
             get
             {

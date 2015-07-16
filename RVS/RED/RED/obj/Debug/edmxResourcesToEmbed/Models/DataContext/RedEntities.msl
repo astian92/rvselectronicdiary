@@ -43,24 +43,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedDiaries">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
-        <MappingFragment StoreEntitySet="ArchivedDiary">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
-          <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
-          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
-          <ScalarProperty Name="Contractor" ColumnName="Contractor" />
-          <ScalarProperty Name="Client" ColumnName="Client" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-          <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
-          <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
-          <ScalarProperty Name="Remark" ColumnName="Remark" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ArchivedProducts">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProduct">
         <MappingFragment StoreEntitySet="ArchivedProducts">
@@ -259,6 +241,24 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Position" ColumnName="Position" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedDiaries">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
+        <MappingFragment StoreEntitySet="ArchivedDiary">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
+          <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Contractor" ColumnName="Contractor" />
+          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+          <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
+          <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

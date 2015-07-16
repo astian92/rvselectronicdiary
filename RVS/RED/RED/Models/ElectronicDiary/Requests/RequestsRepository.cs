@@ -83,7 +83,7 @@ namespace RED.Models.ElectronicDiary.Requests
             int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number.ToString()));
+            var requests = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
             requests = requests.Where(d => d.RequestDate >= (from == null ? d.RequestDate : from.Value) &&
                                                    d.RequestDate <= (to == null ? d.RequestDate : to.Value));
 

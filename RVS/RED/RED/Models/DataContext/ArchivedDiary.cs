@@ -21,7 +21,7 @@ namespace RED.Models.DataContext
         }
     
         public System.Guid Id { get; set; }
-        public string Number { get; set; }
+        public int Number { get; set; }
         public System.DateTime AcceptanceDateAndTime { get; set; }
         public string LetterNumber { get; set; }
         public System.DateTime LetterDate { get; set; }

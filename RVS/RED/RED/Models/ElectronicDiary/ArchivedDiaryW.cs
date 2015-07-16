@@ -13,7 +13,7 @@ namespace RED.Models.ElectronicDiary
         public Guid Id { get; set; }
 
         [Required]
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         public DateTime AcceptanceDateAndTime { get; set; }
 
