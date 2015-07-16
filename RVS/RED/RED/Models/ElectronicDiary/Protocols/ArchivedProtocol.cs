@@ -11,6 +11,8 @@ namespace RED.Models.ElectronicDiary.Protocols
         public ArchivedDiary ArchivedDiary { get; set; }
         public Guid DiaryId { get; set; }
         public DateTime IssuedDate { get; set; }
+        public string Tester { get; set; }
+        public string LabLeader { get; set; }
 
         public ICollection<ArchivedProtocolResult> ProtocolResults { get; set; }
 
@@ -20,6 +22,8 @@ namespace RED.Models.ElectronicDiary.Protocols
             this.DiaryId = adiary.Id;
             this.IssuedDate = adiary.ProtocolIssuedDate;
             this.ProtocolResults = adiary.ArchivedProtocolResults;
+            this.Tester = adiary.ProtocolTester;
+            this.LabLeader = adiary.ProtocolLabLeader;
         }
 
     }

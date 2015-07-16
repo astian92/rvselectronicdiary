@@ -89,20 +89,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Diaries">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Diary">
-        <MappingFragment StoreEntitySet="Diary">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
-          <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
-          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
-          <ScalarProperty Name="Contractor" ColumnName="Contractor" />
-          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ELMAH_Error">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ELMAH_Error">
         <MappingFragment StoreEntitySet="ELMAH_Error">
@@ -158,15 +144,6 @@
           <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
           <ScalarProperty Name="Results" ColumnName="Results" />
           <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Protocols">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
-        <MappingFragment StoreEntitySet="Protocols">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -244,10 +221,64 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProtocolRemarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
+        <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProtocolsRemarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
+        <MappingFragment StoreEntitySet="ProtocolsRemarks">
+          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Remarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
+        <MappingFragment StoreEntitySet="Remarks">
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Protocols">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
+        <MappingFragment StoreEntitySet="Protocols">
+          <ScalarProperty Name="LabLeader" ColumnName="LabLeader" />
+          <ScalarProperty Name="Tester" ColumnName="Tester" />
+          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Diaries">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Diary">
+        <MappingFragment StoreEntitySet="Diary">
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="Contractor" ColumnName="Contractor" />
+          <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+          <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
+          <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ArchivedDiaries">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
         <MappingFragment StoreEntitySet="ArchivedDiary">
           <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ProtocolLabLeader" ColumnName="ProtocolLabLeader" />
+          <ScalarProperty Name="ProtocolTester" ColumnName="ProtocolTester" />
           <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
           <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
           <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />

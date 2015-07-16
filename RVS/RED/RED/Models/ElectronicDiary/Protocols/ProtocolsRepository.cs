@@ -77,6 +77,9 @@ namespace RED.Models.ElectronicDiary.Protocols
                 protocol.ProtocolResults.Add(item);
             }
 
+            protocol.Tester = protocolW.Tester;
+            protocol.LabLeader = protocolW.LabLeader;
+
             db.SaveChanges();
         }
 

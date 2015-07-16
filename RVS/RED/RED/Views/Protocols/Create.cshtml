@@ -108,6 +108,25 @@
                 }
 	        }
         }
+
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Ивършил изпитването:
+            </label>
+            <div class="col-md-9">
+                @Html.TextBox("Tester", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
+                @Html.ValidationMessage("Tester", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Ръководител:
+            </label>
+            <div class="col-md-9">
+                @Html.TextBox("LabLeader", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Ръководител е задължително поле!" })
+                @Html.ValidationMessage("LabLeader", new { @class = "text-danger" })
+            </div>
+        </div>
         
 
         <div class="form-group">

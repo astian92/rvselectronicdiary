@@ -214,6 +214,9 @@
     <Compile Include="Models\DataContext\ArchivedProductTest.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\ArchivedProtocolRemark.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\ArchivedProtocolResult.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -246,6 +249,9 @@
     <Compile Include="Models\DataContext\ProtocolResult.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\ProtocolsRemark.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\RedEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -260,6 +266,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RedEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataContext\Remark.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\Request.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>

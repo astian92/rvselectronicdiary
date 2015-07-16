@@ -107,9 +107,7 @@ namespace RED.Models.ElectronicDiary
             diary.Id = Guid.NewGuid();
 
             int activeMax = db.Diaries.Max(d => d.Number);
-            //string archivedMaxStr = db.ArchivedDiaries.OrderByDescending(ad => ad.Number).First().Number;
-            int archivedMax = 0;
-            //int.TryParse(archivedMaxStr, out archivedMax);
+            int archivedMax = db.ArchivedDiaries.Max(ad => ad.Number);
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
 
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
@@ -213,7 +211,10 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.RequestDate = request.Date;
                 archivedDiary.RequestAcceptedBy = request.User.FirstName.Substring(0,1) + ". " + request.User.LastName;
                 archivedDiary.Remark = new DiaryW(diary).Remark;
-                archivedDiary.ProtocolIssuedDate = request.Protocols.First().IssuedDate;
+                var protocol = request.Protocols.First();
+                archivedDiary.ProtocolIssuedDate = protocol.IssuedDate;
+                archivedDiary.ProtocolTester = protocol.Tester;
+                archivedDiary.ProtocolLabLeader = protocol.LabLeader;
 
                 var products = diary.Products;
                 foreach (var product in products)

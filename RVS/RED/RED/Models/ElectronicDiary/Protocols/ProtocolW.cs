@@ -11,6 +11,8 @@ namespace RED.Models.ElectronicDiary.Protocols
         public Guid Id { get; set; }
         public Guid RequestId { get; set; }
         public DateTime IssuedDate { get; set; }
+        public string Tester { get; set; }
+        public string LabLeader { get; set; }
 
         public ICollection<ProtocolResult> ProtocolResults { get; set; }
         public Request Request { get; set; }
@@ -25,6 +27,8 @@ namespace RED.Models.ElectronicDiary.Protocols
             this.Id = protocol.Id;
             this.RequestId = protocol.Id;
             this.IssuedDate = protocol.IssuedDate;
+            this.Tester = protocol.Tester;
+            this.LabLeader = protocol.LabLeader;
 
             this.ProtocolResults = protocol.ProtocolResults;
             this.Request = protocol.Request;
@@ -37,6 +41,8 @@ namespace RED.Models.ElectronicDiary.Protocols
             protocol.Id = this.Id;
             protocol.RequestId = this.RequestId;
             protocol.IssuedDate = this.IssuedDate;
+            protocol.Tester = this.Tester;
+            protocol.LabLeader = this.LabLeader;
 
             protocol.ProtocolResults = this.ProtocolResults;
             protocol.Request = this.Request;

@@ -23,7 +23,7 @@ namespace RED.Models.DataContext
         public System.Guid Id { get; set; }
         public int Number { get; set; }
         public System.DateTime AcceptanceDateAndTime { get; set; }
-        public int LetterNumber { get; set; }
+        public Nullable<int> LetterNumber { get; set; }
         public System.DateTime LetterDate { get; set; }
         public string Contractor { get; set; }
         public System.Guid ClientId { get; set; }

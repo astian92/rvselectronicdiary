@@ -17,6 +17,7 @@ namespace RED.Models.DataContext
         public ArchivedDiary()
         {
             this.ArchivedProducts = new HashSet<ArchivedProduct>();
+            this.ArchivedProtocolRemarks = new HashSet<ArchivedProtocolRemark>();
             this.ArchivedProtocolResults = new HashSet<ArchivedProtocolResult>();
         }
     
@@ -31,9 +32,12 @@ namespace RED.Models.DataContext
         public System.DateTime RequestDate { get; set; }
         public string RequestAcceptedBy { get; set; }
         public System.DateTime ProtocolIssuedDate { get; set; }
+        public string ProtocolTester { get; set; }
+        public string ProtocolLabLeader { get; set; }
         public string Remark { get; set; }
     
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
+        public virtual ICollection<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
         public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
     }
 }

@@ -12,21 +12,13 @@ namespace RED.Models.DataContext
     using System;
     using System.Collections.Generic;
     
-    public partial class Request
+    public partial class ProtocolsRemark
     {
-        public Request()
-        {
-            this.Protocols = new HashSet<Protocol>();
-        }
-    
         public System.Guid Id { get; set; }
-        public System.Guid DiaryId { get; set; }
-        public System.DateTime Date { get; set; }
-        public Nullable<System.Guid> AcceptedBy { get; set; }
-        public bool IsAccepted { get; set; }
+        public System.Guid ProtocolId { get; set; }
+        public System.Guid RemarkId { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual ICollection<Protocol> Protocols { get; set; }
-        public virtual Diary Diary { get; set; }
+        public virtual Remark Remark { get; set; }
+        public virtual Protocol Protocol { get; set; }
     }
 }

@@ -102,6 +102,24 @@
             i++;
         }
 
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Ивършил изпитването:
+            </label>
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Tester, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
+                @Html.ValidationMessageFor(m => m.Tester, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Ръководител:
+            </label>
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.LabLeader, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Ръководител е задължително поле!" })
+                @Html.ValidationMessageFor(m => m.LabLeader, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9">

@@ -53,6 +53,8 @@
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
+    <Property Name="ProtocolTester" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="8" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedProducts">
@@ -79,6 +81,14 @@
     <Property Name="TestCategory" Type="nvarchar" MaxLength="120" Nullable="false" />
     <Property Name="Units" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ArchivedProtocolRemarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="3500" Nullable="false" />
+  </EntityType>
   <EntityType Name="ArchivedProtocolResults">
     <Key>
       <PropertyRef Name="Id" />
@@ -104,7 +114,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
-    <Property Name="LetterNumber" Type="int" Nullable="false" />
+    <Property Name="LetterNumber" Type="int" />
     <Property Name="LetterDate" Type="date" Nullable="false" />
     <Property Name="Contractor" Type="nvarchar" MaxLength="50" />
     <Property Name="ClientId" Type="uniqueidentifier" Nullable="false" />
@@ -170,6 +180,24 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="IssuedDate" Type="date" Nullable="false" />
+    <Property Name="Tester" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="LabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProtocolsRemarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RemarkId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Remarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Text" Type="nvarchar" MaxLength="3500" Nullable="false" />
   </EntityType>
   <EntityType Name="Requests">
     <Key>
@@ -302,6 +330,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
+    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
+    <End Role="ArchivedProtocolRemarks" Type="Self.ArchivedProtocolRemarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArchivedDiary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArchivedProtocolRemarks">
+        <PropertyRef Name="ArchivedDiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
     <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
     <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
@@ -416,6 +456,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProtocolsRemarks_Protocols">
+    <End Role="Protocols" Type="Self.Protocols" Multiplicity="1" />
+    <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Protocols">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolsRemarks">
+        <PropertyRef Name="ProtocolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProtocolsRemarks_Remarks">
+    <End Role="Remarks" Type="Self.Remarks" Multiplicity="1" />
+    <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Remarks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolsRemarks">
+        <PropertyRef Name="RemarkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Requests_Diary">
     <End Role="Diary" Type="Self.Diary" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -514,6 +578,7 @@
     <EntitySet Name="ArchivedDiary" EntityType="Self.ArchivedDiary" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedProducts" EntityType="Self.ArchivedProducts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedProductTests" EntityType="Self.ArchivedProductTests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArchivedProtocolRemarks" EntityType="Self.ArchivedProtocolRemarks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivedProtocolResults" EntityType="Self.ArchivedProtocolResults" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Diary" EntityType="Self.Diary" Schema="dbo" store:Type="Tables" />
@@ -523,6 +588,8 @@
     <EntitySet Name="ProductTests" EntityType="Self.ProductTests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProtocolResults" EntityType="Self.ProtocolResults" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Protocols" EntityType="Self.Protocols" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProtocolsRemarks" EntityType="Self.ProtocolsRemarks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Remarks" EntityType="Self.Remarks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
@@ -549,6 +616,10 @@
     <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="Self.FK_ArchivedProductTests_ArchivedProducts">
       <End Role="ArchivedProducts" EntitySet="ArchivedProducts" />
       <End Role="ArchivedProductTests" EntitySet="ArchivedProductTests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivedProtocolRemarks_ArchivedDiary" Association="Self.FK_ArchivedProtocolRemarks_ArchivedDiary">
+      <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
+      <End Role="ArchivedProtocolRemarks" EntitySet="ArchivedProtocolRemarks" />
     </AssociationSet>
     <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="Self.FK_ArchivedProtocolResults_ArchivedDiary">
       <End Role="ArchivedDiary" EntitySet="ArchivedDiary" />
@@ -585,6 +656,14 @@
     <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
       <End Role="Requests" EntitySet="Requests" />
       <End Role="Protocols" EntitySet="Protocols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="Self.FK_ProtocolsRemarks_Protocols">
+      <End Role="Protocols" EntitySet="Protocols" />
+      <End Role="ProtocolsRemarks" EntitySet="ProtocolsRemarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolsRemarks_Remarks" Association="Self.FK_ProtocolsRemarks_Remarks">
+      <End Role="Remarks" EntitySet="Remarks" />
+      <End Role="ProtocolsRemarks" EntitySet="ProtocolsRemarks" />
     </AssociationSet>
     <AssociationSet Name="FK_Requests_Diary" Association="Self.FK_Requests_Diary">
       <End Role="Diary" EntitySet="Diary" />
