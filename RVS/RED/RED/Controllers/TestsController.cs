@@ -37,8 +37,13 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddCategory(category);
-                return RedirectToAction("Categories");
+                if (!Rep.IsExisting(category))
+                {
+                    Rep.AddCategory(category);
+                    return RedirectToAction("Categories");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Категория с това име вече съществува. Моля опитайте друго име.");
             }
 
             return View(category);
@@ -67,8 +72,13 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditCategory(category);
-                return RedirectToAction("Categories");
+                if (!Rep.IsExisting(category))
+                {
+                    Rep.EditCategory(category);
+                    return RedirectToAction("Categories");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Категория с това име вече съществува. Моля опитайте друго име.");
             }
 
             return View(category);
@@ -148,9 +158,17 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Add(test);
-                return RedirectToAction("Index");
+                if (!Rep.IsTestExisting(test))
+                {
+                    Rep.Add(test);
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
+
+            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name");
+            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level");
 
             return View(test);
         }
@@ -171,6 +189,7 @@ namespace RED.Controllers
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
             ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
+
             return View(test);
         }
 
@@ -181,9 +200,17 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Edit(test);
-                return RedirectToAction("Index");
+                if (!Rep.IsTestExisting(test))
+                {
+                    Rep.Edit(test);
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
+
+            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
+            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
 
             return View(test);
         }

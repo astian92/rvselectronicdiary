@@ -51,6 +51,5 @@ namespace RED.Models.DataContext
         public virtual DbSet<Protocol> Protocols { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
-        public virtual DbSet<Diary> Diaries { get; set; }
     }
 }

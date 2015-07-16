@@ -54,5 +54,14 @@ namespace RED.Models.ElectronicDiary.Clients
 
             return true;
         }
+
+        public bool IsExisting(ClientW client)
+        {
+            var foundedClient = db.Clients.FirstOrDefault(x => x.Name.ToLower() == client.Name.ToLower());
+            if (foundedClient != null)
+                return true;
+
+            return false;
+        }
     }
 }

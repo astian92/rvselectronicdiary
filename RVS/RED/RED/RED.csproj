@@ -193,6 +193,7 @@
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
     <Compile Include="Models\Dashboard\DashboardRepository.cs" />
     <Compile Include="Models\Dashboard\DashboardW.cs" />
+    <Compile Include="Models\Dashboard\TestsReferenceW.cs" />
     <Compile Include="Models\DataContext\AcredetationLevel.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

@@ -44,8 +44,13 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Add(client);
-                return RedirectToAction("Index");
+                if(!Rep.IsExisting(client))
+                {
+                    Rep.Add(client);
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Клиент с това име вече съществува. Моля опитайте друго име.");
             }
 
             return View(client);
@@ -75,8 +80,13 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Edit(client);
-                return RedirectToAction("Index");
+                if (!Rep.IsExisting(client))
+                {
+                    Rep.Edit(client);
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("ErrorExists", "Клиент с това име вече съществува. Моля опитайте друго име.");
             }
 
             return View(client);

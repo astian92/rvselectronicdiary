@@ -63,6 +63,15 @@ namespace RED.Models.ElectronicDiary.Tests
             return true;
         }
 
+        public bool IsExisting(TestCategoryW cat)
+        {
+            var founded = db.TestCategories.FirstOrDefault(x => x.Name.ToLower() == cat.Name.ToLower());
+            if (founded != null)
+                return true;
+
+            return false;
+        }
+
         public TestW GetTest(Guid Id)
         {
             var test = db.Tests.Single(t => t.Id == Id);
@@ -116,6 +125,15 @@ namespace RED.Models.ElectronicDiary.Tests
             }
 
             return true;
+        }
+
+        public bool IsTestExisting(TestW test)
+        {
+            var founded = db.Tests.FirstOrDefault(x => x.Name.ToLower() == test.Name.ToLower());
+            if (founded != null)
+                return true;
+
+            return false;
         }
     }
 }
