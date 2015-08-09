@@ -147,17 +147,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Request">
-        <MappingFragment StoreEntitySet="Requests">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
-          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Role">
         <MappingFragment StoreEntitySet="Roles">
@@ -289,6 +278,18 @@
           <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
           <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
           <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="TestingPeriod" ColumnName="TestingPeriod" />
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

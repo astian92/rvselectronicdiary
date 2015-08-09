@@ -30,7 +30,7 @@ namespace RED.Models.DataContext
         public System.Guid RoleId { get; set; }
     
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
-        public virtual ICollection<Request> Requests { get; set; }
         public virtual Role Role { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

@@ -40,9 +40,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocX, Version=1.0.1.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.0.0.13\lib\net40\DocX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.0.4\lib\net20\EPPlus.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -171,6 +179,7 @@
     <Compile Include="Controllers\DiaryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -183,6 +192,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\Account\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
@@ -309,9 +319,25 @@
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
+    <Compile Include="Models\FileModels\DirUtility.cs" />
+    <Compile Include="Models\FileModels\FileNames.cs" />
+    <Compile Include="Models\FileModels\FileProperties.cs" />
+    <Compile Include="Models\FileModels\FilesRepository.cs" />
+    <Compile Include="Models\FileModels\ProtocolFiles\ProtocolModel.cs" />
+    <Compile Include="Models\FileModels\ProtocolFiles\ProtocolReport.cs" />
+    <Compile Include="Models\FileModels\RequestList\RequestListModel.cs" />
+    <Compile Include="Models\FileModels\RequestList\RequestListReport.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
     <Compile Include="Models\Logs\LogRepository.cs" />
+    <Compile Include="Models\ReportGeneration\DocXApi\DocXBase.cs" />
+    <Compile Include="Models\ReportGeneration\DocXApi\DocXReportBase.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\EPPlusBaseGeneric.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\EPPlusExcelBase.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\IReportable.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportHeaderPropertyAttribute.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportPropertyAttribute.cs" />
+    <Compile Include="Models\ReportGeneration\EPPlus\ReportModel.cs" />
     <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
     <Compile Include="Models\Responses\ActionError.cs" />
     <Compile Include="Models\Responses\ActionResponse.cs" />
@@ -768,7 +794,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
-    <Folder Include="Models\Helpers\" />
+    <Folder Include="Views\Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

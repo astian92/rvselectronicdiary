@@ -1,6 +1,7 @@
 ﻿using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
+using RED.Models.FileModels;
 using RED.Models.RepositoryBases;
 using RED.Models.Responses;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RED.Models.ElectronicDiary
 {
@@ -83,6 +85,12 @@ namespace RED.Models.ElectronicDiary
             }
 
             db.SaveChanges();
+            
+            var request = diary.Requests.FirstOrDefault();
+            if (request != null)
+            {
+                GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
+            }
         }
 
         public bool Delete(Guid diaryId)
@@ -149,12 +157,14 @@ namespace RED.Models.ElectronicDiary
             {
                 Request request = new Request();
                 request.Id = Guid.NewGuid();
-                request.Date = DateTime.Now.ToUniversalTime();
+                var date = DateTime.Now.ToUniversalTime();
+                request.Date = date;
                 request.DiaryId = diaryId;
 
                 try
                 {
                     db.Requests.Add(request);
+                    GenerateRequestListReport(diaryId, date, request.TestingPeriod ?? 0);
                     db.SaveChanges();
 
                     return true;
@@ -283,6 +293,12 @@ namespace RED.Models.ElectronicDiary
             }
 
             return response;
+        }
+
+        public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
+        {
+            var filesRepository = new FilesRepository();
+            filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
         }
     }
 }

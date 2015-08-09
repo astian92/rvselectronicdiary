@@ -208,6 +208,7 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="AcceptedBy" Type="uniqueidentifier" />
     <Property Name="IsAccepted" Type="bit" Nullable="false" />
+    <Property Name="TestingPeriod" Type="int" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>

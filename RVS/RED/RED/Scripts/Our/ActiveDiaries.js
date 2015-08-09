@@ -14,7 +14,12 @@ $(document).ready(function () {
             success: function (data) {
                 var html = '';
                 if (data == 'Ok') {
-                    html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.</div>';
+                    html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.\
+                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '">\
+                                <i class="fa fa-download"></i>\
+                                Изтегли заявка\
+                                </a>\
+                            </div>';
                 }
                 else {
                     html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';

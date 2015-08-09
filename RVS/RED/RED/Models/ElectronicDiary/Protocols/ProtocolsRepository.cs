@@ -1,5 +1,6 @@
 ﻿using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Requests;
+using RED.Models.FileModels;
 using RED.Models.RepositoryBases;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,8 @@ namespace RED.Models.ElectronicDiary.Protocols
             var protocol = protocolW.ToBase();
             protocol.IssuedDate = DateTime.Now.ToUniversalTime();
             db.Protocols.Add(protocol);
+            var request = db.Requests.Single(r => r.Id == protocol.RequestId);
+            GeneratePorotocolReport(protocol, request);
 
             db.SaveChanges();
         }
@@ -79,6 +82,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             protocol.Tester = protocolW.Tester;
             protocol.LabLeader = protocolW.LabLeader;
+            GeneratePorotocolReport(protocol);
 
             db.SaveChanges();
         }
@@ -98,6 +102,12 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
 
             return true;
+        }
+
+        public void GeneratePorotocolReport(Protocol protocol, Request request = null)
+        {
+            var filesRep = new FilesRepository();
+            filesRep.GenerateProtocolReport(protocol, request);
         }
     }
 }
