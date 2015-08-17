@@ -168,3 +168,6 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyRe
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.xml
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\DocX.dll
+D:\Programing\RED\RVS\RED\RED\bin\DocX.dll
+D:\Programing\RED\RVS\RED\RED\bin\EPPlus.dll
+D:\Programing\RED\RVS\RED\RED\bin\EPPlus.xml

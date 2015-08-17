@@ -192,17 +192,31 @@ namespace RED.Controllers
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
-        public JsonResult GenerateRequest(Guid? diaryId)
+        public JsonResult GenerateRequest(Guid? diaryId, int testingPeriod)
         {
-            if(diaryId != null)
+            if(diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
             {
-                bool isGenerated = Rep.GenerateRequest(diaryId.Value);
+                bool isGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
 
                 if(isGenerated)
                     return Json("Ok", JsonRequestBehavior.AllowGet);  
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);  
+        }
+
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        public JsonResult DeleteRequest(Guid? diaryId)
+        {
+            if (diaryId != null)
+            {
+                bool isDeleted = Rep.DeleteRequest(diaryId.Value);
+
+                if (isDeleted)
+                    return Json("Ok", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

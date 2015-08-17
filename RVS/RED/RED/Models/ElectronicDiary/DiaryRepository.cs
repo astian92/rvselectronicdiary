@@ -151,7 +151,7 @@ namespace RED.Models.ElectronicDiary
             return tests.Select(x => new TestW(x));
         }
 
-        public bool GenerateRequest(Guid diaryId)
+        public bool GenerateRequest(Guid diaryId, int testingPeriod)
         {
             if(db.Diaries.Any(x => x.Id == diaryId))
             {
@@ -160,6 +160,7 @@ namespace RED.Models.ElectronicDiary
                 var date = DateTime.Now.ToUniversalTime();
                 request.Date = date;
                 request.DiaryId = diaryId;
+                request.TestingPeriod = testingPeriod;
 
                 try
                 {
@@ -173,6 +174,30 @@ namespace RED.Models.ElectronicDiary
                 {
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 }
+            }
+
+            return false;
+        }
+
+        public bool DeleteRequest(Guid diaryId)
+        {
+            try
+            {
+                if (db.Diaries.Any(x => x.Id == diaryId))
+                {
+                    var request = db.Requests.FirstOrDefault(r => r.DiaryId == diaryId);
+                    if (request != null)
+                    {
+                        db.Requests.Remove(request);
+                        db.SaveChanges();
+                    }
+
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
             return false;

@@ -105,20 +105,22 @@
 
                             <div class="row" style="margin-bottom:20px;">
                                 <div class="col-md-6">
-                                    <h5>Срок на изпитване (дни): <strong></strong></h5>
-
                                     <div class="status-container">
                                         @if (item.Request == null)
                                         {
                                             if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                             {
-                                                <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                                <label for="testingPeriod">Срок на изпитване (дни):</label>
+                                                <input type="number" min="1" max="365" id="testingPeriod" />
+                                                <br />
+                                                <button id="@item.Id" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>
                                             }
                                         }
                                         else
                                         {
                                             if (item.Request.IsAccepted)
                                             {
+                                                <h5>Срок на изпитване (дни): <strong>@item.Request.TestingPeriod</strong></h5>
                                                 string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
                                                 <h5>Приел пробата: <strong>@name</strong></h5>
                                                 <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
@@ -132,6 +134,7 @@
                                                         Изтегли заявка
                                                     </a>
                                                 </div>
+                                                <button url="/Diary/DeleteRequest?diaryId=@item.Id" diaryId="@item.Id" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката</button>
                                             }
                                         }
                                     </div>
@@ -141,7 +144,7 @@
                                     {
                                         var protocol = item.Request.Protocols.FirstOrDefault();
                                         <h5 class="text-right">Протокол № / Дата на издаване: @item.Number / @(protocol != null ? protocol.IssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) : "") <strong></strong></h5>
-                                        <h5 class="text-right">Получил протокола: <strong></strong></h5>
+                                        @*<h5 class="text-right">Получил протокола: <strong></strong></h5>*@
                                         <h5 class="text-right">Забележка: @item.Remark<strong></strong></h5>
                                     }
                                 </div>
