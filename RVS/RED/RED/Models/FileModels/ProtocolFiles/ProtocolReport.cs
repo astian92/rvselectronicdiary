@@ -21,46 +21,13 @@ namespace RED.Models.FileModels.ProtocolFiles
         protected override void FillContent()
         {
             ReplaceItems();
+            InsertMethodsAndQuantities();
             InsertLists();
+            InsertTable();
         }
 
-        private void InsertLists()
+        private void InsertMethodsAndQuantities()
         {
-            var products = ReportModel.ReportParameters["Products"] as IEnumerable<Product>;
-            products = products.OrderBy(p => p.Number);
-            var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
-
-            var catProds = new List<CategoryProducts>();
-
-            foreach (var cat in categories)
-            {
-                var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
-                var catProdItem = new CategoryProducts();
-                catProdItem.Category = cat;
-                catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
-                catProds.Add(catProdItem);
-            }
-
-            //order the damn categories
-            var orderedCategories = new List<CategoryProducts>();
-            var number = 1;
-            while(catProds.Count > 0)
-            {
-                var category = catProds.FirstOrDefault(c => c.Products.Any(p => p.Number == number));
-                if (category != null)
-                {
-                    orderedCategories.Add(category);
-                    catProds.Remove(category);
-                }
-                number++;
-            }
-
-            var firstCategory = orderedCategories.First();
-            var firstCategoryProducts = string.Join("\n\t", firstCategory.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
-
-            Document.ReplaceText("#FIRSTCATEGORY", firstCategory.Category);
-            Document.ReplaceText("#FIRSTITEMSLIST", "\t" + firstCategoryProducts);
-
             var methods = ReportModel.ReportParameters["Methods"] as IEnumerable<string>;
             var methodsString = string.Join("; ", methods);
 
@@ -70,7 +37,10 @@ namespace RED.Models.FileModels.ProtocolFiles
             var quantitiesString = string.Join("; ", quantities);
 
             Document.ReplaceText("#QUANTITIESLIST", quantitiesString);
+        }
 
+        private void InsertTable()
+        {
             var cellStyle0 = new Formatting();
             cellStyle0.Size = 12;
 
@@ -132,6 +102,65 @@ namespace RED.Models.FileModels.ProtocolFiles
                 table.Rows[rowIndex].Cells[7].Paragraphs[0].Alignment = Alignment.center;
 
                 rowIndex++;
+            }
+        }
+
+        private void InsertLists()
+        {
+            var products = ReportModel.ReportParameters["Products"] as IEnumerable<Product>;
+            products = products.OrderBy(p => p.Number);
+            
+            var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
+
+            var catProds = new List<CategoryProducts>();
+            foreach (var cat in categories)
+            {
+                var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
+                var catProdItem = new CategoryProducts();
+                catProdItem.Category = cat;
+                catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
+                catProds.Add(catProdItem);
+            }
+
+            //order the damn categories
+            var orderedCategories = new List<CategoryProducts>();
+            var number = 1;
+            while(catProds.Count > 0)
+            {
+                var category = catProds.FirstOrDefault(c => c.Products.Any(p => p.Number == number));
+                if (category != null)
+                {
+                    orderedCategories.Add(category);
+                    catProds.Remove(category);
+                }
+                number++;
+            }
+
+            //set styles
+            var categoryStyle = new Formatting();
+            categoryStyle.Size = 14;
+            categoryStyle.Bold = true;
+
+            var productsStyle = new Formatting();
+            productsStyle.Size = 14;
+
+            var listItem = Document.Lists[0].Items[0];
+            bool isLabelInserted = false;
+            string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
+            string afterCategoryIntervals = "";
+            foreach (var cat in orderedCategories)
+            {
+                listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
+
+                if (!isLabelInserted)
+                {
+                    listItem.InsertText(label + Environment.NewLine + "     ");
+                    isLabelInserted = true;
+                    afterCategoryIntervals = "    ";
+                }
+
+                var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
+                listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
             }
         }
 

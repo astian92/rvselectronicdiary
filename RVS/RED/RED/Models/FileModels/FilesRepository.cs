@@ -79,7 +79,7 @@ namespace RED.Models.FileModels
             //if the file already exists override it BUT keep the old with current date
             if (File.Exists(fileProps.FullPath))
             {
-                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx";
+                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
                 File.Move(fileProps.FullPath, newDestination);
             }
 
@@ -133,17 +133,6 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("ProtocolNumber", category + diaryNumber);
             model.ReportParameters.Add("ProtocolIssuedDate", protocol.IssuedDate);
             
-            //add products and categories
-            //var protocolProducts = products.Select(p => new ProtocolProduct()
-            //    {
-            //        Name = p.Name,
-            //        Number = p.Number,
-            //        Quantity = p.Quantity,
-            //        Methods = p.ProductTests.SelectMany(pt => pt.ProtocolResults.Select(pr => pr.MethodValue)),
-            //        Categories = p.ProductTests.Select(pt => pt.Test.TestCategory.Name)
-            //    });
-            //model.ReportParameters.Add("ProtocolProducts", protocolProducts);
-
             model.ReportParameters.Add("Products", products);
             var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
             model.ReportParameters.Add("Methods", methods);
@@ -183,7 +172,7 @@ namespace RED.Models.FileModels
 
             if (File.Exists(fileProps.FullPath))
             {
-                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".docx";
+                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".docx";
                 File.Move(fileProps.FullPath, newDestination);
             }
 

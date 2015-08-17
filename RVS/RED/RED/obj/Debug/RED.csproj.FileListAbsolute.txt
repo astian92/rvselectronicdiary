@@ -113,9 +113,11 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\bin\RED.dll.config
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\RED.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\RED.pdb
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Antlr3.Runtime.dll
+D:\Products\rvselectronicdiary\RVS\RED\RED\bin\DocX.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Elmah.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EntityFramework.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EntityFramework.SqlServer.dll
+D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -139,6 +141,7 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Deployment.dl
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Razor.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\WebGrease.dll
+D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.xml
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.Helpers.xml
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.Mvc.xml
 D:\Products\rvselectronicdiary\RVS\RED\RED\bin\System.Web.Optimization.xml
@@ -165,9 +168,3 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Microsoft
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
-D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.dll
-D:\Products\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.xml
-D:\Products\rvselectronicdiary\RVS\RED\RED\bin\DocX.dll
-D:\Programing\RED\RVS\RED\RED\bin\DocX.dll
-D:\Programing\RED\RVS\RED\RED\bin\EPPlus.dll
-D:\Programing\RED\RVS\RED\RED\bin\EPPlus.xml
