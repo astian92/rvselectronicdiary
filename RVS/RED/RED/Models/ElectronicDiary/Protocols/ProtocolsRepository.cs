@@ -5,6 +5,7 @@ using RED.Models.RepositoryBases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 namespace RED.Models.ElectronicDiary.Protocols
@@ -82,9 +83,14 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             protocol.Tester = protocolW.Tester;
             protocol.LabLeader = protocolW.LabLeader;
-            GeneratePorotocolReport(protocol);
 
-            db.SaveChanges();
+            using (TransactionScope scope = new TransactionScope())
+            {
+                db.SaveChanges();
+                GeneratePorotocolReport(protocol);
+
+                scope.Complete();
+            }
         }
 
         public bool Delete(Guid protocolId)

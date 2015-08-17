@@ -58,6 +58,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -324,6 +325,7 @@
     <Compile Include="Models\FileModels\FileProperties.cs" />
     <Compile Include="Models\FileModels\FilesRepository.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolModel.cs" />
+    <Compile Include="Models\FileModels\ProtocolFiles\ProtocolProduct.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolReport.cs" />
     <Compile Include="Models\FileModels\RequestList\RequestListModel.cs" />
     <Compile Include="Models\FileModels\RequestList\RequestListReport.cs" />

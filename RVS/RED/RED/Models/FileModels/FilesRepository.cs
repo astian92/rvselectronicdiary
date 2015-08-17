@@ -117,19 +117,63 @@ namespace RED.Models.FileModels
 
             if (acreditedProducts.Count() > 0)
             {
-                WriteProtocolReport(protocol, diaryNumber, "A", acreditedProducts);
+                WriteProtocolReport(protocol, diaryNumber, "A", acreditedProducts, protocolRequest);
             }
 
             if (notAcreditedProducts.Count() > 0)
             {
-                WriteProtocolReport(protocol, diaryNumber, "B", notAcreditedProducts);
+                WriteProtocolReport(protocol, diaryNumber, "B", notAcreditedProducts, protocolRequest);
             }
         }
 
-        private void WriteProtocolReport(Protocol protocol, int diaryNumber, string category, IEnumerable<Product> products)
+        private void WriteProtocolReport(Protocol protocol, int diaryNumber, string category, IEnumerable<Product> products, Request request)
         {
             var model = new ReportModel();
-            //... Populate model filtering on the USED PRODUCTS for this acredetetion
+            
+            model.ReportParameters.Add("ProtocolNumber", category + diaryNumber);
+            model.ReportParameters.Add("ProtocolIssuedDate", protocol.IssuedDate);
+            
+            //add products and categories
+            //var protocolProducts = products.Select(p => new ProtocolProduct()
+            //    {
+            //        Name = p.Name,
+            //        Number = p.Number,
+            //        Quantity = p.Quantity,
+            //        Methods = p.ProductTests.SelectMany(pt => pt.ProtocolResults.Select(pr => pr.MethodValue)),
+            //        Categories = p.ProductTests.Select(pt => pt.Test.TestCategory.Name)
+            //    });
+            //model.ReportParameters.Add("ProtocolProducts", protocolProducts);
+
+            model.ReportParameters.Add("Products", products);
+            var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            model.ReportParameters.Add("Methods", methods);
+            var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
+            model.ReportParameters.Add("Quantities", quantities);
+
+            var protocolResults = protocol.ProtocolResults.Where(pr =>
+                pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
+                .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+            model.ReportParameters.Add("ProtocolResults", protocolResults);
+
+            model.ReportParameters.Add("Contractor", request.Diary.Contractor);
+            model.ReportParameters.Add("Client", request.Diary.Client.Name);
+            model.ReportParameters.Add("LetterNumber", request.Diary.LetterNumber);
+            model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
+            model.ReportParameters.Add("RequestDate", request.Date);
+            model.ReportParameters.Add("LabLeader", protocol.LabLeader);
+            model.ReportParameters.Add("Tester", protocol.Tester);
+
+            if (category == "A")
+            {
+                string acredetationString = @"АКРЕДИТИРАНА СЪГЛАСНО БДС EN ISO/IEC 17025:2006
+СЕРТИФИКАТ №55 ЛИ ОТ 08.04.2015 г./ ИА „БСА”
+С ВАЛИДНОСТ НА АКРЕДИТАЦИЯТА ДО 31.03.2016 г.
+";
+                model.ReportParameters.Add("AcredetationString", acredetationString);
+            }
+
+            //add remarks list !
+
             var report = new ProtocolReport(model);
             var data = report.GenerateReport();
 
