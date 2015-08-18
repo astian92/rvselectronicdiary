@@ -185,6 +185,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ProtocolsController.cs" />
+    <Compile Include="Controllers\RemarksController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
@@ -313,6 +314,8 @@
     <Compile Include="Models\ElectronicDiary\Protocols\ArchivedProtocol.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
+    <Compile Include="Models\ElectronicDiary\Remarks\RemarksRepository.cs" />
+    <Compile Include="Models\ElectronicDiary\Remarks\RemarkW.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\ArchivedRequest.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
@@ -792,6 +795,10 @@
     <Content Include="Views\Error\DeleteConflicted.cshtml" />
     <Content Include="Views\Home\TestsReference.cshtml" />
     <Content Include="Views\Diary\Archive.cshtml" />
+    <Content Include="Views\Remarks\Create.cshtml" />
+    <Content Include="Views\Remarks\Delete.cshtml" />
+    <Content Include="Views\Remarks\Edit.cshtml" />
+    <Content Include="Views\Remarks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

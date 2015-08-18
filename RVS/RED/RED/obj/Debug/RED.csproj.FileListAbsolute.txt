@@ -168,3 +168,6 @@ D:\Products\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Microsoft
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
 D:\Products\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
+D:\Programing\RED\RVS\RED\RED\bin\DocX.dll
+D:\Programing\RED\RVS\RED\RED\bin\EPPlus.dll
+D:\Programing\RED\RVS\RED\RED\bin\EPPlus.xml
