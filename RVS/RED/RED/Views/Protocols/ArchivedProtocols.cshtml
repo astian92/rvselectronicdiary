@@ -46,9 +46,55 @@
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
                                     @{
-                                        var orderdProtocolRes = item.ProtocolResults.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                        var acredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited);
+                                    }
+
+                                    @if (acredited.Count() > 0)
+                                    {
+                                        <tr>
+                                            <td colspan="5">
+                                                <b>Акредитирани (А):</b>
+                                            </td>
+                                            <td>
+                                                <a href="#">Изтегли протокол</a>
+                                            </td>
+                                        </tr>
+                                        
+                                        var orderdProtocolRes = acredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
 
                                         foreach (var result in orderdProtocolRes)
+                                        {
+                                            <tr>
+                                                <td>@result.ArchivedProductTest.TestName</td>
+                                                <td>@result.ArchivedProductTest.TestMethods</td>
+                                                <td>
+                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
+                                                </td>
+                                                <td>@result.Results</td>
+                                                <td>@result.MethodValue</td>
+                                                <td>@result.ArchivedProductTest.TestTemperature</td>
+                                            </tr>
+                                        }
+                                    }
+                                    
+                                    @{
+                                        var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited);
+                                    }
+
+                                    @if (notAcredited.Count() > 0)
+                                    {
+                                        <tr>
+                                            <td colspan="5">
+                                                <b>Не акредитирани (Б):</b>
+                                            </td>
+                                            <td>
+                                                <a href="#">Изтегли протокол</a>
+                                            </td>
+                                        </tr>
+
+                                        var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+
+                                        foreach (var result in orderedNotAcreditedResults)
                                         {
                                             <tr>
                                                 <td>@result.ArchivedProductTest.TestName</td>

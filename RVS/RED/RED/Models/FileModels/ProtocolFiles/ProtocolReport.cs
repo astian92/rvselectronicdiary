@@ -127,11 +127,15 @@ namespace RED.Models.FileModels.ProtocolFiles
             var number = 1;
             while(catProds.Count > 0)
             {
-                var category = catProds.FirstOrDefault(c => c.Products.Any(p => p.Number == number));
-                if (category != null)
+                var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
+                if (cats.Count() > 0)
                 {
-                    orderedCategories.Add(category);
-                    catProds.Remove(category);
+                    orderedCategories.AddRange(cats);
+                    catProds.RemoveAll(c => cats.Contains(c));
+                    //foreach (var cat in cats)
+                    //{
+                    //    catProds.Remove(cat);
+                    //}
                 }
                 number++;
             }

@@ -209,7 +209,7 @@ function AcceptRequest(btn) {
     
     var promise = $.ajax({
         type: "POST",
-        url: "AcceptRequest",
+        url: "/Requests/AcceptRequest",
         data: { requestId: id },
         success: function (result) {
             if (result == "True") {

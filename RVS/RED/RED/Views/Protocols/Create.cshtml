@@ -59,7 +59,8 @@
                         </label>
                         <label class="col-md-9 modified-label">
                             @{
-                                var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
+                                //var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
+                                var number = test.Test.AcredetationLevel.Level.Trim() + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j + 1) : ""); 
                             }
                             @number
                             <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
