@@ -65,11 +65,13 @@ namespace RED.Models.ElectronicDiary.Requests
             }
         }
 
+        [Display(Name = "Срок на изпитване (дни)")]
+        public int? TestingPeriod { get; set; }
+
         public ICollection<Protocol> Protocols { get; set; }
 
         public RequestW()
         {
-
         }
 
         public RequestW(Request request)
@@ -79,6 +81,7 @@ namespace RED.Models.ElectronicDiary.Requests
             this.Date = request.Date;
             this.AcceptedBy = request.AcceptedBy;
             this.IsAccepted = request.IsAccepted;
+            this.TestingPeriod = request.TestingPeriod;
 
             this.Diary = request.Diary;
             this.User = request.User;
@@ -94,6 +97,7 @@ namespace RED.Models.ElectronicDiary.Requests
             request.Date = this.Date;
             request.AcceptedBy = this.AcceptedBy;
             request.IsAccepted = this.IsAccepted;
+            request.TestingPeriod = this.TestingPeriod;
 
             request.Diary = this.Diary;
             request.User = this.User;

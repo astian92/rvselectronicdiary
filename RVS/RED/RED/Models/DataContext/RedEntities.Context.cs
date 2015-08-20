@@ -45,11 +45,11 @@ namespace RED.Models.DataContext
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
-        public virtual DbSet<ProtocolsRemark> ProtocolsRemarks { get; set; }
-        public virtual DbSet<Remark> Remarks { get; set; }
         public virtual DbSet<Protocol> Protocols { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
-        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
+        public virtual DbSet<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        public virtual DbSet<Remark> Remarks { get; set; }
     }
 }

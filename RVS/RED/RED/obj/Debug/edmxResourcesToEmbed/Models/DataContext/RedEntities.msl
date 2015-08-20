@@ -219,24 +219,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProtocolsRemarks">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
-        <MappingFragment StoreEntitySet="ProtocolsRemarks">
-          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
-          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Remarks">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
-        <MappingFragment StoreEntitySet="Remarks">
-          <ScalarProperty Name="Text" ColumnName="Text" />
-          <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Protocols">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
         <MappingFragment StoreEntitySet="Protocols">
@@ -262,6 +244,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="TestingPeriod" ColumnName="TestingPeriod" />
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ArchivedDiaries">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
         <MappingFragment StoreEntitySet="ArchivedDiary">
@@ -269,6 +263,7 @@
           <ScalarProperty Name="ProtocolLabLeader" ColumnName="ProtocolLabLeader" />
           <ScalarProperty Name="ProtocolTester" ColumnName="ProtocolTester" />
           <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
+          <ScalarProperty Name="RequestTestingPeriod" ColumnName="RequestTestingPeriod" />
           <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
           <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
           <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -282,14 +277,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Request">
-        <MappingFragment StoreEntitySet="Requests">
-          <ScalarProperty Name="TestingPeriod" ColumnName="TestingPeriod" />
-          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-          <ScalarProperty Name="AcceptedBy" ColumnName="AcceptedBy" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DiaryId" ColumnName="DiaryId" />
+    <EntitySetMapping Name="ProtocolsRemarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
+        <MappingFragment StoreEntitySet="ProtocolsRemarks">
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Remarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
+        <MappingFragment StoreEntitySet="Remarks">
+          <ScalarProperty Name="Text" ColumnName="Text" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

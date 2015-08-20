@@ -10,7 +10,6 @@ namespace RED.Models.ElectronicDiary.Remarks
     public class RemarkW
     {
         public Guid Id { get; set; }
-        public int Number { get; set; }
         public string Text { get; set; }
 
         public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
@@ -23,7 +22,6 @@ namespace RED.Models.ElectronicDiary.Remarks
         public RemarkW(Remark remark)
         {
             this.Id = remark.Id;
-            this.Number = remark.Number;
             this.Text = remark.Text;
 
             this.ProtocolsRemarks = remark.ProtocolsRemarks;
@@ -33,7 +31,6 @@ namespace RED.Models.ElectronicDiary.Remarks
         {
             var remark = new Remark();
             remark.Id = this.Id;
-            remark.Number = this.Number;
             remark.Text = this.Text;
 
             remark.ProtocolsRemarks = remark.ProtocolsRemarks;

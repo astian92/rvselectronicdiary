@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DB_9BCA69_RedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DB_9BCA69_RedDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AcredetationLevels">
     <Key>
       <PropertyRef Name="Id" />
@@ -52,6 +52,7 @@
     <Property Name="Comment" Type="ntext" />
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="RequestTestingPeriod" Type="int" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
     <Property Name="ProtocolTester" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
@@ -190,13 +191,13 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RemarkId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Remarks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="Text" Type="nvarchar" MaxLength="3500" Nullable="false" />
   </EntityType>
   <EntityType Name="Requests">

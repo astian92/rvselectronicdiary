@@ -31,6 +31,7 @@ namespace RED.Models.DataContext
         public string Comment { get; set; }
         public System.DateTime RequestDate { get; set; }
         public string RequestAcceptedBy { get; set; }
+        public Nullable<int> RequestTestingPeriod { get; set; }
         public System.DateTime ProtocolIssuedDate { get; set; }
         public string ProtocolTester { get; set; }
         public string ProtocolLabLeader { get; set; }

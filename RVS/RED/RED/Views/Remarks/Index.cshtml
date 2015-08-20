@@ -1,17 +1,25 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Remarks.RemarkW>
-
+@using RED.Models.Account
 @{
     ViewBag.Title = "Index";
 }
 
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    var user = principal.GetUserData();
+}
+
 <h2>Забележки</h2>
 
-<p>
-    <a href="/Remarks/Create">
-        <i class="fa fa-plus"></i>
-        Добави забележка
-    </a>
-</p>
+@if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+{
+    <p>
+        <a href="/Remarks/Create">
+            <i class="fa fa-plus"></i>
+            Добави забележка
+        </a>
+    </p>
+}
 
 <div class="row">
     <div class="ibox float-e-margins">
@@ -21,7 +29,10 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Text)
                     </th>
-                    <th></th>
+                    @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+                    {
+                        <th></th>
+                    }
                 </tr>
 
                 @foreach (var item in Model)
@@ -30,16 +41,19 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Text)
                         </td>
-                        <td>
-                            <a href="/Remarks/Edit?id=@item.Id">
-                                <i class="fa fa-edit"></i>
-                                Промени
-                            </a>
-                            <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">
-                                <i class="fa fa-trash"></i>
-                                Изтрий
-                            </a>
-                        </td>
+                        @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+                        {
+                            <td>
+                                <a href="/Remarks/Edit?id=@item.Id">
+                                    <i class="fa fa-edit"></i>
+                                    Промени
+                                </a>
+                                <a class="btn-delete" href="@item.Id" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">
+                                    <i class="fa fa-trash"></i>
+                                    Изтрий
+                                </a>
+                            </td>
+                        }
                     </tr>
                 }
 

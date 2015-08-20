@@ -27,7 +27,7 @@ namespace RED.Models.DataContext
         public string LabLeader { get; set; }
     
         public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
-        public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
         public virtual Request Request { get; set; }
+        public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
     }
 }

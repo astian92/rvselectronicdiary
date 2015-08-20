@@ -24,12 +24,15 @@
 
 <h2>Клиенти</h2>
 
+@if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+{
 <p>
     <a href="/Clients/Create">
         <i class="fa fa-plus"></i>
         Добави клиент
     </a>
 </p>
+}
 <div class="row">
     <div class="ibox float-e-margins">
         <div class="ibox-content table-responsive">

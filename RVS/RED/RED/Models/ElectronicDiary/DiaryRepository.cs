@@ -245,11 +245,24 @@ namespace RED.Models.ElectronicDiary
                 var request = diary.Requests.First();
                 archivedDiary.RequestDate = request.Date;
                 archivedDiary.RequestAcceptedBy = request.User.FirstName.Substring(0,1) + ". " + request.User.LastName;
+                archivedDiary.RequestTestingPeriod = request.TestingPeriod;
                 archivedDiary.Remark = new DiaryW(diary).Remark;
                 var protocol = request.Protocols.First();
                 archivedDiary.ProtocolIssuedDate = protocol.IssuedDate;
                 archivedDiary.ProtocolTester = protocol.Tester;
                 archivedDiary.ProtocolLabLeader = protocol.LabLeader;
+
+                foreach (var remark in protocol.ProtocolsRemarks)
+                {
+                    ArchivedProtocolRemark aremark = new ArchivedProtocolRemark();
+                    aremark.Id = Guid.NewGuid();
+                    aremark.ArchivedDiaryId = archivedDiary.Id;
+                    aremark.Remark = remark.Remark.Text;
+
+                    db.ArchivedProtocolRemarks.Add(aremark);
+                }
+                db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
+
 
                 var products = diary.Products;
                 foreach (var product in products)

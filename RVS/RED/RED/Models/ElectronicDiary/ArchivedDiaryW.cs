@@ -45,6 +45,8 @@ namespace RED.Models.ElectronicDiary
 
         public string Remark { get; set; }
 
+        public Nullable<int> RequestTestingPeriod { get; set; }
+
         [Display(Name = "Продукти")]
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
 
@@ -61,6 +63,10 @@ namespace RED.Models.ElectronicDiary
             }
         }
 
+        public ArchivedDiaryW()
+        {
+        }
+
         public ArchivedDiaryW(ArchivedDiary diary)
         {
             this.Id = diary.Id;
@@ -75,6 +81,7 @@ namespace RED.Models.ElectronicDiary
             this.RequestAcceptedBy = diary.RequestAcceptedBy;
             this.ProtocolIssuedDate = diary.ProtocolIssuedDate;
             this.Remark = diary.Remark;
+            this.RequestTestingPeriod = diary.RequestTestingPeriod;
 
             this.ArchivedProducts = diary.ArchivedProducts;
             this.ArchivedProtocolResults = diary.ArchivedProtocolResults;
@@ -96,6 +103,7 @@ namespace RED.Models.ElectronicDiary
             diary.RequestAcceptedBy = this.RequestAcceptedBy;
             diary.ProtocolIssuedDate = this.ProtocolIssuedDate;
             diary.Remark = this.Remark;
+            diary.RequestTestingPeriod = this.RequestTestingPeriod;
 
             diary.ArchivedProducts = this.ArchivedProducts;
             diary.ArchivedProtocolResults = this.ArchivedProtocolResults;

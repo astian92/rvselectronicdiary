@@ -38,7 +38,6 @@ namespace RED.Models.ElectronicDiary.Remarks
         public bool Edit(RemarkW remark)
         {
             var r = db.Remarks.Find(remark.Id);
-            r.Number = remark.Number;
             r.Text = remark.Text;
             db.SaveChanges();
 

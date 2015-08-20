@@ -20,7 +20,6 @@ namespace RED.Models.DataContext
         }
     
         public System.Guid Id { get; set; }
-        public int Number { get; set; }
         public string Text { get; set; }
     
         public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }

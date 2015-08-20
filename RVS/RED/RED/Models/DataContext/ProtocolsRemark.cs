@@ -17,8 +17,9 @@ namespace RED.Models.DataContext
         public System.Guid Id { get; set; }
         public System.Guid ProtocolId { get; set; }
         public System.Guid RemarkId { get; set; }
+        public int Number { get; set; }
     
-        public virtual Remark Remark { get; set; }
         public virtual Protocol Protocol { get; set; }
+        public virtual Remark Remark { get; set; }
     }
 }
