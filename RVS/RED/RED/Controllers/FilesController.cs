@@ -16,5 +16,19 @@ namespace RED.Controllers
             var reportData = Rep.GetRequestListReport(diaryId, out fileName);
             return File(reportData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
+
+        public FileResult GetProtocolFile(Guid protocolId, string category)
+        {
+            string fileName = "";
+            var reportData = Rep.GetProtocolReport(protocolId, category, out fileName);
+            return File(reportData, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+        }
+
+        public FileResult GetArchivedProtocolFile(Guid archivedDiaryId, string category)
+        {
+            string fileName = "";
+            var reportData = Rep.GetArchivedProtocolReport(archivedDiaryId, category, out fileName);
+            return File(reportData, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+        }
 	}
 }

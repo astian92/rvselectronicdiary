@@ -180,5 +180,41 @@ namespace RED.Models.FileModels
             file.Write(data, 0, data.Length);
             file.Close();
         }
+
+        public byte[] GetProtocolReport(Guid protocolId, string category, out string fileName)
+        {
+            var diary = db.Protocols.Single(p => p.Id == protocolId).Request.Diary;
+
+            var fileProp = GetFileProperties(diary.Number, FileNames.Protocol, category);
+
+            if (Directory.Exists(fileProp.Path))
+            {
+                var file = File.ReadAllBytes(fileProp.FullPath);
+
+                fileName = fileProp.FileName;
+                return file;
+            }
+
+            fileName = "unknown.xlsx";
+            return new byte[0];
+        }
+
+        public byte[] GetArchivedProtocolReport(Guid archivedDiaryId, string category, out string fileName)
+        {
+            var diary = db.ArchivedDiaries.Single(ad => ad.Id == archivedDiaryId);
+
+            var fileProp = GetFileProperties(diary.Number, FileNames.Protocol, category);
+
+            if (Directory.Exists(fileProp.Path))
+            {
+                var file = File.ReadAllBytes(fileProp.FullPath);
+
+                fileName = fileProp.FileName;
+                return file;
+            }
+
+            fileName = "unknown.xlsx";
+            return new byte[0];
+        }
     }
 }

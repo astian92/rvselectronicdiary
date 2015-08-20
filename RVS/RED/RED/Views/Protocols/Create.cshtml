@@ -18,9 +18,9 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @{ 
+        @{
             int i = 1;
-            var wrappedDiary = new DiaryW(Model.Diary); 
+            var wrappedDiary = new DiaryW(Model.Diary);
         }
 
         @foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
