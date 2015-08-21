@@ -1,0 +1,191 @@
+﻿@model RED.Models.ElectronicDiary.ArchivedDiaryW
+@using System.Globalization
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
+<h2>Промени</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @*<h4>ArchivedDiary</h4>*@
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Number, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Number)
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="acceptance-date">
+            @Html.LabelFor(model => model.AcceptanceDateAndTime, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @*@Html.EditorFor(model => model.AcceptanceDateAndTime)*@
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    @*@Html.TextBoxFor(m => m.AcceptanceDateAndTime, new { @class = "form-control single-line", type = "datetime", value = Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) })*@
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)"></div>
+                @Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LetterNumber, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.LetterNumber)
+                @Html.ValidationMessageFor(model => model.LetterNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="letter-date">
+            @Html.LabelFor(model => model.LetterDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input id="LetterDate" name="LetterDate" class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на писмото&quot; е задължително!" type="datetime" value="@Model.LetterDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contractor, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Contractor)
+                @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Client)
+                @Html.ValidationMessageFor(model => model.Client, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Comment)
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="request-date">
+            @Html.LabelFor(model => model.RequestDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input id="RequestDate" name="RequestDate" class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на създаване на заявката&quot; е задължително!" type="datetime" value="@Model.RequestDate.ToLocalTime().ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group clockpicker" data-autoclose="true">
+                    <input type="text" class="form-control" name="RequestDateTime" value="@Model.RequestDateTime">
+                    <span class="input-group-addon">
+                        <span class="fa fa-clock-o"></span>
+                    </span>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequestAcceptedBy, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.RequestAcceptedBy)
+                @Html.ValidationMessageFor(model => model.RequestAcceptedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequestTestingPeriod, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.RequestTestingPeriod)
+                @Html.ValidationMessageFor(model => model.RequestTestingPeriod, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="protocol-issue-date">
+            @Html.LabelFor(model => model.ProtocolIssuedDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input id="ProtocolIssuedDate" name="ProtocolIssuedDate" class="form-control text-box single-line" type="datetime" value="@Model.ProtocolIssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.ProtocolIssuedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProtocolTester, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ProtocolTester)
+                @Html.ValidationMessageFor(model => model.ProtocolTester, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProtocolLabLeader, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ProtocolLabLeader)
+                @Html.ValidationMessageFor(model => model.ProtocolLabLeader, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <a href="/Diary/Index" class="btn btn-default">Отказ</a>
+                <input type="submit" value="Запази" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
+<script>
+    $('#letter-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#acceptance-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#protocol-issue-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+    
+    $('#request-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('.clockpicker').clockpicker();
+</script>

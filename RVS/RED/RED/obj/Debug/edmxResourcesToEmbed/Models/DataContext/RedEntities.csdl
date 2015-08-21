@@ -660,7 +660,7 @@
     <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ProtocolTester" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="ProtocolLabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-    <Property Name="Remark" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
     <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
     <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />

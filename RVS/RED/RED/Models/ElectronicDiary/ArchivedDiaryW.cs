@@ -12,39 +12,56 @@ namespace RED.Models.ElectronicDiary
     {
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Полето \"Номер\" е задължително!")]
+        [Display(Name = "Номер")]
         public int Number { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Дата на приемане\" е задължително!")]
+        [Display(Name = "Дата на приемане")]
         public DateTime AcceptanceDateAndTime { get; set; }
 
-        //[Required(ErrorMessage = "Номерът на писмото е задължителен")]
-        //[Range(0, int.MaxValue, ErrorMessage = "Невалиден номер")]
         [Display(Name = "Писмо №")]
         public string LetterNumber { get; set; }
 
-        [Required(ErrorMessage = "Датата на писмото е задължителна")]
+        [Required(ErrorMessage = "Полето \"Дата на писмото\" е задължително!")]
         [Display(Name = "Писмо дата")]
         public DateTime LetterDate { get; set; }
 
-        [Required(ErrorMessage = "Възложителя е задължителен")]
+        [Required(ErrorMessage = "Полето \"Възложител\" е задължително!")]
         [Display(Name = "Възложител")]
         public string Contractor { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Полето \"Клиент\" е задължително!")]
         [Display(Name = "Клиент")]
         public string Client { get; set; }
 
         [Display(Name = "Бележка")]
         public string Comment { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Дата на създаване на заявката\" е задължително!")]
+        [Display(Name = "Дата на създаване на заявката")]
         public DateTime RequestDate { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Приел заявката\" е задължително!")]
+        [Display(Name = "Приел заявката")]
         public string RequestAcceptedBy { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
+        [Display(Name = "Протокол създаден на")]
         public DateTime ProtocolIssuedDate { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
+        [Display(Name = "Извършил изпитването")]
+        public string ProtocolTester { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
+        [Display(Name = "Ръководител")]
+        public string ProtocolLabLeader { get; set; }
 
         public string Remark { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Срок на изпитването\" е задължителнo!")]
+        [Display(Name = "Срок на изпитването")]
         public Nullable<int> RequestTestingPeriod { get; set; }
 
         [Display(Name = "Продукти")]
@@ -63,6 +80,26 @@ namespace RED.Models.ElectronicDiary
             }
         }
 
+        public string RequestDateTime 
+        {
+            get
+            {
+                return this.RequestDate.ToString("HH:mm");
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.RequestDate = this.RequestDate.AddHours(hours);
+                    this.RequestDate = this.RequestDate.AddMinutes(minutes);
+                }
+            }
+        }
+
         public ArchivedDiaryW()
         {
         }
@@ -72,14 +109,16 @@ namespace RED.Models.ElectronicDiary
             this.Id = diary.Id;
             this.Number = diary.Number;
             this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate;
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            this.LetterDate = diary.LetterDate.ToLocalTime();
+            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
             this.Contractor = diary.Contractor;
             this.Client = diary.Client;
             this.Comment = diary.Comment;
-            this.RequestDate = diary.RequestDate;
+            this.RequestDate = diary.RequestDate.ToLocalTime();
             this.RequestAcceptedBy = diary.RequestAcceptedBy;
-            this.ProtocolIssuedDate = diary.ProtocolIssuedDate;
+            this.ProtocolIssuedDate = diary.ProtocolIssuedDate.ToLocalTime();
+            this.ProtocolTester = diary.ProtocolTester;
+            this.ProtocolLabLeader = diary.ProtocolLabLeader;
             this.Remark = diary.Remark;
             this.RequestTestingPeriod = diary.RequestTestingPeriod;
 
@@ -94,14 +133,16 @@ namespace RED.Models.ElectronicDiary
             diary.Id = this.Id;
             diary.Number = this.Number;
             diary.LetterNumber = this.LetterNumber;
-            diary.LetterDate = this.LetterDate;
-            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
+            diary.LetterDate = this.LetterDate.ToUniversalTime();
+            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime.ToUniversalTime();
             diary.Contractor = this.Contractor;
             diary.Client = this.Client;
             diary.Comment = this.Comment;
-            diary.RequestDate = this.RequestDate;
+            diary.RequestDate = this.RequestDate.ToUniversalTime();
             diary.RequestAcceptedBy = this.RequestAcceptedBy;
-            diary.ProtocolIssuedDate = this.ProtocolIssuedDate;
+            diary.ProtocolIssuedDate = this.ProtocolIssuedDate.ToUniversalTime();
+            diary.ProtocolTester = this.ProtocolTester;
+            diary.ProtocolLabLeader = this.ProtocolLabLeader;
             diary.Remark = this.Remark;
             diary.RequestTestingPeriod = this.RequestTestingPeriod;
 

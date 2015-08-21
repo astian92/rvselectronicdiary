@@ -175,6 +175,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArchivedDiaryController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardsController.cs" />
     <Compile Include="Controllers\DiaryController.cs" />
@@ -306,6 +307,7 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
+    <Compile Include="Models\ElectronicDiary\ArchivedDiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
@@ -383,6 +385,7 @@
     <Content Include="Content\plugins\chosen\chosen-sprite%402x.png" />
     <Content Include="Content\plugins\chosen\chosen-sprite.png" />
     <Content Include="Content\plugins\chosen\chosen.css" />
+    <Content Include="Content\plugins\clockpicker\clockpicker.css" />
     <Content Include="Content\plugins\datapicker\datepicker3.css" />
     <Content Include="Content\plugins\DataTables-1.10.2\css\dataTables.autoFill.css" />
     <Content Include="Content\plugins\DataTables-1.10.2\css\dataTables.autoFill.min.css" />
@@ -453,6 +456,7 @@
     <Content Include="Images\favicon.ico" />
     <Content Include="Scripts\Our\CustomPagination.js" />
     <Content Include="Scripts\Our\Dashboard.js" />
+    <Content Include="Scripts\plugins\clockpicker\clockpicker.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.min.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.bootstrap.js" />
@@ -798,6 +802,7 @@
     <Content Include="Views\Remarks\Delete.cshtml" />
     <Content Include="Views\Remarks\Edit.cshtml" />
     <Content Include="Views\Remarks\Index.cshtml" />
+    <Content Include="Views\ArchivedDiary\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
