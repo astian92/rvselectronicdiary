@@ -115,7 +115,17 @@
                                 <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
                                 <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
-
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4 class="text-center">Забележки</h4>
+                                    <ul>
+                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks)
+                                        {
+                                            <li><p>@pRemark.Remark</p></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,10 +16,12 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public ICollection<ProtocolResult> ProtocolResults { get; set; }
         public Request Request { get; set; }
+        public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
 
         public ProtocolW()
         {
             this.ProtocolResults = new List<ProtocolResult>();
+            this.ProtocolsRemarks = new List<ProtocolsRemark>();
         }
 
         public ProtocolW(Protocol protocol)
@@ -32,6 +34,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             this.ProtocolResults = protocol.ProtocolResults;
             this.Request = protocol.Request;
+            this.ProtocolsRemarks = protocol.ProtocolsRemarks;
         }
 
         public Protocol ToBase()
@@ -46,6 +49,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             protocol.ProtocolResults = this.ProtocolResults;
             protocol.Request = this.Request;
+            protocol.ProtocolsRemarks = this.ProtocolsRemarks;
 
             return protocol;
         }

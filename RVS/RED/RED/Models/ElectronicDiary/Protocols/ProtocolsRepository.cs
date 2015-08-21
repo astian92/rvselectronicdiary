@@ -1,4 +1,5 @@
 ﻿using RED.Models.DataContext;
+using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ElectronicDiary.Requests;
 using RED.Models.FileModels;
 using RED.Models.RepositoryBases;
@@ -80,6 +81,12 @@ namespace RED.Models.ElectronicDiary.Protocols
             {
                 protocol.ProtocolResults.Add(item);
             }
+            db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
+            protocol.ProtocolsRemarks.Clear();
+            foreach (var item in protocolW.ProtocolsRemarks)
+            {
+                protocol.ProtocolsRemarks.Add(item);
+            }
 
             protocol.Tester = protocolW.Tester;
             protocol.LabLeader = protocolW.LabLeader;
@@ -114,6 +121,12 @@ namespace RED.Models.ElectronicDiary.Protocols
         {
             var filesRep = new FilesRepository();
             filesRep.GenerateProtocolReport(protocol, request);
+        }
+
+        public IEnumerable<RemarkW> GetRemarks()
+        {
+            RemarksRepository RRep = new RemarksRepository();
+            return RRep.GetRemarks();
         }
     }
 }

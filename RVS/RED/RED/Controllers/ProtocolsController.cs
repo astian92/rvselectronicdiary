@@ -45,8 +45,10 @@ namespace RED.Controllers
         public ActionResult Create(Guid requestId)
         {
             var request = Rep.GetRequest(requestId);
+
+            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
             //ViewBag.request = request;
-            
+
             return View(request);
         }
 
@@ -64,7 +66,7 @@ namespace RED.Controllers
         public ActionResult Edit(Guid protocolId)
         {
             var protocol = Rep.GetProtocol(protocolId);
-            
+            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
             return View(protocol);
         }
 
@@ -78,7 +80,7 @@ namespace RED.Controllers
                 Rep.EditProtocol(protocol);
                 return RedirectToAction("Index");
             }
-
+            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
             return View(protocol);
         }
 

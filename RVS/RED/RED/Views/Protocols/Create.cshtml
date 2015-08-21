@@ -7,6 +7,7 @@
 }
 
 <link href="~/Content/Our/protocols.css" rel="stylesheet" />
+<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
 
 <h2>Добави</h2>
 @using (Html.BeginForm()) 
@@ -128,7 +129,22 @@
                 @Html.ValidationMessage("LabLeader", new { @class = "text-danger" })
             </div>
         </div>
-        
+        <div class="form-group">
+            <label for="RemarkId" class="control-label col-md-3">
+                Забележка:
+            </label>
+            <div class="col-md-9">
+                @Html.DropDownList("RemarkId", null, htmlAttributes: new { @class = "form-control chosen-select" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="button" value="Добави" class="add-remark-btn btn btn-primary" tabindex="5" />
+                <table class="table table-hover remarks-list-table" style="margin-top:23px;">
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9">
@@ -137,24 +153,25 @@
             </div>
         </div>
 
-        <input type="hidden" name="Id" value="@Guid.NewGuid()" />
+        <input id="protocolId" type="hidden" name="Id" value="@Guid.NewGuid()" />
         <input type="hidden" name="RequestId" value="@Model.Id" />
         
     </div>
 }
+<script src="~/Scripts/Our/Helpers.js"></script>
+<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+<script src="~/Scripts/Our/Protocols.js"></script>
 
 <script>
-    function addPlusMinus(item) {
-        var textArea = $(item).parent().parent().find('textarea');
-        var value = textArea.val();
-        value += "±";
-        textArea.val(value);
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
     }
 
-    function addDegrees(item) {
-        var textArea = $(item).parent().parent().find('textarea');
-        var value = textArea.val();
-        value += "°";
-        textArea.val(value);
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
     }
 </script>

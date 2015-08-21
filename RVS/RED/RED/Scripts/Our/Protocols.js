@@ -19,8 +19,9 @@ var tabId = 'active-protocols';
 var url = '/Protocols/FilterActiveProtocols';
 var isActiveTab = true;
 
-$(document).ready(function () {
 
+
+$(document).ready(function () {
     $('.active-tab-btn').click(function () {
         ClearFilters();
         tabId = 'active-protocols';
@@ -114,6 +115,21 @@ $(document).ready(function () {
             }
         })
     });
+
+    $('.add-remark-btn').click(function () {
+        var remarks = $('.remark');
+        var index = remarks.length;
+        var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
+            '<td class="issue-info remark">' +
+                $('#RemarkId option:selected').text() +
+                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarks[' + index + '].RemarkId">' +
+                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarks[' + index + '].ProtocolId">' +
+                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarks[' + index + '].Id">' +
+                '</td><td class="col-xs-1">' +
+                '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+
+        $('.remarks-list-table tbody').append(content);
+    });
 });
 
 function DeleteProtocol(btn) {
@@ -147,4 +163,36 @@ function ClearFilters() {
     $('#ProtocolNumber').val('');
     $('#fromDate').val('');
     $('#toDate').val('');
+}
+
+function deleteRemark(e, number) {
+    $(e).parent().parent().remove();
+
+    var remarks = $('.remark');
+
+    for (var i = 0; i < remarks.length; i++) {
+        var remark = remarks[i];
+        
+        $(remark).find('.remarkId').attr('name', "ProtocolsRemarks[" + i + "].RemarkId");
+        $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarks[" + i + "].ProtocolId");
+        $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarks[" + i + "].Id");
+    }
+}
+
+function recalcuateRemarkNames() {
+
+}
+
+function addPlusMinus(item) {
+    var textArea = $(item).parent().parent().find('textarea');
+    var value = textArea.val();
+    value += "±";
+    textArea.val(value);
+}
+
+function addDegrees(item) {
+    var textArea = $(item).parent().parent().find('textarea');
+    var value = textArea.val();
+    value += "°";
+    textArea.val(value);
 }
