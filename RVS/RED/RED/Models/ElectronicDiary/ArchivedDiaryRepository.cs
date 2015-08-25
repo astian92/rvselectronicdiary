@@ -71,5 +71,56 @@ namespace RED.Models.ElectronicDiary
 
             db.SaveChanges();
         }
+
+        public void EditProduct(ArchivedProductW aproduct)
+        {
+            //1 - edit the product properties
+            var product = db.ArchivedProducts.Single(p => p.Id == aproduct.Id);
+
+            product.Number = aproduct.Number;
+            product.Name = aproduct.Name;
+            product.Quantity = aproduct.Quantity;
+
+            //2 - update numbers of the productResults
+            foreach (var test in product.ArchivedProductTests)
+            {
+                foreach (var result in test.ArchivedProtocolResults)
+                {
+                    var parts = result.ResultNumber.Split('-');
+
+                    result.ResultNumber = test.TestAcredetationLevel.Trim() + product.ArchivedDiary.Number + "-" + product.Number.ToString() +
+                        (parts.Length > 2 ? "-" + parts[2].Trim() : "");
+                }
+            }
+
+            db.SaveChanges();
+        }
+
+        public bool DeleteProduct(Guid id)
+        {
+            var aproduct = db.ArchivedProducts.Single(c => c.Id == id);
+            db.ArchivedProducts.Remove(aproduct);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception exc)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(exc);
+                return false;
+            }
+
+            return true;
+        }
+
+        public IEnumerable<ArchivedProductTestW> GetProductTests(Guid aproductId)
+        {
+            var productTests = db.ArchivedProductTests.Where(ap => ap.ArchivedProductId == aproductId);
+            var result = productTests.ToList().Select(pt => new ArchivedProductTestW(pt));
+
+            return result;
+        }
+
     }
 }

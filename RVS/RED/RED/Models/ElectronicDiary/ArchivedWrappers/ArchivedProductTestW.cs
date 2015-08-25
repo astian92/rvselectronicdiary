@@ -36,6 +36,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             this.TestMethods = atest.TestMethods;
             this.TestAcredetationLevel = atest.TestAcredetationLevel;
             this.TestTemperature = atest.TestTemperature;
+            this.TestCategory = atest.TestCategory;
             this.Units = atest.Units;
 
             if (atest.ArchivedProtocolResults != null)
@@ -55,6 +56,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             atest.TestMethods = this.TestMethods;
             atest.TestAcredetationLevel = this.TestAcredetationLevel;
             atest.TestTemperature = this.TestTemperature;
+            atest.TestCategory = this.TestCategory;
             atest.Units = this.Units;
 
             return atest;

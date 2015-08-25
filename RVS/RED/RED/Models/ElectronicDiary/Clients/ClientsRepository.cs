@@ -47,8 +47,9 @@ namespace RED.Models.ElectronicDiary.Clients
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(exc);
                 return false;
             }
 

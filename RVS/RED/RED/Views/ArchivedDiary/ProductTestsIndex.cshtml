@@ -1,0 +1,130 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProductTestW>
+
+@{
+    ViewBag.Title = "Изследвания";
+    var aproductId = ViewBag.ArchivedProductId;
+}
+
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
+<h2>Изследвания за продукт @ViewBag.AProductName</h2>
+
+@if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+{
+    <p>
+        <a href="/ArchivedDiary/CreateProduct?aproductId=@aproductId">
+            <i class="fa fa-plus"></i>
+            Добави изследване
+        </a>
+    </p>
+}
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="ArchivedProductTestsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Категория</th>
+                        <th>Име</th>
+                        <th>Методи</th>
+                        <th>Ниво акредитация</th>
+                        <th>Единица на величината</th>
+                        <th>Температура</th>
+                        <th>Единици</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*<p>
+    <a href="/Diary">
+        <i class="fa fa-arrow-left"></i>
+        Обратно в дневници
+    </a>
+</p>*@
+
+<script>
+    Tables.CreateTable("#ArchivedProductTestsTable", {
+        order: [],
+        lengthChange: false,
+        selectable: false,
+        paging: true,
+        pageLength: 10,
+        "language": {
+            "paginate": {
+                "previous": "Назад",
+                "next": "Напред"
+            },
+            "zeroRecords": "Няма налични данни",
+            "info": "Показва _START_ до _END_ от _MAX_ записа",
+            "infoFiltered": "(филтрирани от общо _MAX_)",
+            "infoEmpty": "Няма открити данни"
+        },
+        ajaxData: { aproductId: '@aproductId' },
+        ajax: {
+            type: "POST",
+            url: "/ArchivedDiary/GetProductTests",
+        },
+        columns: [
+            { "data": "TestCategory" },
+            { "data": "TestName" },
+            { "data": "TestMethods" },
+            { "data": "TestAcredetationLevel" },
+            { "data": "TestUnitName" },
+            { "data": "TestTemperature" },
+            { "data": "Units" },
+            { "data": "Id" },
+        ],
+        columnDefs: [
+            {
+                targets: -1,
+                width: "25%",
+                sortable: false,
+                render: function (data, type, row) {
+                    return '<a href="/ArchivedDiary/EditProductTest?id=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                },
+                class: "text-center"
+            }
+        ]
+    });
+
+    function Delete(btn) {
+        var id = $(btn).attr('href');
+        var url = '/ArchivedDiary/DeleteProduct?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+    }
+</script>

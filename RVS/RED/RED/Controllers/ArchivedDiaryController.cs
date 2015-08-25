@@ -72,6 +72,27 @@ namespace RED.Controllers
         }
 
         [HttpGet]
+        public ActionResult EditProduct(Guid id)
+        {
+            var aproduct = Rep.GetArchivedProductW(id);
+            ViewBag.ADiaryId = aproduct.ArchivedDiaryId;
+            return View(aproduct);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProduct(ArchivedProductW aproduct)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.EditProduct(aproduct);
+                return RedirectToAction("ProductsIndex", new { archivedDiaryId = aproduct.ArchivedDiaryId });
+            }
+
+            return View(aproduct);
+        }
+
+        [HttpGet]
         public ActionResult DeleteProduct(Guid? id)
         {
             if (id == null)
@@ -92,5 +113,36 @@ namespace RED.Controllers
 
             return View(aproduct);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProduct(Guid id)
+        {
+            var product = Rep.GetArchivedProduct(id);
+            bool isdeleted = Rep.DeleteProduct(id);
+
+            if (isdeleted)
+            {
+                return RedirectToAction("ProductsIndex", new { archivedDiaryId = product.ArchivedDiaryId });
+            }
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/ArchivedDiary/ProductsIndex" });
+        }
+
+        public ActionResult ProductTestsIndex(Guid aproductId)
+        {
+            var aproduct = Rep.GetArchivedProductW(aproductId);
+            ViewBag.ArchivedProductId = aproductId;
+            ViewBag.AProductName = aproduct.Name;
+
+            return View();
+        }
+
+        public JsonResult GetProductTests(Guid aproductId)
+        {
+            var products = Rep.GetProductTests(aproductId);
+            return Json(new { data = products }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

@@ -16,10 +16,11 @@
     </ol>
 </div>
 <div class="modal-footer">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("DeleteProduct", "ArchivedDiary", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
+        @Html.HiddenFor(m => m.Id)
         <div class="form-actions no-color">
             <input type="submit" value="Да" class="btn btn-primary btn-padding-lg" />
             <button type="button" class="btn btn-white btn-padding-lg" data-dismiss="modal">Не</button>
