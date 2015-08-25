@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionType" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" Width="1.5" PointX="11" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="15.5" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Client" Width="1.5" PointX="3.75" PointY="2.625" IsExpanded="true" />
@@ -28,7 +27,6 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogProperties_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_ActionTypes" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_RolesFeatures_Features" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products" ManuallyRouted="false" />
@@ -48,13 +46,15 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Protocols_Requests" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Requests_Users" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" Width="1.5" PointX="8.75" PointY="1.125" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" Width="1.5" PointX="15.75" PointY="9.25" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Remark" Width="1.5" PointX="13.5" PointY="12.5" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" Width="1.5" PointX="11" PointY="4.125" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

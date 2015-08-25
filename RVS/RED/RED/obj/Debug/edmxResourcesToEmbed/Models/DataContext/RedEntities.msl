@@ -43,17 +43,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedProducts">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProduct">
-        <MappingFragment StoreEntitySet="ArchivedProducts">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Number" ColumnName="Number" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ArchivedProductTests">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
         <MappingFragment StoreEntitySet="ArchivedProductTests">
@@ -291,6 +280,17 @@
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
         <MappingFragment StoreEntitySet="Remarks">
           <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProducts">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProduct">
+        <MappingFragment StoreEntitySet="ArchivedProducts">
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

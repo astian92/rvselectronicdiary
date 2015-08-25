@@ -271,7 +271,7 @@ namespace RED.Models.ElectronicDiary
 
                     aproduct.Id = Guid.NewGuid();
                     aproduct.Name = product.Name;
-                    aproduct.Number = product.Number.ToString();
+                    aproduct.Number = product.Number;
                     aproduct.Quantity = product.Quantity;
 
                     var productTests = product.ProductTests;

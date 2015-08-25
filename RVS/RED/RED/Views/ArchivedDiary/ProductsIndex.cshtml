@@ -1,0 +1,117 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProductW>
+
+@{
+    ViewBag.Title = "Продукти";
+    var archivedDiaryId = ViewBag.ArchivedDiaryId;
+}
+
+@using Microsoft.AspNet.Identity
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+}
+
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
+<h2>Продукти за архивиран дневник №@ViewBag.ADiaryNumber</h2>
+
+@if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+{
+    <p>
+        <a href="/ArchivedDiary/CreateProduct?archivedDiaryId=@archivedDiaryId">
+            <i class="fa fa-plus"></i>
+            Добави продукт
+        </a>
+    </p>
+}
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="ArchivedProductsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Име</th>
+                        <th>Количество</th>
+                        <th>Брой изследвания</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    Tables.CreateTable("#ArchivedProductsTable", {
+        order: [],
+        lengthChange: false,
+        selectable: false,
+        paging: true,
+        pageLength: 10,
+        "language": {
+            "paginate": {
+                "previous": "Назад",
+                "next": "Напред"
+            },
+            "zeroRecords": "Няма налични данни",
+            "info": "Показва _START_ до _END_ от _MAX_ записа",
+            "infoFiltered": "(филтрирани от общо _MAX_)",
+            "infoEmpty": "Няма открити данни"
+        },
+        ajaxData: { archivedDiaryId: '@archivedDiaryId' },
+        ajax: {
+            type: "POST",
+            url: "/ArchivedDiary/GetProducts",
+        },
+        columns: [
+            { "data": "Number" },
+            { "data": "Name" },
+            { "data": "Quantity" },
+            { "data": "ArchivedProductsCount" },
+            { "data": "Id" },
+        ],
+        columnDefs: [
+            {
+                targets: -1,
+                width: "25%",
+                sortable: false,
+                render: function (data, type, row) {
+                    return '<a href="/ArchivedDiary/EditProduct?id=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                },
+                class: "text-center"
+            }
+        ]
+    });
+
+    function Delete(btn) {
+        var id = $(btn).attr('href');
+        var url = '/ArchivedDiary/DeleteProduct?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+    }
+</script>

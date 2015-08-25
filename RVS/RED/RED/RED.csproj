@@ -309,6 +309,8 @@
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
+    <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductTestW.cs" />
+    <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductW.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
@@ -802,7 +804,10 @@
     <Content Include="Views\Remarks\Delete.cshtml" />
     <Content Include="Views\Remarks\Edit.cshtml" />
     <Content Include="Views\Remarks\Index.cshtml" />
+    <Content Include="Views\ArchivedDiary\CreateProduct.cshtml" />
+    <Content Include="Views\ArchivedDiary\DeleteProduct.cshtml" />
     <Content Include="Views\ArchivedDiary\Edit.cshtml" />
+    <Content Include="Views\ArchivedDiary\ProductsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

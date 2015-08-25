@@ -1,4 +1,5 @@
 ﻿using RED.Models.DataContext;
+using RED.Models.ElectronicDiary.ArchivedWrappers;
 using RED.Models.RepositoryBases;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,34 @@ namespace RED.Models.ElectronicDiary
             archivedDiary.ProtocolLabLeader = adiary.ProtocolLabLeader;
             archivedDiary.Remark = adiary.Remark;
             archivedDiary.RequestTestingPeriod = adiary.RequestTestingPeriod;
+
+            db.SaveChanges();
+        }
+
+        public ArchivedProduct GetArchivedProduct(Guid archivedProductId)
+        {
+            var archivedProduct = db.ArchivedProducts.Single(ap => ap.Id == archivedProductId);
+            return archivedProduct;
+        }
+
+        public ArchivedProductW GetArchivedProductW(Guid archivedProductId)
+        {
+            var archivedProduct = GetArchivedProduct(archivedProductId);
+            return new ArchivedProductW(archivedProduct);
+        }
+
+        public IEnumerable<ArchivedProductW> GetProducts(Guid archivedDiaryId)
+        {
+            var products = db.ArchivedProducts.Where(ap => ap.ArchivedDiaryId == archivedDiaryId);
+            var result = products.ToList().Select(p => new ArchivedProductW(p));
+
+            return result;
+        }
+
+        public void AddProduct(ArchivedProductW aproduct)
+        {
+            aproduct.Id = Guid.NewGuid();
+            db.ArchivedProducts.Add(aproduct.ToBase());
 
             db.SaveChanges();
         }
