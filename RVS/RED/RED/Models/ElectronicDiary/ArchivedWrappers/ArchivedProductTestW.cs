@@ -1,6 +1,7 @@
 ﻿using RED.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,17 +11,36 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
     {
         public Guid Id { get; set; }
         public Guid ArchivedProductId { get; set; }
-        public string TestName { get; set; }
-        public string TestUnitName { get; set; }
-        public string TestMethods { get; set; }
-        public string TestAcredetationLevel { get; set; }
-        public string TestTemperature { get; set; }
-        public string TestCategory { get; set; }
-        public int Units { get; set; }
-        public int ArchivedProtocolResultsCount { get; set; }
 
-        //public virtual ArchivedProduct ArchivedProduct { get; set; }
-        //public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
+        [Required(ErrorMessage = "Полето \"Име\" е задължително!")]
+        [Display(Name = "Име")]
+        public string TestName { get; set; }
+
+        //[Required(ErrorMessage = "Полето \"Единица на величината\" е задължително!")]
+        [Display(Name = "Единица на величината")]
+        public string TestUnitName { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Методи\" е задължително!")]
+        [Display(Name = "Методи")]
+        public string TestMethods { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Ниво Акредитация\" е задължително!")]
+        [Display(Name = "Ниво Акредитация")]
+        public string TestAcredetationLevel { get; set; }
+
+        //[Required(ErrorMessage = "Полето \"Температура\" е задължително!")]
+        [Display(Name = "Температура")]
+        public string TestTemperature { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Категория\" е задължително!")]
+        [Display(Name = "Категория")]
+        public string TestCategory { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Единици\" е задължително!")]
+        [Display(Name = "Единици")]
+        public int Units { get; set; }
+
+        public IEnumerable<ArchivedProtocolResultW> Results { get; set; }
 
         public ArchivedProductTestW()
         {
@@ -39,10 +59,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             this.TestCategory = atest.TestCategory;
             this.Units = atest.Units;
 
-            if (atest.ArchivedProtocolResults != null)
-            {
-                this.ArchivedProtocolResultsCount = atest.ArchivedProtocolResults.Count();
-            }
+            this.Results = atest.ArchivedProtocolResults.Select(ar => new ArchivedProtocolResultW(ar));
         }
 
         public ArchivedProductTest ToBase()
@@ -58,6 +75,15 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             atest.TestTemperature = this.TestTemperature;
             atest.TestCategory = this.TestCategory;
             atest.Units = this.Units;
+
+            if (this.Results != null)
+            {
+                atest.ArchivedProtocolResults = this.Results.Select(ar => ar.ToBase()).ToList();
+            }
+            else
+            {
+                atest.ArchivedProtocolResults = new List<ArchivedProtocolResult>();
+            }
 
             return atest;
         }

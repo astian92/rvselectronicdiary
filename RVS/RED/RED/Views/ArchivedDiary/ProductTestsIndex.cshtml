@@ -28,7 +28,7 @@
 @if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
 {
     <p>
-        <a href="/ArchivedDiary/CreateProduct?aproductId=@aproductId">
+        <a href="/ArchivedDiary/CreateProductTest?aproductId=@aproductId">
             <i class="fa fa-plus"></i>
             Добави изследване
         </a>
@@ -43,7 +43,7 @@
                         <th>Категория</th>
                         <th>Име</th>
                         <th>Методи</th>
-                        <th>Ниво акредитация</th>
+                        <th>Ниво</th>
                         <th>Единица на величината</th>
                         <th>Температура</th>
                         <th>Единици</th>
@@ -97,7 +97,7 @@
         columnDefs: [
             {
                 targets: -1,
-                width: "25%",
+                width: "20%",
                 sortable: false,
                 render: function (data, type, row) {
                     return '<a href="/ArchivedDiary/EditProductTest?id=' + data + '">\

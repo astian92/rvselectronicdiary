@@ -313,6 +313,7 @@
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductTestW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductW.cs" />
+    <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProtocolResultW.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
@@ -812,6 +813,7 @@
     <Content Include="Views\ArchivedDiary\ProductsIndex.cshtml" />
     <Content Include="Views\ArchivedDiary\EditProduct.cshtml" />
     <Content Include="Views\ArchivedDiary\ProductTestsIndex.cshtml" />
+    <Content Include="Views\ArchivedDiary\CreateProductTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

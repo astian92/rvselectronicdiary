@@ -144,5 +144,24 @@ namespace RED.Controllers
             return Json(new { data = products }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult CreateProductTest(Guid aproductId)
+        {
+            ViewBag.AProductId = aproductId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProductTest(ArchivedProductTestW aproductTest)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.AddProductTest(aproductTest);
+                return RedirectToAction("ProductTestsIndex", new { aproductId = aproductTest.ArchivedProductId });
+            }
+
+            return View(aproductTest);
+        }
+
     }
 }

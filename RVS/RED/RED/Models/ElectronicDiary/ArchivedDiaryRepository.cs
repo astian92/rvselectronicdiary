@@ -122,5 +122,14 @@ namespace RED.Models.ElectronicDiary
             return result;
         }
 
+        public void AddProductTest(ArchivedProductTestW aproductTest)
+        {
+            aproductTest.Id = Guid.NewGuid();
+            db.ArchivedProductTests.Add(aproductTest.ToBase());
+
+            db.SaveChanges();
+        }
+
+
     }
 }
