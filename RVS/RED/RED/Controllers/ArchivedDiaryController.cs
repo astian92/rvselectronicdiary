@@ -15,6 +15,7 @@ namespace RED.Controllers
         public ActionResult Index()
         {
             return View();
+            //extensions test
         }
 
         public ActionResult Edit(Guid id)
