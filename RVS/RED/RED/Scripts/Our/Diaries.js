@@ -12,7 +12,7 @@
                 </div>\
             </div>';
 
-var diaryIdtoOpen;
+var diaryIdtoOpen; //in diaries index it gets an initial value if you are going back to the Diaries from somewhere else!
 var tabId = 'active-diaries';
 var url = '/Diary/FilterActiveDiaries';
 var isActiveTab = true;
@@ -41,6 +41,9 @@ $(document).ready(function () {
                 $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
                     $('a[href="#' + diaryIdtoOpen + '"]').click();
+                    $('html, body').animate({
+                        scrollTop: $("#" + diaryIdtoOpen).offset().top - 50
+                    }, 500);
                     diaryIdtoOpen = undefined;
                 }
             },
@@ -73,6 +76,9 @@ $(document).ready(function () {
                 $('.' + tabId).html(result);
                 if (diaryIdtoOpen) {
                     $('a[href="#' + diaryIdtoOpen + '"]').click();
+                    $('html, body').animate({
+                        scrollTop: $("#" + diaryIdtoOpen).offset().top - 50
+                    }, 500);
                     diaryIdtoOpen = undefined;
                 }
             },

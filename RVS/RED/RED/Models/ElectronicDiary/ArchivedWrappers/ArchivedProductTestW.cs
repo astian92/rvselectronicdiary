@@ -36,9 +36,9 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
         [Display(Name = "Категория")]
         public string TestCategory { get; set; }
 
-        [Required(ErrorMessage = "Полето \"Единици\" е задължително!")]
-        [Display(Name = "Единици")]
-        public int Units { get; set; }
+        //[Required(ErrorMessage = "Полето \"Единици\" е задължително!")]
+        //[Display(Name = "Единици")]
+        //public int Units { get; set; }
 
         public IEnumerable<ArchivedProtocolResultW> Results { get; set; }
 
@@ -57,7 +57,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             this.TestAcredetationLevel = atest.TestAcredetationLevel;
             this.TestTemperature = atest.TestTemperature;
             this.TestCategory = atest.TestCategory;
-            this.Units = atest.Units;
+            //this.Units = atest.Units;
 
             this.Results = atest.ArchivedProtocolResults.Select(ar => new ArchivedProtocolResultW(ar));
         }
@@ -74,7 +74,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             atest.TestAcredetationLevel = this.TestAcredetationLevel;
             atest.TestTemperature = this.TestTemperature;
             atest.TestCategory = this.TestCategory;
-            atest.Units = this.Units;
+            //atest.Units = this.Units;
 
             if (this.Results != null)
             {

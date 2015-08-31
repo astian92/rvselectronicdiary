@@ -16,7 +16,7 @@ namespace RED.Controllers
     public class DiaryController : ControllerBase<DiaryRepository>
     {
         // GET: Diary
-        public ActionResult Index()
+        public ActionResult Index(Guid? IdToOpen, bool isArchived = false)
         {
             var clients = Rep.GetClients();
             var selectList = clients.ToList();
@@ -26,6 +26,8 @@ namespace RED.Controllers
             nullable.Name = "Всички";
             selectList.Insert(0, new ClientW(nullable));
             ViewBag.ClientId = new SelectList(selectList, "Id", "Name");
+            ViewBag.IdToOpen = IdToOpen;
+            ViewBag.IsArchived = isArchived;
             return View();
         }
 

@@ -814,6 +814,12 @@
     <Content Include="Views\ArchivedDiary\EditProduct.cshtml" />
     <Content Include="Views\ArchivedDiary\ProductTestsIndex.cshtml" />
     <Content Include="Views\ArchivedDiary\CreateProductTest.cshtml" />
+    <Content Include="Views\ArchivedDiary\EditProductTest.cshtml" />
+    <Content Include="Views\ArchivedDiary\DeleteProductTest.cshtml" />
+    <Content Include="Views\ArchivedDiary\ProtocolResultsIndex.cshtml" />
+    <Content Include="Views\ArchivedDiary\CreateProtocolResult.cshtml" />
+    <Content Include="Views\ArchivedDiary\EditProtocolResult.cshtml" />
+    <Content Include="Views\ArchivedDiary\DeleteProtocolResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

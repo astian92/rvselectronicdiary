@@ -5,7 +5,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Level" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Level" Type="nvarchar" MaxLength="2" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="ActionLogProperties">
@@ -77,10 +77,9 @@
     <Property Name="TestName" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="TestUnitName" Type="nvarchar" MaxLength="60" />
     <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
-    <Property Name="TestAcredetationLevel" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="TestAcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
     <Property Name="TestTemperature" Type="nvarchar" MaxLength="50" />
     <Property Name="TestCategory" Type="nvarchar" MaxLength="120" Nullable="false" />
-    <Property Name="Units" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedProtocolRemarks">
     <Key>
@@ -309,7 +308,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ArchivedProducts_ArchivedDiary">
-    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
+    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ArchivedDiary">
@@ -321,7 +322,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ArchivedProductTests_ArchivedProducts">
-    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="1" />
+    <End Role="ArchivedProducts" Type="Self.ArchivedProducts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ArchivedProducts">
@@ -333,7 +336,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
-    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1" />
+    <End Role="ArchivedDiary" Type="Self.ArchivedDiary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ArchivedProtocolRemarks" Type="Self.ArchivedProtocolRemarks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ArchivedDiary">
@@ -357,7 +362,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ArchivedProtocolResults_ArchivedProductTests">
-    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="1" />
+    <End Role="ArchivedProductTests" Type="Self.ArchivedProductTests" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ArchivedProtocolResults" Type="Self.ArchivedProtocolResults" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ArchivedProductTests">

@@ -5,11 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ce7cd07a73784346a6b53e711ff57f86" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" Width="1.5" PointX="6" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionType" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="15.5" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Client" Width="1.5" PointX="3.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ELMAH_Error" Width="1.5" PointX="9.75" PointY="12.625" IsExpanded="true" />
@@ -23,11 +21,9 @@
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.TestCategory" Width="1.5" PointX="6" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Test" Width="1.5" PointX="8.25" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.User" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogProperties_ToTable" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_ActionTypes" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ActionLogs_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_RolesFeatures_Features" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" ManuallyRouted="false" />
@@ -54,7 +50,11 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" Width="1.5" PointX="11" PointY="4.125" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" Width="1.5" PointX="6" PointY="19" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.875" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

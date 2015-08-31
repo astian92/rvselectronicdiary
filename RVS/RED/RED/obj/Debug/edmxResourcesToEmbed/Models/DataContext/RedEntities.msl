@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DB_9BCA69_RedDbModelStoreContainer" CdmEntityContainer="RedDataEntities">
-    <EntitySetMapping Name="AcredetationLevels">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.AcredetationLevel">
-        <MappingFragment StoreEntitySet="AcredetationLevels">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Level" ColumnName="Level" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ActionLogProperties">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ActionLogProperty">
         <MappingFragment StoreEntitySet="ActionLogProperties">
@@ -40,21 +31,6 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TypeName" ColumnName="TypeName" />
           <ScalarProperty Name="TypeNameBg" ColumnName="TypeNameBg" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedProductTests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
-        <MappingFragment StoreEntitySet="ArchivedProductTests">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
-          <ScalarProperty Name="TestName" ColumnName="TestName" />
-          <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
-          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
-          <ScalarProperty Name="TestAcredetationLevel" ColumnName="TestAcredetationLevel" />
-          <ScalarProperty Name="TestTemperature" ColumnName="TestTemperature" />
-          <ScalarProperty Name="TestCategory" ColumnName="TestCategory" />
-          <ScalarProperty Name="Units" ColumnName="Units" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -291,6 +267,29 @@
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcredetationLevels">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.AcredetationLevel">
+        <MappingFragment StoreEntitySet="AcredetationLevels">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProductTests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
+        <MappingFragment StoreEntitySet="ArchivedProductTests">
+          <ScalarProperty Name="TestCategory" ColumnName="TestCategory" />
+          <ScalarProperty Name="TestTemperature" ColumnName="TestTemperature" />
+          <ScalarProperty Name="TestAcredetationLevel" ColumnName="TestAcredetationLevel" />
+          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
+          <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
+          <ScalarProperty Name="TestName" ColumnName="TestName" />
+          <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

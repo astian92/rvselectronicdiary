@@ -1,8 +1,8 @@
-﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProductTestW>
+﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProtocolResultW>
 
 @{
-    ViewBag.Title = "Изследвания";
-    var aproductId = ViewBag.ArchivedProductId;
+    ViewBag.Title = "Резултати";
+    var aproductTestId = ViewBag.ArchivedProductTestId;
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -16,28 +16,24 @@
 <script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
 <script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
 
-<h2>Изследвания за продукт @ViewBag.AProductName</h2>
+<h2>Резултати за изследване @ViewBag.AProductTestName</h2>
 
 <p>
-    <a href="/ArchivedDiary/CreateProductTest?aproductId=@aproductId">
+    <a href="/ArchivedDiary/CreateProtocolResult?aproductTestId=@aproductTestId">
         <i class="fa fa-plus"></i>
-        Добави изследване
+        Добави резултат
     </a>
 </p>
 
 <div class="row">
     <div class="ibox float-e-margins">
         <div class="ibox-content table-responsive">
-            <table id="ArchivedProductTestsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+            <table id="ArchivedProtocolResultsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
                 <thead>
                     <tr>
-                        <th>Категория</th>
-                        <th>Име</th>
-                        <th>Методи</th>
-                        <th>Ниво</th>
-                        <th>Единица на величината</th>
-                        <th>Температура</th>
-                        @*<th>Единици</th>*@
+                        <th>Номер</th>
+                        <th>Резултати от изследването</th>
+                        <th>Стойност на показателя</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -47,7 +43,7 @@
 </div>
 
 <p>
-    <a href="/ArchivedDiary/EditProduct?id=@aproductId">
+    <a href="/ArchivedDiary/EditProductTest?aproductTestId=@aproductTestId">
         <i class="fa fa-arrow-left"></i>
         Обратнo
     </a>
@@ -55,7 +51,7 @@
 
 <script>
     $(document).ready(function () {
-        Tables.CreateTable("#ArchivedProductTestsTable", {
+        Tables.CreateTable("#ArchivedProtocolResultsTable", {
             order: [],
             lengthChange: false,
             selectable: false,
@@ -71,19 +67,15 @@
                 "infoFiltered": "(филтрирани от общо _MAX_)",
                 "infoEmpty": "Няма открити данни"
             },
-            ajaxData: { aproductId: '@aproductId' },
+            ajaxData: { aproductTestId: '@aproductTestId' },
             ajax: {
                 type: "POST",
-                url: "/ArchivedDiary/GetProductTests",
+                url: "/ArchivedDiary/GetProtocolResults",
             },
             columns: [
-                { "data": "TestCategory" },
-                { "data": "TestName" },
-                { "data": "TestMethods" },
-                { "data": "TestAcredetationLevel" },
-                { "data": "TestUnitName" },
-                { "data": "TestTemperature" },
-                //{ "data": "Units" },
+                { "data": "ResultNumber" },
+                { "data": "Results" },
+                { "data": "MethodValue" },
                 { "data": "Id" },
             ],
             columnDefs: [
@@ -92,7 +84,7 @@
                     width: "20%",
                     sortable: false,
                     render: function (data, type, row) {
-                        return '<a href="/ArchivedDiary/EditProductTest?aproductTestId=' + data + '">\
+                        return '<a href="/ArchivedDiary/EditProtocolResult?aprotocolResultId=' + data + '">\
                                 <i class="fa fa-edit"></i>\
                                 Промени\
                             </a>|\
@@ -109,7 +101,7 @@
 
     function Delete(btn) {
         var id = $(btn).attr('href');
-        var url = '/ArchivedDiary/DeleteProductTest?id=' + id;
+        var url = '/ArchivedDiary/DeleteProtocolResult?id=' + id;
         $.ajax({
             type: "GET",
             url: url,

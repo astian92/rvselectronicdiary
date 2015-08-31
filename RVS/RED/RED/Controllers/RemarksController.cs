@@ -18,9 +18,16 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            var remarks = Rep.GetRemarks();
-            return View(remarks);
+            //var remarks = Rep.GetRemarks();
+            return View();
         }
+
+        public JsonResult GetRemarks()
+        {
+            var remarks = Rep.GetRemarks();
+            return Json(new { data = remarks });
+        }
+
 
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult Create()

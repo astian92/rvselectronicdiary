@@ -127,7 +127,7 @@ namespace RED.Controllers
                 return RedirectToAction("ProductsIndex", new { archivedDiaryId = product.ArchivedDiaryId });
             }
 
-            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/ArchivedDiary/ProductsIndex" });
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/ArchivedDiary/ProductsIndex?archivedDiaryId=" + product.ArchivedDiaryId });
         }
 
         public ActionResult ProductTestsIndex(Guid aproductId)
@@ -148,11 +148,13 @@ namespace RED.Controllers
         [HttpGet]
         public ActionResult CreateProductTest(Guid aproductId)
         {
+            ViewBag.TestAcredetationLevel = new SelectList(Rep.GetPossibleAcredetationLevels(), "Level", "Level");
             ViewBag.AProductId = aproductId;
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateProductTest(ArchivedProductTestW aproductTest)
         {
             if (ModelState.IsValid)
@@ -164,5 +166,159 @@ namespace RED.Controllers
             return View(aproductTest);
         }
 
+        [HttpGet]
+        public ActionResult EditProductTest(Guid aproductTestId)
+        {
+            var aProductTest = Rep.GetArchivedProductTestW(aproductTestId);
+            ViewBag.TestAcredetationLevel = new SelectList(Rep.GetPossibleAcredetationLevels(), "Level", "Level", aProductTest.TestAcredetationLevel);
+            ViewBag.AProductId = aProductTest.ArchivedProductId;
+            return View(aProductTest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProductTest(ArchivedProductTestW aproductTest)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.EditProductTest(aproductTest);
+                return RedirectToAction("ProductTestsIndex", new { aproductId = aproductTest.ArchivedProductId });
+            }
+
+            return View(aproductTest);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteProductTest(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aproductTest = Rep.GetArchivedProductTestW(id.Value);
+            if (aproductTest == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(aproductTest);
+            }
+
+            return View(aproductTest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProductTest(Guid id)
+        {
+            var productTest = Rep.GetArchivedProductTest(id);
+            bool isdeleted = Rep.DeleteProductTest(id);
+
+            if (isdeleted)
+            {
+                return RedirectToAction("ProductTestsIndex", new { aproductId = productTest.ArchivedProductId });
+            }
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/ArchivedDiary/ProductTestsIndex?aproductId=" + productTest.ArchivedProductId });
+        }
+
+        public ActionResult ProtocolResultsIndex(Guid aproductTestId)
+        {
+            var aproductTest = Rep.GetArchivedProductTestW(aproductTestId);
+            ViewBag.ArchivedProductTestId = aproductTestId;
+            ViewBag.AProductTestName = aproductTest.TestName;
+
+            return View();
+        }
+
+        public JsonResult GetProtocolResults(Guid aproductTestId)
+        {
+            var products = Rep.GetProtocolResults(aproductTestId);
+            return Json(new { data = products }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateProtocolResult(Guid aproductTestId)
+        {
+            var productTest = Rep.GetArchivedProductTestW(aproductTestId);
+            var product = Rep.GetArchivedProductW(productTest.ArchivedProductId);
+
+            ViewBag.ADiaryId = product.ArchivedDiaryId;
+            ViewBag.AProductTestId = aproductTestId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateProtocolResult(ArchivedProtocolResultW aprotocolResult)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.AddProtocolResult(aprotocolResult);
+                return RedirectToAction("ProtocolResultsIndex", new { aproductTestId = aprotocolResult.ArchivedProductTestId });
+            }
+
+            return View(aprotocolResult);
+        }
+        
+        [HttpGet]    
+        public ActionResult EditProtocolResult(Guid aprotocolResultId)
+        {
+            var aprotocolResult = Rep.GetArchivedProtocolResultW(aprotocolResultId);
+            ViewBag.AProductTestId = aprotocolResult.ArchivedProductTestId;
+            return View(aprotocolResult);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProtocolResult(ArchivedProtocolResultW aprotocolResult)
+        {
+            if (ModelState.IsValid)
+            {
+                Rep.EditProtocolResult(aprotocolResult);
+                return RedirectToAction("ProtocolResultsIndex", new { aproductTestId = aprotocolResult.ArchivedProductTestId });
+            }
+
+            return View(aprotocolResult);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteProtocolResult(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aprotocolResult = Rep.GetArchivedProtocolResultW(id.Value);
+            if (aprotocolResult == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(aprotocolResult);
+            }
+
+            return View(aprotocolResult);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProtocolResult(Guid id)
+        {
+            var protocolResult = Rep.GetArchivedProtocolResult(id);
+            bool isdeleted = Rep.DeleteProtocolResult(id);
+
+            if (isdeleted)
+            {
+                return RedirectToAction("ProtocolResultsIndex", new { aproductTestId = protocolResult.ArchivedProductTestId });
+            }
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/ArchivedDiary/ProtocolResultsIndex?aproductTestId=" + protocolResult.ArchivedProductTestId });
+        }
     }
 }

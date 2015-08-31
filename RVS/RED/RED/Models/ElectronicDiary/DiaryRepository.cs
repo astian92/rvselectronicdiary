@@ -286,7 +286,7 @@ namespace RED.Models.ElectronicDiary
                         aptest.TestAcredetationLevel = ptest.Test.AcredetationLevel.Level;
                         aptest.TestTemperature = ptest.Test.Temperature;
                         aptest.TestCategory = ptest.Test.TestCategory.Name;
-                        aptest.Units = ptest.Units;
+                        //aptest.Units = ptest.Units;
 
                         var protocolResults = ptest.ProtocolResults;
                         foreach (var presult in protocolResults)

@@ -131,12 +131,13 @@
 <script src="~/Scripts/Our/Diaries.js"></script>
 
 <script>
+    var isArchived = @(((bool)ViewBag.IsArchived).ToString().ToLower());
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },
         '.chosen-select-no-single': { disable_search_threshold: 10 },
         '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' }
-        
     }
 
     for (var selector in config) {
@@ -159,6 +160,18 @@
         forceParse: false,
         calendarWeeks: true,
         autoclose: true
+    });
+
+    $(document).ready(function () {
+        diaryIdtoOpen = '@(ViewBag.IdToOpen)';
+
+        if (isArchived) {
+            $('.archived-tab-btn').click();
+            window.location = "#" + diaryIdtoOpen;
+        }
+        else {
+            $('.active-tab-btn').click(); //- no need it gets called by default in the view !
+        }
     });
 </script>
 

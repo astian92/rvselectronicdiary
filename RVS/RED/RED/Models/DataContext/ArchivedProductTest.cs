@@ -27,9 +27,8 @@ namespace RED.Models.DataContext
         public string TestAcredetationLevel { get; set; }
         public string TestTemperature { get; set; }
         public string TestCategory { get; set; }
-        public int Units { get; set; }
     
-        public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
         public virtual ArchivedProduct ArchivedProduct { get; set; }
+        public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
     }
 }

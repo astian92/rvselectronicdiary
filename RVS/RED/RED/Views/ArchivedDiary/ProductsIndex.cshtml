@@ -5,13 +5,6 @@
     var archivedDiaryId = ViewBag.ArchivedDiaryId;
 }
 
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-}
-
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
@@ -25,15 +18,13 @@
 
 <h2>Продукти за архивиран дневник №@ViewBag.ADiaryNumber</h2>
 
-@if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
-{
-    <p>
-        <a href="/ArchivedDiary/CreateProduct?archivedDiaryId=@archivedDiaryId">
-            <i class="fa fa-plus"></i>
-            Добави продукт
-        </a>
-    </p>
-}
+<p>
+    <a href="/ArchivedDiary/CreateProduct?archivedDiaryId=@archivedDiaryId">
+        <i class="fa fa-plus"></i>
+        Добави продукт
+    </a>
+</p>
+
 <div class="row">
     <div class="ibox float-e-margins">
         <div class="ibox-content table-responsive">
@@ -53,48 +44,49 @@
 </div>
 
 <p>
-    <a href="/Diary">
+    <a href="/Diary/Index?IdToOpen=@archivedDiaryId&isArchived=true">
         <i class="fa fa-arrow-left"></i>
         Обратно в дневници
     </a>
 </p>
 
 <script>
-    Tables.CreateTable("#ArchivedProductsTable", {
-        order: [],
-        lengthChange: false,
-        selectable: false,
-        paging: true,
-        pageLength: 10,
-        "language": {
-            "paginate": {
-                "previous": "Назад",
-                "next": "Напред"
+    $(document).ready(function () {
+        Tables.CreateTable("#ArchivedProductsTable", {
+            order: [],
+            lengthChange: false,
+            selectable: false,
+            paging: true,
+            pageLength: 10,
+            "language": {
+                "paginate": {
+                    "previous": "Назад",
+                    "next": "Напред"
+                },
+                "zeroRecords": "Няма налични данни",
+                "info": "Показва _START_ до _END_ от _MAX_ записа",
+                "infoFiltered": "(филтрирани от общо _MAX_)",
+                "infoEmpty": "Няма открити данни"
             },
-            "zeroRecords": "Няма налични данни",
-            "info": "Показва _START_ до _END_ от _MAX_ записа",
-            "infoFiltered": "(филтрирани от общо _MAX_)",
-            "infoEmpty": "Няма открити данни"
-        },
-        ajaxData: { archivedDiaryId: '@archivedDiaryId' },
-        ajax: {
-            type: "POST",
-            url: "/ArchivedDiary/GetProducts",
-        },
-        columns: [
-            { "data": "Number" },
-            { "data": "Name" },
-            { "data": "Quantity" },
-            { "data": "ArchivedProductsCount" },
-            { "data": "Id" },
-        ],
-        columnDefs: [
-            {
-                targets: -1,
-                width: "25%",
-                sortable: false,
-                render: function (data, type, row) {
-                    return '<a href="/ArchivedDiary/EditProduct?id=' + data + '">\
+            ajaxData: { archivedDiaryId: '@archivedDiaryId' },
+            ajax: {
+                type: "POST",
+                url: "/ArchivedDiary/GetProducts",
+            },
+            columns: [
+                { "data": "Number" },
+                { "data": "Name" },
+                { "data": "Quantity" },
+                { "data": "ArchivedProductsCount" },
+                { "data": "Id" },
+            ],
+            columnDefs: [
+                {
+                    targets: -1,
+                    width: "25%",
+                    sortable: false,
+                    render: function (data, type, row) {
+                        return '<a href="/ArchivedDiary/EditProduct?id=' + data + '">\
                                 <i class="fa fa-edit"></i>\
                                 Промени\
                             </a>|\
@@ -102,10 +94,11 @@
                                 <i class="fa fa-trash"></i>\
                                 Изтрий\
                             </a>'
-                },
-                class: "text-center"
-            }
-        ]
+                    },
+                    class: "text-center"
+                }
+            ]
+        });
     });
 
     function Delete(btn) {
