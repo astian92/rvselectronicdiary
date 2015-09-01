@@ -93,6 +93,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="3500" Nullable="false" />
+          <Property Name="AcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <EntityType Name="ArchivedProtocolResults">
           <Key>
@@ -195,6 +196,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RemarkId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Number" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Remarks">
@@ -470,6 +472,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProtocolsRemarks_AcredetationLevels">
+          <End Role="AcredetationLevels" Type="Self.AcredetationLevels" Multiplicity="1" />
+          <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcredetationLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolsRemarks">
+              <PropertyRef Name="AcredetationLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProtocolsRemarks_Protocols">
           <End Role="Protocols" Type="Self.Protocols" Multiplicity="1" />
           <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
@@ -670,6 +684,10 @@
           <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
             <End Role="Requests" EntitySet="Requests" />
             <End Role="Protocols" EntitySet="Protocols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProtocolsRemarks_AcredetationLevels" Association="Self.FK_ProtocolsRemarks_AcredetationLevels">
+            <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />
+            <End Role="ProtocolsRemarks" EntitySet="ProtocolsRemarks" />
           </AssociationSet>
           <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="Self.FK_ProtocolsRemarks_Protocols">
             <End Role="Protocols" EntitySet="Protocols" />
@@ -1084,7 +1102,6 @@
             <End Role="TestCategories" EntitySet="TestCategories" />
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
-          <EntitySet Name="ArchivedProtocolRemarks" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" />
           <EntitySet Name="Protocols" EntityType="DB_9BCA69_RedDbModel.Protocol" />
           <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
             <End Role="Protocol" EntitySet="Protocols" />
@@ -1113,24 +1130,11 @@
             <End Role="Request" EntitySet="Requests" />
           </AssociationSet>
           <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
-          <AssociationSet Name="FK_ArchivedProtocolRemarks_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary">
-            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-            <End Role="ArchivedProtocolRemark" EntitySet="ArchivedProtocolRemarks" />
-          </AssociationSet>
           <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
             <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
             <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
           </AssociationSet>
-          <EntitySet Name="ProtocolsRemarks" EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" />
           <EntitySet Name="Remarks" EntityType="DB_9BCA69_RedDbModel.Remark" />
-          <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols">
-            <End Role="Protocol" EntitySet="Protocols" />
-            <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProtocolsRemarks_Remarks" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks">
-            <End Role="Remark" EntitySet="Remarks" />
-            <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
-          </AssociationSet>
           <EntitySet Name="ArchivedProducts" EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" />
           <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
             <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
@@ -1150,16 +1154,25 @@
             <End Role="ArchivedProductTest" EntitySet="ArchivedProductTests" />
             <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="ArchivedProtocolRemark">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
-          <Property Name="Remark" Type="String" Nullable="false" MaxLength="3500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedProtocolRemark" ToRole="ArchivedDiary" />
-        </EntityType>
+          <EntitySet Name="ProtocolsRemarks" EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" />
+          <AssociationSet Name="FK_ProtocolsRemarks_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels">
+            <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
+            <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols">
+            <End Role="Protocol" EntitySet="Protocols" />
+            <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProtocolsRemarks_Remarks" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks">
+            <End Role="Remark" EntitySet="Remarks" />
+            <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
+          </AssociationSet>
+          <EntitySet Name="ArchivedProtocolRemarks" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" />
+          <AssociationSet Name="FK_ArchivedProtocolRemarks_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary">
+            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+            <End Role="ArchivedProtocolRemark" EntitySet="ArchivedProtocolRemarks" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Protocol">
           <Key>
             <PropertyRef Name="Id" />
@@ -1300,22 +1313,10 @@
           <Property Name="ProtocolTester" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="ProtocolLabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
           <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
           <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
+          <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
         </EntityType>
-        <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
-          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" Role="ArchivedProtocolRemark" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ArchivedDiary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArchivedProtocolRemark">
-              <PropertyRef Name="ArchivedDiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
           <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
           <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
@@ -1328,17 +1329,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ProtocolsRemark">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
-          <Property Name="RemarkId" Type="Guid" Nullable="false" />
-          <Property Name="Number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="ProtocolsRemark" ToRole="Protocol" />
-          <NavigationProperty Name="Remark" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" FromRole="ProtocolsRemark" ToRole="Remark" />
-        </EntityType>
         <EntityType Name="Remark">
           <Key>
             <PropertyRef Name="Id" />
@@ -1347,30 +1337,6 @@
           <Property Name="Text" Type="String" Nullable="false" MaxLength="3500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" FromRole="Remark" ToRole="ProtocolsRemark" />
         </EntityType>
-        <Association Name="FK_ProtocolsRemarks_Protocols">
-          <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Protocol">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolsRemark">
-              <PropertyRef Name="ProtocolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProtocolsRemarks_Remarks">
-          <End Type="DB_9BCA69_RedDbModel.Remark" Role="Remark" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Remark">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolsRemark">
-              <PropertyRef Name="RemarkId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ArchivedProduct">
           <Key>
             <PropertyRef Name="Id" />
@@ -1403,6 +1369,7 @@
           <Property Name="Level" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="AcredetationLevel" ToRole="Test" />
+          <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" FromRole="AcredetationLevel" ToRole="ProtocolsRemark" />
         </EntityType>
         <EntityType Name="ArchivedProductTest">
           <Key>
@@ -1459,7 +1426,80 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="ProtocolsRemark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
+          <Property Name="RemarkId" Type="Guid" Nullable="false" />
+          <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" FromRole="ProtocolsRemark" ToRole="AcredetationLevel" />
+          <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="ProtocolsRemark" ToRole="Protocol" />
+          <NavigationProperty Name="Remark" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" FromRole="ProtocolsRemark" ToRole="Remark" />
+        </EntityType>
+        <Association Name="FK_ProtocolsRemarks_AcredetationLevels">
+          <End Type="DB_9BCA69_RedDbModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcredetationLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolsRemark">
+              <PropertyRef Name="AcredetationLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProtocolsRemarks_Protocols">
+          <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Protocol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolsRemark">
+              <PropertyRef Name="ProtocolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProtocolsRemarks_Remarks">
+          <End Type="DB_9BCA69_RedDbModel.Remark" Role="Remark" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remark">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolsRemark">
+              <PropertyRef Name="RemarkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ArchivedProtocolRemark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="3500" FixedLength="false" Unicode="true" />
+          <Property Name="AcredetationLevel" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedProtocolRemark" ToRole="ArchivedDiary" />
+        </EntityType>
+        <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
+          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" Role="ArchivedProtocolRemark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArchivedDiary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedProtocolRemark">
+              <PropertyRef Name="ArchivedDiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1639,15 +1679,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ArchivedProtocolRemarks">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
-              <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Protocols">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
               <MappingFragment StoreEntitySet="Protocols">
@@ -1706,16 +1737,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProtocolsRemarks">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
-              <MappingFragment StoreEntitySet="ProtocolsRemarks">
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
-                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Remarks">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
               <MappingFragment StoreEntitySet="Remarks">
@@ -1754,6 +1775,27 @@
                 <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
                 <ScalarProperty Name="TestName" ColumnName="TestName" />
                 <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProtocolsRemarks">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
+              <MappingFragment StoreEntitySet="ProtocolsRemarks">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
+                <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArchivedProtocolRemarks">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
+              <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
+                <ScalarProperty Name="AcredetationLevel" ColumnName="AcredetationLevel" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -88,6 +88,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="3500" Nullable="false" />
+    <Property Name="AcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedProtocolResults">
     <Key>
@@ -190,6 +191,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProtocolId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RemarkId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Number" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Remarks">
@@ -465,6 +467,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProtocolsRemarks_AcredetationLevels">
+    <End Role="AcredetationLevels" Type="Self.AcredetationLevels" Multiplicity="1" />
+    <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcredetationLevels">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolsRemarks">
+        <PropertyRef Name="AcredetationLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProtocolsRemarks_Protocols">
     <End Role="Protocols" Type="Self.Protocols" Multiplicity="1" />
     <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
@@ -665,6 +679,10 @@
     <AssociationSet Name="FK_Protocols_Requests" Association="Self.FK_Protocols_Requests">
       <End Role="Requests" EntitySet="Requests" />
       <End Role="Protocols" EntitySet="Protocols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolsRemarks_AcredetationLevels" Association="Self.FK_ProtocolsRemarks_AcredetationLevels">
+      <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />
+      <End Role="ProtocolsRemarks" EntitySet="ProtocolsRemarks" />
     </AssociationSet>
     <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="Self.FK_ProtocolsRemarks_Protocols">
       <End Role="Protocols" EntitySet="Protocols" />

@@ -17,6 +17,7 @@ namespace RED.Models.DataContext
         public AcredetationLevel()
         {
             this.Tests = new HashSet<Test>();
+            this.ProtocolsRemarks = new HashSet<ProtocolsRemark>();
         }
     
         public System.Guid Id { get; set; }
@@ -24,5 +25,6 @@ namespace RED.Models.DataContext
         public string Description { get; set; }
     
         public virtual ICollection<Test> Tests { get; set; }
+        public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
     }
 }

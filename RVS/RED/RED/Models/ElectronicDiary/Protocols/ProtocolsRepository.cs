@@ -83,10 +83,10 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
             db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
             protocol.ProtocolsRemarks.Clear();
-            foreach (var item in protocolW.ProtocolsRemarks)
-            {
-                protocol.ProtocolsRemarks.Add(item);
-            }
+            //foreach (var item in protocolW.ProtocolsRemarks)
+            //{
+            //    protocol.ProtocolsRemarks.Add(item);
+            //}
 
             protocol.Tester = protocolW.Tester;
             protocol.LabLeader = protocolW.LabLeader;

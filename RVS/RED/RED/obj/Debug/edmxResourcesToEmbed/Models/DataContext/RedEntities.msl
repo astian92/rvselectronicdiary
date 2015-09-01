@@ -175,15 +175,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedProtocolRemarks">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
-        <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
-          <ScalarProperty Name="Remark" ColumnName="Remark" />
-          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Protocols">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
         <MappingFragment StoreEntitySet="Protocols">
@@ -242,16 +233,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProtocolsRemarks">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
-        <MappingFragment StoreEntitySet="ProtocolsRemarks">
-          <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
-          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Remarks">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Remark">
         <MappingFragment StoreEntitySet="Remarks">
@@ -290,6 +271,27 @@
           <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
           <ScalarProperty Name="TestName" ColumnName="TestName" />
           <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProtocolsRemarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
+        <MappingFragment StoreEntitySet="ProtocolsRemarks">
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
+          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+          <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProtocolRemarks">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
+        <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
+          <ScalarProperty Name="AcredetationLevel" ColumnName="AcredetationLevel" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

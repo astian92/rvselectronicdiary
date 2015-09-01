@@ -120,46 +120,89 @@
                 @Html.ValidationMessageFor(m => m.LabLeader, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            <label for="RemarkId" class="control-label col-md-3">
-                Забележка:
-            </label>
-            <div class="col-md-9">
-                @Html.DropDownList("RemarkId", null, htmlAttributes: new { @class = "form-control chosen-select" })
+        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
+        {
+            <div class="form-group">
+                <label for="RemarkId" class="control-label col-md-3">
+                    Забележка (A):
+                </label>
+                <div class="col-md-9">
+                    @Html.DropDownList("RemarkId", null, htmlAttributes: new { @class = "form-control chosen-select a-remarksDd" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <input type="button" value="Добави" class="add-remark-btn btn btn-primary" tabindex="5" />
-                <table class="table table-hover remarks-list-table" style="margin-top:23px;">
-                    <tbody>
-                        @{ 
-                            int r = 0;
-                        }
-                        @foreach (var pRemark in Model.ProtocolsRemarks)
-                        {
-                            <tr>
-                                <td class="col-xs-1"><span class="label label-primary">Добавен</span></td>
-                                <td class="issue-info remark">
-                                    @pRemark.Remark.Text
-                                    <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarks[@r].RemarkId">
-                                    <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarks[@r].ProtocolId">
-                                    <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarks[@r].Id">
-                                </td>
-                                <td class="col-xs-1">
-                                    <a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a>
-                                </td>
-                            </tr>
-                            r++;
-                        }
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="button" value="Добави" class="add-a-remark-btn btn btn-primary" tabindex="5" />
+                    <table class="table table-hover remarks-a-list-table" style="margin-top:23px;">
+                        <tbody>
+                            @{ 
+                                int r = 0;
+                            }
+                            @foreach (var pRemark in Model.ProtocolsRemarksA)
+                            {
+                                <tr>
+                                    <td class="col-xs-1"><span class="label label-primary">Добавен</span></td>
+                                    <td class="issue-info remark">
+                                        @pRemark.Remark.Text
+                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarks[@r].RemarkId">
+                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarks[@r].ProtocolId">
+                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarks[@r].Id">
+                                    </td>
+                                    <td class="col-xs-1">
+                                        <a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a>
+                                    </td>
+                                </tr>
+                                r++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        }
+        
+        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
+        {
+            <div class="form-group">
+                <label for="RemarkId" class="control-label col-md-3">
+                    Забележка (B):
+                </label>
+                <div class="col-md-9">
+                    @Html.DropDownList("RemarkId", null, htmlAttributes: new { @class = "form-control chosen-select b-remarksDd" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="button" value="Добави" class="add-b-remark-btn btn btn-primary" tabindex="5" />
+                    <table class="table table-hover remarks-b-list-table" style="margin-top:23px;">
+                        <tbody>
+                            @{
+                                int r = 0;
+                            }
+                            @foreach (var pRemark in Model.ProtocolsRemarksB)
+                            {
+                                <tr>
+                                    <td class="col-xs-1"><span class="label label-primary">Добавен</span></td>
+                                    <td class="issue-info remark">
+                                        @pRemark.Remark.Text
+                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarks[@r].RemarkId">
+                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarks[@r].ProtocolId">
+                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarks[@r].Id">
+                                    </td>
+                                    <td class="col-xs-1">
+                                        <a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a>
+                                    </td>
+                                </tr>
+                                r++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
 
         <div class="form-group" style="margin-bottom: 60px;">
             <div class="col-md-offset-3 col-md-9">
-                <input type="submit" value="Запиши" class="btn btn-primary" />
+                <input type="submit" value="Запази" class="btn btn-primary" />
                 @Html.ActionLink("Отказ", "Index", "Protocols", null, new { @class = "btn btn-default" })
             </div>
         </div>

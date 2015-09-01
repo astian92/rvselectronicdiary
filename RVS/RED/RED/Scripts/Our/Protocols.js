@@ -19,8 +19,6 @@ var tabId = 'active-protocols';
 var url = '/Protocols/FilterActiveProtocols';
 var isActiveTab = true;
 
-
-
 $(document).ready(function () {
     $('.active-tab-btn').click(function () {
         ClearFilters();
@@ -116,19 +114,36 @@ $(document).ready(function () {
         })
     });
 
-    $('.add-remark-btn').click(function () {
-        var remarks = $('.remark');
-        var index = remarks.length;
+    $('.add-a-remark-btn').click(function () {
+        var aremarks = $('.a-remark');
+        var index = aremarks.length;
         var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
-            '<td class="issue-info remark">' +
-                $('#RemarkId option:selected').text() +
-                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarks[' + index + '].RemarkId">' +
-                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarks[' + index + '].ProtocolId">' +
-                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarks[' + index + '].Id">' +
+            '<td class="issue-info remark a-remark">' +
+                $('.a-remarksDd option:selected').text() +
+                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksA[' + index + '].RemarkId">' +
+                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksA[' + index + '].ProtocolId">' +
+                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksA[' + index + '].Id">' +
+                '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksA[' + index + '].Number">' +
                 '</td><td class="col-xs-1">' +
                 '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
 
-        $('.remarks-list-table tbody').append(content);
+        $('.remarks-a-list-table tbody').append(content);
+    });
+
+    $('.add-b-remark-btn').click(function () {
+        var bremarks = $('.b-remark');
+        var index = bremarks.length;
+        var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
+            '<td class="issue-info remark b-remark">' +
+                $('.b-remarksDd option:selected').text() +
+                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksB[' + index + '].RemarkId">' +
+                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksB[' + index + '].ProtocolId">' +
+                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksB[' + index + '].Id">' +
+                '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksB[' + index + '].Number">' +
+                '</td><td class="col-xs-1">' +
+                '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+
+        $('.remarks-b-list-table tbody').append(content);
     });
 });
 

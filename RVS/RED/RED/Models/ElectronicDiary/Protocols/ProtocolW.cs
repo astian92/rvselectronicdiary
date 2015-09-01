@@ -16,12 +16,15 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public ICollection<ProtocolResult> ProtocolResults { get; set; }
         public Request Request { get; set; }
-        public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        //public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        public ICollection<ProtocolsRemark> ProtocolsRemarksA { get; set; }
+        public ICollection<ProtocolsRemark> ProtocolsRemarksB { get; set; }
 
         public ProtocolW()
         {
             this.ProtocolResults = new List<ProtocolResult>();
-            this.ProtocolsRemarks = new List<ProtocolsRemark>();
+            this.ProtocolsRemarksA = new List<ProtocolsRemark>();
+            this.ProtocolsRemarksB = new List<ProtocolsRemark>();
         }
 
         public ProtocolW(Protocol protocol)
@@ -34,7 +37,8 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             this.ProtocolResults = protocol.ProtocolResults;
             this.Request = protocol.Request;
-            this.ProtocolsRemarks = protocol.ProtocolsRemarks;
+            this.ProtocolsRemarksA = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited).ToList();
+            this.ProtocolsRemarksB = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited).ToList();
         }
 
         public Protocol ToBase()
@@ -49,7 +53,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             protocol.ProtocolResults = this.ProtocolResults;
             protocol.Request = this.Request;
-            protocol.ProtocolsRemarks = this.ProtocolsRemarks;
+            protocol.ProtocolsRemarks = this.ProtocolsRemarksA.Union(this.ProtocolsRemarksB).ToList();
 
             return protocol;
         }
