@@ -1,25 +1,26 @@
-﻿var spinnerString = '<div class="ibox-content"> \
-                        <div class="spiner-example">\
-                            <div class="sk-spinner sk-spinner-cube-grid">\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                            </div>\
-                        </div>\
-                    </div>';
-
-var protocolIdToOpen;
+﻿var protocolIdToOpen;
 var tabId = 'active-protocols';
 var url = '/Protocols/FilterActiveProtocols';
 var isActiveTab = true;
 
 $(document).ready(function () {
+    $('.' + tabId).html(spiner);
+    $.ajax({
+        cache: false,
+        type: 'GET',
+        url: url,
+        data: {
+            page: 1, pageSize: PAGE_SIZE, number: -1
+        },
+        success: function (result) {
+            $('.' + tabId).html(result);
+        },
+        error: function () {
+            var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на активните протоколи</div>");
+            $('.' + tabId).html(errorMsg);
+        }
+    });
+
     $('.active-tab-btn').click(function () {
         ClearFilters();
         tabId = 'active-protocols';
@@ -29,14 +30,14 @@ $(document).ready(function () {
         $('.active-protocols').empty();
         $('.archived-protocols').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -64,14 +65,14 @@ $(document).ready(function () {
         $('.active-protocols').empty();
         $('.archived-protocols').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -94,7 +95,7 @@ $(document).ready(function () {
         $('.active-diaries').empty();
         $('.archived-diaries').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         var data = GetFilters();
         data.page = 1;
@@ -114,36 +115,19 @@ $(document).ready(function () {
         })
     });
 
-    $('.add-a-remark-btn').click(function () {
-        var aremarks = $('.a-remark');
-        var index = aremarks.length;
+    $('.add-remark-btn').click(function () {
+        var remarks = $('.remark');
+        var index = remarks.length;
         var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
-            '<td class="issue-info remark a-remark">' +
-                $('.a-remarksDd option:selected').text() +
-                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksA[' + index + '].RemarkId">' +
-                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksA[' + index + '].ProtocolId">' +
-                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksA[' + index + '].Id">' +
-                '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksA[' + index + '].Number">' +
+            '<td class="issue-info remark">' +
+                $('#RemarkId option:selected').text() +
+                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarks[' + index + '].RemarkId">' +
+                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarks[' + index + '].ProtocolId">' +
+                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarks[' + index + '].Id">' +
                 '</td><td class="col-xs-1">' +
                 '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
 
-        $('.remarks-a-list-table tbody').append(content);
-    });
-
-    $('.add-b-remark-btn').click(function () {
-        var bremarks = $('.b-remark');
-        var index = bremarks.length;
-        var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
-            '<td class="issue-info remark b-remark">' +
-                $('.b-remarksDd option:selected').text() +
-                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksB[' + index + '].RemarkId">' +
-                '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksB[' + index + '].ProtocolId">' +
-                '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksB[' + index + '].Id">' +
-                '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksB[' + index + '].Number">' +
-                '</td><td class="col-xs-1">' +
-                '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
-
-        $('.remarks-b-list-table tbody').append(content);
+        $('.remarks-list-table tbody').append(content);
     });
 });
 
@@ -162,7 +146,7 @@ function DeleteProtocol(btn) {
 }
 
 function GetFilters() {
-    var pageSize = 2;
+    var pageSize = PAGE_SIZE;
     var number = $('#ProtocolNumber').val();
     if (number == '') {
         number = -1;
@@ -187,7 +171,7 @@ function deleteRemark(e, number) {
 
     for (var i = 0; i < remarks.length; i++) {
         var remark = remarks[i];
-        
+
         $(remark).find('.remarkId').attr('name', "ProtocolsRemarks[" + i + "].RemarkId");
         $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarks[" + i + "].ProtocolId");
         $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarks[" + i + "].Id");

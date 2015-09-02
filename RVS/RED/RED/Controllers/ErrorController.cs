@@ -13,5 +13,10 @@ namespace RED.Controllers
             ViewBag.returnUrl = returnUrl;
             return View();
         }
+
+        public ActionResult ProductExpired()
+        {
+            return View();
+        }
     }
 }
