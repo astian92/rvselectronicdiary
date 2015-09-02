@@ -138,18 +138,19 @@
                             @{ 
                                 int r = 0;
                             }
-                            @foreach (var pRemark in Model.ProtocolsRemarksA)
+                            @foreach (var pRemark in Model.ProtocolsRemarksA.OrderBy(rem => rem.Number))
                             {
                                 <tr>
                                     <td class="col-xs-1"><span class="label label-primary">Добавен</span></td>
-                                    <td class="issue-info remark">
+                                    <td class="issue-info remark a-remark">
                                         @pRemark.Remark.Text
-                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarks[@r].RemarkId">
-                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarks[@r].ProtocolId">
-                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarks[@r].Id">
+                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarksA[@r].RemarkId">
+                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarksA[@r].ProtocolId">
+                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarksA[@r].Id">
+                                        <input class="remarkNumber" type="hidden" value="@pRemark.Number" name="ProtocolsRemarksA[@r].Number">
                                     </td>
                                     <td class="col-xs-1">
-                                        <a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a>
+                                        <a class="delete-remark" onclick="deleteRemarkA(this)"><h3 style="margin: 0px">x</h3></a>
                                     </td>
                                 </tr>
                                 r++;
@@ -178,18 +179,19 @@
                             @{
                                 int r = 0;
                             }
-                            @foreach (var pRemark in Model.ProtocolsRemarksB)
+                            @foreach (var pRemark in Model.ProtocolsRemarksB.OrderBy(rem => rem.Number))
                             {
                                 <tr>
                                     <td class="col-xs-1"><span class="label label-primary">Добавен</span></td>
-                                    <td class="issue-info remark">
+                                    <td class="issue-info remark b-remark">
                                         @pRemark.Remark.Text
-                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarks[@r].RemarkId">
-                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarks[@r].ProtocolId">
-                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarks[@r].Id">
+                                        <input class="remarkId" type="hidden" value="@pRemark.RemarkId" name="ProtocolsRemarksB[@r].RemarkId">
+                                        <input class="remarkProtocolId" type="hidden" value="@pRemark.ProtocolId" name="ProtocolsRemarksB[@r].ProtocolId">
+                                        <input class="remarkRowId" type="hidden" value="@pRemark.Id" name="ProtocolsRemarksB[@r].Id">
+                                        <input class="remarkNumber" type="hidden" value="@pRemark.Number" name="ProtocolsRemarksB[@r].Number">
                                     </td>
                                     <td class="col-xs-1">
-                                        <a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a>
+                                        <a class="delete-remark" onclick="deleteRemarkB(this)"><h3 style="margin: 0px">x</h3></a>
                                     </td>
                                 </tr>
                                 r++;

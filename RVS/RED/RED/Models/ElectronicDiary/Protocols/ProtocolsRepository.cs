@@ -83,10 +83,18 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
             db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
             protocol.ProtocolsRemarks.Clear();
-            //foreach (var item in protocolW.ProtocolsRemarks)
-            //{
-            //    protocol.ProtocolsRemarks.Add(item);
-            //}
+            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.Acredited);
+            foreach (var item in protocolW.ProtocolsRemarksA)
+            {
+                item.AcredetationLevelId = acreditedLevel.Id;
+                protocol.ProtocolsRemarks.Add(item);
+            }
+            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
+            foreach (var item in protocolW.ProtocolsRemarksB)
+            {
+                item.AcredetationLevelId = notAcreditedLevel.Id;
+                protocol.ProtocolsRemarks.Add(item);
+            }
 
             protocol.Tester = protocolW.Tester;
             protocol.LabLeader = protocolW.LabLeader;

@@ -54,8 +54,8 @@
                                     @{
                                         var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited);
                                     }
-                                        
-                                    @if(acredited.Count() > 0)
+
+                                    @if (acredited.Count() > 0)
                                     {
                                         <tr>
                                             <td colspan="5">
@@ -65,9 +65,9 @@
                                                 <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=A">Изтегли протокол</a>
                                             </td>
                                         </tr>
-                                        
+
                                         var orderedAcreditedResults = acredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
-                                        
+
                                         foreach (var result in orderedAcreditedResults)
                                         {
                                             <tr>
@@ -83,7 +83,42 @@
                                         }
                                     }
 
+                                </table>
+                            </div>
 
+                            <div class="row" style="margin-bottom: 20px;">
+                                <div class="col-xs-12">
+                                    <h4 class="text-center">Забележки</h4>
+                                    <ul>
+                                        @foreach (var pRemark in item.ProtocolsRemarksA.OrderBy(rem => rem.Number))
+                                        {
+                                            <li><p>@pRemark.Remark.Text</p></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Наименувание на показателя
+                                        </th>
+                                        <th>
+                                            Методи
+                                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
+                                        </th>
+                                        <th>
+                                            № на образеца
+                                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                        </th>
+                                        <th>Резултати от изследването, неопределеност</th>
+                                        <th>
+                                            Стойност на показателя
+                                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
+                                        </th>
+                                        <th>Условия на заобикалящата среда</th>
+                                    </tr>
                                     @{
                                         var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited);
                                     }
@@ -98,7 +133,7 @@
                                                 <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=B">Изтегли протокол</a>
                                             </td>
                                         </tr>
-                                        
+
                                         var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
 
                                         foreach (var result in orderedNotAcreditedResults)
@@ -122,11 +157,11 @@
                                 <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
                                 <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 20px;">
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
                                     <ul>
-                                        @foreach (var pRemark in item.ProtocolsRemarksA)
+                                        @foreach (var pRemark in item.ProtocolsRemarksB.OrderBy(rem => rem.Number))
                                         {
                                             <li><p>@pRemark.Remark.Text</p></li>
                                         }
@@ -136,20 +171,21 @@
 
                             @if (principal.IsAuthorize("b3a0ca2d-428d-4f12-8b93-fc227350fc2c"))
                             {
-                            <div class="row">
-                                <div class="text-right">
-                                    <a class="btn btn-primary" href="/Protocols/Edit?protocolId=@item.Id">
-                                        <i class="fa fa-edit"></i>
-                                        Промени
-                                    </a>
-                                    <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal" onclick="DeleteProtocol(this)">
-                                        <i class="fa fa-trash"></i>
-                                        Изтрий
-                                    </a>
+                                <div class="row">
+                                    <div class="text-right">
+                                        <a class="btn btn-primary" href="/Protocols/Edit?protocolId=@item.Id">
+                                            <i class="fa fa-edit"></i>
+                                            Промени
+                                        </a>
+                                        <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal" onclick="DeleteProtocol(this)">
+                                            <i class="fa fa-trash"></i>
+                                            Изтрий
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
                             }
                         </div>
+
                     </div>
                 </div>
             </div>

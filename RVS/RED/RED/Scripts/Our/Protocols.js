@@ -120,12 +120,12 @@ $(document).ready(function () {
         var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
             '<td class="issue-info remark a-remark">' +
                 $('.a-remarksDd option:selected').text() +
-                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksA[' + index + '].RemarkId">' +
+                '<input class="remarkId" type="hidden" value="' + $('.a-remarksDd').val() + '" name="ProtocolsRemarksA[' + index + '].RemarkId">' +
                 '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksA[' + index + '].ProtocolId">' +
                 '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksA[' + index + '].Id">' +
                 '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksA[' + index + '].Number">' +
                 '</td><td class="col-xs-1">' +
-                '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+                '<a class="delete-remark" onclick="deleteRemarkA(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
 
         $('.remarks-a-list-table tbody').append(content);
     });
@@ -136,12 +136,12 @@ $(document).ready(function () {
         var content = '<tr><td class="col-xs-1"><span class="label label-primary">Добавен</span></td>' +
             '<td class="issue-info remark b-remark">' +
                 $('.b-remarksDd option:selected').text() +
-                '<input class="remarkId" type="hidden" value="' + $('#RemarkId').val() + '" name="ProtocolsRemarksB[' + index + '].RemarkId">' +
+                '<input class="remarkId" type="hidden" value="' + $('.b-remarksDd').val() + '" name="ProtocolsRemarksB[' + index + '].RemarkId">' +
                 '<input class="remarkProtocolId" type="hidden" value="' + $('#protocolId').val() + '" name="ProtocolsRemarksB[' + index + '].ProtocolId">' +
                 '<input class="remarkRowId" type="hidden" value="' + guid() + '" name="ProtocolsRemarksB[' + index + '].Id">' +
                 '<input class="remarkNumber" type="hidden" value="' + (index + 1) + '" name="ProtocolsRemarksB[' + index + '].Number">' +
                 '</td><td class="col-xs-1">' +
-                '<a class="delete-remark" onclick="deleteRemark(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+                '<a class="delete-remark" onclick="deleteRemarkB(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
 
         $('.remarks-b-list-table tbody').append(content);
     });
@@ -180,17 +180,35 @@ function ClearFilters() {
     $('#toDate').val('');
 }
 
-function deleteRemark(e, number) {
+function deleteRemarkA(e, number) {
     $(e).parent().parent().remove();
 
-    var remarks = $('.remark');
+    var remarks = $('.a-remark');
 
     for (var i = 0; i < remarks.length; i++) {
         var remark = remarks[i];
         
-        $(remark).find('.remarkId').attr('name', "ProtocolsRemarks[" + i + "].RemarkId");
-        $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarks[" + i + "].ProtocolId");
-        $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarks[" + i + "].Id");
+        $(remark).find('.remarkId').attr('name', "ProtocolsRemarksA[" + i + "].RemarkId");
+        $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarksA[" + i + "].ProtocolId");
+        $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarksA[" + i + "].Id");
+        $(remark).find('.remarkNumber').attr('name', "ProtocolsRemarksA[" + i + "].Number");
+        $(remark).find('.remarkNumber').val(i + 1);
+    }
+}
+
+function deleteRemarkB(e, number) {
+    $(e).parent().parent().remove();
+
+    var remarks = $('.b-remark');
+
+    for (var i = 0; i < remarks.length; i++) {
+        var remark = remarks[i];
+
+        $(remark).find('.remarkId').attr('name', "ProtocolsRemarksB[" + i + "].RemarkId");
+        $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarksB[" + i + "].ProtocolId");
+        $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarksB[" + i + "].Id");
+        $(remark).find('.remarkNumber').attr('name', "ProtocolsRemarksB[" + i + "].Number");
+        $(remark).find('.remarkNumber').val(i + 1);
     }
 }
 
