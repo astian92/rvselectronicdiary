@@ -111,8 +111,8 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active active-diaries">
-                    @{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
-                    number = -1, diaryNumber = -1, client = Guid.Empty }); }
+                    @*@{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
+                    number = -1, diaryNumber = -1, client = Guid.Empty }); }*@
                 </div>
 
                 <div id="tab-2" class="tab-pane archived-diaries">
@@ -162,7 +162,7 @@
         autoclose: true
     });
 
-    $(document).ready(function () {
+    @*$(document).ready(function () {
         diaryIdtoOpen = '@(ViewBag.IdToOpen)';
 
         if (isArchived) {
@@ -172,7 +172,7 @@
         else {
             $('.active-tab-btn').click(); //- no need it gets called by default in the view !
         }
-    });
+    });*@
 </script>
 
 @*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">

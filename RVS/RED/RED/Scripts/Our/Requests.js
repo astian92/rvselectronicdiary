@@ -1,25 +1,25 @@
-﻿var spinnerString = '<div class="ibox-content"> \
-                        <div class="spiner-example">\
-                            <div class="sk-spinner sk-spinner-cube-grid">\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                            </div>\
-                        </div>\
-                    </div>';
-
-
-var requestIdToOpen;
-var tabId = 'not-accepted-tab-btn';
-var url = '/Requests/GetNotAcceptedRequests';
+﻿var requestIdToOpen;
+var tabId = 'not-accepted-requests';
+var url = '/Requests/FilterNotAcceptedRequests';
 
 $(document).ready(function () {
+    $('.' + tabId).html(spiner);
+    $.ajax({
+        cache: false,
+        type: 'POST',
+        url: url,
+        data: {
+            page: 1, pageSize: PAGE_SIZE, number: -1
+        },
+        success: function (result) {
+            $('.' + tabId).html(result);
+        },
+        error: function () {
+            var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+            $('.' + tabId).html(errorMsg);
+        }
+    });
+
     $('.not-accepted-tab-btn').click(function () {
         ClearFilters();
         tabId = 'not-accepted-requests';
@@ -30,14 +30,14 @@ $(document).ready(function () {
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'POST',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -50,7 +50,7 @@ $(document).ready(function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
                 $('.' + tabId).html(errorMsg);
             }
-        })
+        });
     });
 
     $('.accepted-tab-btn').click(function () {
@@ -63,14 +63,14 @@ $(document).ready(function () {
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -83,7 +83,7 @@ $(document).ready(function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
                 $('.' + tabId).html(errorMsg);
             }
-        })
+        });
     });
 
     $('.my-requests-tab-btn').click(function () {
@@ -96,14 +96,14 @@ $(document).ready(function () {
         $('.completed-requests').empty();
         $('.archived-requests').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -116,7 +116,7 @@ $(document).ready(function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
                 $('.' + tabId).html(errorMsg);
             }
-        })
+        });
     });
 
     $('.completed-tab-btn').click(function () {
@@ -129,14 +129,14 @@ $(document).ready(function () {
         $('.my-requests').empty();
         $('.archived-requests').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -145,7 +145,7 @@ $(document).ready(function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
                 $('.' + tabId).html(errorMsg);
             }
-        })
+        });
     });
 
     $('.archived-tab-btn').click(function () {
@@ -158,14 +158,14 @@ $(document).ready(function () {
         $('.my-requests').empty();
         $('.completed-requests').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -174,14 +174,14 @@ $(document).ready(function () {
                 var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
                 $('.' + tabId).html(errorMsg);
             }
-        })
+        });
     });
 
     $('#filter').click(function () {
         $('.active-diaries').empty();
         $('.archived-diaries').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         var data = GetFilters();
         data.page = 1;
@@ -191,7 +191,6 @@ $(document).ready(function () {
             type: 'POST',
             url: url,
             data: data,
-            data: { page: page, pageSize: pageSize, number: number, fromDate: fromDate, toDate: toDate },
             success: function (result) {
                 $('.' + tabId).html(result);
             },
@@ -266,7 +265,7 @@ function DenyRequest(btn) {
 }
 
 function GetFilters() {
-    var pageSize = 2;
+    var pageSize = PAGE_SIZE;
     var number = $('#RequestNumber').val();
     if (number == '') {
         number = -1;

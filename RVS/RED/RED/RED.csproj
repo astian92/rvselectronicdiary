@@ -193,6 +193,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Filters\BombFilter.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -459,8 +460,10 @@
     <Content Include="Images\favicon-32x32.png" />
     <Content Include="Images\favicon-96x96.png" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Scripts\jquery.shared.min.js" />
     <Content Include="Scripts\Our\CustomPagination.js" />
     <Content Include="Scripts\Our\Dashboard.js" />
+    <Content Include="Scripts\Our\Shared.js" />
     <Content Include="Scripts\plugins\clockpicker\clockpicker.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.js" />
     <Content Include="Scripts\plugins\DataTables-1.10.2\dataTables.autoFill.min.js" />
@@ -820,6 +823,7 @@
     <Content Include="Views\ArchivedDiary\CreateProtocolResult.cshtml" />
     <Content Include="Views\ArchivedDiary\EditProtocolResult.cshtml" />
     <Content Include="Views\ArchivedDiary\DeleteProtocolResult.cshtml" />
+    <Content Include="Views\Error\ProductExpired.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,25 +1,26 @@
-﻿var spinnerString = '<div class="ibox-content"> \
-                        <div class="spiner-example">\
-                            <div class="sk-spinner sk-spinner-cube-grid">\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                                <div class="sk-cube"></div>\
-                            </div>\
-                        </div>\
-                    </div>';
-
-var protocolIdToOpen;
+﻿var protocolIdToOpen;
 var tabId = 'active-protocols';
 var url = '/Protocols/FilterActiveProtocols';
 var isActiveTab = true;
 
 $(document).ready(function () {
+    $('.' + tabId).html(spiner);
+    $.ajax({
+        cache: false,
+        type: 'GET',
+        url: url,
+        data: {
+            page: 1, pageSize: PAGE_SIZE, number: -1
+        },
+        success: function (result) {
+            $('.' + tabId).html(result);
+        },
+        error: function () {
+            var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на активните протоколи</div>");
+            $('.' + tabId).html(errorMsg);
+        }
+    });
+
     $('.active-tab-btn').click(function () {
         ClearFilters();
         tabId = 'active-protocols';
@@ -29,14 +30,14 @@ $(document).ready(function () {
         $('.active-protocols').empty();
         $('.archived-protocols').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -64,14 +65,14 @@ $(document).ready(function () {
         $('.active-protocols').empty();
         $('.archived-protocols').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         $.ajax({
             cache: false,
             type: 'GET',
             url: url,
             data: {
-                page: 1, pageSize: 2, number: -1
+                page: 1, pageSize: PAGE_SIZE, number: -1
             },
             success: function (result) {
                 $('.' + tabId).html(result);
@@ -94,7 +95,7 @@ $(document).ready(function () {
         $('.active-diaries').empty();
         $('.archived-diaries').empty();
 
-        $('.' + tabId).html(spinnerString);
+        $('.' + tabId).html(spiner);
 
         var data = GetFilters();
         data.page = 1;
@@ -162,7 +163,7 @@ function DeleteProtocol(btn) {
 }
 
 function GetFilters() {
-    var pageSize = 2;
+    var pageSize = PAGE_SIZE;
     var number = $('#ProtocolNumber').val();
     if (number == '') {
         number = -1;
@@ -187,7 +188,7 @@ function deleteRemarkA(e, number) {
 
     for (var i = 0; i < remarks.length; i++) {
         var remark = remarks[i];
-        
+
         $(remark).find('.remarkId').attr('name', "ProtocolsRemarksA[" + i + "].RemarkId");
         $(remark).find('.remarkProtocolId').attr('name', "ProtocolsRemarksA[" + i + "].ProtocolId");
         $(remark).find('.remarkRowId').attr('name', "ProtocolsRemarksA[" + i + "].Id");

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
-
+<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 <h2>Създай</h2>
 
 @using (Html.BeginForm()) 
@@ -57,7 +57,7 @@
         </div>
     </div>
 }
-
+<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
 <script>
     $('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green',
