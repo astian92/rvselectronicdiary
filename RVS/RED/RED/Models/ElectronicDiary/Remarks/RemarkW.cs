@@ -12,11 +12,11 @@ namespace RED.Models.ElectronicDiary.Remarks
         public Guid Id { get; set; }
         public string Text { get; set; }
 
-        public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        //public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
 
         public RemarkW()
         {
-            this.ProtocolsRemarks = new List<ProtocolsRemark>();
+            //this.ProtocolsRemarks = new List<ProtocolsRemark>();
         }
 
         public RemarkW(Remark remark)
@@ -24,7 +24,7 @@ namespace RED.Models.ElectronicDiary.Remarks
             this.Id = remark.Id;
             this.Text = remark.Text;
 
-            this.ProtocolsRemarks = remark.ProtocolsRemarks;
+            //this.ProtocolsRemarks = remark.ProtocolsRemarks;
         }
 
         public Remark ToBase()
@@ -33,7 +33,7 @@ namespace RED.Models.ElectronicDiary.Remarks
             remark.Id = this.Id;
             remark.Text = this.Text;
 
-            remark.ProtocolsRemarks = remark.ProtocolsRemarks;
+            //remark.ProtocolsRemarks = remark.ProtocolsRemarks;
 
             return remark;
         }

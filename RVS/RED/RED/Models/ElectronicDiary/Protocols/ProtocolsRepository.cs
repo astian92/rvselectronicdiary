@@ -56,6 +56,17 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public void Create(ProtocolW protocolW)
         {
+            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.Acredited);
+            foreach (var remark in protocolW.ProtocolsRemarksA)
+            {
+                remark.AcredetationLevelId = acreditedLevel.Id;
+            }
+            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
+            foreach (var remark in protocolW.ProtocolsRemarksB)
+            {
+                remark.AcredetationLevelId = notAcreditedLevel.Id;
+            }
+
             var protocol = protocolW.ToBase();
             protocol.IssuedDate = DateTime.Now.ToUniversalTime();
             db.Protocols.Add(protocol);
@@ -87,12 +98,18 @@ namespace RED.Models.ElectronicDiary.Protocols
             foreach (var item in protocolW.ProtocolsRemarksA)
             {
                 item.AcredetationLevelId = acreditedLevel.Id;
+                //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
+                //needed inside the protocol generating
+                item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId); 
                 protocol.ProtocolsRemarks.Add(item);
             }
             var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
             foreach (var item in protocolW.ProtocolsRemarksB)
             {
                 item.AcredetationLevelId = notAcreditedLevel.Id;
+                //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
+                //needed inside the protocol generating
+                item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId);
                 protocol.ProtocolsRemarks.Add(item);
             }
 

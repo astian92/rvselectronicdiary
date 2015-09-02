@@ -9,6 +9,7 @@
     var user = principal.GetUserData();
 }
 
+<link href="~/Content/Our/RemarksTextAreasStyle.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
@@ -73,7 +74,7 @@
                 url: "/Remarks/GetRemarks",
             },
             columns: [
-                { "data": "Text" },
+                { "data": "Text", "class": "multilineText" },
                 @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
             {
                 <text>

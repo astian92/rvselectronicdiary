@@ -129,7 +129,9 @@ namespace RED.Models.FileModels
         private void WriteProtocolReport(Protocol protocol, int diaryNumber, string category, IEnumerable<Product> products, Request request)
         {
             var model = new ReportModel();
-            
+
+            model.ReportParameters.Add("AcredetationLevel", category);
+
             model.ReportParameters.Add("ProtocolNumber", category + diaryNumber);
             model.ReportParameters.Add("ProtocolIssuedDate", protocol.IssuedDate);
             
@@ -151,6 +153,9 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("RequestDate", request.Date);
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
             model.ReportParameters.Add("Tester", protocol.Tester);
+
+            var remarks = protocol.ProtocolsRemarks.Where(r => r.AcredetationLevel.Level.Trim() == category);
+            model.ReportParameters.Add("Remarks", remarks);
 
             if (category == "A")
             {

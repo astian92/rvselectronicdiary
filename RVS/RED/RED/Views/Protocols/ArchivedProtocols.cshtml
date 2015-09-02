@@ -24,6 +24,13 @@
                             <div class="row">
                                 <h4 class="text-navy text-center">Протокол №: @item.ArchivedDiary.Number</h4>
                             </div>
+
+                            @{
+                                var acredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited);
+                            }
+
+                            @if (acredited.Count() > 0)
+                            {
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
@@ -45,12 +52,7 @@
                                         </th>
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
-                                    @{
-                                        var acredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited);
-                                    }
-
-                                    @if (acredited.Count() > 0)
-                                    {
+                                    
                                         <tr>
                                             <td colspan="5">
                                                 <b>Акредитирани (А):</b>
@@ -59,10 +61,12 @@
                                                 <a href="/Files/GetArchivedProtocolFile?archivedDiaryId=@(item.DiaryId)&category=A">Изтегли протокол</a>
                                             </td>
                                         </tr>
-                                        
-                                        var orderdProtocolRes = acredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
 
-                                        foreach (var result in orderdProtocolRes)
+                                        @{ 
+                                            var orderdProtocolRes = acredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                        }
+
+                                        @foreach (var result in orderdProtocolRes)
                                         {
                                             <tr>
                                                 <td>@result.ArchivedProductTest.TestName</td>
@@ -75,14 +79,50 @@
                                                 <td>@result.ArchivedProductTest.TestTemperature</td>
                                             </tr>
                                         }
-                                    }
-                                    
-                                    @{
-                                        var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited);
-                                    }
+                                </table>
+                            </div>
 
-                                    @if (notAcredited.Count() > 0)
-                                    {
+                            <div class="row" style="margin-bottom: 20px;">
+                                <div class="col-xs-12">
+                                    <h4 class="text-center">Забележки</h4>
+                                    <ul>
+                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcredetationLevels.Acredited))
+                                        {
+                                            <li><p>@pRemark.Remark</p></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            }
+
+                            @{
+                                var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited);
+                            }
+
+                            @if (notAcredited.Count() > 0)
+                            {
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Наименувание на показателя
+                                        </th>
+                                        <th>
+                                            Методи
+                                            <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
+                                        </th>
+                                        <th>
+                                            № на образеца
+                                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                        </th>
+                                        <th>Резултати от изследването, неопределеност</th>
+                                        <th>
+                                            Стойност на показателя
+                                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
+                                        </th>
+                                        <th>Условия на заобикалящата среда</th>
+                                    </tr>
+                                    
                                         <tr>
                                             <td colspan="5">
                                                 <b>Не акредитирани (Б):</b>
@@ -92,41 +132,46 @@
                                             </td>
                                         </tr>
 
+                                    @{
                                         var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                    }
 
-                                        foreach (var result in orderedNotAcreditedResults)
-                                        {
-                                            <tr>
-                                                <td>@result.ArchivedProductTest.TestName</td>
-                                                <td>@result.ArchivedProductTest.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
-                                                <td>@result.ArchivedProductTest.TestTemperature</td>
-                                            </tr>
-                                        }
+                                    @foreach (var result in orderedNotAcreditedResults)
+                                    {
+                                        <tr>
+                                            <td>@result.ArchivedProductTest.TestName</td>
+                                            <td>@result.ArchivedProductTest.TestMethods</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            <td>@result.MethodValue</td>
+                                            <td>@result.ArchivedProductTest.TestTemperature</td>
+                                        </tr>
                                     }
                                 </table>
                             </div>
 
-                            <div class="status-container">
-                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
-                                <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
-                            </div>
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 20px;">
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
                                     <ul>
-                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks)
+                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcredetationLevels.NotAcredited))
                                         {
                                             <li><p>@pRemark.Remark</p></li>
                                         }
                                     </ul>
                                 </div>
                             </div>
+                            }
+
+                            <div class="status-container">
+                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
+                                <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
+                            </div>
+                            
                         </div>
+
                     </div>
                 </div>
             </div>

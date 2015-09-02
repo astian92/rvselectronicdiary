@@ -378,6 +378,7 @@
     <Content Include="Content\Our\custom-pagination.css" />
     <Content Include="Content\Our\datatables-changes.css" />
     <Content Include="Content\Our\protocols.css" />
+    <Content Include="Content\Our\RemarksTextAreasStyle.css" />
     <Content Include="Content\Our\shared.css" />
     <Content Include="Content\Our\tabs-changes.css" />
     <Content Include="Content\patterns\congruent_pentagon.png" />

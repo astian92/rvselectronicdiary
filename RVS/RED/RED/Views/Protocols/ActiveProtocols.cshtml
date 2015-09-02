@@ -30,6 +30,12 @@
                             <div class="row">
                                 <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
                             </div>
+                            @{
+                                var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited);
+                            }
+
+                            @if (acredited.Count() > 0)
+                            {
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
@@ -51,12 +57,7 @@
                                         </th>
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
-                                    @{
-                                        var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited);
-                                    }
-
-                                    @if (acredited.Count() > 0)
-                                    {
+                                    
                                         <tr>
                                             <td colspan="5">
                                                 <b>Акредитирани (А):</b>
@@ -66,9 +67,10 @@
                                             </td>
                                         </tr>
 
-                                        var orderedAcreditedResults = acredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
-
-                                        foreach (var result in orderedAcreditedResults)
+                                        @{ 
+                                            var orderedAcreditedResults = acredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                        }
+                                        @foreach (var result in orderedAcreditedResults)
                                         {
                                             <tr>
                                                 <td>@result.ProductTest.Test.Name</td>
@@ -81,11 +83,8 @@
                                                 <td>@result.ProductTest.Test.Temperature</td>
                                             </tr>
                                         }
-                                    }
-
                                 </table>
                             </div>
-
                             <div class="row" style="margin-bottom: 20px;">
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
@@ -97,7 +96,14 @@
                                     </ul>
                                 </div>
                             </div>
+                            }
+                            
+                            @{
+                                var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited);
+                            }
 
+                            @if (notAcredited.Count() > 0)
+                            {
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
@@ -119,12 +125,7 @@
                                         </th>
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
-                                    @{
-                                        var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited);
-                                    }
-
-                                    @if (notAcredited.Count() > 0)
-                                    {
+                                   
                                         <tr>
                                             <td colspan="5">
                                                 <b>Не акредитирани (Б):</b>
@@ -134,9 +135,11 @@
                                             </td>
                                         </tr>
 
-                                        var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                        @{
+                                            var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                        }
 
-                                        foreach (var result in orderedNotAcreditedResults)
+                                        @foreach (var result in orderedNotAcreditedResults)
                                         {
                                             <tr>
                                                 <td>@result.ProductTest.Test.Name</td>
@@ -149,14 +152,9 @@
                                                 <td>@result.ProductTest.Test.Temperature</td>
                                             </tr>
                                         }
-                                    }
                                 </table>
                             </div>
 
-                            <div class="status-container">
-                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
-                                <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
-                            </div>
                             <div class="row" style="margin-bottom: 20px;">
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
@@ -167,6 +165,11 @@
                                         }
                                     </ul>
                                 </div>
+                            </div>
+                            }
+                            <div class="status-container">
+                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
+                                <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
 
                             @if (principal.IsAuthorize("b3a0ca2d-428d-4f12-8b93-fc227350fc2c"))

@@ -258,6 +258,7 @@ namespace RED.Models.ElectronicDiary
                     aremark.Id = Guid.NewGuid();
                     aremark.ArchivedDiaryId = archivedDiary.Id;
                     aremark.Remark = remark.Remark.Text;
+                    aremark.AcredetationLevel = remark.AcredetationLevel.Level;
 
                     db.ArchivedProtocolRemarks.Add(aremark);
                 }

@@ -6,6 +6,7 @@ using RED.Models.ReportGeneration.EPPlus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace RED.Models.FileModels.ProtocolFiles
@@ -24,6 +25,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             InsertMethodsAndQuantities();
             InsertLists();
             InsertTable();
+            InsertRemarks();
         }
 
         private void InsertMethodsAndQuantities()
@@ -199,6 +201,20 @@ namespace RED.Models.FileModels.ProtocolFiles
             Document.ReplaceText("#TESTER", tester);
 
             Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
+        }
+
+        private void InsertRemarks()
+        {
+            var remarks = ReportModel.ReportParameters["Remarks"] as IEnumerable<ProtocolsRemark>;
+
+            StringBuilder remarksText = new StringBuilder();
+
+            foreach (var remark in remarks.OrderBy(r => r.Number))
+            {
+                remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
+            }
+
+            Document.ReplaceText("#REMARKSLIST", remarksText.ToString());
         }
     }
 }
