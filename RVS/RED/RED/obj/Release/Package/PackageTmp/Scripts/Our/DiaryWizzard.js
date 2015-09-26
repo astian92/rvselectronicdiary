@@ -209,7 +209,3 @@ function hideQuantityValidation() {
         $('.product-quantity-validation').addClass('collapse');
     }
 }
-
-//$('.add-test-btn').on('click', function () {
-//    console.log(this);
-//});

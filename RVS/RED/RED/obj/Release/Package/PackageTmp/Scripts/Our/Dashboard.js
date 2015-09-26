@@ -1,5 +1,21 @@
-﻿$(document).ready(function () {
-    var url = '/Home/TestsReference'
+﻿var spiner = '<div class="spiner-example" style="height:auto; padding-top:0;">\
+                <div class="sk-spinner sk-spinner-cube-grid">\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                    <div class="sk-cube"></div>\
+                </div>\
+            </div>';
+
+$(document).ready(function () {
+    var url = '/Home/TestsReference';
+
+    $('.tests-reference').html(spiner);
     $.ajax({
         cache: false,
         type: 'POST',
@@ -15,6 +31,7 @@
     });
 
     $('.btn-daily').click(function () {
+        $('.tests-reference').html(spiner);
         $.ajax({
             cache: false,
             type: 'POST',
@@ -31,6 +48,7 @@
     });
 
     $('.btn-monthly').click(function () {
+        $('.tests-reference').html(spiner);
         $.ajax({
             cache: false,
             type: 'POST',
@@ -47,6 +65,7 @@
     });
 
     $('.btn-yearly').click(function () {
+        $('.tests-reference').html(spiner);
         $.ajax({
             cache: false,
             type: 'POST',

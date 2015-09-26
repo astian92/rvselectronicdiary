@@ -1,23 +1,26 @@
-﻿var spiner = '<div class="spiner-example" style="height:auto; padding-top:0;">\
-                <div class="sk-spinner sk-spinner-cube-grid">\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                    <div class="sk-cube"></div>\
-                </div>\
-            </div>';
-
-var diaryIdtoOpen;
+﻿var diaryIdtoOpen;
 var tabId = 'active-diaries';
 var url = '/Diary/FilterActiveDiaries';
 var isActiveTab = true;
 
 $(document).ready(function () {
+    $('.' + tabId).html(spiner);
+    $.ajax({
+        cache: false,
+        type: 'POST',
+        data: {
+            page: 1, pageSize: PAGE_SIZE, number: -1,
+            diaryNumber: -1, client: "00000000-0000-0000-0000-000000000000"
+        },
+        url: url,
+        success: function (result) {
+            $('.' + tabId).html(result);
+        },
+        error: function () {
+            var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на дневниците</div>");
+            $('.' + tabId).html(errorMsg);
+        }
+    });
 
     $('.active-tab-btn').click(function () {
         ClearFilters();
@@ -33,7 +36,7 @@ $(document).ready(function () {
             cache: false,
             type: 'POST',
             data: {
-                page: 1, pageSize: 2, number: -1,
+                page: 1, pageSize: PAGE_SIZE, number: -1,
                 diaryNumber: -1, client: "00000000-0000-0000-0000-000000000000"
             },
             url: url,
@@ -65,7 +68,7 @@ $(document).ready(function () {
             cache: false,
             type: 'POST',
             data: {
-                page: 1, pageSize: 2, number: -1,
+                page: 1, pageSize: PAGE_SIZE, number: -1,
                 diaryNumber: -1, client: "Всички"
             },
             url: '/Diary/FilterArchivedDiaries',
@@ -91,7 +94,7 @@ $(document).ready(function () {
 
         var data = GetFilters();
         data.page = 1;
-        
+
         $.ajax({
             cache: false,
             type: 'POST',
@@ -109,7 +112,7 @@ $(document).ready(function () {
 });
 
 function GetFilters() {
-    var pageSize = 2;
+    var pageSize = PAGE_SIZE;
     var number = $('#LetterNumber').val();
     if (number == '') {
         number = -1;
@@ -166,6 +169,6 @@ function ArchiveDiary(btn) {
         }
 
     });
-    
+
     return false;
 }

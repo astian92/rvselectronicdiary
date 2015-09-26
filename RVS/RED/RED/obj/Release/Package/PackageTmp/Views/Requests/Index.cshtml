@@ -24,11 +24,11 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="ibox-content" style="display: block;">
+    <div class="ibox-content" style="display: none;">
         <div class="row">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label class="col-md-2 no-padding">Заявка №:</label>
+                    <label class="no-padding">Заявка №:</label>
                     <input class="form-control text-box single-line" data-val="true"
                             data-val-range-min="0" data-val-range-max="2147483647"
                             id="RequestNumber" type="number" value="">
@@ -88,12 +88,12 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active not-accepted-requests">
-                    @{ Html.RenderAction("FilterNotAcceptedRequests", new
+                    @*@{ Html.RenderAction("FilterNotAcceptedRequests", new
                        {
                             page = 1,
                             pageSize = 2,
                             number = -1
-                       }); }
+                       }); }*@
                 </div>
 
                 <div id="tab-2" class="tab-pane accepted-requests">

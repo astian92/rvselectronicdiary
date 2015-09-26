@@ -1,0 +1,91 @@
+﻿@model RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProtocolResultW
+
+<h2>Добави</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Резултат</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <input type="hidden" name="ArchivedDiaryId" value="@ViewBag.ADiaryId" />
+        <input type="hidden" name="ArchivedProductTestId" value="@ViewBag.AProductTestId" />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResultNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ResultNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ResultNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Results, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.Results, new {  @class = "form-control tarea" })
+                @Html.ValidationMessageFor(model => model.Results, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus()" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees()" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="MethodValue" class="control-label col-md-3">
+                Стойност на показателя
+                <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
+            </label>
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.MethodValue, new { @class = "form-control tarea" })
+                @Html.ValidationMessageFor(model => model.MethodValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinusToMethodValue()" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegreesToMethodValue()" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <a href="/ArchivedDiary/ProtocolResultsIndex?aproductTestId=@ViewBag.AProductTestId" class="btn btn-default">Отказ</a>
+                <input type="submit" value="Създай" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function addPlusMinus() {
+        var value = $('#Results').val();
+        value += '±';
+        $('#Results').val(value);
+    }
+
+    function addDegrees() {
+        var value = $('#Results').val();
+        value += '°';
+        $('#Results').val(value);
+    }
+
+    function addPlusMinusToMethodValue() {
+        var value = $('#MethodValue').val();
+        value += '±';
+        $('#MethodValue').val(value);
+    }
+
+    function addDegreesToMethodValue() {
+        var value = $('#MethodValue').val();
+        value += '°';
+        $('#MethodValue').val(value);
+    }
+</script>

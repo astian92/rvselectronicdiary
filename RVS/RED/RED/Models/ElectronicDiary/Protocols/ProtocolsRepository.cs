@@ -60,11 +60,13 @@ namespace RED.Models.ElectronicDiary.Protocols
             foreach (var remark in protocolW.ProtocolsRemarksA)
             {
                 remark.AcredetationLevelId = acreditedLevel.Id;
+                remark.Remark = db.Remarks.Single(r => r.Id == remark.RemarkId);
             }
             var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
             foreach (var remark in protocolW.ProtocolsRemarksB)
             {
                 remark.AcredetationLevelId = notAcreditedLevel.Id;
+                remark.Remark = db.Remarks.Single(r => r.Id == remark.RemarkId);
             }
 
             var protocol = protocolW.ToBase();

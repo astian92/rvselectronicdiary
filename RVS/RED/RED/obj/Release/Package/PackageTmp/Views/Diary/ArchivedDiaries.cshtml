@@ -92,7 +92,7 @@
 
                             <div class="row" style="margin-bottom:20px;">
                                 <div class="col-md-6">
-                                    <h5>Срок на изпитване (дни): <strong></strong></h5>
+                                    <h5>Срок на изпитване (дни): <strong>@item.RequestTestingPeriod</strong></h5>
 
                                     <div class="status-container">
                                         <h5>Приел пробата: <strong>@item.RequestAcceptedBy</strong></h5>
@@ -120,6 +120,16 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="row">
+                                <div class="text-right">
+                                    <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
+                                        <i class="fa fa-edit"></i>
+                                        Промени
+                                    </a>
+                                    @*<a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-trash"></i>
+                                        Изтрий
+                                    </a>*@
+                                </div>
                                 @*@if (item. == null || !item.Request.IsAccepted)
                                 {
                                     <div class="text-right">

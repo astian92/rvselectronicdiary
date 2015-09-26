@@ -211,7 +211,8 @@ namespace RED.Models.FileModels.ProtocolFiles
 
             foreach (var remark in remarks.OrderBy(r => r.Number))
             {
-                remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
+                if(remark.Remark != null)
+                    remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
             }
 
             Document.ReplaceText("#REMARKSLIST", remarksText.ToString());

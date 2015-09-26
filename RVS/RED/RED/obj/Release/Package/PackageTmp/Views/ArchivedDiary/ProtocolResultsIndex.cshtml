@@ -1,0 +1,115 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedWrappers.ArchivedProtocolResultW>
+
+@{
+    ViewBag.Title = "Резултати";
+    var aproductTestId = ViewBag.ArchivedProductTestId;
+}
+
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
+<h2>Резултати за изследване @ViewBag.AProductTestName</h2>
+
+<p>
+    <a href="/ArchivedDiary/CreateProtocolResult?aproductTestId=@aproductTestId">
+        <i class="fa fa-plus"></i>
+        Добави резултат
+    </a>
+</p>
+
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="ArchivedProtocolResultsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Резултати от изследването</th>
+                        <th>Стойност на показателя</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a href="/ArchivedDiary/EditProductTest?aproductTestId=@aproductTestId">
+        <i class="fa fa-arrow-left"></i>
+        Обратнo
+    </a>
+</p>
+
+<script>
+    $(document).ready(function () {
+        Tables.CreateTable("#ArchivedProtocolResultsTable", {
+            order: [],
+            lengthChange: false,
+            selectable: false,
+            paging: true,
+            pageLength: 10,
+            "language": {
+                "paginate": {
+                    "previous": "Назад",
+                    "next": "Напред"
+                },
+                "zeroRecords": "Няма налични данни",
+                "info": "Показва _START_ до _END_ от _MAX_ записа",
+                "infoFiltered": "(филтрирани от общо _MAX_)",
+                "infoEmpty": "Няма открити данни"
+            },
+            ajaxData: { aproductTestId: '@aproductTestId' },
+            ajax: {
+                type: "POST",
+                url: "/ArchivedDiary/GetProtocolResults",
+            },
+            columns: [
+                { "data": "ResultNumber" },
+                { "data": "Results" },
+                { "data": "MethodValue" },
+                { "data": "Id" },
+            ],
+            columnDefs: [
+                {
+                    targets: -1,
+                    width: "20%",
+                    sortable: false,
+                    render: function (data, type, row) {
+                        return '<a href="/ArchivedDiary/EditProtocolResult?aprotocolResultId=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                    },
+                    class: "text-center"
+                }
+            ]
+        });
+    });
+
+    function Delete(btn) {
+        var id = $(btn).attr('href');
+        var url = '/ArchivedDiary/DeleteProtocolResult?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+    }
+</script>

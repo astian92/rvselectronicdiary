@@ -87,7 +87,7 @@
                 width: "25%",
                 sortable: false,
                 render: function (data, type, row) {
-                    return '<a href="/Roles/Edit?id=' + data + '">\
+                    return '<a href="/Tests/EditCategory?id=' + data + '">\
                                 <i class="fa fa-edit"></i>\
                                 Промени\
                             </a>|\
@@ -104,7 +104,6 @@
     });
 
     function Delete(btn) {
-        alert("Marto categories");
         var id = $(btn).attr('href');
         var url = '/Tests/DeleteCategory?id=' + id;
         $.ajax({

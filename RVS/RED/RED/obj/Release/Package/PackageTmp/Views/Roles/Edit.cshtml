@@ -1,9 +1,9 @@
 ﻿@model RED.Models.Admin.Roles.RoleW
-
+@using RED.Models.DataContext
 @{
     ViewBag.Title = "Edit";
 }
-
+<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 <h2>Промени</h2>
 
 @using (Html.BeginForm())
@@ -25,13 +25,29 @@
         </div>
         <div class="form-group">
             <div class="col-md-11 col-md-offset-1">
-                @foreach (var item in ViewBag.Features)
-                {
-                    <div class="col-lg-4 col-md-6 border-left-right" style="padding:15px;">
-                        <input type="checkbox" value="@item.Id" name="features" class="i-checks" @(Model.Connections.Any(x => x.FeatureId == item.Id) ? "checked" : "") />
-                        <span class="m-l-xs">@item.DisplayName</span>
-                    </div>
+                @{
+                    var features = ViewBag.Features as List<Feature>;
+                    var visualFeatures = features.Where(x => x.DisplayName.Contains("Визуализация"));
+                    var editFeatures = features.Where(x => x.DisplayName.Contains("Обработка"));
                 }
+                <div class="col-md-6 border-left-right">
+                    @foreach (var item in visualFeatures)
+                    {
+                        <div style="padding:15px;">
+                            <input type="checkbox" value="@item.Id" name="features" class="i-checks" @(Model.Connections.Any(x => x.FeatureId == item.Id) ? "checked" : "") />
+                            <span class="m-l-xs">@item.DisplayName</span>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6 border-left-right">
+                    @foreach (var item in editFeatures)
+                    {
+                        <div style="padding:15px;">
+                            <input type="checkbox" value="@item.Id" name="features" class="i-checks" @(Model.Connections.Any(x => x.FeatureId == item.Id) ? "checked" : "") />
+                            <span class="m-l-xs">@item.DisplayName</span>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
 
@@ -43,6 +59,7 @@
         </div>
     </div>
 }
+<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
 <script>
     $('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green',

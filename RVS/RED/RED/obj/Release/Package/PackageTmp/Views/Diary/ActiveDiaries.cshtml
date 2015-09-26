@@ -105,20 +105,22 @@
 
                             <div class="row" style="margin-bottom:20px;">
                                 <div class="col-md-6">
-                                    <h5>Срок на изпитване (дни): <strong></strong></h5>
-
                                     <div class="status-container">
                                         @if (item.Request == null)
                                         {
                                             if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                             {
-                                                <button id="@item.Id" class="btn btn-primary btn-request"><i class="fa fa-tag"></i> Направи заявка</button>
+                                                <label for="testingPeriod">Срок на изпитване (дни):</label>
+                                                <input type="number" min="1" max="365" id="testingPeriod" />
+                                                <br />
+                                                <button id="@item.Id" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>
                                             }
                                         }
                                         else
                                         {
                                             if (item.Request.IsAccepted)
                                             {
+                                                <h5>Срок на изпитване (дни): <strong>@item.Request.TestingPeriod</strong></h5>
                                                 string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
                                                 <h5>Приел пробата: <strong>@name</strong></h5>
                                                 <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
@@ -127,7 +129,12 @@
                                             {
                                                 <div class="alert alert-success">
                                                     Заявката е в очакване да бъде приета.
+                                                    <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id">
+                                                        <i class="fa fa-download"></i> 
+                                                        Изтегли заявка
+                                                    </a>
                                                 </div>
+                                                <button url="/Diary/DeleteRequest?diaryId=@item.Id" diaryId="@item.Id" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката</button>
                                             }
                                         }
                                     </div>
@@ -137,7 +144,7 @@
                                     {
                                         var protocol = item.Request.Protocols.FirstOrDefault();
                                         <h5 class="text-right">Протокол № / Дата на издаване: @item.Number / @(protocol != null ? protocol.IssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) : "") <strong></strong></h5>
-                                        <h5 class="text-right">Получил протокола: <strong></strong></h5>
+                                        @*<h5 class="text-right">Получил протокола: <strong></strong></h5>*@
                                         <h5 class="text-right">Забележка: @item.Remark<strong></strong></h5>
                                     }
                                 </div>
@@ -151,7 +158,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
-                                        <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:10px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"> Откажи</i></a>
+                                        <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:10px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"></i>Откажи</a>
                                         <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
                                     </div>
                                 </div>
@@ -183,11 +190,14 @@
                                 @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                 {
                                     <div class="text-right">
-                                        <button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
+                                        <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
                                             <i class="fa fa-archive"></i>
                                             Архивирай
-                                        </button>
-
+                                        </a>
+                                        @*<button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
+                                            <i class="fa fa-archive"></i>
+                                            Архивирай
+                                        </button>*@
                                     </div>
                                     <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
 

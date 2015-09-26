@@ -1,0 +1,124 @@
+﻿@model IEnumerable<RED.Models.ElectronicDiary.Remarks.RemarkW>
+@using RED.Models.Account
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    var user = principal.GetUserData();
+}
+
+<link href="~/Content/Our/RemarksTextAreasStyle.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+<link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
+<link href="~/Content/Our/datatables-changes.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="~/Scripts/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="~/Scripts/Helpers/myDataTablesWrapper.js"></script>
+
+<h2>Забележки</h2>
+
+@if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+{
+    <p>
+        <a href="/Remarks/Create">
+            <i class="fa fa-plus"></i>
+            Добави забележка
+        </a>
+    </p>
+}
+
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content table-responsive">
+            <table id="RemarksTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th>Текст</th>
+                        @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        Tables.CreateTable("#RemarksTable", {
+            order: [],
+            lengthChange: false,
+            selectable: false,
+            paging: true,
+            pageLength: 10,
+            "language": {
+                "paginate": {
+                    "previous": "Назад",
+                    "next": "Напред"
+                },
+                "zeroRecords": "Няма налични данни",
+                "info": "Показва _START_ до _END_ от _MAX_ записа",
+                "infoFiltered": "(филтрирани от общо _MAX_)",
+                "infoEmpty": "Няма открити данни"
+            },
+            ajax: {
+                type: "POST",
+                url: "/Remarks/GetRemarks",
+            },
+            columns: [
+                { "data": "Text", "class": "multilineText" },
+                @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+            {
+                <text>
+                { "data": "Id" }
+                </text>
+            }
+        ],
+        @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+        {
+            <text>
+            columnDefs: [
+                {
+                    targets: -1,
+                    width: "25%",
+                    sortable: false,
+                    render: function (data, type, row) {
+                        return '<a href="/Remarks/Edit?id=' + data + '">\
+                                <i class="fa fa-edit"></i>\
+                                Промени\
+                            </a>|\
+                            <a class="btn-delete" href="' + data + '" data-toggle="modal" data-target="#myModal" onclick="Delete(this)">\
+                                <i class="fa fa-trash"></i>\
+                                Изтрий\
+                            </a>'
+                    },
+                    class: "text-center"
+                }
+            ]
+            </text>
+        }
+        });
+    });
+
+    function Delete(btn) {
+        var id = $(btn).attr('href');
+        var url = '/Remarks/Delete?id=' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (view) {
+                $('.modal-content').html(view);
+            }
+        });
+    }
+</script>

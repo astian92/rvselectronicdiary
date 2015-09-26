@@ -40,11 +40,11 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="ibox-content" style="display: block;">
+    <div class="ibox-content" style="display: none;">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    <label class="col-md-2 no-padding">Дневник №:</label>
+                    <label class="no-padding">Дневник №:</label>
                     <input class="form-control text-box single-line" data-val="true" 
                             data-val-range-min="0" data-val-range-max="2147483647" 
                             id="DiaryNumber" type="number" value="">
@@ -52,12 +52,13 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    <label class="col-md-2 no-padding">Писмо №:</label>
+                    <label class="no-padding">Писмо №:</label>
                     <input class="form-control text-box single-line" data-val="true"
                            data-val-range-min="0" data-val-range-max="2147483647"
                            id="LetterNumber" type="number" value="">
                 </div>
             </div>
+            <div class="clearfix"></div>
             <div class="col-md-12 col-lg-4">
                 <div class="form-group">
                     <label for="ClientId" class="col-xs-12 no-padding">Клиент</label>
@@ -110,8 +111,8 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active active-diaries">
-                    @{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
-                    number = -1, diaryNumber = -1, client = Guid.Empty }); }
+                    @*@{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
+                    number = -1, diaryNumber = -1, client = Guid.Empty }); }*@
                 </div>
 
                 <div id="tab-2" class="tab-pane archived-diaries">
@@ -130,12 +131,13 @@
 <script src="~/Scripts/Our/Diaries.js"></script>
 
 <script>
+    var isArchived = @(((bool)ViewBag.IsArchived).ToString().ToLower());
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },
         '.chosen-select-no-single': { disable_search_threshold: 10 },
-        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-        '.chosen-select-width': { width: "95%" }
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' }
     }
 
     for (var selector in config) {
@@ -159,6 +161,18 @@
         calendarWeeks: true,
         autoclose: true
     });
+
+    @*$(document).ready(function () {
+        diaryIdtoOpen = '@(ViewBag.IdToOpen)';
+
+        if (isArchived) {
+            $('.archived-tab-btn').click();
+            window.location = "#" + diaryIdtoOpen;
+        }
+        else {
+            $('.active-tab-btn').click(); //- no need it gets called by default in the view !
+        }
+    });*@
 </script>
 
 @*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
