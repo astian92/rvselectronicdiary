@@ -21,6 +21,7 @@ namespace RED.Models.DataContext
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public string Mobile { get; set; }
     
         public virtual ICollection<Diary> Diaries { get; set; }
     }

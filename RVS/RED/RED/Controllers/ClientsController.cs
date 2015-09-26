@@ -25,6 +25,7 @@ namespace RED.Controllers
             var jsonData = clients.Select(c => new
             {
                 Name = c.Name,
+                Mobile = c.Mobile,
                 Id = c.Id
             });
 

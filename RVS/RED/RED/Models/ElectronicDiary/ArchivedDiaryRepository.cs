@@ -32,6 +32,7 @@ namespace RED.Models.ElectronicDiary
             archivedDiary.AcceptanceDateAndTime = adiary.AcceptanceDateAndTime.ToUniversalTime();
             archivedDiary.Contractor = adiary.Contractor;
             archivedDiary.Client = adiary.Client;
+            archivedDiary.ClientMobile = adiary.ClientMobile;
             archivedDiary.Comment = adiary.Comment;
             archivedDiary.RequestDate = adiary.RequestDate.ToUniversalTime();
             archivedDiary.RequestAcceptedBy = adiary.RequestAcceptedBy;

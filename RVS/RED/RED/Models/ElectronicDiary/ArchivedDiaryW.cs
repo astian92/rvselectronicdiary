@@ -35,6 +35,11 @@ namespace RED.Models.ElectronicDiary
         [Display(Name = "Клиент")]
         public string Client { get; set; }
 
+        [MaxLength(30, ErrorMessage = "Телефонът на клиента трябва да е не по-дълъг от 30 символа.")]
+        [RegularExpression(@"^\+?[0-9]*$", ErrorMessage = "Телефонът трябва да бъде във формат +359123456789.")]
+        [Display(Name = "Телефон")]
+        public string ClientMobile { get; set; }
+
         [Display(Name = "Бележка")]
         public string Comment { get; set; }
 
@@ -113,6 +118,7 @@ namespace RED.Models.ElectronicDiary
             this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
             this.Contractor = diary.Contractor;
             this.Client = diary.Client;
+            this.ClientMobile = diary.ClientMobile;
             this.Comment = diary.Comment;
             this.RequestDate = diary.RequestDate.ToLocalTime();
             this.RequestAcceptedBy = diary.RequestAcceptedBy;
@@ -137,6 +143,7 @@ namespace RED.Models.ElectronicDiary
             diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime.ToUniversalTime();
             diary.Contractor = this.Contractor;
             diary.Client = this.Client;
+            diary.ClientMobile = this.ClientMobile;
             diary.Comment = this.Comment;
             diary.RequestDate = this.RequestDate.ToUniversalTime();
             diary.RequestAcceptedBy = this.RequestAcceptedBy;

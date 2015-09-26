@@ -34,6 +34,7 @@ namespace RED.Models.ElectronicDiary.Clients
         {
             var client = db.Clients.Single(c => c.Id == clientW.Id);
             client.Name = clientW.Name;
+            client.Mobile = clientW.Mobile;
             
             db.SaveChanges();
         }
@@ -58,7 +59,7 @@ namespace RED.Models.ElectronicDiary.Clients
 
         public bool IsExisting(ClientW client)
         {
-            var foundedClient = db.Clients.FirstOrDefault(x => x.Name.ToLower() == client.Name.ToLower());
+            var foundedClient = db.Clients.FirstOrDefault(x => x.Name.ToLower() == client.Name.ToLower() && x.Id != client.Id);
             if (foundedClient != null)
                 return true;
 

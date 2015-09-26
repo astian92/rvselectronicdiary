@@ -241,6 +241,7 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.LetterDate = diary.LetterDate;
                 archivedDiary.Contractor = diary.Contractor;
                 archivedDiary.Client = diary.Client.Name;
+                archivedDiary.ClientMobile = diary.Client.Mobile;
                 archivedDiary.Comment = diary.Comment;
                 var request = diary.Requests.First();
                 archivedDiary.RequestDate = request.Date;

@@ -29,8 +29,8 @@ namespace RED.Models.DataContext
         public System.Guid ClientId { get; set; }
         public string Comment { get; set; }
     
-        public virtual Client Client { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

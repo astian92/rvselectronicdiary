@@ -29,7 +29,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<ActionLog> ActionLogs { get; set; }
         public virtual DbSet<ActionType> ActionTypes { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -44,12 +43,13 @@ namespace RED.Models.DataContext
         public virtual DbSet<Protocol> Protocols { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
-        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<Remark> Remarks { get; set; }
         public virtual DbSet<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual DbSet<AcredetationLevel> AcredetationLevels { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
         public virtual DbSet<ProtocolsRemark> ProtocolsRemarks { get; set; }
         public virtual DbSet<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
+        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
     }
 }

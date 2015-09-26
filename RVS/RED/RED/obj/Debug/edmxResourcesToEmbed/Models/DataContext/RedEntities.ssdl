@@ -49,6 +49,7 @@
     <Property Name="LetterDate" Type="datetime" Nullable="false" />
     <Property Name="Contractor" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Client" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="ClientMobile" Type="nvarchar" MaxLength="30" />
     <Property Name="Comment" Type="ntext" />
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -107,6 +108,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="Diary">
     <Key>

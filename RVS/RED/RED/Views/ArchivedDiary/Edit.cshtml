@@ -70,6 +70,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ClientMobile, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ClientMobile)
+                @Html.ValidationMessageFor(model => model.ClientMobile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Comment, new { @class = "control-label col-md-3" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Comment)

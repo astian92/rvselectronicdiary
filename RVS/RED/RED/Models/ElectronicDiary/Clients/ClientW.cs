@@ -15,6 +15,11 @@ namespace RED.Models.ElectronicDiary.Clients
         [Display(Name="Име")]
         public string Name { get; set; }
 
+        [MaxLength(30, ErrorMessage = "Телефонът на клиента трябва да е не по-дълъг от 30 символа.")]
+        [RegularExpression(@"^\+?[0-9]*$", ErrorMessage = "Телефонът трябва да бъде във формат +359123456789.")]
+        [Display(Name="Телефон")]
+        public string Mobile { get; set; }
+
         public virtual ICollection<Diary> Diaries { get; set; }
 
         public ClientW()
@@ -27,6 +32,7 @@ namespace RED.Models.ElectronicDiary.Clients
             this.Id = client.Id;
             this.Name = client.Name;
             this.Diaries = client.Diaries;
+            this.Mobile = client.Mobile;
         }
 
         public Client ToBase()
@@ -36,6 +42,7 @@ namespace RED.Models.ElectronicDiary.Clients
             client.Id = this.Id;
             client.Name = this.Name;
             client.Diaries = this.Diaries;
+            client.Mobile = this.Mobile;
 
             return client;
         }
