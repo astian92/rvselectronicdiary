@@ -221,5 +221,38 @@ namespace RED.Models.FileModels
             fileName = "unknown.xlsx";
             return new byte[0];
         }
+
+        //Archived shit
+        public void RegenerateProtocolReport(ArchivedDiaryW adiary)
+        {
+            var acreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited));
+            var notAcreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited));
+
+            if (acreditedProducts.Count() > 0)
+            {
+                RewriteProtocolReport(adiary, "A", acreditedProducts);
+            }
+            if (notAcreditedProducts.Count() > 0)
+            {
+                RewriteProtocolReport(adiary, "B", notAcreditedProducts);
+            }
+        }
+
+        private void RewriteProtocolReport(ArchivedDiaryW adiary, string category, IEnumerable<ArchivedProduct> products)
+        {
+            var model = new ReportModel();
+
+            model.ReportParameters.Add("AcredetationLevel", category);
+            model.ReportParameters.Add("ProtocolNumber", category + adiary.Number);
+            model.ReportParameters.Add("ProtocolIssuedDate", adiary.ProtocolIssuedDate);
+
+            //model.ReportParameters.Add("Products", products);
+            //var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            //model.ReportParameters.Add("Methods", methods);
+            //var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
+            //model.ReportParameters.Add("Quantities", quantities);
+
+
+        }
     }
 }
