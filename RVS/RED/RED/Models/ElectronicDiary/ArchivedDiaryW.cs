@@ -74,6 +74,8 @@ namespace RED.Models.ElectronicDiary
 
         public virtual ICollection<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
 
+        public virtual ICollection<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
+
         public string LetterInfo
         {
             get
@@ -130,6 +132,7 @@ namespace RED.Models.ElectronicDiary
 
             this.ArchivedProducts = diary.ArchivedProducts;
             this.ArchivedProtocolResults = diary.ArchivedProtocolResults;
+            this.ArchivedProtocolRemarks = diary.ArchivedProtocolRemarks;
         }
 
         public ArchivedDiary ToBase()
@@ -155,6 +158,7 @@ namespace RED.Models.ElectronicDiary
 
             diary.ArchivedProducts = this.ArchivedProducts;
             diary.ArchivedProtocolResults = this.ArchivedProtocolResults;
+            diary.ArchivedProtocolRemarks = this.ArchivedProtocolRemarks;
 
             return diary;
         }

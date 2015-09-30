@@ -44,7 +44,7 @@
     <Property Name="ArchivedProductTestId" Type="Guid" Nullable="false" />
     <Property Name="ResultNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Results" Type="String" MaxLength="800" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MethodValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="ArchivedProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProtocolResult" ToRole="ArchivedProductTest" />
     <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
   </EntityType>
@@ -687,6 +687,7 @@
     <Property Name="Remark" Type="String" Nullable="false" MaxLength="3500" FixedLength="false" Unicode="true" />
     <Property Name="AcredetationLevel" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedProtocolRemark" ToRole="ArchivedDiary" />
+    <Property Name="Number" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="ArchivedDiary">
     <Key>

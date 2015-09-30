@@ -46,6 +46,13 @@ namespace RED.Models.Responses
                 return new ActionError("Възникна грешка при опит за архивиране на дневник", ErrorTypes.ServerError);
             }
         }
-        
+
+        public static ActionError UnableToRefreshArchivedProtocol
+        {
+            get
+            {
+                return new ActionError("Възникна грешка при опит за опресняване на архивиран протокол!", ErrorTypes.ServerError);
+            }
+        }
     }
 }

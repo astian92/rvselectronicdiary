@@ -8,6 +8,11 @@
     font-weight: bold;
 }
 
+.req-success-msg {
+    color: green;
+    font-weight: bold;
+}
+
 .icon-accordion i {
     padding-left: 5px;
 }

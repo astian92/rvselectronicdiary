@@ -28,6 +28,39 @@ namespace RED.Models.FileModels.ProtocolFiles
             InsertRemarks();
         }
 
+        private void ReplaceItems()
+        {
+            var protocolNumber = ReportModel.ReportParameters["ProtocolNumber"] as string;
+            var protocolIssuedDate = (DateTime)ReportModel.ReportParameters["ProtocolIssuedDate"];
+            var contractor = ReportModel.ReportParameters["Contractor"] as string;
+            var client = ReportModel.ReportParameters["Client"] as string;
+            var letterNumber = ReportModel.ReportParameters["LetterNumber"] as int?;
+            var letterDate = (DateTime)ReportModel.ReportParameters["LetterDate"];
+            var requestDate = (DateTime)ReportModel.ReportParameters["RequestDate"];
+            var labLeader = ReportModel.ReportParameters["LabLeader"] as string;
+            var tester = ReportModel.ReportParameters["Tester"] as string;
+
+            string acredetationString = "";
+            if (ReportModel.ReportParameters.ContainsKey("AcredetationString"))
+            {
+                acredetationString = ReportModel.ReportParameters["AcredetationString"] as string;
+            }
+
+            Document.ReplaceText("#PROTOCOLNUMBER", protocolNumber);
+            Document.ReplaceText("#PROTOCOLISSUEDDATE", protocolIssuedDate.ToString("dd.MM.yyyy"));
+            Document.ReplaceText("#CONTRACTOR", contractor);
+            Document.ReplaceText("#CLIENT", client);
+            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() : "");
+            Document.ReplaceText("#LETTERDATE", letterDate.ToString("dd.MM.yyyy"));
+            Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
+            Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
+            Document.ReplaceText("#REQMIN", requestDate.Minute.ToString());
+            Document.ReplaceText("#LABLEADER", labLeader);
+            Document.ReplaceText("#TESTER", tester);
+
+            Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
+        }
+
         private void InsertMethodsAndQuantities()
         {
             var methods = ReportModel.ReportParameters["Methods"] as IEnumerable<string>;
@@ -39,6 +72,69 @@ namespace RED.Models.FileModels.ProtocolFiles
             var quantitiesString = string.Join("; ", quantities);
 
             Document.ReplaceText("#QUANTITIESLIST", quantitiesString);
+        }
+
+        private void InsertLists()
+        {
+            var products = ReportModel.ReportParameters["Products"] as IEnumerable<Product>;
+            products = products.OrderBy(p => p.Number);
+
+            var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
+
+            var catProds = new List<CategoryProducts>();
+            foreach (var cat in categories)
+            {
+                var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
+                var catProdItem = new CategoryProducts();
+                catProdItem.Category = cat;
+                catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
+                catProds.Add(catProdItem);
+            }
+
+            //order the damn categories
+            var orderedCategories = new List<CategoryProducts>();
+            var number = 1;
+            while (catProds.Count > 0)
+            {
+                var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
+                if (cats.Count() > 0)
+                {
+                    orderedCategories.AddRange(cats);
+                    catProds.RemoveAll(c => cats.Contains(c));
+                    //foreach (var cat in cats)
+                    //{
+                    //    catProds.Remove(cat);
+                    //}
+                }
+                number++;
+            }
+
+            //set styles
+            var categoryStyle = new Formatting();
+            categoryStyle.Size = 14;
+            categoryStyle.Bold = true;
+
+            var productsStyle = new Formatting();
+            productsStyle.Size = 14;
+
+            var listItem = Document.Lists[0].Items[0];
+            bool isLabelInserted = false;
+            string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
+            string afterCategoryIntervals = "";
+            foreach (var cat in orderedCategories)
+            {
+                listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
+
+                if (!isLabelInserted)
+                {
+                    listItem.InsertText(label + Environment.NewLine + "     ");
+                    isLabelInserted = true;
+                    afterCategoryIntervals = "    ";
+                }
+
+                var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
+                listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
+            }
         }
 
         private void InsertTable()
@@ -105,102 +201,6 @@ namespace RED.Models.FileModels.ProtocolFiles
 
                 rowIndex++;
             }
-        }
-
-        private void InsertLists()
-        {
-            var products = ReportModel.ReportParameters["Products"] as IEnumerable<Product>;
-            products = products.OrderBy(p => p.Number);
-            
-            var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
-
-            var catProds = new List<CategoryProducts>();
-            foreach (var cat in categories)
-            {
-                var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
-                var catProdItem = new CategoryProducts();
-                catProdItem.Category = cat;
-                catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
-                catProds.Add(catProdItem);
-            }
-
-            //order the damn categories
-            var orderedCategories = new List<CategoryProducts>();
-            var number = 1;
-            while(catProds.Count > 0)
-            {
-                var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
-                if (cats.Count() > 0)
-                {
-                    orderedCategories.AddRange(cats);
-                    catProds.RemoveAll(c => cats.Contains(c));
-                    //foreach (var cat in cats)
-                    //{
-                    //    catProds.Remove(cat);
-                    //}
-                }
-                number++;
-            }
-
-            //set styles
-            var categoryStyle = new Formatting();
-            categoryStyle.Size = 14;
-            categoryStyle.Bold = true;
-
-            var productsStyle = new Formatting();
-            productsStyle.Size = 14;
-
-            var listItem = Document.Lists[0].Items[0];
-            bool isLabelInserted = false;
-            string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
-            string afterCategoryIntervals = "";
-            foreach (var cat in orderedCategories)
-            {
-                listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
-
-                if (!isLabelInserted)
-                {
-                    listItem.InsertText(label + Environment.NewLine + "     ");
-                    isLabelInserted = true;
-                    afterCategoryIntervals = "    ";
-                }
-
-                var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
-                listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
-            }
-        }
-
-        private void ReplaceItems()
-        {
-            var protocolNumber = ReportModel.ReportParameters["ProtocolNumber"] as string;
-            var protocolIssuedDate = (DateTime)ReportModel.ReportParameters["ProtocolIssuedDate"];
-            var contractor = ReportModel.ReportParameters["Contractor"] as string;
-            var client = ReportModel.ReportParameters["Client"] as string;
-            var letterNumber = ReportModel.ReportParameters["LetterNumber"] as int?;
-            var letterDate = (DateTime)ReportModel.ReportParameters["LetterDate"];
-            var requestDate = (DateTime)ReportModel.ReportParameters["RequestDate"];
-            var labLeader = ReportModel.ReportParameters["LabLeader"] as string;
-            var tester = ReportModel.ReportParameters["Tester"] as string;
-
-            string acredetationString = "";
-            if (ReportModel.ReportParameters.ContainsKey("AcredetationString"))
-            {
-                acredetationString = ReportModel.ReportParameters["AcredetationString"] as string;
-            }
-
-            Document.ReplaceText("#PROTOCOLNUMBER", protocolNumber);
-            Document.ReplaceText("#PROTOCOLISSUEDDATE", protocolIssuedDate.ToString("dd.MM.yyyy"));
-            Document.ReplaceText("#CONTRACTOR", contractor);
-            Document.ReplaceText("#CLIENT", client);
-            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() : "");
-            Document.ReplaceText("#LETTERDATE", letterDate.ToString("dd.MM.yyyy"));
-            Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
-            Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
-            Document.ReplaceText("#REQMIN", requestDate.Minute.ToString());
-            Document.ReplaceText("#LABLEADER", labLeader);
-            Document.ReplaceText("#TESTER", tester);
-
-            Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
         }
 
         private void InsertRemarks()

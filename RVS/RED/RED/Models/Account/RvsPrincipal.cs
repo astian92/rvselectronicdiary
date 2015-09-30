@@ -84,7 +84,7 @@ namespace RED.Models.Account
             return true;
         }
 
-        public bool IsGod()
+        private bool IsGod()
         {
             var context = DbContextFactory.GetDbContext();
             var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);

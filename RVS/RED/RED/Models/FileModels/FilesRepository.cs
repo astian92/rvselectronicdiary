@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using RED.Models.FileModels.ProtocolFiles;
 using RED.Models.ElectronicDiary;
+using RED.Models.ElectronicDiary.Converters;
 
 namespace RED.Models.FileModels
 {
@@ -150,7 +151,7 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("Client", request.Diary.Client.Name);
             model.ReportParameters.Add("LetterNumber", request.Diary.LetterNumber);
             model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
-            model.ReportParameters.Add("RequestDate", request.Date);
+            model.ReportParameters.Add("RequestDate", request.Date.ToLocalTime());
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
             model.ReportParameters.Add("Tester", protocol.Tester);
 
@@ -165,8 +166,6 @@ namespace RED.Models.FileModels
 ";
                 model.ReportParameters.Add("AcredetationString", acredetationString);
             }
-
-            //add remarks list !
 
             var report = new ProtocolReport(model);
             var data = report.GenerateReport();
@@ -246,13 +245,71 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("ProtocolNumber", category + adiary.Number);
             model.ReportParameters.Add("ProtocolIssuedDate", adiary.ProtocolIssuedDate);
 
-            //model.ReportParameters.Add("Products", products);
-            //var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
-            //model.ReportParameters.Add("Methods", methods);
-            //var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
-            //model.ReportParameters.Add("Quantities", quantities);
+            var convertedProducts = new List<Product>();
+            var productConverter = new ProductConverter();
+            foreach (var pr in products)
+            {
+                var product = productConverter.ConvertFromArchived(pr);
+                convertedProducts.Add(product);
+            }
 
+            model.ReportParameters.Add("Products", convertedProducts);
+            var methods = convertedProducts.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            model.ReportParameters.Add("Methods", methods);
+            var quantities = convertedProducts.OrderBy(p => p.Number).Select(p => p.Quantity);
+            model.ReportParameters.Add("Quantities", quantities);
 
+            var protocolResultsConverter = new ProtocolResultsConverter();
+            var theProtocolResults = adiary.ArchivedProtocolResults.Select(apr => protocolResultsConverter.ConvertFromArchived(apr));
+
+            var protocolResults = theProtocolResults.Where(pr =>
+                pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
+                .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+            model.ReportParameters.Add("ProtocolResults", protocolResults);
+
+            model.ReportParameters.Add("Contractor", adiary.Contractor);
+            model.ReportParameters.Add("Client", adiary.Client);
+            model.ReportParameters.Add("LetterNumber", adiary.LetterNumber);
+            model.ReportParameters.Add("LetterDate", adiary.LetterDate);
+            model.ReportParameters.Add("RequestDate", adiary.RequestDate.ToLocalTime());
+            model.ReportParameters.Add("LabLeader", adiary.ProtocolLabLeader);
+            model.ReportParameters.Add("Tester", adiary.ProtocolTester);
+
+            var remarksConverter = new RemarksConverter();
+            var remarks = adiary.ArchivedProtocolRemarks.Where(r => r.AcredetationLevel.Trim() == category).
+                Select(r => new ProtocolsRemark()
+                {
+                    Remark = remarksConverter.ConvertFromArchived(r),
+                    Number = r.Number
+                });
+
+            model.ReportParameters.Add("Remarks", remarks);
+
+            if (category == "A")
+            {
+                string acredetationString = @"АКРЕДИТИРАНА СЪГЛАСНО БДС EN ISO/IEC 17025:2006
+СЕРТИФИКАТ №55 ЛИ ОТ 08.04.2015 г./ ИА „БСА”
+С ВАЛИДНОСТ НА АКРЕДИТАЦИЯТА ДО 31.03.2016 г.
+";
+                model.ReportParameters.Add("AcredetationString", acredetationString);
+            }
+
+            var report = new ProtocolReport(model);
+            var data = report.GenerateReport();
+
+            CheckAndGenerateDirectories(adiary.Number);
+
+            var fileProps = GetFileProperties(adiary.Number, FileNames.Protocol, category);
+
+            if (File.Exists(fileProps.FullPath))
+            {
+                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".docx";
+                File.Move(fileProps.FullPath, newDestination);
+            }
+
+            var file = File.Create(fileProps.FullPath);
+            file.Write(data, 0, data.Length);
+            file.Close();
         }
     }
 }

@@ -49,6 +49,7 @@
     <Property Name="LetterDate" Type="datetime" Nullable="false" />
     <Property Name="Contractor" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Client" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="ClientMobile" Type="nvarchar" MaxLength="30" />
     <Property Name="Comment" Type="ntext" />
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -87,6 +88,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="3500" Nullable="false" />
     <Property Name="AcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
   </EntityType>
@@ -99,7 +101,7 @@
     <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ResultNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
-    <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="Clients">
     <Key>
@@ -107,6 +109,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="Diary">
     <Key>

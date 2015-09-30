@@ -88,6 +88,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ArchivedDiaryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="3500" Nullable="false" />
     <Property Name="AcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
   </EntityType>
@@ -100,7 +101,7 @@
     <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ResultNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
-    <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="Clients">
     <Key>

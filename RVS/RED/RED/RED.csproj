@@ -195,6 +195,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\BombFilter.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -317,6 +318,10 @@
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProtocolResultW.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
+    <Compile Include="Models\ElectronicDiary\Converters\ProductConverter.cs" />
+    <Compile Include="Models\ElectronicDiary\Converters\ProductTestsConverter.cs" />
+    <Compile Include="Models\ElectronicDiary\Converters\ProtocolResultsConverter.cs" />
+    <Compile Include="Models\ElectronicDiary\Converters\RemarksConverter.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ArchivedProtocol.cs" />

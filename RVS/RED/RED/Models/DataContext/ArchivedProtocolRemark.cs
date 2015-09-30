@@ -18,6 +18,7 @@ namespace RED.Models.DataContext
         public System.Guid ArchivedDiaryId { get; set; }
         public string Remark { get; set; }
         public string AcredetationLevel { get; set; }
+        public int Number { get; set; }
     
         public virtual ArchivedDiary ArchivedDiary { get; set; }
     }

@@ -288,7 +288,6 @@ D:\RED\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.xml
 D:\RED\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\RED\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\RED\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
-D:\RED\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\bin\RED.dll.config
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\bin\RED.dll
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\bin\RED.pdb
@@ -348,3 +347,4 @@ D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Securi
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\Programing\Repos\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
+D:\RED\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache

@@ -1,5 +1,6 @@
 ﻿using RED.Models.ControllerBases;
 using RED.Models.FileModels;
+using RED.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,8 @@ namespace RED.Controllers
             var reportData = Rep.GetArchivedProtocolReport(archivedDiaryId, category, out fileName);
             return File(reportData, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
         }
+
+       
+
 	}
 }

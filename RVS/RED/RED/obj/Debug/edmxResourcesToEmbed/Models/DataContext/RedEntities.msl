@@ -260,6 +260,7 @@
     <EntitySetMapping Name="ArchivedProtocolRemarks">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolRemark">
         <MappingFragment StoreEntitySet="ArchivedProtocolRemarks">
+          <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="AcredetationLevel" ColumnName="AcredetationLevel" />
           <ScalarProperty Name="Remark" ColumnName="Remark" />
           <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />

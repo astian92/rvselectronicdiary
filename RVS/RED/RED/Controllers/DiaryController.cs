@@ -3,6 +3,8 @@ using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
+using RED.Models.FileModels;
+using RED.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -247,6 +249,15 @@ namespace RED.Controllers
         {
             var response = Rep.ArchiveDiary(diaryId);
             return Json(response);
+        }
+
+        [UserFilter]
+        public JsonResult RefreshArchivedProtocol(Guid adiaryId)
+        {
+            var adiary = Rep.GetArchivedDiary(adiaryId);
+            var response = Rep.RegenerateArchivedProtocol(adiary);
+
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

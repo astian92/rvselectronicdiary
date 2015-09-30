@@ -57,6 +57,12 @@ namespace RED.Models.ElectronicDiary
             return new DiaryW(diary);
         }
 
+        public ArchivedDiaryW GetArchivedDiary(Guid adiaryId)
+        {
+            var adiary = db.ArchivedDiaries.Single(c => c.Id == adiaryId);
+            return new ArchivedDiaryW(adiary);
+        }
+
         public void Edit(DiaryW diaryW)
         {
             var diary = db.Diaries.Single(c => c.Id == diaryW.Id);
@@ -244,7 +250,7 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.ClientMobile = diary.Client.Mobile;
                 archivedDiary.Comment = diary.Comment;
                 var request = diary.Requests.First();
-                archivedDiary.RequestDate = request.Date;
+                archivedDiary.RequestDate = request.Date.ToUniversalTime();
                 archivedDiary.RequestAcceptedBy = request.User.FirstName.Substring(0,1) + ". " + request.User.LastName;
                 archivedDiary.RequestTestingPeriod = request.TestingPeriod;
                 archivedDiary.Remark = new DiaryW(diary).Remark;
@@ -260,6 +266,7 @@ namespace RED.Models.ElectronicDiary
                     aremark.ArchivedDiaryId = archivedDiary.Id;
                     aremark.Remark = remark.Remark.Text;
                     aremark.AcredetationLevel = remark.AcredetationLevel.Level;
+                    aremark.Number = remark.Number;
 
                     db.ArchivedProtocolRemarks.Add(aremark);
                 }
@@ -339,6 +346,27 @@ namespace RED.Models.ElectronicDiary
         {
             var filesRepository = new FilesRepository();
             filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
+        }
+
+        public ActionResponse RegenerateArchivedProtocol(ArchivedDiaryW adiary)
+        {
+            var response = new ActionResponse();
+
+            try
+            {
+                var filesRep = new FilesRepository();
+                filesRep.RegenerateProtocolReport(adiary);
+
+                response.IsSuccess = true;
+                response.SuccessMsg = "Успешно опресняване на архивирания протокол!";
+            }
+            catch (Exception exc)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(exc);
+                response.Error = ErrorFactory.UnableToRefreshArchivedProtocol;
+            }
+
+            return response;
         }
     }
 }

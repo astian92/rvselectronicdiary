@@ -11,7 +11,7 @@ namespace RED.Filters
 {
     public class BombFilter : ActionFilterAttribute
     {
-        private DateTime trialExpireDate = new DateTime(2015, 10, 10);
+        private DateTime trialExpireDate = new DateTime(2015, 11, 01);
         private string privateKey = "c11418e7-df8e-4dfc-90e8-695f79246726";
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

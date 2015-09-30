@@ -73,7 +73,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/28/2015 20:54:33</publishTime>
     </File>
     <File Include="bin/RED.dll">
-      <publishTime>09/03/2015 16:05:55</publishTime>
+      <publishTime>09/30/2015 23:49:30</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>08/28/2015 20:54:31</publishTime>
@@ -139,7 +139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/28/2015 20:54:13</publishTime>
     </File>
     <File Include="Content/Our/tabs-changes.css">
-      <publishTime>08/28/2015 20:54:13</publishTime>
+      <publishTime>09/30/2015 22:45:35</publishTime>
     </File>
     <File Include="Content/patterns/congruent_pentagon.png">
       <publishTime>08/28/2015 20:54:13</publishTime>
@@ -532,7 +532,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/28/2015 20:54:14</publishTime>
     </File>
     <File Include="Models/DataContext/RedEntities.edmx.diagram">
-      <publishTime>09/02/2015 00:27:29</publishTime>
+      <publishTime>09/29/2015 21:07:04</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>08/28/2015 20:54:26</publishTime>
@@ -1117,7 +1117,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/31/2015 20:56:59</publishTime>
     </File>
     <File Include="Views/ArchivedDiary/Edit.cshtml">
-      <publishTime>08/28/2015 20:54:17</publishTime>
+      <publishTime>09/29/2015 21:07:04</publishTime>
     </File>
     <File Include="Views/ArchivedDiary/EditProduct.cshtml">
       <publishTime>08/28/2015 20:54:17</publishTime>
@@ -1138,16 +1138,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/31/2015 21:14:01</publishTime>
     </File>
     <File Include="Views/Clients/Create.cshtml">
-      <publishTime>08/28/2015 20:54:17</publishTime>
+      <publishTime>09/29/2015 21:07:04</publishTime>
     </File>
     <File Include="Views/Clients/Delete.cshtml">
       <publishTime>08/28/2015 20:54:17</publishTime>
     </File>
     <File Include="Views/Clients/Edit.cshtml">
-      <publishTime>08/28/2015 20:54:17</publishTime>
+      <publishTime>09/29/2015 21:07:04</publishTime>
     </File>
     <File Include="Views/Clients/Index.cshtml">
-      <publishTime>08/28/2015 20:54:17</publishTime>
+      <publishTime>09/29/2015 21:07:04</publishTime>
     </File>
     <File Include="Views/Dashboards/Dashboard_1.cshtml">
       <publishTime>08/28/2015 20:54:17</publishTime>
@@ -1171,7 +1171,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/28/2015 20:54:17</publishTime>
     </File>
     <File Include="Views/Diary/ArchivedDiaries.cshtml">
-      <publishTime>08/28/2015 20:54:17</publishTime>
+      <publishTime>09/30/2015 23:31:38</publishTime>
     </File>
     <File Include="Views/Diary/Create.cshtml">
       <publishTime>08/28/2015 20:54:17</publishTime>
@@ -1246,7 +1246,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/02/2015 22:32:43</publishTime>
     </File>
     <File Include="Views/Protocols/ArchivedProtocols.cshtml">
-      <publishTime>09/02/2015 22:38:38</publishTime>
+      <publishTime>09/30/2015 22:07:02</publishTime>
     </File>
     <File Include="Views/Protocols/Create.cshtml">
       <publishTime>09/02/2015 23:12:41</publishTime>

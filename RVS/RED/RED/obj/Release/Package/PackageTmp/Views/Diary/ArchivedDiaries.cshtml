@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedDiaryW>
 @using System.Globalization;
+@using RED.Models.Account
+
+@{
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    var user = principal.GetUserData();
+}
 
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
@@ -111,49 +117,24 @@
                                     <div class="col-md-12 no-padding">
                                         <textarea disabled class="comment form-control message-input" name="Comment">@item.Comment</textarea>
                                     </div>
-                                    @*<div class="col-md-2">
-                                        <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
-                                        <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:10px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"> Откажи</i></a>
-                                        <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
-                                    </div>*@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="row">
-                                <div class="text-right">
-                                    <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
-                                        <i class="fa fa-edit"></i>
-                                        Промени
-                                    </a>
-                                    @*<a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-trash"></i>
-                                        Изтрий
-                                    </a>*@
-                                </div>
-                                @*@if (item. == null || !item.Request.IsAccepted)
-                                {
+                            @if(user.Id == Guid.Parse("0f68da69-5c82-480b-9474-54c133439b0c") || user.Id == Guid.Parse("613b0faa-8828-44a9-8bbe-09ba68cc33ae"))
+                            {
+                                <div class="row">
                                     <div class="text-right">
-                                        <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
+                                        <a class="btn btn-primary" adiaryId="@item.Id" onclick="refreshProtocol(this)">
+                                            <i class="fa fa-refresh"></i>
+                                            Опресни протокол
+                                        </a>
+                                        <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
                                             <i class="fa fa-edit"></i>
                                             Промени
                                         </a>
-                                        <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-trash"></i>
-                                            Изтрий
-                                        </a>
                                     </div>
-                                }*@
-
-                                @*@if (item.Request != null && item.Request.Protocols.Any())
-                                {
-                                    <div class="text-right">
-                                        <a class="btn btn-primary btn-archive" href="/Diary/Archive?id=@item.Id">
-                                            <i class="fa fa-archive"></i>
-                                            Архивирай
-                                        </a>
-                                    </div>
-                                }*@
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -186,6 +167,30 @@
     });
 
     pagination.Create(".custom-pagination");
+
+    function refreshProtocol(sender) { 
+        var id = $(sender).attr('adiaryId');
+
+        $.ajax({
+            type: 'POST',
+            url: '/Diary/RefreshArchivedProtocol',
+            data: { adiaryId: id },
+            success: function (result) {
+                //show success message
+                if (result.IsSuccess) {
+                    var successMsg = $("<div class='req-success-msg' style='color: green;'>" + result.SuccessMsg + "</div>");
+                    $(sender).parent().append(successMsg);
+                }
+                else {
+                    var errorMsg = $("<div class='req-error-msg' style='color: red;'>" + result.Error.ErrorText + "</div>");
+                    $(sender).parent().append(errorMsg);
+                }
+            },
+            error: function () {
+                
+            }
+        });
+    }
 
     function changePage(page) {
         var data = GetFilters();

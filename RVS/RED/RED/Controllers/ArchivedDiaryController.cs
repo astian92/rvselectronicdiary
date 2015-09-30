@@ -1,4 +1,5 @@
-﻿using RED.Models.ControllerBases;
+﻿using RED.Filters;
+using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.ArchivedWrappers;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace RED.Controllers
 {
+    [UserFilter]
     public class ArchivedDiaryController : ControllerBase<ArchivedDiaryRepository>
     {
         public ActionResult Index()
