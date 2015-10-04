@@ -120,8 +120,18 @@ namespace RED.Models.ElectronicDiary
         {
             diary.Id = Guid.NewGuid();
 
-            int activeMax = db.Diaries.Max(d => d.Number);
-            int archivedMax = db.ArchivedDiaries.Max(ad => ad.Number);
+            int activeMax = 0;
+            if (db.Diaries.Any())
+            {
+                activeMax = db.Diaries.Max(d => d.Number);
+            }
+
+            int archivedMax = 0;
+            if (db.ArchivedDiaries.Any())
+            {
+                archivedMax = db.ArchivedDiaries.Max(ad => ad.Number);
+            }
+
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
 
             diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
