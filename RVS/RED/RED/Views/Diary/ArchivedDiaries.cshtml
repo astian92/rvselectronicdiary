@@ -42,7 +42,7 @@
 
                                 <div class="col-sm-6 text-right">
                                     <h5>№: <strong>@item.Number</strong></h5>
-                                    <h5>Дата на приемане: <strong>@item.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
+                                    <h5>Дата на приемане: <strong>@item.AcceptanceDateAndTime.ToLocalTime().ToString("dd.M.yyyy HH:mm", CultureInfo.InvariantCulture)</strong></h5>
                                 </div>
                             </div>
 
@@ -102,7 +102,7 @@
 
                                     <div class="status-container">
                                         <h5>Приел пробата: <strong>@item.RequestAcceptedBy</strong></h5>
-                                        <h5>Дата на приемане: <strong>@item.RequestDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)</strong></h5>
+                                        <h5>Дата на приемане: <strong>@item.RequestDate.ToLocalTime().ToString("dd.M.yyyy HH:mmm", CultureInfo.InvariantCulture)</strong></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
