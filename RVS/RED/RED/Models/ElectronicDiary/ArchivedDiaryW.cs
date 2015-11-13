@@ -87,6 +87,26 @@ namespace RED.Models.ElectronicDiary
             }
         }
 
+        public string AcceptanceTime
+        {
+            get
+            {
+                return this.AcceptanceDateAndTime.ToString("HH:mm");
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddHours(hours);
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddMinutes(minutes);
+                }
+            }
+        }
+
         public string RequestDateTime 
         {
             get

@@ -24,12 +24,22 @@
 
         <div class="form-group" id="acceptance-date">
             @Html.LabelFor(model => model.AcceptanceDateAndTime, new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
+            <div class="col-md-5">
                 @*@Html.EditorFor(model => model.AcceptanceDateAndTime)*@
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     @*@Html.TextBoxFor(m => m.AcceptanceDateAndTime, new { @class = "form-control single-line", type = "datetime", value = Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) })*@
                     <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)"></div>
+                @*@Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })*@
+            </div>
+            <div class="col-md-4">
+                <div class="input-group clockpicker" data-autoclose="true">
+                    <input type="text" class="form-control" name="AcceptanceTime" value="@Model.AcceptanceTime">
+                    <span class="input-group-addon">
+                        <span class="fa fa-clock-o"></span>
+                    </span>
+                </div>
+
                 @Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })
             </div>
         </div>

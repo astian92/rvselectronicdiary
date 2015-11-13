@@ -55,7 +55,8 @@ namespace RED.Models.FileModels.RequestList
             var title = Cells["A5"].Value;
             Cells["A5"].Value = title.ToString()
                 .Replace("#NUMBER", queryNumber.ToString())
-                .Replace("#DATE", date.Value.ToString("d.MM.yyyy г"));
+                .Replace("#DATE", date == null ? "" : date.Value.ToLocalTime().ToString("d.MM.yyyy г"))
+                .Replace("#TIME", date == null ? "" : date.Value.ToLocalTime().ToString("HH:mm"));
         }
 
         private void FormatRow(int row)

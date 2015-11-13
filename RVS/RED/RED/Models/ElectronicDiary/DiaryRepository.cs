@@ -260,7 +260,7 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.ClientMobile = diary.Client.Mobile;
                 archivedDiary.Comment = diary.Comment;
                 var request = diary.Requests.First();
-                archivedDiary.RequestDate = request.Date.ToUniversalTime();
+                archivedDiary.RequestDate = request.Date;
                 archivedDiary.RequestAcceptedBy = request.User.FirstName.Substring(0,1) + ". " + request.User.LastName;
                 archivedDiary.RequestTestingPeriod = request.TestingPeriod;
                 archivedDiary.Remark = new DiaryW(diary).Remark;
