@@ -149,7 +149,7 @@
                 </div>
             </div>
         }
-        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited)))
+        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited)))
         {
             <div class="form-group">
                 <label for="RemarkId" class="control-label col-md-3">
