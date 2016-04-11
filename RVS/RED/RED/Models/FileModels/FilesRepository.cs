@@ -199,7 +199,7 @@ namespace RED.Models.FileModels
                 return file;
             }
 
-            fileName = "unknown.xlsx";
+            fileName = "unknown";
             return new byte[0];
         }
 
