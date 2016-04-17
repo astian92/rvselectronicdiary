@@ -1,0 +1,3 @@
+A - Applied on Working Database
+B - Applied on Empty (test)
+X - Applied on Production Server - RVS Server
