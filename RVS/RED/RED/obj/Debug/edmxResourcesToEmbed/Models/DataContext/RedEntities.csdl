@@ -160,6 +160,9 @@
     <NavigationProperty Name="ProductTests" Relationship="Self.FK_ProductTests_Tests" FromRole="Tests" ToRole="ProductTests" />
     <NavigationProperty Name="TestCategory" Relationship="Self.FK_Tests_TestCategories" FromRole="Tests" ToRole="TestCategories" />
     <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="Test" ToRole="AcredetationLevel" />
+    <Property Name="TypeId" Type="Guid" Nullable="false" />
+    <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TestType" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" FromRole="Test" ToRole="TestType" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -433,6 +436,11 @@
     <AssociationSet Name="FK_Diary_Clients" Association="DB_9BCA69_RedDbModel.FK_Diary_Clients">
       <End Role="Client" EntitySet="Clients" />
       <End Role="Diary" EntitySet="Diaries" />
+    </AssociationSet>
+    <EntitySet Name="TestTypes" EntityType="DB_9BCA69_RedDbModel.TestType" />
+    <AssociationSet Name="FK_Tests_TestTypes" Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes">
+      <End Role="TestType" EntitySet="TestTypes" />
+      <End Role="Test" EntitySet="Tests" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Protocol">
@@ -771,6 +779,27 @@
       </Principal>
       <Dependent Role="Diary">
         <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ShortName" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" FromRole="TestType" ToRole="Test" />
+  </EntityType>
+  <Association Name="FK_Tests_TestTypes">
+    <End Type="DB_9BCA69_RedDbModel.TestType" Role="TestType" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="TypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

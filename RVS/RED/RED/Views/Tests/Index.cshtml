@@ -36,6 +36,7 @@
             <table id="TestsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
                 <thead>
                     <tr>
+                        <th>Вид</th>
                         <th>Име</th>
                         <th>Методи</th>
                         <th>Ниво</th>
@@ -75,6 +76,7 @@
             url: "/Tests/GetTests",
         },
         columns: [
+            { "data": "TestType" },
             { "data": "Name" },
             { "data": "TestMethods" },
             { "data": "Level" },
@@ -119,10 +121,10 @@
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
 
-            api.column(5, { page: 'current' }).data().each(function (group, i) {
+            api.column(6, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="6">' + group + '</td></tr>'
+                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
                     );
 
                     last = group;

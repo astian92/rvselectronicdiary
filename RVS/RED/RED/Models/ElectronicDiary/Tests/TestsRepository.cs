@@ -106,6 +106,8 @@ namespace RED.Models.ElectronicDiary.Tests
             test.AcredetationLevelId = testW.AcredetationLevelId;
             test.Temperature = testW.Temperature;
             test.UnitName = testW.UnitName;
+            test.TypeId = testW.TypeId;
+            test.MethodValue = testW.MethodValue;
 
             db.SaveChanges();
         }
@@ -134,6 +136,11 @@ namespace RED.Models.ElectronicDiary.Tests
                 return true;
 
             return false;
+        }
+
+        public IEnumerable<TestType> GetTestTypes()
+        {
+            return db.TestTypes.ToList();
         }
     }
 }

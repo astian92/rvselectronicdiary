@@ -131,6 +131,7 @@ namespace RED.Controllers
 
             var jsonData = tests.Select(t => new
             {
+                TestType = t.TestType.ShortName,
                 Name = t.Name,
                 TestMethods = t.TestMethods,
                 Level = t.AcredetationLevel.Level,
@@ -148,6 +149,7 @@ namespace RED.Controllers
         {
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name"); 
             ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level");
+            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type");
             return View();
         }
 
@@ -158,17 +160,15 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsTestExisting(test))
-                {
-                    Rep.Add(test);
-                    return RedirectToAction("Index");
-                }
+                Rep.Add(test);
+                return RedirectToAction("Index");
 
                 ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name");
             ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level");
+            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type");
 
             return View(test);
         }
@@ -189,6 +189,7 @@ namespace RED.Controllers
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
             ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
+            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type", test.TypeId);
 
             return View(test);
         }
@@ -200,17 +201,15 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsTestExisting(test))
-                {
-                    Rep.Edit(test);
-                    return RedirectToAction("Index");
-                }
+                Rep.Edit(test);
+                return RedirectToAction("Index");
 
                 ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
             ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
+            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type", test.TypeId);
 
             return View(test);
         }
