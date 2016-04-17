@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce7cd07a73784346a6b53e711ff57f86" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="ce7cd07a73784346a6b53e711ff57f86" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionType" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
@@ -56,6 +56,8 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Diary_Clients" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.TestType" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

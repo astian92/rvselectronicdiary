@@ -51,5 +51,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
         public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<TestType> TestTypes { get; set; }
     }
 }

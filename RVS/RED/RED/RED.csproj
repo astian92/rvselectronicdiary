@@ -307,6 +307,9 @@
     <Compile Include="Models\DataContext\TestCategory.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext\TestType.cs">
+      <DependentUpon>RedEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
