@@ -15,6 +15,24 @@
                 <input class="form-control text-box single-line valid unitBox" data-val-range="Невалиден номер" data-val-range-max="2147483647" data-val-range-min="0" id="Products[0].ProductTests[0].Units" name="LetterNumber" type="number" value="">
                 <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="units-name-validation collapse">Единиците са задължителни</span></span>
             </div>
+
+
+            <div class="form-group">
+                <label class="control-label" for="">Стойност на показателя</label>
+                <textarea class="form-control no-resize"></textarea>
+                <span class="special-chars-holder pull-right">
+                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
+                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
+                </span>
+                @*<div class="clearfix"></div>*@
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="">Забележка</label>
+                <textarea class="form-control no-resize"></textarea>
+            </div>
+
+
+
             <div class="form-group" key="@product.Key">
                 <input type="button" value="Добави" class="add-test-btn btn btn-primary" tabindex="5" />
             </div>
@@ -28,17 +46,24 @@
                         {
                             <tr>
                                 <td class="col-md-2">
-                                    <span class="label label-primary">Добавен</span>
+                                    @if (test.Type == 1)
+                                    {
+                                        <span class="label label-primary">МКБ</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-warning">ФЗХ</span>
+                                    }
                                 </td>
-                                <td class="issue-info test">
+                                <td class="col-md-4 issue-info test">
                                     @test.Name
                                     <input class="testId" type="hidden" value="@test.Id" />
                                 </td>
-                                <td class="col-md-2">
+                                <td class="col-md-4">
                                     @test.Units
                                     <input class="unitsValue" type="hidden" value="@test.Units" />
                                 </td>
-                                <td class="text-right">
+                                <td class="col-md-2 text-right">
                                     <a class="delete-product" key="@test.Key" onclick="deleteTest(this)">
                                         <h3 style="margin: 0px">x</h3>
                                     </a>

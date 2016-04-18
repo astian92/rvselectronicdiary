@@ -1,14 +1,16 @@
 ﻿@model RED.Models.ElectronicDiary.DiaryW
 @using System.Globalization;
+
 <link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
 <link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Create";
 }
 
-
 <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 <link href="~/Content/plugins/wizzard/jquery.steps.css" rel="stylesheet" />
+<link href="~/Content/Our/create-diary-custom.css" rel="stylesheet" />
+
 <h2>Добави писмо</h2>
 
 @using (Html.BeginForm("Create", "Diary", FormMethod.Post, new { @class = "wizard-big", @id = "form"}))

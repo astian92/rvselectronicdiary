@@ -97,7 +97,6 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-
             DiaryW diary = Rep.GetDiary(id.Value);
             if (diary == null)
             {

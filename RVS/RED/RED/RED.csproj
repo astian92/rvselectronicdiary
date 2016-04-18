@@ -383,6 +383,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\email.css" />
+    <Content Include="Content\Our\create-diary-custom.css" />
     <Content Include="Content\Our\custom-pagination.css" />
     <Content Include="Content\Our\datatables-changes.css" />
     <Content Include="Content\Our\protocols.css" />
