@@ -31,8 +31,16 @@ namespace RED.Models.ElectronicDiary.Tests
         [Display(Name = "Единица на Величината")]
         public string UnitName { get; set; }
 
+        [Required]
+        [Display(Name = "Вид")]
+        public Guid TypeId { get; set; }
+
+        [Display(Name = "Стойност на показателя")]
+        public string MethodValue { get; set; }
+
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestCategory TestCategory { get; set; }
+        public virtual TestType TestType { get; set; }
 
         public TestW()
         {
@@ -48,9 +56,12 @@ namespace RED.Models.ElectronicDiary.Tests
             this.AcredetationLevelId = test.AcredetationLevelId;
             this.Temperature = test.Temperature;
             this.UnitName = test.UnitName;
+            this.TypeId = test.TypeId;
+            this.MethodValue = test.MethodValue;
 
             this.AcredetationLevel = test.AcredetationLevel;
             this.TestCategory = test.TestCategory;
+            this.TestType = test.TestType;
         }
 
         public Test ToBase()
@@ -64,9 +75,12 @@ namespace RED.Models.ElectronicDiary.Tests
             test.AcredetationLevelId = this.AcredetationLevelId;
             test.Temperature = this.Temperature;
             test.UnitName = this.UnitName;
+            test.TypeId = this.TypeId;
+            test.MethodValue = this.MethodValue;
 
             test.AcredetationLevel = this.AcredetationLevel;
             test.TestCategory = this.TestCategory;
+            test.TestType = this.TestType;
 
             return test;
         }
