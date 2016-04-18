@@ -17,7 +17,7 @@ namespace RED.Models.ElectronicDiary.Converters
 
             protocolResult.ResultNumber = aProtocolResult.ResultNumber;
             protocolResult.Results = aProtocolResult.Results;
-            protocolResult.MethodValue = aProtocolResult.MethodValue;
+            //protocolResult.MethodValue = aProtocolResult.MethodValue;
 
             var converter = new ProductTestsConverter();
             protocolResult.ProductTest = converter.ConvertFromArchived(aProtocolResult.ArchivedProductTest);

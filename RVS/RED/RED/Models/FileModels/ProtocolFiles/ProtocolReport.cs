@@ -193,8 +193,8 @@ namespace RED.Models.FileModels.ProtocolFiles
                 table.Rows[rowIndex].Cells[5].Paragraphs[0].InsertText(result.Results, false, cellStyle0);
                 table.Rows[rowIndex].Cells[5].Paragraphs[0].Alignment = Alignment.center;
 
-                table.Rows[rowIndex].Cells[6].Paragraphs[0].InsertText(result.MethodValue, false, cellStyle0);
-                table.Rows[rowIndex].Cells[6].Paragraphs[0].Alignment = Alignment.center;
+                //table.Rows[rowIndex].Cells[6].Paragraphs[0].InsertText(result.MethodValue, false, cellStyle0);
+                //table.Rows[rowIndex].Cells[6].Paragraphs[0].Alignment = Alignment.center;
 
                 table.Rows[rowIndex].Cells[7].Paragraphs[0].InsertText(result.ProductTest.Test.Temperature, false, cellStyle3);
                 table.Rows[rowIndex].Cells[7].Paragraphs[0].Alignment = Alignment.center;

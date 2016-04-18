@@ -314,7 +314,7 @@ namespace RED.Models.ElectronicDiary
 
                             apresult.Id = Guid.NewGuid();
                             apresult.Results = presult.Results;
-                            apresult.MethodValue = presult.MethodValue;
+                            //apresult.MethodValue = presult.MethodValue;
                             apresult.ResultNumber = presult.ResultNumber;
                             apresult.ArchivedDiaryId = archivedDiary.Id;
 

@@ -175,7 +175,6 @@
     <Property Name="ProductTestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ResultNumber" Type="nchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="MethodValue" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Protocols">
     <Key>
