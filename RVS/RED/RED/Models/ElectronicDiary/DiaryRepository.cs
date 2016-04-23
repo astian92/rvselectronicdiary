@@ -266,7 +266,7 @@ namespace RED.Models.ElectronicDiary
                 archivedDiary.Remark = new DiaryW(diary).Remark;
                 var protocol = request.Protocols.First();
                 archivedDiary.ProtocolIssuedDate = protocol.IssuedDate;
-                archivedDiary.ProtocolTester = protocol.Tester;
+                archivedDiary.ProtocolTester = protocol.TesterMKB;
                 archivedDiary.ProtocolLabLeader = protocol.LabLeader;
 
                 foreach (var remark in protocol.ProtocolsRemarks)

@@ -21,7 +21,7 @@ namespace RED.Models.DataContext
         public int Number { get; set; }
     
         public virtual AcredetationLevel AcredetationLevel { get; set; }
-        public virtual Protocol Protocol { get; set; }
         public virtual Remark Remark { get; set; }
+        public virtual Protocol Protocol { get; set; }
     }
 }

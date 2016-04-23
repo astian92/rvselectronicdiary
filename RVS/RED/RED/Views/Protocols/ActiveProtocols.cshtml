@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Protocols.ProtocolW>
 @using RED.Models.ElectronicDiary
 @using System.Collections.Generic
-
-@using Microsoft.AspNet.Identity
+@using RED.Models
 @using RED.Models.Account
 
 @{
@@ -67,7 +66,7 @@
                                         </td>
                                     </tr>
 
-                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == "МКБ"))
+                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == @TestTypes.MKB))
                                     { 
                                         <tr>
                                             <td colspan="6">
@@ -76,7 +75,7 @@
                                         </tr>
                                     }
                                     @{ 
-                                        var orderedAcreditedResultsMKB = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == "МКБ")
+                                        var orderedAcreditedResultsMKB = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB)
                                             .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
                                     }
                                     @foreach (var result in orderedAcreditedResultsMKB)
@@ -94,7 +93,7 @@
                                     }
 
                                     @*FZH*@
-                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == "ФЗХ"))
+                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
                                     {
                                         <tr>
                                             <td colspan="6">
@@ -103,7 +102,7 @@
                                         </tr>
                                     }
                                     @{
-                                        var orderedAcreditedResultsFZH = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == "ФЗХ")
+                                        var orderedAcreditedResultsFZH = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH)
                                             .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
                                     }
                                     @foreach (var result in orderedAcreditedResultsFZH)
@@ -171,7 +170,7 @@
                                         </td>
                                     </tr>
 
-                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == "МКБ"))
+                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB))
                                     {
                                         <tr>
                                             <td colspan="6">
@@ -181,7 +180,7 @@
                                     }
 
                                     @{
-                                        var orderedNotAcreditedResultsMKB = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == "МКБ")
+                                        var orderedNotAcreditedResultsMKB = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB)
                                             .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
                                     }
 
@@ -200,7 +199,7 @@
                                     }
 
                                     @*ФЗХ*@
-                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == "ФЗХ"))
+                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
                                     {
                                         <tr>
                                             <td colspan="6">
@@ -209,7 +208,7 @@
                                         </tr>
                                     }
                                     @{
-                                        var orderedNotAcreditedResultsFZH = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == "ФЗХ")
+                                        var orderedNotAcreditedResultsFZH = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH)
                                             .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
                                     }
 
@@ -241,8 +240,17 @@
                                 </div>
                             </div>
                             }
+
                             <div class="status-container">
-                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
+                                @if (item.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB))
+                                {
+                                    <h5>Извършил изпитването (МКБ): <strong>@item.TesterMKB</strong></h5>
+                                }
+
+                                @if (item.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
+                                {
+                                    <h5>Извършил изпитването (ФЗХ): <strong>@item.TesterFZH</strong></h5>
+                                }
                                 <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
 

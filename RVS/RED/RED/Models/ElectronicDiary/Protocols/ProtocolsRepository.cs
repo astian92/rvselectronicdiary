@@ -115,7 +115,8 @@ namespace RED.Models.ElectronicDiary.Protocols
                 protocol.ProtocolsRemarks.Add(item);
             }
 
-            protocol.Tester = protocolW.Tester;
+            protocol.TesterMKB = protocolW.TesterMKB;
+            protocol.TesterFZH = protocolW.TesterFZH;
             protocol.LabLeader = protocolW.LabLeader;
 
             using (TransactionScope scope = new TransactionScope())

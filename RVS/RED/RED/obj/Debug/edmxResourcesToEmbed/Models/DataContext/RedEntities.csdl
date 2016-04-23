@@ -336,7 +336,6 @@
       <End Role="TestCategories" EntitySet="TestCategories" />
       <End Role="Tests" EntitySet="Tests" />
     </AssociationSet>
-    <EntitySet Name="Protocols" EntityType="DB_9BCA69_RedDbModel.Protocol" />
     <EntitySet Name="Diaries" EntityType="DB_9BCA69_RedDbModel.Diary" />
     <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
       <End Role="Diary" EntitySet="Diaries" />
@@ -346,10 +345,6 @@
     <AssociationSet Name="FK_Requests_Diary" Association="DB_9BCA69_RedDbModel.FK_Requests_Diary">
       <End Role="Diary" EntitySet="Diaries" />
       <End Role="Request" EntitySet="Requests" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Protocols_Requests" Association="DB_9BCA69_RedDbModel.FK_Protocols_Requests">
-      <End Role="Request" EntitySet="Requests" />
-      <End Role="Protocol" EntitySet="Protocols" />
     </AssociationSet>
     <AssociationSet Name="FK_Requests_Users" Association="DB_9BCA69_RedDbModel.FK_Requests_Users">
       <End Role="User" EntitySet="Users" />
@@ -374,10 +369,6 @@
     <EntitySet Name="ProtocolsRemarks" EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" />
     <AssociationSet Name="FK_ProtocolsRemarks_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels">
       <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
-      <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols">
-      <End Role="Protocol" EntitySet="Protocols" />
       <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
     </AssociationSet>
     <AssociationSet Name="FK_ProtocolsRemarks_Remarks" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks">
@@ -413,24 +404,20 @@
       <End Role="ProductTest" EntitySet="ProductTests" />
       <End Role="ProtocolResult" EntitySet="ProtocolResults" />
     </AssociationSet>
+    <EntitySet Name="Protocols" EntityType="DB_9BCA69_RedDbModel.Protocol" />
     <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
       <End Role="Protocol" EntitySet="Protocols" />
       <End Role="ProtocolResult" EntitySet="ProtocolResults" />
     </AssociationSet>
+    <AssociationSet Name="FK_Protocols_Requests" Association="DB_9BCA69_RedDbModel.FK_Protocols_Requests">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="Protocol" EntitySet="Protocols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols">
+      <End Role="Protocol" EntitySet="Protocols" />
+      <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Protocol">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="RequestId" Type="Guid" Nullable="false" />
-    <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Tester" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-    <Property Name="LabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Request" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Protocol" ToRole="Request" />
-    <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="Protocol" ToRole="ProtocolsRemark" />
-    <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="Protocol" ToRole="ProtocolResult" />
-  </EntityType>
   <EntityType Name="Diary">
     <Key>
       <PropertyRef Name="Id" />
@@ -472,8 +459,8 @@
     <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
     <Property Name="TestingPeriod" Type="Int32" />
     <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
-    <NavigationProperty Name="Protocols" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Request" ToRole="Protocol" />
     <NavigationProperty Name="User" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
+    <NavigationProperty Name="Protocols" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Request" ToRole="Protocol" />
   </EntityType>
   <Association Name="FK_Requests_Diary">
     <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="1">
@@ -486,18 +473,6 @@
       </Principal>
       <Dependent Role="Request">
         <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Protocols_Requests">
-    <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Request">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Protocol">
-        <PropertyRef Name="RequestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -608,8 +583,8 @@
     <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
     <Property Name="Number" Type="Int32" Nullable="false" />
     <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" FromRole="ProtocolsRemark" ToRole="AcredetationLevel" />
-    <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="ProtocolsRemark" ToRole="Protocol" />
     <NavigationProperty Name="Remark" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" FromRole="ProtocolsRemark" ToRole="Remark" />
+    <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="ProtocolsRemark" ToRole="Protocol" />
   </EntityType>
   <Association Name="FK_ProtocolsRemarks_AcredetationLevels">
     <End Type="DB_9BCA69_RedDbModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
@@ -620,18 +595,6 @@
       </Principal>
       <Dependent Role="ProtocolsRemark">
         <PropertyRef Name="AcredetationLevelId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProtocolsRemarks_Protocols">
-    <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Protocol">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProtocolsRemark">
-        <PropertyRef Name="ProtocolId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -788,6 +751,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Protocol">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="RequestId" Type="Guid" Nullable="false" />
+    <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TesterMKB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="TesterFZH" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="Protocol" ToRole="ProtocolResult" />
+    <NavigationProperty Name="Request" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Protocol" ToRole="Request" />
+    <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="Protocol" ToRole="ProtocolsRemark" />
+  </EntityType>
   <Association Name="FK_ProtocolResults_Protocols">
     <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -798,6 +775,30 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ProtocolResult">
+        <PropertyRef Name="ProtocolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Protocols_Requests">
+    <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Protocol">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProtocolsRemarks_Protocols">
+    <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.ProtocolsRemark" Role="ProtocolsRemark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Protocol">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProtocolsRemark">
         <PropertyRef Name="ProtocolId" />
       </Dependent>
     </ReferentialConstraint>

@@ -1,5 +1,6 @@
 ﻿@model RED.Models.ElectronicDiary.Requests.RequestW
 @using RED.Models.ElectronicDiary
+@using RED.Models;
 @using System.Collections.Generic
 
 @{
@@ -111,15 +112,33 @@
 	        }
         }
 
+
+        @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.MKB)))
+        {
+            <div class="form-group">
+                <label for="Tester" class="control-label col-md-3">
+                    Ивършил изпитването (МКБ):
+                </label>
+                <div class="col-md-9">
+                    @Html.TextBox("TesterMKB", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
+                    @Html.ValidationMessage("TesterMKB", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+       @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.FZH)))
+       {
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
-                Ивършил изпитването:
+                Ивършил изпитването (ФЗХ):
             </label>
             <div class="col-md-9">
-                @Html.TextBox("Tester", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
-                @Html.ValidationMessage("Tester", new { @class = "text-danger" })
+                @Html.TextBox("TesterFZH", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (ФЗХ) е задължително поле!" })
+                @Html.ValidationMessage("TesterFZH", new { @class = "text-danger" })
             </div>
         </div>
+       }
+
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
                 Ръководител:
