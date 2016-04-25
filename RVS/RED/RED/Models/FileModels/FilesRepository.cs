@@ -55,14 +55,25 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("Date", date);
 
             var items = new List<RequestListModel>();
+
             foreach (var product in diary.Products.OrderBy(dp => dp.Number))
             {
                 var item = new RequestListModel();
 
-                item.Number = product.Number;
-                item.SampleType = product.Name;
-                item.Quantity = product.Quantity;
-                item.TestNames = product.ProductTests.Select(t => t.Test.Name).ToArray();
+                //item.Number = product.Number;
+                //item.SampleType = product.Name;
+                //item.Quantity = product.Quantity;
+                //item.TestNames = product.ProductTests.Select(t => t.Test.Name).ToArray();
+
+                item.ProductNumber = product.Number;
+                item.ProductName = product.Name;
+                item.ProductTests = product.ProductTests.Select(pt => new SubListModel()
+                                    {
+                                        TestType = pt.Test.TestType.ShortName, //1 for MKB 2 for FZH
+                                        TestName = pt.Test.Name,
+                                        Method = pt.Test.TestMethods,
+                                        MethodValue = pt.Test.TestType.ShortName
+                                    }).ToList();
 
                 items.Add(item);
             }
