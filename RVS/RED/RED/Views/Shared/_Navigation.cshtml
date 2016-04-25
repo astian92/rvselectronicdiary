@@ -10,13 +10,13 @@
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <a href="/Account/Profile?id=@user.Id">
+                    @*<a href="/Account/Profile?id=@user.Id">
                     <span> 
                         <img src="~/Images/default_small.png" alt="image" class="img-circle" />
-                    </span>
+                    </span>*@
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">@(user.FirstName + " " + user.LastName)</strong>
+                                <strong class="font-bold" style="color: white">@(user.FirstName + " " + user.LastName)</strong>
                             </span> <span class="text-muted text-xs block">@user.Position</span>
                         </span>
                     </a>

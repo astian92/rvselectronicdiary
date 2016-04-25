@@ -19,8 +19,8 @@
 
 
             <div class="form-group">
-                <label class="control-label" for="">Стойност на показателя</label>
-                <textarea class="form-control no-resize"></textarea>
+                <label class="control-label" for="methodValueBox">Стойност на показателя</label>
+                <textarea class="form-control no-resize methodValueBox"></textarea>
                 <span class="special-chars-holder pull-right">
                     <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
                     <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
@@ -29,10 +29,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="">Забележка</label>
-                <textarea class="form-control no-resize"></textarea>
+                <textarea class="form-control no-resize remarkBox"></textarea>
             </div>
-
-
 
             <div class="form-group" key="@product.Key">
                 <input type="button" value="Добави" class="add-test-btn btn btn-primary" tabindex="5" />
@@ -100,8 +98,9 @@
         var groupParent = $(this).parent().parent();
 
         var unitBox = groupParent.find('.unitBox');
-        console.log(unitBox);
         var units = unitBox.val();
+        var methodValue = groupParent.find('.methodValueBox').val();
+        var remark = groupParent.find('.remarkBox').val();
 
         if (units == '') {
             groupParent.find('.units-name-validation').removeClass('collapse');
@@ -111,13 +110,14 @@
         var testsDd = groupParent.find('.tests option:selected');
         var selectedTestId = testsDd.val();
         var selectedTestText = testsDd.text();
-        console.log(selectedTestId, selectedTestText);
+        //console.log(selectedTestId, selectedTestText);
 
         var content = '<tr><td class="col-md-2"><span class="label label-primary">Добавен</span></td>' +
             '<td class="issue-info test">' +
                 selectedTestText + '</td><td class="col-md-2">' +
                 units + '</td><td class="text-right">' +
                 '<a class="delete-product" key="' + testKey + '" onclick="deleteTest(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
+        //... add methodValue and Remark to UI
 
         groupParent.parent().find('.test-list-table tbody').append(content);
         unitBox.val('');
@@ -125,16 +125,20 @@
         $('.current').removeClass('error');
          
         //CONTINUE WITH ADDING THIS INFORMATION IN THE PRODUCTS TABLE
-        console.log($('.product'));
+        //console.log($('.product'));
 
         var testsHolder = $('<span class="test" id="' + testKey + '"></span>');
         var testIdInput = $('<input type="hidden" class="testId" value="' + selectedTestId + '" />');
         var unitsInput = $('<input type="hidden" class="units" value="' + units + '" />');
         var testNameInput = $('<input type="hidden" class="name" value="' + selectedTestText + '" />');
+        var methodValueInput = $('<input type="hidden" class="methodValue" value="' + methodValue + '" />')
+        var remarkInput = $('<input type="hidden" class="remark" value="' + remark + '" />')
 
         testsHolder.append(testIdInput);
         testsHolder.append(unitsInput);
         testsHolder.append(testNameInput);
+        testsHolder.append(methodValueInput);
+        testsHolder.append(remarkInput);
 
         var product;
         var products = $('.product');

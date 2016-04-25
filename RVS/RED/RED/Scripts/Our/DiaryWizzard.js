@@ -83,6 +83,8 @@ $("#form").steps({
                 testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
                 var units = test.find('.units');
                 units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
+                //TODO: map names to the new data
+
             }
         }
 
