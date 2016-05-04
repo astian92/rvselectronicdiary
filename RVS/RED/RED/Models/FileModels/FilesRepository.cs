@@ -47,22 +47,35 @@ namespace RED.Models.FileModels
         public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
+            var diaryW = new DiaryW(diary);
             var model = new ReportModel();
             //var request = diary.Requests.First();
 
-            model.ReportParameters.Add("RequestNumber", diary.Number);
+            model.ReportParameters.Add("RequestNumber", diaryW.Remark + diaryW.Number);
             model.ReportParameters.Add("TestingPeriod", testingPeriod);
             model.ReportParameters.Add("Date", date);
 
             var items = new List<RequestListModel>();
+
             foreach (var product in diary.Products.OrderBy(dp => dp.Number))
             {
                 var item = new RequestListModel();
 
-                item.Number = product.Number;
-                item.SampleType = product.Name;
-                item.Quantity = product.Quantity;
-                item.TestNames = product.ProductTests.Select(t => t.Test.Name).ToArray();
+                //item.Number = product.Number;
+                //item.SampleType = product.Name;
+                //item.Quantity = product.Quantity;
+                //item.TestNames = product.ProductTests.Select(t => t.Test.Name).ToArray();
+
+                item.ProductNumber = product.Number;
+                item.ProductName = product.Name;
+                item.ProductTests = product.ProductTests.Select(pt => new SubListModel()
+                                    {
+                                        TestType = pt.Test.TestType.ShortName,
+                                        TestName = pt.Test.Name,
+                                        Method = pt.Test.TestMethods,
+                                        MethodValue = pt.Test.TestType.ShortName,
+                                        Remark = pt.Remark
+                                    }).ToList();
 
                 items.Add(item);
             }
