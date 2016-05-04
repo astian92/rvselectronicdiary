@@ -5,6 +5,7 @@ using System.Web;
 using RED.Models.ReportGeneration;
 using RED.Models.ReportGeneration.EPPlus;
 using OfficeOpenXml;
+using System.Globalization;
 
 namespace RED.Models.FileModels.RequestList
 {
@@ -18,11 +19,16 @@ namespace RED.Models.FileModels.RequestList
 
         protected override void FillContent()
         {
+            //Get The First Table Data
+            var diaryNumber = ReportModel.ReportParameters["RequestNumber"] as string;
+            var testingPeriod = ReportModel.ReportParameters["TestingPeriod"] as int? ?? 0;
+            DateTime? requestDate = ReportModel.ReportParameters["Date"] as DateTime?;
+
             int row = 6;
 
             if (reportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.MKB)))
             {
-                CreateTableInTemplate("7.1 МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ", ref row);
+                CreateTableInTemplate("7.1 МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.MKB);
             }
 
             row++;
@@ -30,7 +36,7 @@ namespace RED.Models.FileModels.RequestList
 
             if (reportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.FZH)))
             {
-                CreateTableInTemplate("7.2 ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ", ref row);
+                CreateTableInTemplate("7.2 ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.FZH);
             }
 
             //Insert only FZH Tests
@@ -63,12 +69,12 @@ namespace RED.Models.FileModels.RequestList
             ReplaceInFooter(row);
         }
 
-        private void CreateTableInTemplate(string title, ref int row)
+        private void CreateTableInTemplate(string title, ref int row, string diaryNumber, int testingPeriod, DateTime? requestDate, string testType)
         {
             //1 the title
             var head = Cells["A" + row + ":F" + row];
             head.Merge = true;
-            head.Value = "ЗАЯВКА № #NUMBER / Дата #DATE"; // / Час #TIME					
+            head.Value = string.Format("ЗАЯВКА № {0} / Дата {1}", diaryNumber, requestDate?.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); // / Час #TIME					
             //style the head
             row += 2;
 
@@ -83,11 +89,16 @@ namespace RED.Models.FileModels.RequestList
             Cells["E" + row].Value = "Допуск";
             Cells["F" + row].Value = "Забележка";
             //style table header cells
-            row += 2;
+            row += 1;
+
+            //PopulateData
+            PopulateData(ref row, testType, diaryNumber);
+
+            row += 1;
 
             var days = Cells["A" + row + ":C" + row];
             days.Merge = true;
-            days.Value = "Срок за изпитване: #D дни";
+            days.Value = string.Format("Срок за изпитване: {0} дни", testingPeriod);
 
             var tester = Cells["D" + row + ":F" + row];
             tester.Merge = true;
@@ -95,6 +106,31 @@ namespace RED.Models.FileModels.RequestList
 
             row++;
         }
+
+        private void PopulateData(ref int row, string testType, string diaryNumber)
+        {
+            var products = reportData.Where(r => r.ProductTests.Any(pt => pt.TestType == testType));
+
+            Cells["A" + row].Value = diaryNumber;
+            //no row increment ! products start on the same row
+
+            foreach (var product in products)
+            {
+                Cells["B" + row].Value = product.ProductNumber + ". " + product.ProductName;
+
+                var tests = product.ProductTests.Where(pt => pt.TestType == testType);
+                foreach (var test in tests)
+                {
+                    Cells["C" + row].Value = test.TestName;
+                    Cells["D" + row].Value = test.Method;
+                    Cells["E" + row].Value = test.MethodValue;
+                    Cells["F" + row].Value = test.Remark;
+
+                    row++;
+                }
+            }
+        }
+
 
         private void ReplaceInTitle()
         {

@@ -29,9 +29,9 @@ namespace RED.Models.DataContext
         public System.Guid TypeId { get; set; }
         public string MethodValue { get; set; }
     
-        public virtual ICollection<ProductTest> ProductTests { get; set; }
         public virtual TestCategory TestCategory { get; set; }
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestType TestType { get; set; }
+        public virtual ICollection<ProductTest> ProductTests { get; set; }
     }
 }

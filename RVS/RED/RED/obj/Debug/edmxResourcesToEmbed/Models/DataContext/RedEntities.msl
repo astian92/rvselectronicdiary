@@ -82,16 +82,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProductTests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
-        <MappingFragment StoreEntitySet="ProductTests">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="TestId" ColumnName="TestId" />
-          <ScalarProperty Name="Units" ColumnName="Units" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Role">
         <MappingFragment StoreEntitySet="Roles">
@@ -306,6 +296,18 @@
           <ScalarProperty Name="TesterMKB" ColumnName="TesterMKB" />
           <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
           <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
+        <MappingFragment StoreEntitySet="ProductTests">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+          <ScalarProperty Name="Units" ColumnName="Units" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

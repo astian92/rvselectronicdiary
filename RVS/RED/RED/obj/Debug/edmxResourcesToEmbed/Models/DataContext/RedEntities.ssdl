@@ -165,6 +165,8 @@
     <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Units" Type="int" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="400" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="400" />
   </EntityType>
   <EntityType Name="ProtocolResults">
     <Key>

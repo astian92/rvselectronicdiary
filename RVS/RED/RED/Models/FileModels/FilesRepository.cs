@@ -47,10 +47,11 @@ namespace RED.Models.FileModels
         public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
+            var diaryW = new DiaryW(diary);
             var model = new ReportModel();
             //var request = diary.Requests.First();
 
-            model.ReportParameters.Add("RequestNumber", diary.Number);
+            model.ReportParameters.Add("RequestNumber", diaryW.Remark + diaryW.Number);
             model.ReportParameters.Add("TestingPeriod", testingPeriod);
             model.ReportParameters.Add("Date", date);
 
@@ -69,10 +70,11 @@ namespace RED.Models.FileModels
                 item.ProductName = product.Name;
                 item.ProductTests = product.ProductTests.Select(pt => new SubListModel()
                                     {
-                                        TestType = pt.Test.TestType.ShortName, //1 for MKB 2 for FZH
+                                        TestType = pt.Test.TestType.ShortName,
                                         TestName = pt.Test.Name,
                                         Method = pt.Test.TestMethods,
-                                        MethodValue = pt.Test.TestType.ShortName
+                                        MethodValue = pt.Test.TestType.ShortName,
+                                        Remark = pt.Remark
                                     }).ToList();
 
                 items.Add(item);

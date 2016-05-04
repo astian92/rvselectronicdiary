@@ -25,5 +25,7 @@ namespace RED.Models.FileModels.RequestList
         public string Method { get; set; }
 
         public string MethodValue { get; set; }
+
+        public string Remark { get; set; }
     }
 }
