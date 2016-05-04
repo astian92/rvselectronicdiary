@@ -157,10 +157,23 @@ namespace RED.Models.ElectronicDiary
 
         public IEnumerable<ClientW> GetClients()
         {
-            var roles = db.Clients.ToList();
-            return roles.Select(r => new ClientW(r));
+            return db.Clients.ToList().Select(r => new ClientW(r));
         }
         
+        public IEnumerable<Client> GetSelectListClients()
+        {
+            var selectList = new List<Client>();
+
+            var nullable = new Client();
+            nullable.Id = Guid.Empty;
+            nullable.Name = "Всички";
+            selectList.Insert(0, nullable);
+
+            selectList.AddRange(db.Clients);
+
+            return selectList;
+        }
+
         public IEnumerable<TestW> GetTests()
         {
             var tests = db.Tests.ToList();
