@@ -26,7 +26,7 @@ namespace RED.Models.ElectronicDiary
 
         public Guid Key { get; set; }
 
-        public int Type { get; set; } //1 - MKB, 2 - FZH
+        public string Type { get; set; }
 
         public int Units { get; set; }
 

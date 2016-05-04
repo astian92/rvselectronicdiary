@@ -239,7 +239,7 @@ namespace RED.Controllers
 
         public ActionResult ProductsTests(SimpleProduct[] products)
         {
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "FullValue", "FullName");
             return PartialView(products);
         }
 

@@ -134,7 +134,7 @@ namespace RED.Models.ElectronicDiary
 
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
 
-            diary.AcceptanceDateAndTime = DateTime.Now.ToUniversalTime();
+            diary.AcceptanceDateAndTime = DateTime.UtcNow;
 
             int i = 1;
             foreach (var item in diary.Products)
@@ -164,7 +164,7 @@ namespace RED.Models.ElectronicDiary
         public IEnumerable<TestW> GetTests()
         {
             var tests = db.Tests.ToList();
-            return tests.Select(x => new TestW(x));
+            return tests.Select(x => new TestW(x)).OrderBy(x => x.TestCategory.Name);
         }
 
         public bool GenerateRequest(Guid diaryId, int testingPeriod)

@@ -20,10 +20,10 @@
 
             <div class="form-group">
                 <label class="control-label" for="methodValueBox">Стойност на показателя</label>
-                <textarea class="form-control no-resize methodValueBox"></textarea>
+                <textarea id="methodValueBox" class="form-control no-resize methodValueBox"></textarea>
                 <span class="special-chars-holder pull-right">
-                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
-                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
+                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" for="methodValueBox" tabindex="-1" />
+                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" for="methodValueBox" tabindex="-1" />
                 </span>
                 @*<div class="clearfix"></div>*@
             </div>
@@ -44,8 +44,37 @@
                         foreach (var test in product.Tests)
                         {
                             <tr>
-                                <td class="col-md-2">
-                                    @if (test.Type == 1)
+                                <td colspan="3">
+                                    <div class="col-md-2">
+                                        @if (test.Type == TestTypes.MKB)
+                                        {
+                                            <span class="label label-primary">МКБ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-warning">ФЗХ</span>
+                                        }
+                                    </div>
+
+                                    <div class="col-md-9 test">
+                                        @test.Name
+                                        <input class="testId" type="hidden" value="@test.Id" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        @test.Units
+                                        <input class="unitsValue" type="hidden" value="@test.Units" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>@test.MethodValue</p>
+                                        <input type="hidden" class="methodValue" value="@test.MethodValue" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>@test.Remark</p>
+                                        <input type="hidden" class="remark" value="@test.Remark" />
+                                    </div>
+                                </td>
+                                @*<td class="col-md-1">
+                                    @if (test.Type == TestTypes.MKB)
                                     {
                                         <span class="label label-primary">МКБ</span>
                                     }
@@ -54,15 +83,15 @@
                                         <span class="label label-warning">ФЗХ</span>
                                     }
                                 </td>
-                                <td class="col-md-4 issue-info test">
+                                <td class="issue-info test">
                                     @test.Name
                                     <input class="testId" type="hidden" value="@test.Id" />
                                 </td>
-                                <td class="col-md-4">
+                                <td class="col-md-2">
                                     @test.Units
                                     <input class="unitsValue" type="hidden" value="@test.Units" />
-                                </td>
-                                <td class="col-md-2 text-right">
+                                </td>*@
+                                <td class="text-right">
                                     <a class="delete-product" key="@test.Key" onclick="deleteTest(this)">
                                         <h3 style="margin: 0px">x</h3>
                                     </a>
@@ -98,6 +127,8 @@
         var groupParent = $(this).parent().parent();
 
         var unitBox = groupParent.find('.unitBox');
+        var methodValueBox = groupParent.find('.methodValueBox');
+        var remarkBox = groupParent.find('.remarkBox');
         var units = unitBox.val();
         var methodValue = groupParent.find('.methodValueBox').val();
         var remark = groupParent.find('.remarkBox').val();
@@ -108,11 +139,18 @@
         }
       
         var testsDd = groupParent.find('.tests option:selected');
-        var selectedTestId = testsDd.val();
+        var selectedTestValue = testsDd.val();
+        var array = selectedTestValue.split('_');
+        var selectedTestId = array[1];
+        var selectedTestType = array[0];
         var selectedTestText = testsDd.text();
         //console.log(selectedTestId, selectedTestText);
 
-        var content = '<tr><td class="col-md-2"><span class="label label-primary">Добавен</span></td>' +
+        var labelColor = 'label-primary';
+        if (selectedTestType == 'ФЗХ')
+            labelColor = 'label-warning';
+
+        var content = '<tr><td class="col-md-1"><span class="label ' + labelColor + '">' + selectedTestType + '</span></td>' +
             '<td class="issue-info test">' +
                 selectedTestText + '</td><td class="col-md-2">' +
                 units + '</td><td class="text-right">' +
@@ -121,6 +159,8 @@
 
         groupParent.parent().find('.test-list-table tbody').append(content);
         unitBox.val('');
+        methodValueBox.val('');
+        remarkBox.val('');
         groupParent.find('.units-name-validation').addClass('collapse');
         $('.current').removeClass('error');
          
@@ -131,12 +171,14 @@
         var testIdInput = $('<input type="hidden" class="testId" value="' + selectedTestId + '" />');
         var unitsInput = $('<input type="hidden" class="units" value="' + units + '" />');
         var testNameInput = $('<input type="hidden" class="name" value="' + selectedTestText + '" />');
+        var testTypeInput = $('<input type="hidden" class="type" value="' + selectedTestType + '" />')
         var methodValueInput = $('<input type="hidden" class="methodValue" value="' + methodValue + '" />')
         var remarkInput = $('<input type="hidden" class="remark" value="' + remark + '" />')
 
         testsHolder.append(testIdInput);
         testsHolder.append(unitsInput);
         testsHolder.append(testNameInput);
+        testsHolder.append(testTypeInput);
         testsHolder.append(methodValueInput);
         testsHolder.append(remarkInput);
 
@@ -165,4 +207,22 @@
             $('.units-name-validation').addClass('collapse');
         }
     })
+
+    function addPlusMinus(e) {
+        var Id = $(e).attr('for');
+        var value = $('#' + Id).val();
+
+        value += '±';
+
+        $('#' + Id).val(value);
+    }
+
+    function addDegrees(e) {
+        var Id = $(e).attr('for');
+        var value = $('#' + Id).val();
+
+        value += '°';
+
+        $('#' + Id).val(value);
+    }
 </script>

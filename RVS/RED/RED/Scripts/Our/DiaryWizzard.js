@@ -29,8 +29,11 @@ $("#form").steps({
                     var id = $(this).find('.testId').val();
                     var units = $(this).find('.units').val();
                     var name = $(this).find('.name').val();
+                    var type = $(this).find('.type').val();
+                    var methodValue = $(this).find('.methodValue').val();
+                    var remark = $(this).find('.remark').val();
 
-                    tests.push({ Id: id, Units: units, Name: name, Key: key });
+                    tests.push({ Id: id, Units: units, Name: name, Key: key, MethodValue: methodValue, Remark: remark, Type: type });
                 });
                 products.push({ Name: productName, Key: productKey, Tests: tests });
             });
