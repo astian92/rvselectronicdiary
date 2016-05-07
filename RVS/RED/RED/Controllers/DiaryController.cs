@@ -17,19 +17,12 @@ namespace RED.Controllers
     [RoleFilter("fd53f97f-8bec-42ae-b17a-80cc7fee522f")]
     public class DiaryController : ControllerBase<DiaryRepository>
     {
-        // GET: Diary
         public ActionResult Index(Guid? IdToOpen, bool isArchived = false)
         {
-            var clients = Rep.GetClients();
-            var selectList = clients.ToList();
-
-            Client nullable = new Client();
-            nullable.Id = Guid.Empty;
-            nullable.Name = "Всички";
-            selectList.Insert(0, new ClientW(nullable));
-            ViewBag.ClientId = new SelectList(selectList, "Id", "Name");
+            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(), "Id", "Name");
             ViewBag.IdToOpen = IdToOpen;
             ViewBag.IsArchived = isArchived;
+
             return View();
         }
 
@@ -62,7 +55,6 @@ namespace RED.Controllers
             return PartialView("ArchivedDiaries", archivedDiaries);
         }
 
-        // GET: Diary/Create
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create()
         {
@@ -71,7 +63,6 @@ namespace RED.Controllers
             return View();
         }
 
-        // POST: Diary/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
@@ -239,7 +230,7 @@ namespace RED.Controllers
 
         public ActionResult ProductsTests(SimpleProduct[] products)
         {
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            ViewBag.Tests = new SelectList(Rep.GetTests(), "FullValue", "FullName");
             return PartialView(products);
         }
 

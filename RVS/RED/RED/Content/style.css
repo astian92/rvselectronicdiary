@@ -6448,3 +6448,18 @@ body.skin-3 {
 button .fa{
     padding-right:5px;
 }
+
+.modified-label {
+    padding-top: 7px;
+    margin-bottom: 0px;
+}
+
+.modified-label-notbold {
+    padding-top: 7px;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+
+.no-resize {
+    resize: none;
+}

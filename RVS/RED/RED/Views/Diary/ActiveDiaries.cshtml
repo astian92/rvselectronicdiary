@@ -53,7 +53,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col-md-12">
                                     <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
                                     <table class="table">
@@ -77,7 +77,7 @@
                                                         <span>@product.Quantity</span>
                                                     </td>
                                                     @{ int i = 0; }
-                                                    @foreach(var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
+                                                    @foreach (var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
                                                     {
                                                         if (i == 0)
                                                         {
@@ -87,17 +87,17 @@
                                                         }
                                                         else
                                                         {
-                                                            <tr>
-                                                                <td colspan="4" style="text-align: right">
-                                                                    <span>@test.Test.Name</span>
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td colspan="4" style="text-align: right">
+                                                                <span>@test.Test.Name</span>
+                                                            </td>
+                                                        </tr>
                                                         }
-                                                            
+
                                                         i++;
                                                     }
-                                                </tr>
-                                            }
+                                                    </tr>
+                                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -108,10 +108,10 @@
                                     <div class="status-container">
                                         @if (item.Request == null)
                                         {
-                                            if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                            if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                                             {
                                                 <label for="testingPeriod">Срок на изпитване (дни):</label>
-                                                <input type="number" min="1" max="365" id="testingPeriod" />
+                                                <input type="number" min="1" max="365" id="testingPeriod-@item.Id" />
                                                 <br />
                                                 <button id="@item.Id" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>
                                             }
@@ -130,7 +130,7 @@
                                                 <div class="alert alert-success">
                                                     Заявката е в очакване да бъде приета.
                                                     <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id">
-                                                        <i class="fa fa-download"></i> 
+                                                        <i class="fa fa-download"></i>
                                                         Изтегли заявка
                                                     </a>
                                                 </div>
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    @if(item.Request != null)
+                                    @if (item.Request != null)
                                     {
                                         var protocol = item.Request.Protocols.FirstOrDefault();
                                         <h5 class="text-right">Протокол № / Дата на издаване: @item.Number / @(protocol != null ? protocol.IssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) : "") <strong></strong></h5>
@@ -149,67 +149,69 @@
                                     }
                                 </div>
                             </div>
-                            @if(principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                            @if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
                             {
-                            <div class="ibox-content comment-container" style="margin-bottom:10px;">
-                                <div class="form-group">
-                                    <div class="col-md-10 no-padding">
-                                        <textarea @(item.Comment == null ? "" : "disabled") class="comment form-control message-input" name="Comment" placeholder="Въведи бележка">@item.Comment</textarea>
+                                <hr />
+                                <div class="row comment-container" style="margin-bottom:30px;">
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <textarea @(item.Comment == null ? "" : "disabled") class="comment form-control message-input" name="Comment" placeholder="Въведи бележка">@item.Comment</textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:5px;" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
+                                            <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:5px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"></i>Откажи</a>
+                                            <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" style="margin-top:5px;" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
-                                        <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:10px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"></i>Откажи</a>
-                                        <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
-                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="clearfix"></div>
-                            </div>
                             }
                             else
                             {
                                 <div class="ibox-content comment-container" style="margin-bottom:10px;">
-                                    
                                     <p>@item.Comment</p>
                                 </div>
                             }
                             <div class="row">
-                                @if ((item.Request == null || !item.Request.IsAccepted) && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
-                                {
-                                    <div class="text-right">
-                                        <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
-                                            <i class="fa fa-edit"></i>
-                                            Промени
-                                        </a>
-                                        <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-trash"></i>
-                                            Изтрий
-                                        </a>
-                                    </div>
-                                }
-                                
-                                @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
-                                {
-                                    <div class="text-right">
-                                        <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-archive"></i>
-                                            Архивирай
-                                        </a>
-                                        @*<button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
-                                            <i class="fa fa-archive"></i>
-                                            Архивирай
-                                        </button>*@
-                                    </div>
-                                    <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
+                                <div class="col-xs-12">
+                                    @if ((item.Request == null || !item.Request.IsAccepted) && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                    {
+                                        <div class="text-right">
+                                            <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
+                                                <i class="fa fa-edit"></i>
+                                                Промени
+                                            </a>
+                                            <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-trash"></i>
+                                                Изтрий
+                                            </a>
+                                        </div>
+                                    }
 
-                                    </div>
-                                }
+                                    @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                    {
+                                        <div class="text-right">
+                                            <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-archive"></i>
+                                                Архивирай
+                                            </a>
+                                            @*<button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
+                                                    <i class="fa fa-archive"></i>
+                                                    Архивирай
+                                                </button>*@
+                                        </div>
+                                        <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
+
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    }
+                                                        }
 </div>
 
 <div class="custom-pagination pull-right">
@@ -231,7 +233,7 @@
             changePage(page);
         },
         //clickNextArguments: ["http://next", '2'],
-        onPageInputChange: function (arguments, page) { 
+        onPageInputChange: function (arguments, page) {
             changePage(page);
         },
         //changePageFieldArguments: ["argument1", "argument2" ...]
@@ -239,10 +241,10 @@
 
     pagination.Create(".custom-pagination");
 
-    function changePage(page) { 
+    function changePage(page) {
         var data = GetFilters();
         data.page = page;
-        
+
         $.ajax({
             cache: false,
             type: 'POST',

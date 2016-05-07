@@ -86,9 +86,9 @@ function closeComment(diaryId) {
 
 function generateRequest(target) {
     var diaryId = $(target).attr('id');
-    var testingPeriod = $('#testingPeriod').val();
-
-    $('.status-container').html(spiner);
+    var testingPeriod = $('#testingPeriod-' + diaryId).val();
+    var parent = $(target).parent();
+    parent.html(spiner);
     $.ajax({
         type: "POST",
         url: '/Diary/GenerateRequest?diaryId=' + diaryId + '&&testingPeriod=' + testingPeriod,
@@ -109,7 +109,7 @@ function generateRequest(target) {
                 html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
             }
 
-            $('.status-container').html(html);
+            parent.html(html);
         }
     });
 
@@ -119,8 +119,9 @@ function generateRequest(target) {
 function deleteRequest(target) {
     var url = $(target).attr('url');
     var diaryId = $(target).attr('diaryId');
-    
-    $('.status-container').html(spiner);
+    var parent = $(target).parent();
+
+    parent.html(spiner);
     $.ajax({
         type: "POST",
         url: url,
@@ -129,7 +130,7 @@ function deleteRequest(target) {
             var html = '';
             if (res == 'Ok') {
                 html = '<label for="testingPeriod">Срок на изпитване (дни):</label>' +
-                       '<input type="number" min="1" max="365" id="testingPeriod" />' +
+                       '<input type="number" min="1" max="365" id="testingPeriod-' + diaryId + '" />' +
                        '<br />' +
                        '<button id="' + diaryId + '" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>';
             }
@@ -137,7 +138,7 @@ function deleteRequest(target) {
                 html = '<div class="alert alert-danger">Възникна грешка при изтриването на заявката.</div>';
             }
 
-            $('.status-container').html(html);
+            parent.html(html);
         }
     });
 }

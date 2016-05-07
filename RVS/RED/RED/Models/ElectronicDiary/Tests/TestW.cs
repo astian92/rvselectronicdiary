@@ -18,6 +18,10 @@ namespace RED.Models.ElectronicDiary.Tests
         [Display(Name = "Име")]
         public string Name { get; set; }
 
+        public string FullName { get; set; }
+
+        public string FullValue { get; set; }
+
         [Required(ErrorMessage = "Полето Методи е задължително!")]
         [Display(Name = "Методи")]
         public string TestMethods { get; set; }
@@ -52,6 +56,8 @@ namespace RED.Models.ElectronicDiary.Tests
             this.Id = test.Id;
             this.TestCategoryId = test.TestCategoryId;
             this.Name = test.Name;
+            this.FullName = test.Name + " - " + test.TestCategory.Name;
+            this.FullValue = test.TestType.ShortName + "_" + test.Id;
             this.TestMethods = test.TestMethods;
             this.AcredetationLevelId = test.AcredetationLevelId;
             this.Temperature = test.Temperature;
