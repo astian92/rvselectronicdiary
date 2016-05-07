@@ -58,7 +58,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create()
         {
-            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name");
             //ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
             return View();
         }
@@ -75,27 +75,22 @@ namespace RED.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
+            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
 
             return View(diary);
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            DiaryW diary = Rep.GetDiary(id.Value);
+            var diary = Rep.GetDiary(id);
             if (diary == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "Id", "Name");
 
             return View(diary);
         }
@@ -112,30 +107,23 @@ namespace RED.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetClients(), "Id", "Name", diary.ClientId);
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "Id", "Name");
 
             return View(diary);
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            DiaryW client = Rep.GetDiary(id.Value);
+            var client = Rep.GetDiary(id);
             if (client == null)
             {
                 return HttpNotFound();
             }
 
             if (Request.IsAjaxRequest())
-            {
                 return PartialView(client);
-            }
 
             return View(client);
         }
@@ -230,7 +218,7 @@ namespace RED.Controllers
 
         public ActionResult ProductsTests(SimpleProduct[] products)
         {
-            ViewBag.Tests = new SelectList(Rep.GetTests(), "FullValue", "FullName");
+            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "FullValue", "FullName");
             return PartialView(products);
         }
 

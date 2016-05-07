@@ -44,53 +44,30 @@
                         foreach (var test in product.Tests)
                         {
                             <tr>
-                                <td colspan="3">
-                                    <div class="col-md-2">
-                                        @if (test.Type == TestTypes.MKB)
-                                        {
-                                            <span class="label label-primary">МКБ</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="label label-warning">ФЗХ</span>
-                                        }
-                                    </div>
-
-                                    <div class="col-md-9 test">
+                                <td>
+                                    @if (test.Type == TestTypes.MKB)
+                                    { <span class="label label-primary">МКБ</span> }
+                                    else
+                                    { <span class="label label-warning">ФЗХ</span> }
+                                </td>
+                                <td colspan="2">
+                                    <div class="col-md-11 test">
                                         @test.Name
-                                        <input class="testId" type="hidden" value="@test.Id" />
+                                        @*<input class="testId" type="hidden" value="@test.Id" />*@
                                     </div>
                                     <div class="col-md-1">
                                         @test.Units
-                                        <input class="unitsValue" type="hidden" value="@test.Units" />
+                                        @*<input class="unitsValue" type="hidden" value="@test.Units" />*@
                                     </div>
                                     <div class="col-md-6">
-                                        <p>@test.MethodValue</p>
-                                        <input type="hidden" class="methodValue" value="@test.MethodValue" />
+                                        <p style="margin-top:10px;">@test.MethodValue</p>
+                                        @*<input type="hidden" class="methodValue" value="@test.MethodValue" />*@
                                     </div>
                                     <div class="col-md-6">
-                                        <p>@test.Remark</p>
-                                        <input type="hidden" class="remark" value="@test.Remark" />
+                                        <p style="margin-top:10px;">@test.Remark</p>
+                                        @*<input type="hidden" class="remark" value="@test.Remark" />*@
                                     </div>
                                 </td>
-                                @*<td class="col-md-1">
-                                    @if (test.Type == TestTypes.MKB)
-                                    {
-                                        <span class="label label-primary">МКБ</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-warning">ФЗХ</span>
-                                    }
-                                </td>
-                                <td class="issue-info test">
-                                    @test.Name
-                                    <input class="testId" type="hidden" value="@test.Id" />
-                                </td>
-                                <td class="col-md-2">
-                                    @test.Units
-                                    <input class="unitsValue" type="hidden" value="@test.Units" />
-                                </td>*@
                                 <td class="text-right">
                                     <a class="delete-product" key="@test.Key" onclick="deleteTest(this)">
                                         <h3 style="margin: 0px">x</h3>
@@ -150,12 +127,11 @@
         if (selectedTestType == 'ФЗХ')
             labelColor = 'label-warning';
 
-        var content = '<tr><td class="col-md-1"><span class="label ' + labelColor + '">' + selectedTestType + '</span></td>' +
-            '<td class="issue-info test">' +
-                selectedTestText + '</td><td class="col-md-2">' +
-                units + '</td><td class="text-right">' +
+        var content = '<tr><td><span class="label ' + labelColor + '">' + selectedTestType + '</span></td>' +
+            '<td colspan="2"><div class="col-md-11 test">' +
+                selectedTestText + '</div><div class="col-md-1">' +
+                units + '</div><div class="col-md-6"><p style="margin-top:10px;">' + methodValue + '</p></div><div class="col-md-6"><p style="margin-top:10px;">' + remark + '</p></div><td class="text-right">' +
                 '<a class="delete-product" key="' + testKey + '" onclick="deleteTest(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
-        //... add methodValue and Remark to UI
 
         groupParent.parent().find('.test-list-table tbody').append(content);
         unitBox.val('');

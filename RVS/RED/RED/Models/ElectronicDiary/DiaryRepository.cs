@@ -148,6 +148,7 @@ namespace RED.Models.ElectronicDiary
                 foreach (var pt in item.ProductTests)
                 {
                     pt.Id = Guid.NewGuid();
+                    pt.ProductId = item.Id;
                 }
             }
 
@@ -160,14 +161,17 @@ namespace RED.Models.ElectronicDiary
             return db.Clients.ToList().Select(r => new ClientW(r));
         }
         
-        public IEnumerable<Client> GetSelectListClients()
+        public IEnumerable<Client> GetSelectListClients(bool allValue = true)
         {
             var selectList = new List<Client>();
 
-            var nullable = new Client();
-            nullable.Id = Guid.Empty;
-            nullable.Name = "Всички";
-            selectList.Insert(0, nullable);
+            if(allValue)
+            {
+                var nullable = new Client();
+                nullable.Id = Guid.Empty;
+                nullable.Name = "Всички";
+                selectList.Insert(0, nullable);
+            }
 
             selectList.AddRange(db.Clients);
 
@@ -178,6 +182,13 @@ namespace RED.Models.ElectronicDiary
         {
             var tests = db.Tests.ToList();
             return tests.Select(x => new TestW(x)).OrderBy(x => x.TestCategory.Name);
+        }
+
+        public IEnumerable<TestW> GetSelectListTests()
+        {
+            var selectList = db.Tests.OrderBy(x => x.TestCategory.Name).Select(x => new TestW { FullName = x.Name + " - " + x.TestCategory.Name,
+                                                                                                FullValue = x.TestType.ShortName + "_" + x.Id });
+            return selectList;
         }
 
         public bool GenerateRequest(Guid diaryId, int testingPeriod)
