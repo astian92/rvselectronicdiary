@@ -343,6 +343,7 @@
     <Compile Include="Models\FileModels\FileNames.cs" />
     <Compile Include="Models\FileModels\FileProperties.cs" />
     <Compile Include="Models\FileModels\FilesRepository.cs" />
+    <Compile Include="Models\FileModels\MethodsModel.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolProduct.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolReport.cs" />
     <Compile Include="Models\FileModels\RequestList\RequestListModel.cs" />

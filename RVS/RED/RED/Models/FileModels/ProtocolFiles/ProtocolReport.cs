@@ -24,8 +24,8 @@ namespace RED.Models.FileModels.ProtocolFiles
             ReplaceItems();
             InsertMethodsAndQuantities();
             InsertLists();
-            InsertTable();
-            InsertRemarks();
+            //InsertTable();
+            //InsertRemarks();
         }
 
         private void ReplaceItems()
@@ -55,18 +55,25 @@ namespace RED.Models.FileModels.ProtocolFiles
             Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
             Document.ReplaceText("#REQMIN", requestDate.Minute.ToString());
-            Document.ReplaceText("#LABLEADER", labLeader);
-            Document.ReplaceText("#TESTER", tester);
+            //Document.ReplaceText("#LABLEADER", labLeader); - LATER ON SECOND PAGE
+            //Document.ReplaceText("#TESTER", tester);
 
             Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
         }
 
         private void InsertMethodsAndQuantities()
         {
-            var methods = ReportModel.ReportParameters["Methods"] as IEnumerable<string>;
-            var methodsString = string.Join("; ", methods);
+            var methods = ReportModel.ReportParameters["Methods"] as IEnumerable<MethodsModel>;
+            var methodsString = new StringBuilder();
 
-            Document.ReplaceText("#TESTMETHODSLIST", methodsString);
+            int i = 1;
+            foreach (var item in methods)
+            {
+                methodsString.AppendLine(i + ". " + item.TestName + " - " + item.TestMethod);
+                i++;
+            }
+
+            Document.ReplaceText("#TESTMETHODSLIST", methodsString.ToString());
 
             var quantities = ReportModel.ReportParameters["Quantities"] as IEnumerable<string>;
             var quantitiesString = string.Join("; ", quantities);

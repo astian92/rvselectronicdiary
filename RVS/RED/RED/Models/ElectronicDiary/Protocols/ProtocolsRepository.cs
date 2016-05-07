@@ -137,7 +137,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             {
                 db.SaveChanges();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 return false;
             }

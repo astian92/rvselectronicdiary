@@ -150,7 +150,9 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("ProtocolIssuedDate", protocol.IssuedDate);
             
             model.ReportParameters.Add("Products", products);
-            var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            //var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category)
+                            .Select(pt => new MethodsModel() { TestName = pt.Test.Name, TestMethod = pt.Test.TestMethods })).ToList().Distinct();
             model.ReportParameters.Add("Methods", methods);
             var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
             model.ReportParameters.Add("Quantities", quantities);
