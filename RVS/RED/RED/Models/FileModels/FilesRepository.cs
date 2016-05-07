@@ -73,7 +73,7 @@ namespace RED.Models.FileModels
                                         TestType = pt.Test.TestType.ShortName,
                                         TestName = pt.Test.Name,
                                         Method = pt.Test.TestMethods,
-                                        MethodValue = pt.Test.TestType.ShortName,
+                                        MethodValue = pt.Test.MethodValue,
                                         Remark = pt.Remark
                                     }).ToList();
 

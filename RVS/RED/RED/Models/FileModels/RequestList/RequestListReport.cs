@@ -40,33 +40,7 @@ namespace RED.Models.FileModels.RequestList
             }
 
             //Insert only FZH Tests
-
-
-            ReplaceInTitle(); //in order to make changes after the table headers are generated
-
-            //foreach (var item in reportData)
-            //{
-            //    Cells["B" + row].Value = item.Number;
-            //    Cells["C" + row].Value = item.SampleType;
-            //    Cells["D" + row].Value = item.Quantity;
-
-            //    foreach (var test in item.TestNames)
-            //    {
-            //        Cells["E" + row].Value = test;
-            //        FormatRow(row);
-            //        row++;
-            //        InsertRow(row);
-            //    }
-
-            //    if (item.TestNames.Length == 0)
-            //    {
-            //        FormatRow(row);
-            //        row++;
-            //        InsertRow(row);
-            //    }
-            //}
-
-            ReplaceInFooter(row);
+            
         }
 
         private void CreateTableInTemplate(string title, ref int row, string diaryNumber, int testingPeriod, DateTime? requestDate, string testType)
@@ -76,18 +50,22 @@ namespace RED.Models.FileModels.RequestList
             head.Merge = true;
             head.Value = string.Format("ЗАЯВКА № {0} / Дата {1}", diaryNumber, requestDate?.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); // / Час #TIME					
             //style the head
+            FormatTitleRow(row);
+             
             row += 2;
 
             Cells["A" + row].Value = title;
+            FormatCategoryRow(row);
             //style title
             row++;
 
             Cells["A" + row].Value = "Вх. №";
-            Cells["B" + row].Value = "Вид на  пробата";
+            Cells["B" + row].Value = "Вид на пробата";
             Cells["C" + row].Value = "Показател";
             Cells["D" + row].Value = "Метод";
             Cells["E" + row].Value = "Допуск";
             Cells["F" + row].Value = "Забележка";
+            FormatHeaderRow(row);
             //style table header cells
             row += 1;
 
@@ -103,6 +81,8 @@ namespace RED.Models.FileModels.RequestList
             var tester = Cells["D" + row + ":F" + row];
             tester.Merge = true;
             tester.Value = "Приел пробата......";
+
+            FormatFooterRow(row);
 
             row++;
         }
@@ -126,42 +106,88 @@ namespace RED.Models.FileModels.RequestList
                     Cells["E" + row].Value = test.MethodValue;
                     Cells["F" + row].Value = test.Remark;
 
+                    FormatDataRow(row);
+
                     row++;
                 }
             }
         }
 
-
-        private void ReplaceInTitle()
+        private void FormatTitleRow(int row)
         {
-            var queryNumber = ReportModel.ReportParameters["RequestNumber"];
-            var date = ReportModel.ReportParameters["Date"] as DateTime?;
-
-            //var title = Cells["A5"].Value;
-            //Cells["A5"].Value = title.ToString()
-            //    .Replace("#NUMBER", queryNumber.ToString())
-            //    .Replace("#DATE", date == null ? "" : date.Value.ToLocalTime().ToString("d.MM.yyyy г"))
-            //    .Replace("#TIME", date == null ? "" : date.Value.ToLocalTime().ToString("HH:mm"));
+            Cells["A" + row].Style.Font.Size = 14;
+            Cells["A" + row].Style.Font.Name = "Times New Roman";
+            Cells["A" + row].Style.Font.Bold = true;
+            Cells["A" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
         }
 
-        private void FormatRow(int row)
+        private void FormatCategoryRow(int row)
         {
+            Cells["A" + row].Style.Font.Size = 14;
+            Cells["A" + row].Style.Font.Name = "Times New Roman";
+            Cells["A" + row].Style.Font.Bold = true;
+            Cells["A" + row].Style.Indent = 2;
+        }
+
+        private void FormatHeaderRow(int row)
+        {
+            Cells["A" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["A" + row].Style.Font.Size = 12;
+            Cells["A" + row].Style.Font.Name = "Times New Roman";
+            Cells["A" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             Cells["B" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["B" + row].Style.Font.Size = 12;
+            Cells["B" + row].Style.Font.Name = "Times New Roman";
+            Cells["B" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             Cells["C" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["C" + row].Style.Font.Size = 12;
+            Cells["C" + row].Style.Font.Name = "Times New Roman";
+            Cells["C" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             Cells["D" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["D" + row].Style.Font.Size = 12;
+            Cells["D" + row].Style.Font.Name = "Times New Roman";
+            Cells["D" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             Cells["E" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["E" + row].Style.Font.Size = 12;
+            Cells["E" + row].Style.Font.Name = "Times New Roman";
+            Cells["E" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            Cells["F" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["F" + row].Style.Font.Size = 12;
+            Cells["F" + row].Style.Font.Name = "Times New Roman";
+            Cells["F" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+        }
+
+        private void FormatDataRow(int row)
+        {
+            Cells["A" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["A" + row].Style.WrapText = true;
+            Cells["A" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            Cells["B" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["B" + row].Style.WrapText = true;
+            Cells["B" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            Cells["C" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["C" + row].Style.WrapText = true;
+            Cells["C" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            Cells["D" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["D" + row].Style.WrapText = true;
+            Cells["D" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            Cells["E" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["E" + row].Style.WrapText = true;
+            Cells["E" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            Cells["F" + row].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, System.Drawing.Color.Black);
+            Cells["F" + row].Style.WrapText = true;
+            Cells["F" + row].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
             Cells["B" + row + ":E" + row].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             Cells["B" + row + ":E" + row].Style.Font.Size = 12;
             Cells["B" + row + ":E" + row].Style.Font.Name = "Times New Roman";
         }
 
-        private void ReplaceInFooter(int row)
+        private void FormatFooterRow(int row)
         {
-            var timeLength = ReportModel.ReportParameters["TestingPeriod"].ToString();
-
-            //var footer = Cells["B" + (row + 2)].Value;
-            //Cells["B" + (row + 2)].Value = footer.ToString().Replace("#D", timeLength);
+            Cells["A" + row].Style.Indent = 3;
+            Cells["D" + row].Style.Indent = 3;
         }
+
     }
 }
