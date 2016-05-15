@@ -112,9 +112,9 @@
                                 </div>
                             </div>
 
-                            <div class="ibox-content comment-container" style="margin-bottom:10px;">
+                            <div class="row comment-container" style="margin-bottom:30px;">
                                 <div class="form-group">
-                                    <div class="col-md-12 no-padding">
+                                    <div class="col-md-12">
                                         <textarea disabled class="comment form-control message-input" name="Comment">@item.Comment</textarea>
                                     </div>
                                 </div>
@@ -123,15 +123,17 @@
                             @if(user.Id == Guid.Parse("0f68da69-5c82-480b-9474-54c133439b0c") || user.Id == Guid.Parse("613b0faa-8828-44a9-8bbe-09ba68cc33ae"))
                             {
                                 <div class="row">
-                                    <div class="text-right">
-                                        <a class="btn btn-primary" adiaryId="@item.Id" onclick="refreshProtocol(this)">
-                                            <i class="fa fa-refresh"></i>
-                                            Опресни протокол
-                                        </a>
-                                        <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
-                                            <i class="fa fa-edit"></i>
-                                            Промени
-                                        </a>
+                                    <div class="col-xs-12">
+                                        <div class="text-right">
+                                            <a class="btn btn-primary" adiaryId="@item.Id" onclick="refreshProtocol(this)">
+                                                <i class="fa fa-refresh"></i>
+                                                Опресни протокол
+                                            </a>
+                                            <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
+                                                <i class="fa fa-edit"></i>
+                                                Промени
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             }

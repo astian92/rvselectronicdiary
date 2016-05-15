@@ -214,7 +214,7 @@ namespace RED.Models.ElectronicDiary
             var protocolResult = db.ArchivedProtocolResults.Single(apr => apr.Id == aprotocolResult.Id);
 
             protocolResult.ResultNumber = aprotocolResult.ResultNumber;
-            protocolResult.MethodValue = aprotocolResult.MethodValue;
+            //protocolResult.MethodValue = aprotocolResult.MethodValue;
             protocolResult.Results = aprotocolResult.Results;
             
             db.SaveChanges();

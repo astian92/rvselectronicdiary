@@ -266,7 +266,7 @@ namespace RED.Models.ElectronicDiary
 
         public ActionResponse ArchiveDiary(Guid diaryId)
         {
-            ActionResponse response = new ActionResponse();
+            var res = new ActionResponse();
 
             try
             {
@@ -329,6 +329,11 @@ namespace RED.Models.ElectronicDiary
                         aptest.TestAcredetationLevel = ptest.Test.AcredetationLevel.Level;
                         aptest.TestTemperature = ptest.Test.Temperature;
                         aptest.TestCategory = ptest.Test.TestCategory.Name;
+                        //aptest.TestType = ptest.Test.TestType.Type;
+                        //aptest.TestTypeShortName = ptest.Test.TestType.ShortName;
+                        //aptest.MethodValue = ptest.MethodValue;
+                        //aptest.Remark = ptest.Remark;
+
                         //aptest.Units = ptest.Units;
 
                         var protocolResults = ptest.ProtocolResults;
@@ -363,17 +368,17 @@ namespace RED.Models.ElectronicDiary
 
                 db.SaveChanges();
 
-                response.IsSuccess = true;
-                response.ResponseObject = archivedDiary.Id;
-                response.SuccessMsg = "Архивирането на дневник: " + diary.Number + " премина успешно.";
+                res.IsSuccess = true;
+                res.ResponseObject = archivedDiary.Id;
+                res.SuccessMsg = "Архивирането на дневник: " + diary.Number + " премина успешно.";
             }
             catch (Exception exc)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(exc);
-                response.Error = ErrorFactory.UnableToArchiveDiary;
+                res.Error = ErrorFactory.UnableToArchiveDiary;
             }
 
-            return response;
+            return res;
         }
 
         public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)

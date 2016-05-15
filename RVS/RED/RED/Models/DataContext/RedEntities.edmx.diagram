@@ -4,11 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce7cd07a73784346a6b53e711ff57f86" Name="Diagram1" ZoomLevel="82">
+      <Diagram DiagramId="ce7cd07a73784346a6b53e711ff57f86" Name="Diagram1" ZoomLevel="58">
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLogProperty" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionLog" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ActionType" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="15.5" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ELMAH_Error" Width="1.5" PointX="9.75" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Feature" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Product" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
@@ -33,10 +32,7 @@
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Remark" Width="1.5" PointX="13.5" PointY="12.5" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" Width="1.5" PointX="11" PointY="4.125" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" Width="1.5" PointX="6" PointY="19" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.875" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" Width="1.5" PointX="15.75" PointY="13.75" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" />
@@ -45,7 +41,6 @@
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Client" Width="1.5" PointX="3.75" PointY="1.5" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Diary_Clients" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.TestType" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" />
@@ -58,6 +53,11 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.5" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="15.5" PointY="3.25" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

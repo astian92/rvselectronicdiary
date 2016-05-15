@@ -131,16 +131,16 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Archive(Guid id)
         {
-            DiaryW client = Rep.GetDiary(id);
-            if (client == null)
+            var diary = Rep.GetDiary(id);
+            if (diary == null)
             {
                 return HttpNotFound();
             }
 
             if (Request.IsAjaxRequest())
-                return PartialView(client);
+                return PartialView(diary);
 
-            return View(client);
+            return View(diary);
         }
 
         [HttpPost, ActionName("Delete")]
