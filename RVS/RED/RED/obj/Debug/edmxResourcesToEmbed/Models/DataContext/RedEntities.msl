@@ -34,18 +34,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedProtocolResults">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolResult">
-        <MappingFragment StoreEntitySet="ArchivedProtocolResults">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
-          <ScalarProperty Name="ArchivedProductTestId" ColumnName="ArchivedProductTestId" />
-          <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
-          <ScalarProperty Name="Results" ColumnName="Results" />
-          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ELMAH_Error">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ELMAH_Error">
         <MappingFragment StoreEntitySet="ELMAH_Error">
@@ -201,20 +189,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ArchivedProductTests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
-        <MappingFragment StoreEntitySet="ArchivedProductTests">
-          <ScalarProperty Name="TestCategory" ColumnName="TestCategory" />
-          <ScalarProperty Name="TestTemperature" ColumnName="TestTemperature" />
-          <ScalarProperty Name="TestAcredetationLevel" ColumnName="TestAcredetationLevel" />
-          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
-          <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
-          <ScalarProperty Name="TestName" ColumnName="TestName" />
-          <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProtocolsRemarks">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolsRemark">
         <MappingFragment StoreEntitySet="ProtocolsRemarks">
@@ -308,6 +282,35 @@
           <ScalarProperty Name="Units" ColumnName="Units" />
           <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProductTests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
+        <MappingFragment StoreEntitySet="ArchivedProductTests">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+          <ScalarProperty Name="TestTypeShortName" ColumnName="TestTypeShortName" />
+          <ScalarProperty Name="TestType" ColumnName="TestType" />
+          <ScalarProperty Name="TestCategory" ColumnName="TestCategory" />
+          <ScalarProperty Name="TestTemperature" ColumnName="TestTemperature" />
+          <ScalarProperty Name="TestAcredetationLevel" ColumnName="TestAcredetationLevel" />
+          <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
+          <ScalarProperty Name="TestUnitName" ColumnName="TestUnitName" />
+          <ScalarProperty Name="TestName" ColumnName="TestName" />
+          <ScalarProperty Name="ArchivedProductId" ColumnName="ArchivedProductId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArchivedProtocolResults">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProtocolResult">
+        <MappingFragment StoreEntitySet="ArchivedProtocolResults">
+          <ScalarProperty Name="Results" ColumnName="Results" />
+          <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
+          <ScalarProperty Name="ArchivedProductTestId" ColumnName="ArchivedProductTestId" />
+          <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

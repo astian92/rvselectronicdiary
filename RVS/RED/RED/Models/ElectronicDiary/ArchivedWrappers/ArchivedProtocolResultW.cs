@@ -21,9 +21,9 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
         [Display(Name = "Резултати от изследването, неопределеност")]
         public string Results { get; set; }
 
-        [Required(ErrorMessage = "Полето \"Стойност на показателя\" е задължително!")]
-        [Display(Name = "Стойност на показателя")]
-        public string MethodValue { get; set; }
+        //[Required(ErrorMessage = "Полето \"Стойност на показателя\" е задължително!")]
+        //[Display(Name = "Стойност на показателя")]
+        //public string MethodValue { get; set; }
 
         public ArchivedProtocolResultW()
         {
@@ -37,7 +37,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             this.ArchivedProductTestId = aresult.ArchivedProductTestId;
             this.Results = aresult.Results;
             this.ResultNumber = aresult.ResultNumber;
-            this.MethodValue = aresult.MethodValue;
+            //this.MethodValue = aresult.MethodValue;
         }
 
         public ArchivedProtocolResult ToBase()
@@ -49,7 +49,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             aresult.ArchivedProductTestId = this.ArchivedProductTestId;
             aresult.Results = this.Results;
             aresult.ResultNumber = this.ResultNumber;
-            aresult.MethodValue = this.MethodValue;
+            //aresult.MethodValue = this.MethodValue;
 
             return aresult;
         }

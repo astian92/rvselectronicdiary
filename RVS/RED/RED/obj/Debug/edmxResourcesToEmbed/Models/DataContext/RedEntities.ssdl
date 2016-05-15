@@ -81,6 +81,10 @@
     <Property Name="TestAcredetationLevel" Type="nvarchar" MaxLength="2" Nullable="false" />
     <Property Name="TestTemperature" Type="nvarchar" MaxLength="50" />
     <Property Name="TestCategory" Type="nvarchar" MaxLength="120" Nullable="false" />
+    <Property Name="TestType" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="TestTypeShortName" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="MethodValue" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="400" />
   </EntityType>
   <EntityType Name="ArchivedProtocolRemarks">
     <Key>
@@ -101,7 +105,6 @@
     <Property Name="ArchivedProductTestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ResultNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
     <Property Name="Results" Type="nvarchar" MaxLength="800" Nullable="false" />
-    <Property Name="MethodValue" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="Clients">
     <Key>
@@ -495,7 +498,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProtocolsRemarks_Protocols">
-    <End Role="Protocols" Type="Self.Protocols" Multiplicity="1" />
+    <End Role="Protocols" Type="Self.Protocols" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ProtocolsRemarks" Type="Self.ProtocolsRemarks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Protocols">
