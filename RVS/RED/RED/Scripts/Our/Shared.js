@@ -13,3 +13,21 @@
             </div>';
 
 var PAGE_SIZE = 10;
+
+function addPlusMinus(e) {
+    var Id = $(e).attr('for');
+    var value = $('#' + Id).val();
+
+    value += '±';
+
+    $('#' + Id).val(value);
+}
+
+function addDegrees(e) {
+    var Id = $(e).attr('for');
+    var value = $('#' + Id).val();
+
+    value += '°';
+
+    $('#' + Id).val(value);
+}

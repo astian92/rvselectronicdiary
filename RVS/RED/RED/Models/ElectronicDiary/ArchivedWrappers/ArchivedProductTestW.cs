@@ -40,6 +40,21 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
         //[Display(Name = "Единици")]
         //public int Units { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Вид\" е задължително!")]
+        [Display(Name = "Вид")]
+        public string TestType { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Вид (съкратено)\" е задължително!")]
+        [Display(Name = "Вид (съкратено)")]
+        public string TestTypeShortName { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Стойност на показателя\" е задължително!")]
+        [Display(Name = "Стойност на показателя")]
+        public string MethodValue { get; set; }
+
+        [Display(Name = "Забележка")]
+        public string Remark { get; set; }
+
         public IEnumerable<ArchivedProtocolResultW> Results { get; set; }
 
         public ArchivedProductTestW()
@@ -57,6 +72,10 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             this.TestAcredetationLevel = atest.TestAcredetationLevel;
             this.TestTemperature = atest.TestTemperature;
             this.TestCategory = atest.TestCategory;
+            this.TestType = atest.TestType;
+            this.TestTypeShortName = atest.TestTypeShortName;
+            this.MethodValue = atest.MethodValue;
+            this.Remark = atest.Remark;
             //this.Units = atest.Units;
 
             this.Results = atest.ArchivedProtocolResults.Select(ar => new ArchivedProtocolResultW(ar));
@@ -74,6 +93,10 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             atest.TestAcredetationLevel = this.TestAcredetationLevel;
             atest.TestTemperature = this.TestTemperature;
             atest.TestCategory = this.TestCategory;
+            atest.TestType = this.TestType;
+            atest.TestTypeShortName = this.TestTypeShortName;
+            atest.MethodValue = this.MethodValue;
+            atest.Remark = this.Remark;
             //atest.Units = this.Units;
 
             if (this.Results != null)
