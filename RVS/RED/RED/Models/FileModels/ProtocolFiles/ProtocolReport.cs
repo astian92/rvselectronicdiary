@@ -50,12 +50,12 @@ namespace RED.Models.FileModels.ProtocolFiles
             Document.ReplaceText("#PROTOCOLISSUEDDATE", protocolIssuedDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#CONTRACTOR", contractor);
             Document.ReplaceText("#CLIENT", client);
-            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() : "");
+            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() + " " : "");
             Document.ReplaceText("#LETTERDATE", letterDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
             Document.ReplaceText("#REQMIN", requestDate.Minute.ToString());
-            //Document.ReplaceText("#LABLEADER", labLeader); - LATER ON SECOND PAGE
+            Document.ReplaceText("#LABLEADER", labLeader); //-LATER ON SECOND PAGE
             //Document.ReplaceText("#TESTER", tester);
 
             Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
@@ -86,62 +86,84 @@ namespace RED.Models.FileModels.ProtocolFiles
             var products = ReportModel.ReportParameters["Products"] as IEnumerable<Product>;
             products = products.OrderBy(p => p.Number);
 
-            var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
-
-            var catProds = new List<CategoryProducts>();
-            foreach (var cat in categories)
-            {
-                var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
-                var catProdItem = new CategoryProducts();
-                catProdItem.Category = cat;
-                catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
-                catProds.Add(catProdItem);
-            }
-
-            //order the damn categories
-            var orderedCategories = new List<CategoryProducts>();
-            var number = 1;
-            while (catProds.Count > 0)
-            {
-                var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
-                if (cats.Count() > 0)
-                {
-                    orderedCategories.AddRange(cats);
-                    catProds.RemoveAll(c => cats.Contains(c));
-                    //foreach (var cat in cats)
-                    //{
-                    //    catProds.Remove(cat);
-                    //}
-                }
-                number++;
-            }
-
             //set styles
-            var categoryStyle = new Formatting();
-            categoryStyle.Size = 14;
-            categoryStyle.Bold = true;
-
             var productsStyle = new Formatting();
             productsStyle.Size = 14;
 
-            var listItem = Document.Lists[0].Items[0];
-            bool isLabelInserted = false;
-            string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
-            string afterCategoryIntervals = "";
-            foreach (var cat in orderedCategories)
+            var builder = new StringBuilder();
+
+            foreach (var product in products.OrderBy(p => p.Number))
             {
-                listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
-
-                if (!isLabelInserted)
-                {
-                    listItem.InsertText(label + Environment.NewLine + "     ");
-                    isLabelInserted = true;
-                    afterCategoryIntervals = "    ";
-                }
-
-                var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
-                listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
+                builder.AppendLine(product.Number + ". " + product.Name); //continue with " - " product category ? (not one category, but many ...) TALK WITH IVO
             }
+
+            Document.ReplaceText("#PRODUCTSLIST", builder.ToString());
+
+            //var listItem = Document.Lists[0].Items[0];
+
+            //foreach (var product in products.OrderBy(p => p.Number))
+            //{
+            //    listItem.InsertText(product.Number + ". " + product.Name, false, productsStyle); //continue with " - " product category ? (not one category, but many ...) TALK WITH IVO
+            //}
+
+            #region oldCode
+            //var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
+
+            //var catProds = new List<CategoryProducts>();
+            //foreach (var cat in categories)
+            //{
+            //    var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
+            //    var catProdItem = new CategoryProducts();
+            //    catProdItem.Category = cat;
+            //    catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
+            //    catProds.Add(catProdItem);
+            //}
+
+            ////order the damn categories
+            //var orderedCategories = new List<CategoryProducts>();
+            //var number = 1;
+            //while (catProds.Count > 0)
+            //{
+            //    var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
+            //    if (cats.Count() > 0)
+            //    {
+            //        orderedCategories.AddRange(cats);
+            //        catProds.RemoveAll(c => cats.Contains(c));
+            //        //foreach (var cat in cats)
+            //        //{
+            //        //    catProds.Remove(cat);
+            //        //}
+            //    }
+            //    number++;
+            //}
+
+            ////set styles
+            //var categoryStyle = new Formatting();
+            //categoryStyle.Size = 14;
+            //categoryStyle.Bold = true;
+
+            //var productsStyle = new Formatting();
+            //productsStyle.Size = 14;
+
+            //var listItem = Document.Lists[0].Items[0];
+            //bool isLabelInserted = false;
+            //string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
+            //string afterCategoryIntervals = "";
+            //foreach (var cat in orderedCategories)
+            //{
+            //    listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
+
+            //    if (!isLabelInserted)
+            //    {
+            //        listItem.InsertText(label + Environment.NewLine + "     ");
+            //        isLabelInserted = true;
+            //        afterCategoryIntervals = "    ";
+            //    }
+
+            //    var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
+            //    listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
+            //}
+            #endregion
         }
 
         private void InsertTable()
