@@ -5,6 +5,7 @@ using RED.Models.ReportGeneration.DocXApi;
 using RED.Models.ReportGeneration.EPPlus;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -13,10 +14,24 @@ namespace RED.Models.FileModels.ProtocolFiles
 {
     public class ProtocolReport : DocXReportBase
     {
+        private IOrderedEnumerable<ProtocolResult> modelItems;
+
+        private bool hasMKB;
+        private bool hasFZH;
+        private bool HasBoth
+        {
+            get
+            {
+                return this.hasMKB && this.hasFZH;
+            }
+        }
+
         public ProtocolReport(ReportModel model) 
             : base(model, "ProtocolTemplate.docx")
         {
-            
+            this.modelItems = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
+            this.hasMKB = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
+            this.hasFZH = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
         }
 
         protected override void FillContent()
@@ -24,6 +39,33 @@ namespace RED.Models.FileModels.ProtocolFiles
             ReplaceItems();
             InsertMethodsAndQuantities();
             InsertLists();
+
+            var secondDocument = CreateLandscapePart();
+
+            string tableTitle = string.Empty;
+            if (this.hasMKB)
+            {
+                tableTitle = "7.1 РЕЗУЛТАТИ ОТ МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ:";
+                CreateResultsTable(secondDocument, tableTitle);
+            }
+            if (this.hasFZH)
+            {
+                string number = "1";
+                if (this.HasBoth)
+                {
+                    number = "2";
+                }
+
+                tableTitle = "7." + number + " РЕЗУЛТАТИ ОТ ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ:";
+                CreateResultsTable(secondDocument, tableTitle);
+            }
+            
+            secondDocument.Save();
+
+            this.Document.InsertSection();
+            this.Document.InsertDocument(secondDocument);
+
+
             //InsertTable();
             //InsertRemarks();
         }
@@ -98,73 +140,114 @@ namespace RED.Models.FileModels.ProtocolFiles
             }
 
             Document.ReplaceText("#PRODUCTSLIST", builder.ToString());
-
-            //var listItem = Document.Lists[0].Items[0];
-
-            //foreach (var product in products.OrderBy(p => p.Number))
-            //{
-            //    listItem.InsertText(product.Number + ". " + product.Name, false, productsStyle); //continue with " - " product category ? (not one category, but many ...) TALK WITH IVO
-            //}
-
-            #region oldCode
-            //var categories = products.SelectMany(p => p.ProductTests.Select(pt => pt.Test.TestCategory.Name)).Distinct();
-
-            //var catProds = new List<CategoryProducts>();
-            //foreach (var cat in categories)
-            //{
-            //    var inProducts = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategory.Name == cat));
-            //    var catProdItem = new CategoryProducts();
-            //    catProdItem.Category = cat;
-            //    catProdItem.Products = inProducts.Select(p => new NumberNamePair() { Name = p.Name, Number = p.Number }).ToArray();
-            //    catProds.Add(catProdItem);
-            //}
-
-            ////order the damn categories
-            //var orderedCategories = new List<CategoryProducts>();
-            //var number = 1;
-            //while (catProds.Count > 0)
-            //{
-            //    var cats = catProds.Where(c => c.Products.Any(p => p.Number == number));
-            //    if (cats.Count() > 0)
-            //    {
-            //        orderedCategories.AddRange(cats);
-            //        catProds.RemoveAll(c => cats.Contains(c));
-            //        //foreach (var cat in cats)
-            //        //{
-            //        //    catProds.Remove(cat);
-            //        //}
-            //    }
-            //    number++;
-            //}
-
-            ////set styles
-            //var categoryStyle = new Formatting();
-            //categoryStyle.Size = 14;
-            //categoryStyle.Bold = true;
-
-            //var productsStyle = new Formatting();
-            //productsStyle.Size = 14;
-
-            //var listItem = Document.Lists[0].Items[0];
-            //bool isLabelInserted = false;
-            //string label = @"/ Наименование на пробата – тип, марка, вид и др. /";
-            //string afterCategoryIntervals = "";
-            //foreach (var cat in orderedCategories)
-            //{
-            //    listItem.InsertText(cat.Category + ":" + Environment.NewLine + afterCategoryIntervals, false, categoryStyle);
-
-            //    if (!isLabelInserted)
-            //    {
-            //        listItem.InsertText(label + Environment.NewLine + "     ");
-            //        isLabelInserted = true;
-            //        afterCategoryIntervals = "    ";
-            //    }
-
-            //    var catProducts = string.Join("\n    ", cat.Products.OrderBy(p => p.Number).Select(p => p.Concatenated));
-            //    listItem.InsertText(catProducts + Environment.NewLine, false, productsStyle);
-            //}
-            #endregion
         }
+
+        public DocX CreateLandscapePart()
+        {
+            System.IO.MemoryStream ms2 = new System.IO.MemoryStream();
+            DocX document2 = DocX.Create(ms2);
+            document2.PageLayout.Orientation = Novacode.Orientation.Landscape;
+
+            var titleStyle = new Formatting();
+            titleStyle.Size = 12;
+            titleStyle.Bold = true;
+            titleStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            Paragraph p = document2.InsertParagraph("7. РЕЗУЛТАТИ ОТ ИЗПИТВАНЕ", false, titleStyle);
+
+            return document2;
+        }
+
+        private void CreateResultsTable(DocX document2, string tableTitle) //add items later
+        {
+            var titleStyle = new Formatting();
+            titleStyle.Size = 12;
+            titleStyle.Bold = true;
+            titleStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            var title = document2.InsertParagraph(tableTitle, false, titleStyle);
+            var protocolResults = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
+
+            var table = document2.InsertTable(1, 9);
+
+            InsertTableHeader(table);
+
+            //foreach (var item in this.modelItems)
+            //{
+            //    var row = table.InsertRow();
+
+            //    row.Cells[0].InsertParagraph("ASD");
+            //    row.Cells[1].InsertParagraph("ASD");
+            //    row.Cells[2].InsertParagraph("ASD");
+            //    row.Cells[3].InsertParagraph("ASD");
+            //    row.Cells[4].InsertParagraph("ASD");
+            //    row.Cells[5].InsertParagraph("ASD");
+            //    row.Cells[6].InsertParagraph("ASD");
+            //    row.Cells[7].InsertParagraph("ASD");
+            //    row.Cells[8].InsertParagraph("ASD");
+            //}
+        }
+
+        private void InsertTableHeader(Table table)
+        {
+            var textStyle = new Formatting();
+            textStyle.Size = 9;
+            textStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            var row = table.Rows[0];
+
+            row.Cells[0].Paragraphs[0].InsertText("№ по ред", false, textStyle);
+            
+            PrepareTableCell(row.Cells[0], 0.83);
+            row.Cells[1].Paragraphs[0].InsertText("№ на образеца по вх/изх. дневник", false, textStyle);
+            PrepareTableCell(row.Cells[1], 1.97);
+            row.Cells[2].Paragraphs[0].InsertText("Продукт", false, textStyle);
+            PrepareTableCell(row.Cells[2], 6);
+            row.Cells[3].Paragraphs[0].InsertText("Изпитван показател", false, textStyle);
+            PrepareTableCell(row.Cells[3], 2.99);
+            row.Cells[4].Paragraphs[0].InsertText("Единица на величина", false, textStyle);
+            PrepareTableCell(row.Cells[4], 1.74);
+            row.Cells[5].Paragraphs[0].InsertText("Метод на изследване", false, textStyle);
+            PrepareTableCell(row.Cells[5], 0.83);
+            row.Cells[6].Paragraphs[0].InsertText("Резултат от изпитването", false, textStyle);
+            PrepareTableCell(row.Cells[6], 0.83);
+            row.Cells[7].Paragraphs[0].InsertText("Стойност и допуск на показателя", false, textStyle);
+            PrepareTableCell(row.Cells[7], 0.83);
+            row.Cells[8].Paragraphs[0].InsertText("Условия на изпитването", false, textStyle);
+            PrepareTableCell(row.Cells[8], 0.83);
+
+            SetBorder(row);
+        }
+
+        private void SetBorder(Row row)
+        {
+            foreach (var cell in row.Cells)
+            {
+                SetBorder(cell);
+            }
+        }
+
+        private void SetBorder(Cell cell)
+        {
+            cell.SetBorder(TableCellBorderType.Top, new Border(BorderStyle.Tcbs_single, BorderSize.one, 0, Color.Black));
+            cell.SetBorder(TableCellBorderType.Bottom, new Border(BorderStyle.Tcbs_single, BorderSize.one, 0, Color.Black));
+            cell.SetBorder(TableCellBorderType.Left, new Border(BorderStyle.Tcbs_single, BorderSize.one, 0, Color.Black));
+            cell.SetBorder(TableCellBorderType.Right, new Border(BorderStyle.Tcbs_single, BorderSize.one, 0, Color.Black));
+        }
+
+        private void PrepareTableCell(Cell cell, double width)
+        {
+            cell.Width = width;
+            cell.Paragraphs[0].Alignment = Alignment.center;
+            cell.VerticalAlignment = VerticalAlignment.Center;
+        }
+
+
+
+
+
+
+
 
         private void InsertTable()
         {
