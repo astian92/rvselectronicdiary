@@ -171,6 +171,10 @@ namespace RED.Models.ElectronicDiary
             productTest.TestTemperature = aproductTest.TestTemperature;
             productTest.TestUnitName = aproductTest.TestUnitName;
             productTest.TestAcredetationLevel = aproductTest.TestAcredetationLevel;
+            productTest.TestType = aproductTest.TestType;
+            productTest.TestTypeShortName = aproductTest.TestTypeShortName;
+            productTest.MethodValue = aproductTest.MethodValue;
+            productTest.Remark = aproductTest.Remark;
 
             db.SaveChanges();
         }

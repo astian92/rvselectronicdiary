@@ -329,10 +329,10 @@ namespace RED.Models.ElectronicDiary
                         aptest.TestAcredetationLevel = ptest.Test.AcredetationLevel.Level;
                         aptest.TestTemperature = ptest.Test.Temperature;
                         aptest.TestCategory = ptest.Test.TestCategory.Name;
-                        //aptest.TestType = ptest.Test.TestType.Type;
-                        //aptest.TestTypeShortName = ptest.Test.TestType.ShortName;
-                        //aptest.MethodValue = ptest.MethodValue;
-                        //aptest.Remark = ptest.Remark;
+                        aptest.TestType = ptest.Test.TestType.Type;
+                        aptest.TestTypeShortName = ptest.Test.TestType.ShortName;
+                        aptest.MethodValue = ptest.MethodValue;
+                        aptest.Remark = ptest.Remark;
 
                         //aptest.Units = ptest.Units;
 
