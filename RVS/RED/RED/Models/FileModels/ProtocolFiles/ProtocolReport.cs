@@ -15,7 +15,7 @@ namespace RED.Models.FileModels.ProtocolFiles
     public class ProtocolReport : DocXReportBase
     {
         private IOrderedEnumerable<ProtocolResult> modelItems;
-        private double[] cellsWidth = { 2d, 2d, 2d, 2d, 2d, 2d, 2d, 2d, 2d };
+        private double[] cellsWidth = { 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 };
 
         private bool hasMKB;
         private bool hasFZH;
@@ -47,9 +47,11 @@ namespace RED.Models.FileModels.ProtocolFiles
             string tableTitle = string.Empty;
             if (this.hasMKB)
             {
+                var tester = ReportModel.ReportParameters["TesterMKB"] as string;
                 tableTitle = "7.1 РЕЗУЛТАТИ ОТ МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ:";
                 var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
                 CreateResultsTable(secondDocument, tableTitle, data);
+                InsertTesterSignature(secondDocument, tester);
             }
             if (this.hasFZH)
             {
@@ -59,19 +61,24 @@ namespace RED.Models.FileModels.ProtocolFiles
                     number = "2";
                 }
 
+                var tester = ReportModel.ReportParameters["TesterFZH"] as string;
                 tableTitle = "7." + number + " РЕЗУЛТАТИ ОТ ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ:";
                 var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
                 CreateResultsTable(secondDocument, tableTitle, data);
+                InsertTesterSignature(secondDocument, tester);
             }
-            
+
+            InsertRemarks(secondDocument);
+            InsertLabLeaderSignature(secondDocument);
+
             secondDocument.Save();
 
             this.Document.InsertSection();
             this.Document.InsertDocument(secondDocument);
 
+            //InsertSignatures();
 
             //InsertTable();
-            //InsertRemarks();
         }
 
         private void ReplaceItems()
@@ -84,7 +91,6 @@ namespace RED.Models.FileModels.ProtocolFiles
             var letterDate = (DateTime)ReportModel.ReportParameters["LetterDate"];
             var requestDate = (DateTime)ReportModel.ReportParameters["RequestDate"];
             var labLeader = ReportModel.ReportParameters["LabLeader"] as string;
-            var tester = ReportModel.ReportParameters["Tester"] as string;
 
             string acredetationString = "";
             if (ReportModel.ReportParameters.ContainsKey("AcredetationString"))
@@ -101,8 +107,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
             Document.ReplaceText("#REQMIN", requestDate.Minute.ToString());
-            Document.ReplaceText("#LABLEADER", labLeader); //-LATER ON SECOND PAGE
-            //Document.ReplaceText("#TESTER", tester);
+            Document.ReplaceText("#LABLEADER", labLeader);
 
             Document.ReplaceText("#ACREDETATIONSTRING", acredetationString);
         }
@@ -175,7 +180,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             title.InsertText(Environment.NewLine);
 
             var table = document2.InsertTable(1, 9);
-            //table.AutoFit = AutoFit.Window;
+            table.AutoFit = AutoFit.Window;
 
             InsertTableHeader(table);
             InsertTableNumerationRow(table);
@@ -226,12 +231,19 @@ namespace RED.Models.FileModels.ProtocolFiles
             textStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
 
             int productIndex = 1;
-            
+            string lastProductName = "";
+
             foreach (var item in data)
             {
                 var row = table.InsertRow();
 
-                row.Cells[0].Paragraphs[0].InsertText(productIndex + ".", false, textStyle);
+                if (lastProductName != item.ProductTest.Product.Name)
+                {
+                    row.Cells[0].Paragraphs[0].InsertText(productIndex + ".", false, textStyle);
+                    productIndex++;
+                    lastProductName = item.ProductTest.Product.Name;
+                }
+
                 row.Cells[1].Paragraphs[0].InsertText(item.ResultNumber, false, textStyle);
                 row.Cells[2].Paragraphs[0].InsertText(item.ProductTest.Product.Name, false, textStyle);
                 row.Cells[3].Paragraphs[0].InsertText(item.ProductTest.Test.Name, false, textStyle);
@@ -251,13 +263,19 @@ namespace RED.Models.FileModels.ProtocolFiles
                 for (int i = 0; i < table.ColumnCount; i++)
                 {
                     var cell = row.Cells[i];
-                    cell.Width = cellsWidth[i];
+                    cell.Width = cellsWidth[i]; //DOESNT FUCKING WORK !!!!!!!!! 
                     cell.Paragraphs[0].Alignment = Alignment.center;
                     cell.VerticalAlignment = VerticalAlignment.Center;
                 }
 
                 SetBorder(row);
             }
+
+            //INCOMPETENT ... just incompetent API !
+            //for (int i = 0; i < table.ColumnCount; i++)
+            //{
+            //    table.SetColumnWidth(i, cellsWidth[i]);
+            //}
         }
 
         private void SetBorder(Row row)
@@ -276,83 +294,29 @@ namespace RED.Models.FileModels.ProtocolFiles
             cell.SetBorder(TableCellBorderType.Right, new Border(BorderStyle.Tcbs_single, BorderSize.one, 0, Color.Black));
         }
 
+        private void InsertTesterSignature(DocX document2, string tester)
+        {
+            var textStyle = new Formatting();
+            textStyle.Size = 12;
+            textStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
 
+            var signatureHeader = document2.InsertParagraph(
+                    Environment.NewLine +
+                    "Извършил изпитването:",
+                    false,
+                    textStyle
+                );
+            signatureHeader.IndentationBefore = 2;
 
+            var nameBox = document2.InsertParagraph(
+                    "/" + tester + "/",
+                    false,
+                    textStyle
+                );
+            nameBox.IndentationBefore = 2;
+        }
 
-
-
-
-
-
-
-
-        //private void InsertTable()
-        //{
-        //    var cellStyle0 = new Formatting();
-        //    cellStyle0.Size = 12;
-
-        //    var cellStyle1 = new Formatting();
-        //    cellStyle1.Size = 12;
-        //    cellStyle1.Italic = true;
-
-        //    var cellStyle3 = new Formatting();
-        //    cellStyle3.Size = 10;
-
-        //    var protocolResults = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
-        //    var table = Document.Tables.First();
-        //    int rowIndex = 2;
-        //    foreach (var result in protocolResults)
-        //    {
-        //        if (rowIndex > 2)
-        //        {
-        //            var row = table.InsertRow();
-        //            row.Cells[0].Width = 0.83;
-        //            row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[1].Width = 2.99;
-        //            row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[2].Width = 1.74;
-        //            row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[3].Width = 4;
-        //            row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[4].Width = 1.97;
-        //            row.Cells[4].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[5].Width = 4.75;
-        //            row.Cells[5].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[6].Width = 2.25;
-        //            row.Cells[6].VerticalAlignment = VerticalAlignment.Center;
-        //            row.Cells[7].Width = 2;
-        //            row.Cells[7].VerticalAlignment = VerticalAlignment.Center;
-        //        }
-
-        //        table.Rows[rowIndex].Cells[0].Paragraphs[0].InsertText((rowIndex - 1) + ".", false, cellStyle0);
-        //        table.Rows[rowIndex].Cells[0].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[1].Paragraphs[0].InsertText(result.ProductTest.Test.Name, false, cellStyle1);
-        //        table.Rows[rowIndex].Cells[1].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[2].Paragraphs[0].InsertText(result.ProductTest.Test.UnitName, false, cellStyle0);
-        //        table.Rows[rowIndex].Cells[2].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[3].Paragraphs[0].InsertText(result.ProductTest.Test.TestMethods, false, cellStyle0);
-        //        table.Rows[rowIndex].Cells[3].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[4].Paragraphs[0].InsertText(result.ResultNumber, false, cellStyle0);
-        //        table.Rows[rowIndex].Cells[4].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[5].Paragraphs[0].InsertText(result.Results, false, cellStyle0);
-        //        table.Rows[rowIndex].Cells[5].Paragraphs[0].Alignment = Alignment.center;
-
-        //        //table.Rows[rowIndex].Cells[6].Paragraphs[0].InsertText(result.MethodValue, false, cellStyle0);
-        //        //table.Rows[rowIndex].Cells[6].Paragraphs[0].Alignment = Alignment.center;
-
-        //        table.Rows[rowIndex].Cells[7].Paragraphs[0].InsertText(result.ProductTest.Test.Temperature, false, cellStyle3);
-        //        table.Rows[rowIndex].Cells[7].Paragraphs[0].Alignment = Alignment.center;
-
-        //        rowIndex++;
-        //    }
-        //}
-
-        private void InsertRemarks()
+        private void InsertRemarks(DocX document2)
         {
             var remarks = ReportModel.ReportParameters["Remarks"] as IEnumerable<ProtocolsRemark>;
 
@@ -360,11 +324,44 @@ namespace RED.Models.FileModels.ProtocolFiles
 
             foreach (var remark in remarks.OrderBy(r => r.Number))
             {
-                if(remark.Remark != null)
+                if (remark.Remark != null)
                     remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
             }
 
-            Document.ReplaceText("#REMARKSLIST", remarksText.ToString());
+            var remarksParagraph = document2.InsertParagraph(Environment.NewLine + remarksText.ToString());
+            remarksParagraph.IndentationBefore = 2;
         }
+
+        private void InsertLabLeaderSignature(DocX document2)
+        {
+            var labLeader = ReportModel.ReportParameters["LabLeader"] as string;
+
+            var textStyle = new Formatting();
+            textStyle.Size = 14;
+            textStyle.Bold = true;
+            textStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            var labLeaderHeader = document2.InsertParagraph(
+                    "Ръководител на лабораторията:",
+                    false,
+                    textStyle
+                );
+            labLeaderHeader.Alignment = Alignment.right;
+            labLeaderHeader.IndentationAfter = 2;
+
+            var ts2 = new Formatting();
+            ts2.Size = 14;
+            ts2.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            var nameBox = document2.InsertParagraph(
+                    //Environment.NewLine +
+                    "/" + labLeader + "/",
+                    false,
+                    ts2
+                );
+            nameBox.Alignment = Alignment.right;
+            nameBox.IndentationAfter = 1;
+        }
+
     }
 }

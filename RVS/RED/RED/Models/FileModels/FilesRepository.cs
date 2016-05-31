@@ -168,7 +168,8 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
             model.ReportParameters.Add("RequestDate", request.Date.ToLocalTime());
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
-            model.ReportParameters.Add("Tester", protocol.TesterMKB);
+            model.ReportParameters.Add("TesterMKB", protocol.TesterMKB);
+            model.ReportParameters.Add("TesterFZH", protocol.TesterFZH);
 
             var remarks = protocol.ProtocolsRemarks.Where(r => r.AcredetationLevel.Level.Trim() == category);
             model.ReportParameters.Add("Remarks", remarks);
