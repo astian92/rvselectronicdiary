@@ -44,8 +44,10 @@ namespace RED.Models.DataContext
 
             //save actual changes
             int changesCount = base.SaveChanges();
+
             #region testProperties
-            //THIS IS A WAY TO TRACE THE VALIDATION FIELDS THAT GIVE PROBLEMS
+            ////THIS IS A WAY TO TRACE THE VALIDATION FIELDS THAT GIVE PROBLEMS
+            //int changesCount = 0;
             //try
             //{
             //    changesCount = base.SaveChanges();
@@ -60,7 +62,8 @@ namespace RED.Models.DataContext
             //        }
             //    }
             //}
-            #endregion  
+            #endregion
+
             //use the same context to commit the logs
             try
             {

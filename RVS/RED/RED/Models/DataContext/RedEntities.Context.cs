@@ -48,9 +48,9 @@ namespace RED.Models.DataContext
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<TestType> TestTypes { get; set; }
         public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
-        public virtual DbSet<Protocol> Protocols { get; set; }
         public virtual DbSet<ProductTest> ProductTests { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
+        public virtual DbSet<Protocol> Protocols { get; set; }
     }
 }
