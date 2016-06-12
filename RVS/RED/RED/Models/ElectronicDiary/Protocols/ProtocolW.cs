@@ -21,6 +21,26 @@ namespace RED.Models.ElectronicDiary.Protocols
         public ICollection<ProtocolsRemark> ProtocolsRemarksA { get; set; }
         public ICollection<ProtocolsRemark> ProtocolsRemarksB { get; set; }
 
+        public string IssuedTime
+        {
+            get
+            {
+                return this.IssuedDate.ToString("HH:mm");
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.IssuedDate = this.IssuedDate.AddHours(hours);
+                    this.IssuedDate = this.IssuedDate.AddMinutes(minutes);
+                }
+            }
+        }
+
         public ProtocolW()
         {
             this.ProtocolResults = new List<ProtocolResult>();
@@ -32,7 +52,7 @@ namespace RED.Models.ElectronicDiary.Protocols
         {
             this.Id = protocol.Id;
             this.RequestId = protocol.Id;
-            this.IssuedDate = protocol.IssuedDate;
+            this.IssuedDate = protocol.IssuedDate.ToLocalTime();
             this.TesterMKB = protocol.TesterMKB;
             this.TesterFZH = protocol.TesterFZH;
             this.LabLeader = protocol.LabLeader;

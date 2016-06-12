@@ -7,6 +7,8 @@
     ViewBag.Title = "Create";
 }
 
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
 <link href="~/Content/Our/protocols.css" rel="stylesheet" />
 <link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
 
@@ -112,6 +114,32 @@
 	        }
         }
 
+        <div class="form-group" id="issued-date">
+            @Html.Label("IssuedDate", "Издаден на:", new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" id="IssuedDate" name="IssuedDate" type="datetime" value=""
+                           data-val="true" data-val-required="Полето &quot;Издаден на (дата)&quot; е задължително!">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group clockpicker" data-autoclose="true">
+                    <input type="text" class="form-control" id="IssuedTime" name="IssuedTime" value=""
+                           data-val="true" data-val-required="Полето &quot;Издаден на (час)&quot; е задължително!">
+                    <span class="input-group-addon">
+                        <span class="fa fa-clock-o"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9 col-md-offset-3">
+                @Html.ValidationMessage("IssuedDate", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-9 col-md-offset-3">
+                @Html.ValidationMessage("IssuedTime", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.MKB)))
         {
@@ -203,8 +231,21 @@
 <script src="~/Scripts/Our/Helpers.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/Our/Protocols.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 
 <script>
+    $('.clockpicker').clockpicker();
+
+    $('#issued-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },

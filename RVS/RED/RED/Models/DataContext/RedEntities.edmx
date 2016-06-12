@@ -192,7 +192,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="IssuedDate" Type="date" Nullable="false" />
+          <Property Name="IssuedDate" Type="datetime" Nullable="false" />
           <Property Name="TesterMKB" Type="nvarchar" MaxLength="300" />
           <Property Name="TesterFZH" Type="nvarchar" MaxLength="300" />
           <Property Name="LabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
@@ -1529,7 +1529,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="RequestId" Type="Guid" Nullable="false" />
-          <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IssuedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TesterMKB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="TesterFZH" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="LabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />

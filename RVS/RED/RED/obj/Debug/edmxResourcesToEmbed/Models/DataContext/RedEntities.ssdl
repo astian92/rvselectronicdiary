@@ -187,7 +187,7 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="IssuedDate" Type="date" Nullable="false" />
+    <Property Name="IssuedDate" Type="datetime" Nullable="false" />
     <Property Name="TesterMKB" Type="nvarchar" MaxLength="300" />
     <Property Name="TesterFZH" Type="nvarchar" MaxLength="300" />
     <Property Name="LabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
