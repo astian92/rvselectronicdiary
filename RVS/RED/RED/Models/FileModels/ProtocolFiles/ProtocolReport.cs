@@ -309,7 +309,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             signatureHeader.IndentationBefore = 2;
 
             var nameBox = document2.InsertParagraph(
-                    "/" + tester + "/",
+                    "/" + tester + "/" + Environment.NewLine,
                     false,
                     textStyle
                 );
@@ -328,7 +328,7 @@ namespace RED.Models.FileModels.ProtocolFiles
                     remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
             }
 
-            var remarksParagraph = document2.InsertParagraph(Environment.NewLine + remarksText.ToString());
+            var remarksParagraph = document2.InsertParagraph(remarksText.ToString());
             remarksParagraph.IndentationBefore = 2;
         }
 
