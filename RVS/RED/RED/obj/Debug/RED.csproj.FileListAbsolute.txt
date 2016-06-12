@@ -465,3 +465,4 @@ D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitt
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache

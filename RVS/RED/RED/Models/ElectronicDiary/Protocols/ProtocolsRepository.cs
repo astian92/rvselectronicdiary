@@ -70,7 +70,8 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
 
             var protocol = protocolW.ToBase();
-            protocol.IssuedDate = DateTime.Now.ToUniversalTime();
+            //protocol.IssuedDate = DateTime.Now.ToUniversalTime();
+            protocol.IssuedDate = protocol.IssuedDate.ToUniversalTime();
             db.Protocols.Add(protocol);
             var request = db.Requests.Single(r => r.Id == protocol.RequestId);
             GeneratePorotocolReport(protocol, request);
@@ -115,6 +116,7 @@ namespace RED.Models.ElectronicDiary.Protocols
                 protocol.ProtocolsRemarks.Add(item);
             }
 
+            protocol.IssuedDate = protocolW.IssuedDate.ToUniversalTime();
             protocol.TesterMKB = protocolW.TesterMKB;
             protocol.TesterFZH = protocolW.TesterFZH;
             protocol.LabLeader = protocolW.LabLeader;
