@@ -59,8 +59,8 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             this.ProtocolResults = protocol.ProtocolResults;
             this.Request = protocol.Request;
-            this.ProtocolsRemarksA = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited).ToList();
-            this.ProtocolsRemarksB = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited).ToList();
+            this.ProtocolsRemarksA = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited).ToList();
+            this.ProtocolsRemarksB = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited).ToList();
         }
 
         public Protocol ToBase()

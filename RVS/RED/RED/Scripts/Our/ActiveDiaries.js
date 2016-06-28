@@ -89,6 +89,7 @@ function generateRequest(target) {
     var testingPeriod = $('#testingPeriod-' + diaryId).val();
     var parent = $(target).parent();
     parent.html(spiner);
+
     $.ajax({
         type: "POST",
         url: '/Diary/GenerateRequest?diaryId=' + diaryId + '&&testingPeriod=' + testingPeriod,

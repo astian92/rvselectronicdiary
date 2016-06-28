@@ -178,9 +178,9 @@ namespace RED.Controllers
         {
             if(diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
             {
-                bool isGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
+                int countGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
 
-                if(isGenerated)
+                if(countGenerated > 0)
                     return Json("Ok", JsonRequestBehavior.AllowGet);  
             }
 
