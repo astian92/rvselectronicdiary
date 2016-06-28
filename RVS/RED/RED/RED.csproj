@@ -532,9 +532,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Scripts\app\inspinia.js" />
-    <Content Include="Scripts\app\inspinia.min.js" />
-    <Content Include="Scripts\app\skin.config.min.js" />
     <EntityDeploy Include="Models\DataContext\RedEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RedEntities.Designer.cs</LastGenOutput>
