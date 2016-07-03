@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Protocols.ArchivedProtocol>
 @using RED.Models.ElectronicDiary
 @using System.Collections.Generic
+@using RED.Models
+@using RED.Models.Account
 
 <div class="panel-group" id="accordion_@ViewBag.Label">
     @foreach (var item in Model)
@@ -62,11 +64,20 @@
                                             </td>
                                         </tr>
 
+                                        @if (acredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB))
+                                        {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от микробиологично изпитване:</b>
+                                            </td>
+                                        </tr>
+                                        }
                                         @{ 
-                                            var orderdProtocolRes = acredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                            var orderedAcreditedResultsMKB = acredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB)
+                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
                                         }
 
-                                        @foreach (var result in orderdProtocolRes)
+                                        @foreach (var result in orderedAcreditedResultsMKB)
                                         {
                                             <tr>
                                                 <td>@result.ArchivedProductTest.TestName</td>
@@ -75,10 +86,37 @@
                                                     @(result.ResultNumber != null ? result.ResultNumber : "")
                                                 </td>
                                                 <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
+                                                @*<td>@result.MethodValue</td>*@
                                                 <td>@result.ArchivedProductTest.TestTemperature</td>
                                             </tr>
                                         }
+
+                                    @if (acredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH))
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от физикохимично и органолептично изпитване:</b>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @{
+                                        var orderedAcreditedResultsFZH = acredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH)
+                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                    }
+
+                                    @foreach (var result in orderedAcreditedResultsMKB)
+                                    {
+                                        <tr>
+                                            <td>@result.ArchivedProductTest.TestName</td>
+                                            <td>@result.ArchivedProductTest.TestMethods</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            @*<td>@result.MethodValue</td>*@
+                                            <td>@result.ArchivedProductTest.TestTemperature</td>
+                                        </tr>
+                                    }
                                 </table>
                             </div>
 
@@ -132,11 +170,21 @@
                                             </td>
                                         </tr>
 
-                                    @{
-                                        var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                    @if (notAcredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB))
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от микробиологично изпитване:</b>
+                                            </td>
+                                        </tr>
                                     }
 
-                                    @foreach (var result in orderedNotAcreditedResults)
+                                    @{
+                                        var orderedNotAcreditedResultsMKB = notAcredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB)
+                                            .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                    }
+
+                                    @foreach (var result in orderedNotAcreditedResultsMKB)
                                     {
                                         <tr>
                                             <td>@result.ArchivedProductTest.TestName</td>
@@ -145,7 +193,34 @@
                                                 @(result.ResultNumber != null ? result.ResultNumber : "")
                                             </td>
                                             <td>@result.Results</td>
-                                            <td>@result.MethodValue</td>
+                                            @*<td>@result.MethodValue</td>*@
+                                            <td>@result.ArchivedProductTest.TestTemperature</td>
+                                        </tr>
+                                    }
+
+                                    @if (notAcredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH))
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от физикохимично и органолептично изпитване:</b>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @{
+                                        var orderedNotAcreditedResultsFZH = notAcredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH)
+                                            .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                    }
+
+                                    @foreach (var result in orderedNotAcreditedResultsFZH)
+                                    {
+                                        <tr>
+                                            <td>@result.ArchivedProductTest.TestName</td>
+                                            <td>@result.ArchivedProductTest.TestMethods</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            @*<td>@result.MethodValue</td>*@
                                             <td>@result.ArchivedProductTest.TestTemperature</td>
                                         </tr>
                                     }
