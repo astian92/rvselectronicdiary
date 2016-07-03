@@ -178,10 +178,10 @@ namespace RED.Controllers
         {
             if(diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
             {
-                bool isGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
+                string charGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
 
-                if(isGenerated)
-                    return Json("Ok", JsonRequestBehavior.AllowGet);  
+                if(!string.IsNullOrEmpty(charGenerated))
+                    return Json(charGenerated, JsonRequestBehavior.AllowGet);  
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);  

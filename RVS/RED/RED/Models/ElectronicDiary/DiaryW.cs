@@ -74,12 +74,12 @@ namespace RED.Models.ElectronicDiary
                 {
                     foreach (var ptest in product.ProductTests)
                     {
-                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited)
+                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited)
                         {
                             hasAcredited = true;
                         }
 
-                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited)
+                        if (ptest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited)
                         {
                             hasNotAcredited = true;
                         }
@@ -88,15 +88,15 @@ namespace RED.Models.ElectronicDiary
 
                 if (hasAcredited && hasNotAcredited)
                 {
-                    remark = AcredetationLevels.Acredited + "/" + AcredetationLevels.NotAcredited;
+                    remark = AcreditationLevels.Acredited + "/" + AcreditationLevels.NotAcredited;
                 }
                 else if (hasAcredited)
                 {
-                    remark = AcredetationLevels.Acredited;
+                    remark = AcreditationLevels.Acredited;
                 }
                 else if (hasNotAcredited)
                 {
-                    remark = AcredetationLevels.NotAcredited;
+                    remark = AcreditationLevels.NotAcredited;
                 }
 
                 return remark;

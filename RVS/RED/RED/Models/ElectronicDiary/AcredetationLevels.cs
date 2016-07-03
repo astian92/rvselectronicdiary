@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RED.Models.ElectronicDiary
 {
-    public static class AcredetationLevels
+    public static class AcreditationLevels
     {
         public static string Acredited = "A";
         public static string NotAcredited = "B";

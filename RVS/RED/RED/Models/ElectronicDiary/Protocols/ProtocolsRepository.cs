@@ -56,13 +56,13 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public void Create(ProtocolW protocolW)
         {
-            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.Acredited);
+            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
             foreach (var remark in protocolW.ProtocolsRemarksA)
             {
                 remark.AcredetationLevelId = acreditedLevel.Id;
                 remark.Remark = db.Remarks.Single(r => r.Id == remark.RemarkId);
             }
-            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
+            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
             foreach (var remark in protocolW.ProtocolsRemarksB)
             {
                 remark.AcredetationLevelId = notAcreditedLevel.Id;
@@ -97,7 +97,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
             db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
             protocol.ProtocolsRemarks.Clear();
-            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.Acredited);
+            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
             foreach (var item in protocolW.ProtocolsRemarksA)
             {
                 item.AcredetationLevelId = acreditedLevel.Id;
@@ -106,7 +106,7 @@ namespace RED.Models.ElectronicDiary.Protocols
                 item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId); 
                 protocol.ProtocolsRemarks.Add(item);
             }
-            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcredetationLevels.NotAcredited);
+            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
             foreach (var item in protocolW.ProtocolsRemarksB)
             {
                 item.AcredetationLevelId = notAcreditedLevel.Id;

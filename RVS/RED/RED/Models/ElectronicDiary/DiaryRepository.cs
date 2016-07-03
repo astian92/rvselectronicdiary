@@ -95,7 +95,8 @@ namespace RED.Models.ElectronicDiary
             var request = diary.Requests.FirstOrDefault();
             if (request != null)
             {
-                GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
+                var filesRepository = new FilesRepository();
+                string charGenerated = filesRepository.GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
             }
         }
 
@@ -191,7 +192,7 @@ namespace RED.Models.ElectronicDiary
             return selectList;
         }
 
-        public bool GenerateRequest(Guid diaryId, int testingPeriod)
+        public string GenerateRequest(Guid diaryId, int testingPeriod)
         {
             if(db.Diaries.Any(x => x.Id == diaryId))
             {
@@ -205,10 +206,11 @@ namespace RED.Models.ElectronicDiary
                 try
                 {
                     db.Requests.Add(request);
-                    GenerateRequestListReport(diaryId, date, request.TestingPeriod ?? 0);
+                    var filesRepository = new FilesRepository();
+                    string charGenerated = filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
                     db.SaveChanges();
 
-                    return true;
+                    return charGenerated;
                 }
                 catch(Exception ex)
                 {
@@ -216,7 +218,7 @@ namespace RED.Models.ElectronicDiary
                 }
             }
 
-            return false;
+            return string.Empty;
         }
 
         public bool DeleteRequest(Guid diaryId)
@@ -379,12 +381,6 @@ namespace RED.Models.ElectronicDiary
             }
 
             return res;
-        }
-
-        public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
-        {
-            var filesRepository = new FilesRepository();
-            filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
         }
 
         public ActionResponse RegenerateArchivedProtocol(ArchivedDiaryW adiary)

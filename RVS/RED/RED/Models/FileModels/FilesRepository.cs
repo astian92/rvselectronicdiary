@@ -44,69 +44,127 @@ namespace RED.Models.FileModels
             }
         }
 
-        public void GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
+        public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
             var diaryW = new DiaryW(diary);
-            var model = new ReportModel();
-            //var request = diary.Requests.First();
 
-            model.ReportParameters.Add("RequestNumber", diaryW.Remark + diaryW.Number);
-            model.ReportParameters.Add("TestingPeriod", testingPeriod);
-            model.ReportParameters.Add("Date", date);
-
-            var items = new List<RequestListModel>();
+            var acreditedItems = new List<RequestListModel>();
+            var notAcreditedItems = new List<RequestListModel>();
 
             foreach (var product in diary.Products.OrderBy(dp => dp.Number))
             {
-                var item = new RequestListModel();
+                if (product.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.Acredited))
+                {
+                    var item = new RequestListModel();
 
-                //item.Number = product.Number;
-                //item.SampleType = product.Name;
-                //item.Quantity = product.Quantity;
-                //item.TestNames = product.ProductTests.Select(t => t.Test.Name).ToArray();
+                    item.ProductNumber = product.Number;
+                    item.ProductName = product.Name;
+                    item.ProductTests = product.ProductTests
+                        .Where(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.Acredited)
+                        .Select(pt => new SubListModel()
+                        {
+                            TestType = pt.Test.TestType.ShortName,
+                            TestName = pt.Test.Name,
+                            Method = pt.Test.TestMethods,
+                            MethodValue = pt.Test.MethodValue,
+                            Remark = pt.Remark
+                        })
+                        .ToList();
 
-                item.ProductNumber = product.Number;
-                item.ProductName = product.Name;
-                item.ProductTests = product.ProductTests.Select(pt => new SubListModel()
-                                    {
-                                        TestType = pt.Test.TestType.ShortName,
-                                        TestName = pt.Test.Name,
+                    acreditedItems.Add(item);
+                }
+
+                if (product.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.NotAcredited))
+                {
+                    var item = new RequestListModel();
+
+                    item.ProductNumber = product.Number;
+                    item.ProductName = product.Name;
+                    item.ProductTests = product.ProductTests
+                        .Where(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.NotAcredited)
+                        .Select(pt => new SubListModel()
+                        {
+                            TestType = pt.Test.TestType.ShortName,
+                            TestName = pt.Test.Name,
                                         Method = pt.TestMethod.Method,
-                                        MethodValue = pt.Test.MethodValue,
-                                        Remark = pt.Remark
-                                    }).ToList();
+                            MethodValue = pt.Test.MethodValue,
+                            Remark = pt.Remark
+                        })
+                        .ToList();
 
-                items.Add(item);
+                    notAcreditedItems.Add(item);
+                }
             }
 
-            model.reportItems = items;
-            var report = new RequestListReport(model);
+            string requestsGeneratedCount = string.Empty;
 
-            var data = report.GenerateReport();
-
-            //this is supposed to create all the necessary directories for the file.
-            CheckAndGenerateDirectories(diary.Number);
-
-            var fileProps = GetFileProperties(diary.Number, FileNames.RequestListReport);
-
-            //if the file already exists override it BUT keep the old with current date
-            if (File.Exists(fileProps.FullPath))
+            if (acreditedItems.Count > 0)
             {
-                string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
-                File.Move(fileProps.FullPath, newDestination);
+                //GENERATE REQUEST A
+                var model = new ReportModel();
+                model.ReportParameters.Add("RequestNumber", AcreditationLevels.Acredited + diaryW.Number);
+                model.ReportParameters.Add("TestingPeriod", testingPeriod);
+                model.ReportParameters.Add("Date", date);
+                model.reportItems = acreditedItems;
+
+                var report = new RequestListReport(model);
+                var data = report.GenerateReport();
+
+                //this is supposed to create all the necessary directories for the file.
+                CheckAndGenerateDirectories(diary.Number);
+
+                var fileProps = GetFileProperties(diary.Number, FileNames.RequestListReport, AcreditationLevels.Acredited);
+                if (File.Exists(fileProps.FullPath))
+                {
+                    string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
+                    File.Move(fileProps.FullPath, newDestination);
+                }
+
+                var file = File.Create(fileProps.FullPath);
+                file.Write(data, 0, data.Length);
+                file.Close();
+
+                requestsGeneratedCount += "A";
             }
 
-            var file = File.Create(fileProps.FullPath);
-            file.Write(data, 0, data.Length);
-            file.Close();
+            if (notAcreditedItems.Count > 0)
+            {
+                //Generate Request B
+                var model = new ReportModel();
+                model.ReportParameters.Add("RequestNumber", AcreditationLevels.NotAcredited + diaryW.Number);
+                model.ReportParameters.Add("TestingPeriod", testingPeriod);
+                model.ReportParameters.Add("Date", date);
+                model.reportItems = notAcreditedItems;
+
+                var report = new RequestListReport(model);
+                var data = report.GenerateReport();
+
+                //this is supposed to create all the necessary directories for the file.
+                CheckAndGenerateDirectories(diary.Number);
+
+                var fileProps = GetFileProperties(diary.Number, FileNames.RequestListReport, AcreditationLevels.NotAcredited);
+                if (File.Exists(fileProps.FullPath))
+                {
+                    string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
+                    File.Move(fileProps.FullPath, newDestination);
+                }
+
+                var file = File.Create(fileProps.FullPath);
+                file.Write(data, 0, data.Length);
+                file.Close();
+
+                requestsGeneratedCount += "B";
+            }
+
+            return requestsGeneratedCount;
         }
 
-        public byte[] GetRequestListReport(Guid diaryId, out string fileName)
+        public byte[] GetRequestListReport(Guid diaryId, string category, out string fileName)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
 
-            var fileProp = GetFileProperties(diary.Number, FileNames.RequestListReport);
+            var fileProp = GetFileProperties(diary.Number, FileNames.RequestListReport, category);
             
             if (Directory.Exists(fileProp.Path))
             {
@@ -125,9 +183,9 @@ namespace RED.Models.FileModels
             var protocolRequest = request ?? protocol.Request;
             var diaryNumber = protocolRequest.Diary.Number;
             //We need to identify if there will be more than 1 protocol (one for A and one for B)
-            var acreditedProducts = protocolRequest.Diary.Products.Where(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited));
+            var acreditedProducts = protocolRequest.Diary.Products.Where(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited));
 
-            var notAcreditedProducts = protocolRequest.Diary.Products.Where(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited));
+            var notAcreditedProducts = protocolRequest.Diary.Products.Where(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited));
 
             if (acreditedProducts.Count() > 0)
             {
@@ -240,8 +298,8 @@ namespace RED.Models.FileModels
         //Archived shit
         public void RegenerateProtocolReport(ArchivedDiaryW adiary)
         {
-            var acreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited));
-            var notAcreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited));
+            var acreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcreditationLevels.Acredited));
+            var notAcreditedProducts = adiary.ArchivedProducts.Where(p => p.ArchivedProductTests.Any(apt => apt.TestAcredetationLevel.Trim() == AcreditationLevels.NotAcredited));
 
             if (acreditedProducts.Count() > 0)
             {

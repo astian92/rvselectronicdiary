@@ -89,6 +89,7 @@ function generateRequest(target) {
     var testingPeriod = $('#testingPeriod-' + diaryId).val();
     var parent = $(target).parent();
     parent.html(spiner);
+
     $.ajax({
         type: "POST",
         url: '/Diary/GenerateRequest?diaryId=' + diaryId + '&&testingPeriod=' + testingPeriod,
@@ -96,17 +97,28 @@ function generateRequest(target) {
         //contentType: "application/json; charset=utf-8",
         success: function (data) {
             var html = '';
-            if (data == 'Ok') {
-                html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.\
-                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '">\
+
+            if (data == "Failed") {
+                html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
+            }
+            else {
+                if (data.indexOf("A") > -1) { //if there was a A request generated
+                    html = '<div class="alert alert-success">Заявката (A) е в очакване да бъде приета.\
+                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '&category=A">\
                                 <i class="fa fa-download"></i>\
                                 Изтегли заявка\
                                 </a>\
-                            </div>\
-                        <button url="/Diary/DeleteRequest?diaryId=' + diaryId + '" diaryId="' + diaryId + '" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката </button>';
-            }
-            else {
-                html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
+                            </div>'
+                }
+                if (data.indexOf("B") > -1) {
+                    html += '<div class="alert alert-success">Заявката (B) е в очакване да бъде приета.\
+                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '&category=B">\
+                                <i class="fa fa-download"></i>\
+                                Изтегли заявка\
+                                </a>\
+                            </div>'
+                }
+                html += '<button url="/Diary/DeleteRequest?diaryId=' + diaryId + '" diaryId="' + diaryId + '" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката </button>';
             }
 
             parent.html(html);
