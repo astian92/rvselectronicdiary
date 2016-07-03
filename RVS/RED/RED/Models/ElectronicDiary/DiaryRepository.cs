@@ -96,7 +96,7 @@ namespace RED.Models.ElectronicDiary
             if (request != null)
             {
                 var filesRepository = new FilesRepository();
-                int requestsCount = filesRepository.GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
+                string charGenerated = filesRepository.GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
             }
         }
 
@@ -192,7 +192,7 @@ namespace RED.Models.ElectronicDiary
             return selectList;
         }
 
-        public int GenerateRequest(Guid diaryId, int testingPeriod)
+        public string GenerateRequest(Guid diaryId, int testingPeriod)
         {
             if(db.Diaries.Any(x => x.Id == diaryId))
             {
@@ -207,10 +207,10 @@ namespace RED.Models.ElectronicDiary
                 {
                     db.Requests.Add(request);
                     var filesRepository = new FilesRepository();
-                    int requestsCount = filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
+                    string charGenerated = filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
                     db.SaveChanges();
 
-                    return requestsCount;
+                    return charGenerated;
                 }
                 catch(Exception ex)
                 {
@@ -218,7 +218,7 @@ namespace RED.Models.ElectronicDiary
                 }
             }
 
-            return 0;
+            return string.Empty;
         }
 
         public bool DeleteRequest(Guid diaryId)

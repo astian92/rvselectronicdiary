@@ -11,10 +11,10 @@ namespace RED.Controllers
 {
     public class FilesController : ControllerBase<FilesRepository>
     {
-        public FileResult GetRequestFile(Guid diaryId)
+        public FileResult GetRequestFile(Guid diaryId, string category)
         {
             string fileName = "";
-            var reportData = Rep.GetRequestListReport(diaryId, out fileName);
+            var reportData = Rep.GetRequestListReport(diaryId, category, out fileName);
             return File(reportData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 

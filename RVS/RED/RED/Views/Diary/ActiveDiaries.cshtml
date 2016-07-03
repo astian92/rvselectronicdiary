@@ -127,13 +127,26 @@
                                             }
                                             else
                                             {
-                                                <div class="alert alert-success">
-                                                    Заявката е в очакване да бъде приета.
-                                                    <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id">
-                                                        <i class="fa fa-download"></i>
-                                                        Изтегли заявка
-                                                    </a>
-                                                </div>
+                                                if (item.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.Acredited)))
+                                                {
+                                                    <div class="alert alert-success">
+                                                        Заявката (A) е в очакване да бъде приета.
+                                                        <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id&category=A">
+                                                            <i class="fa fa-download"></i>
+                                                            Изтегли заявка
+                                                        </a>
+                                                    </div>
+                                                }
+                                                if (item.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.NotAcredited)))
+                                                {
+                                                    <div class="alert alert-success">
+                                                        Заявката (B) е в очакване да бъде приета.
+                                                        <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id&category=B">
+                                                            <i class="fa fa-download"></i>
+                                                            Изтегли заявка
+                                                        </a>
+                                                    </div>
+                                                }
                                                 <button url="/Diary/DeleteRequest?diaryId=@item.Id" diaryId="@item.Id" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката</button>
                                             }
                                         }

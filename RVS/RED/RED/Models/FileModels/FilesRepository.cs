@@ -44,7 +44,7 @@ namespace RED.Models.FileModels
             }
         }
 
-        public int GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
+        public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
             var diaryW = new DiaryW(diary);
@@ -97,7 +97,7 @@ namespace RED.Models.FileModels
                 }
             }
 
-            int requestsGeneratedCount = 0;
+            string requestsGeneratedCount = string.Empty;
 
             if (acreditedItems.Count > 0)
             {
@@ -125,7 +125,7 @@ namespace RED.Models.FileModels
                 file.Write(data, 0, data.Length);
                 file.Close();
 
-                requestsGeneratedCount++;
+                requestsGeneratedCount += "A";
             }
 
             if (notAcreditedItems.Count > 0)
@@ -154,17 +154,17 @@ namespace RED.Models.FileModels
                 file.Write(data, 0, data.Length);
                 file.Close();
 
-                requestsGeneratedCount++;
+                requestsGeneratedCount += "B";
             }
 
             return requestsGeneratedCount;
         }
 
-        public byte[] GetRequestListReport(Guid diaryId, out string fileName)
+        public byte[] GetRequestListReport(Guid diaryId, string category, out string fileName)
         {
             var diary = db.Diaries.Single(d => d.Id == diaryId);
 
-            var fileProp = GetFileProperties(diary.Number, FileNames.RequestListReport);
+            var fileProp = GetFileProperties(diary.Number, FileNames.RequestListReport, category);
             
             if (Directory.Exists(fileProp.Path))
             {
