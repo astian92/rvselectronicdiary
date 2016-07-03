@@ -66,7 +66,7 @@ namespace RED.Models.FileModels
                         {
                             TestType = pt.Test.TestType.ShortName,
                             TestName = pt.Test.Name,
-                            Method = pt.Test.TestMethods,
+                            Method = pt.TestMethod.Method,
                             MethodValue = pt.Test.MethodValue,
                             Remark = pt.Remark
                         })
