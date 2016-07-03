@@ -168,7 +168,7 @@
                 @Html.ValidationMessageFor(m => m.LabLeader, "", new { @class = "text-danger" })
             </div>
         </div>
-        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited))
+        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited))
         {
             <div class="form-group">
                 <label for="RemarkId" class="control-label col-md-3">
@@ -209,7 +209,7 @@
             </div>
         }
         
-        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited))
+        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited))
         {
             <div class="form-group">
                 <label for="RemarkId" class="control-label col-md-3">

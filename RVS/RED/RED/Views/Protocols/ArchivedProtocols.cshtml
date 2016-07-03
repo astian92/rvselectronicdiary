@@ -28,7 +28,7 @@
                             </div>
 
                             @{
-                                var acredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.Acredited);
+                                var acredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcreditationLevels.Acredited);
                             }
 
                             @if (acredited.Count() > 0)
@@ -124,7 +124,7 @@
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
                                     <ul>
-                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcredetationLevels.Acredited).OrderBy(r => r.Number))
+                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcreditationLevels.Acredited).OrderBy(r => r.Number))
                                         {
                                             <li><p>@pRemark.Remark</p></li>
                                         }
@@ -134,7 +134,7 @@
                             }
 
                             @{
-                                var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcredetationLevels.NotAcredited);
+                                var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcreditationLevels.NotAcredited);
                             }
 
                             @if (notAcredited.Count() > 0)
@@ -231,7 +231,7 @@
                                 <div class="col-xs-12">
                                     <h4 class="text-center">Забележки</h4>
                                     <ul>
-                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcredetationLevels.NotAcredited))
+                                        @foreach (var pRemark in item.ArchivedDiary.ArchivedProtocolRemarks.Where(apr => apr.AcredetationLevel.Trim() == AcreditationLevels.NotAcredited))
                                         {
                                             <li><p>@pRemark.Remark</p></li>
                                         }

@@ -30,7 +30,7 @@
                                 <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
                             </div>
                             @{
-                                var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited);
+                                var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited);
                             }
 
                             @if (acredited.Count() > 0)
@@ -134,7 +134,7 @@
                             }
                             
                             @{
-                                var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited);
+                                var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited);
                             }
 
                             @if (notAcredited.Count() > 0)
