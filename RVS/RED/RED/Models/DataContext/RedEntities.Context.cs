@@ -35,7 +35,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<RolesFeature> RolesFeatures { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TestCategory> TestCategories { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
@@ -47,10 +46,12 @@ namespace RED.Models.DataContext
         public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<TestType> TestTypes { get; set; }
-        public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
-        public virtual DbSet<ProductTest> ProductTests { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
         public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<TestMethod> TestMethods { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
+        public virtual DbSet<ProductTest> ProductTests { get; set; }
     }
 }

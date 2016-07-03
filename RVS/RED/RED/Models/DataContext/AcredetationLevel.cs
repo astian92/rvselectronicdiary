@@ -16,15 +16,15 @@ namespace RED.Models.DataContext
     {
         public AcredetationLevel()
         {
-            this.Tests = new HashSet<Test>();
             this.ProtocolsRemarks = new HashSet<ProtocolsRemark>();
+            this.Tests = new HashSet<Test>();
         }
     
         public System.Guid Id { get; set; }
         public string Level { get; set; }
         public string Description { get; set; }
     
-        public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        public virtual ICollection<Test> Tests { get; set; }
     }
 }

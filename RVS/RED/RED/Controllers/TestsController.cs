@@ -133,7 +133,7 @@ namespace RED.Controllers
             {
                 TestType = t.TestType.ShortName,
                 Name = t.Name,
-                TestMethods = t.TestMethods,
+                //TestMethods = t.TestMethods,
                 Level = t.AcredetationLevel.Level,
                 UnitName = t.UnitName,
                 Temperature = t.Temperature,

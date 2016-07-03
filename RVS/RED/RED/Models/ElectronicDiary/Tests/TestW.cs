@@ -22,13 +22,12 @@ namespace RED.Models.ElectronicDiary.Tests
 
         public string FullValue { get; set; }
 
-        [Required(ErrorMessage = "Полето Методи е задължително!")]
-        [Display(Name = "Методи")]
-        public string TestMethods { get; set; }
+        [Display(Name = "Стойност на показателя")]
+        public string MethodValue { get; set; }
 
         [Display(Name = "Вид Акредитация")]
         public Guid AcredetationLevelId { get; set; }
-        
+
         [Display(Name = "Температура")]
         public string Temperature { get; set; }
 
@@ -39,12 +38,13 @@ namespace RED.Models.ElectronicDiary.Tests
         [Display(Name = "Вид")]
         public Guid TypeId { get; set; }
 
-        [Display(Name = "Стойност на показателя")]
-        public string MethodValue { get; set; }
-
         public virtual AcredetationLevel AcredetationLevel { get; set; }
         public virtual TestCategory TestCategory { get; set; }
         public virtual TestType TestType { get; set; }
+
+        [Required(ErrorMessage = "Полето Методи е задължително!")]
+        [Display(Name = "Методи")]
+        public virtual ICollection<TestMethod> TestMethods { get; set; }
 
         public TestW()
         {
@@ -58,7 +58,6 @@ namespace RED.Models.ElectronicDiary.Tests
             this.Name = test.Name;
             this.FullName = test.Name + " - " + test.TestCategory.Name;
             this.FullValue = test.TestType.ShortName + "_" + test.Id;
-            this.TestMethods = test.TestMethods;
             this.AcredetationLevelId = test.AcredetationLevelId;
             this.Temperature = test.Temperature;
             this.UnitName = test.UnitName;
@@ -68,6 +67,7 @@ namespace RED.Models.ElectronicDiary.Tests
             this.AcredetationLevel = test.AcredetationLevel;
             this.TestCategory = test.TestCategory;
             this.TestType = test.TestType;
+            this.TestMethods = test.TestMethods;
         }
 
         public Test ToBase()
@@ -77,7 +77,6 @@ namespace RED.Models.ElectronicDiary.Tests
             test.Id = this.Id;
             test.TestCategoryId = this.TestCategoryId;
             test.Name = this.Name;
-            test.TestMethods = this.TestMethods;
             test.AcredetationLevelId = this.AcredetationLevelId;
             test.Temperature = this.Temperature;
             test.UnitName = this.UnitName;
@@ -87,6 +86,7 @@ namespace RED.Models.ElectronicDiary.Tests
             test.AcredetationLevel = this.AcredetationLevel;
             test.TestCategory = this.TestCategory;
             test.TestType = this.TestType;
+            test.TestMethods = this.TestMethods;
 
             return test;
         }

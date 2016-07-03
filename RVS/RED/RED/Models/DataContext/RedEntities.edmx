@@ -172,6 +172,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TestMethodId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Units" Type="int" Nullable="false" />
           <Property Name="MethodValue" Type="nvarchar" MaxLength="400" />
           <Property Name="Remark" Type="nvarchar" MaxLength="400" />
@@ -257,6 +258,14 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
         </EntityType>
+        <EntityType Name="TestMethods">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Method" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tests">
           <Key>
             <PropertyRef Name="Id" />
@@ -265,7 +274,6 @@
           <Property Name="TestCategoryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TypeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
           <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Temperature" Type="nvarchar" MaxLength="50" />
           <Property Name="UnitName" Type="nvarchar" MaxLength="60" />
@@ -427,9 +435,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductTests_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -437,6 +443,18 @@
             </Principal>
             <Dependent Role="ProductTests">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTests_TestMethods">
+          <End Role="TestMethods" Type="Self.TestMethods" Multiplicity="1" />
+          <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestMethods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductTests">
+              <PropertyRef Name="TestMethodId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -452,7 +470,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProtocolResults_Products">
+        <Association Name="FK_ProtocolResults_ProductTests">
           <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="1" />
           <End Role="ProtocolResults" Type="Self.ProtocolResults" Multiplicity="*" />
           <ReferentialConstraint>
@@ -582,6 +600,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TestMethods_Tests">
+          <End Role="Tests" Type="Self.Tests" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TestMethods" Type="Self.TestMethods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestMethods">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tests_AcredetationLevels">
           <End Role="AcredetationLevels" Type="Self.AcredetationLevels" Multiplicity="1" />
           <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
@@ -655,6 +687,7 @@
           <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestCategories" EntityType="Self.TestCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestMethods" EntityType="Self.TestMethods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestTypes" EntityType="Self.TestTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -702,11 +735,15 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductTests" EntitySet="ProductTests" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductTests_TestMethods" Association="Self.FK_ProductTests_TestMethods">
+            <End Role="TestMethods" EntitySet="TestMethods" />
+            <End Role="ProductTests" EntitySet="ProductTests" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductTests_Tests" Association="Self.FK_ProductTests_Tests">
             <End Role="Tests" EntitySet="Tests" />
             <End Role="ProductTests" EntitySet="ProductTests" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProtocolResults_Products" Association="Self.FK_ProtocolResults_Products">
+          <AssociationSet Name="FK_ProtocolResults_ProductTests" Association="Self.FK_ProtocolResults_ProductTests">
             <End Role="ProductTests" EntitySet="ProductTests" />
             <End Role="ProtocolResults" EntitySet="ProtocolResults" />
           </AssociationSet>
@@ -745,6 +782,10 @@
           <AssociationSet Name="FK_RolesFeatures_Roles" Association="Self.FK_RolesFeatures_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="RolesFeatures" EntitySet="RolesFeatures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestMethods_Tests" Association="Self.FK_TestMethods_Tests">
+            <End Role="Tests" EntitySet="Tests" />
+            <End Role="TestMethods" EntitySet="TestMethods" />
           </AssociationSet>
           <AssociationSet Name="FK_Tests_AcredetationLevels" Association="Self.FK_Tests_AcredetationLevels">
             <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />
@@ -873,25 +914,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_TestCategories" FromRole="TestCategories" ToRole="Tests" />
-        </EntityType>
-        <EntityType Name="Test">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="TestCategoryId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TestMethods" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
-          <Property Name="Temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UnitName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TestCategory" Relationship="Self.FK_Tests_TestCategories" FromRole="Tests" ToRole="TestCategories" />
-          <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="Test" ToRole="AcredetationLevel" />
-          <Property Name="TypeId" Type="Guid" Nullable="false" />
-          <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TestType" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" FromRole="Test" ToRole="TestType" />
-          <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="Test" ToRole="ProductTest" />
+          <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" FromRole="TestCategory" ToRole="Test" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -989,18 +1012,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tests_TestCategories">
-          <End Role="TestCategories" Type="Self.TestCategory" Multiplicity="1" />
-          <End Role="Tests" Type="Self.Test" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TestCategories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tests">
-              <PropertyRef Name="TestCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="RedDataEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperty" />
           <EntitySet Name="ActionLogs" EntityType="Self.ActionLog" />
@@ -1012,7 +1023,6 @@
           <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeature" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TestCategories" EntityType="Self.TestCategory" />
-          <EntitySet Name="Tests" EntityType="Self.Test" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="Self.FK_ActionLogProperties_ToTable">
             <End Role="ActionLogs" EntitySet="ActionLogs" />
@@ -1038,10 +1048,6 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tests_TestCategories" Association="Self.FK_Tests_TestCategories">
-            <End Role="TestCategories" EntitySet="TestCategories" />
-            <End Role="Tests" EntitySet="Tests" />
-          </AssociationSet>
           <EntitySet Name="Diaries" EntityType="DB_9BCA69_RedDbModel.Diary" />
           <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
             <End Role="Diary" EntitySet="Diaries" />
@@ -1059,10 +1065,6 @@
           <EntitySet Name="Remarks" EntityType="DB_9BCA69_RedDbModel.Remark" />
           <EntitySet Name="ArchivedProducts" EntityType="DB_9BCA69_RedDbModel.ArchivedProduct" />
           <EntitySet Name="AcredetationLevels" EntityType="DB_9BCA69_RedDbModel.AcredetationLevel" />
-          <AssociationSet Name="FK_Tests_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels">
-            <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
-            <End Role="Test" EntitySet="Tests" />
-          </AssociationSet>
           <EntitySet Name="ProtocolsRemarks" EntityType="DB_9BCA69_RedDbModel.ProtocolsRemark" />
           <AssociationSet Name="FK_ProtocolsRemarks_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels">
             <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
@@ -1088,24 +1090,6 @@
             <End Role="Diary" EntitySet="Diaries" />
           </AssociationSet>
           <EntitySet Name="TestTypes" EntityType="DB_9BCA69_RedDbModel.TestType" />
-          <AssociationSet Name="FK_Tests_TestTypes" Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes">
-            <End Role="TestType" EntitySet="TestTypes" />
-            <End Role="Test" EntitySet="Tests" />
-          </AssociationSet>
-          <EntitySet Name="ProtocolResults" EntityType="DB_9BCA69_RedDbModel.ProtocolResult" />
-          <EntitySet Name="ProductTests" EntityType="DB_9BCA69_RedDbModel.ProductTest" />
-          <AssociationSet Name="FK_ProductTests_Products" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="ProductTest" EntitySet="ProductTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
-            <End Role="Test" EntitySet="Tests" />
-            <End Role="ProductTest" EntitySet="ProductTests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProtocolResults_Products" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products">
-            <End Role="ProductTest" EntitySet="ProductTests" />
-            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
-          </AssociationSet>
           <EntitySet Name="ArchivedProductTests" EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" />
           <EntitySet Name="ArchivedProtocolResults" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" />
           <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
@@ -1121,10 +1105,6 @@
             <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
           </AssociationSet>
           <EntitySet Name="Protocols" EntityType="DB_9BCA69_RedDbModel.Protocol" />
-          <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
-            <End Role="Protocol" EntitySet="Protocols" />
-            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
-          </AssociationSet>
           <AssociationSet Name="FK_Protocols_Requests" Association="DB_9BCA69_RedDbModel.FK_Protocols_Requests">
             <End Role="Request" EntitySet="Requests" />
             <End Role="Protocol" EntitySet="Protocols" />
@@ -1132,6 +1112,46 @@
           <AssociationSet Name="FK_ProtocolsRemarks_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols">
             <End Role="Protocol" EntitySet="Protocols" />
             <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
+          </AssociationSet>
+          <EntitySet Name="TestMethods" EntityType="DB_9BCA69_RedDbModel.TestMethod" />
+          <EntitySet Name="Tests" EntityType="DB_9BCA69_RedDbModel.Test" />
+          <AssociationSet Name="FK_Tests_AcredetationLevels" Association="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels">
+            <End Role="AcredetationLevel" EntitySet="AcredetationLevels" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_TestCategories" Association="DB_9BCA69_RedDbModel.FK_Tests_TestCategories">
+            <End Role="TestCategory" EntitySet="TestCategories" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestMethods_Tests" Association="DB_9BCA69_RedDbModel.FK_TestMethods_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestMethod" EntitySet="TestMethods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tests_TestTypes" Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes">
+            <End Role="TestType" EntitySet="TestTypes" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <EntitySet Name="ProtocolResults" EntityType="DB_9BCA69_RedDbModel.ProtocolResult" />
+          <AssociationSet Name="FK_ProtocolResults_Protocols" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols">
+            <End Role="Protocol" EntitySet="Protocols" />
+            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
+          </AssociationSet>
+          <EntitySet Name="ProductTests" EntityType="DB_9BCA69_RedDbModel.ProductTest" />
+          <AssociationSet Name="FK_ProductTests_Products" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductTest" EntitySet="ProductTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTests_TestMethods" Association="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods">
+            <End Role="TestMethod" EntitySet="TestMethods" />
+            <End Role="ProductTest" EntitySet="ProductTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTests_Tests" Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="ProductTest" EntitySet="ProductTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProtocolResults_ProductTests" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests">
+            <End Role="ProductTest" EntitySet="ProductTests" />
+            <End Role="ProtocolResult" EntitySet="ProtocolResults" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Diary">
@@ -1231,21 +1251,9 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Level" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="AcredetationLevel" ToRole="Test" />
           <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" FromRole="AcredetationLevel" ToRole="ProtocolsRemark" />
+          <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="AcredetationLevel" ToRole="Test" />
         </EntityType>
-        <Association Name="FK_Tests_AcredetationLevels">
-          <End Type="DB_9BCA69_RedDbModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AcredetationLevel">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Test">
-              <PropertyRef Name="AcredetationLevelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ProtocolsRemark">
           <Key>
             <PropertyRef Name="Id" />
@@ -1376,82 +1384,6 @@
           <Property Name="ShortName" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tests" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" FromRole="TestType" ToRole="Test" />
         </EntityType>
-        <Association Name="FK_Tests_TestTypes">
-          <End Type="DB_9BCA69_RedDbModel.TestType" Role="TestType" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TestType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Test">
-              <PropertyRef Name="TypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ProtocolResult">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
-          <Property Name="ProductTestId" Type="Guid" Nullable="false" />
-          <Property Name="ResultNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Results" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProtocolResult" ToRole="ProductTest" />
-          <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="ProtocolResult" ToRole="Protocol" />
-        </EntityType>
-        <EntityType Name="ProductTest">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ProductId" Type="Guid" Nullable="false" />
-          <Property Name="TestId" Type="Guid" Nullable="false" />
-          <Property Name="Units" Type="Int32" Nullable="false" />
-          <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="ProductTest" ToRole="Product" />
-          <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
-          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Products" FromRole="ProductTest" ToRole="ProtocolResult" />
-        </EntityType>
-        <Association Name="FK_ProductTests_Products">
-          <End Type="DB_9BCA69_RedDbModel.Product" Role="Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductTest">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductTests_Tests">
-          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Test">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductTest">
-              <PropertyRef Name="TestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProtocolResults_Products">
-          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductTest">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolResult">
-              <PropertyRef Name="ProductTestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ArchivedProductTest">
           <Key>
             <PropertyRef Name="Id" />
@@ -1533,24 +1465,10 @@
           <Property Name="TesterMKB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="TesterFZH" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="LabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="Protocol" ToRole="ProtocolResult" />
           <NavigationProperty Name="Request" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Protocol" ToRole="Request" />
           <NavigationProperty Name="ProtocolsRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Protocols" FromRole="Protocol" ToRole="ProtocolsRemark" />
+          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="Protocol" ToRole="ProtocolResult" />
         </EntityType>
-        <Association Name="FK_ProtocolResults_Protocols">
-          <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Protocol">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProtocolResult">
-              <PropertyRef Name="ProtocolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Protocols_Requests">
           <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="1" />
           <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="*" />
@@ -1574,6 +1492,174 @@
             </Principal>
             <Dependent Role="ProtocolsRemark">
               <PropertyRef Name="ProtocolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TestMethod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TestId" Type="Guid" Nullable="false" />
+          <Property Name="Method" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_TestMethods_Tests" FromRole="TestMethod" ToRole="Test" />
+          <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods" FromRole="TestMethod" ToRole="ProductTest" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TestCategoryId" Type="Guid" Nullable="false" />
+          <Property Name="TypeId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AcredetationLevelId" Type="Guid" Nullable="false" />
+          <Property Name="Temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AcredetationLevel" Relationship="DB_9BCA69_RedDbModel.FK_Tests_AcredetationLevels" FromRole="Test" ToRole="AcredetationLevel" />
+          <NavigationProperty Name="TestCategory" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestCategories" FromRole="Test" ToRole="TestCategory" />
+          <NavigationProperty Name="TestMethods" Relationship="DB_9BCA69_RedDbModel.FK_TestMethods_Tests" FromRole="Test" ToRole="TestMethod" />
+          <NavigationProperty Name="TestType" Relationship="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" FromRole="Test" ToRole="TestType" />
+          <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="Test" ToRole="ProductTest" />
+        </EntityType>
+        <Association Name="FK_Tests_AcredetationLevels">
+          <End Type="DB_9BCA69_RedDbModel.AcredetationLevel" Role="AcredetationLevel" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcredetationLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="AcredetationLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_TestCategories">
+          <End Type="DB_9BCA69_RedDbModel.TestCategory" Role="TestCategory" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="TestCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestMethods_Tests">
+          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.TestMethod" Role="TestMethod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestMethod">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tests_TestTypes">
+          <End Type="DB_9BCA69_RedDbModel.TestType" Role="TestType" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProtocolResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProtocolId" Type="Guid" Nullable="false" />
+          <Property Name="ProductTestId" Type="Guid" Nullable="false" />
+          <Property Name="ResultNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Results" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Protocol" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" FromRole="ProtocolResult" ToRole="Protocol" />
+          <NavigationProperty Name="ProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests" FromRole="ProtocolResult" ToRole="ProductTest" />
+        </EntityType>
+        <Association Name="FK_ProtocolResults_Protocols">
+          <End Type="DB_9BCA69_RedDbModel.Protocol" Role="Protocol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Protocol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolResult">
+              <PropertyRef Name="ProtocolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="TestId" Type="Guid" Nullable="false" />
+          <Property Name="TestMethodId" Type="Guid" Nullable="false" />
+          <Property Name="Units" Type="Int32" Nullable="false" />
+          <Property Name="MethodValue" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="ProductTest" ToRole="Product" />
+          <NavigationProperty Name="TestMethod" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods" FromRole="ProductTest" ToRole="TestMethod" />
+          <NavigationProperty Name="Test" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" FromRole="ProductTest" ToRole="Test" />
+          <NavigationProperty Name="ProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests" FromRole="ProductTest" ToRole="ProtocolResult" />
+        </EntityType>
+        <Association Name="FK_ProductTests_Products">
+          <End Type="DB_9BCA69_RedDbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductTest">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTests_TestMethods">
+          <End Type="DB_9BCA69_RedDbModel.TestMethod" Role="TestMethod" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestMethod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductTest">
+              <PropertyRef Name="TestMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTests_Tests">
+          <End Type="DB_9BCA69_RedDbModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductTest">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProtocolResults_ProductTests">
+          <End Type="DB_9BCA69_RedDbModel.ProductTest" Role="ProductTest" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ProtocolResult" Role="ProtocolResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProtocolResult">
+              <PropertyRef Name="ProductTestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1685,21 +1771,6 @@
               <MappingFragment StoreEntitySet="TestCategories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tests">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Test">
-              <MappingFragment StoreEntitySet="Tests">
-                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TestMethods" ColumnName="TestMethods" />
-                <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
-                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
-                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1833,29 +1904,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProtocolResults">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
-              <MappingFragment StoreEntitySet="ProtocolResults">
-                <ScalarProperty Name="Results" ColumnName="Results" />
-                <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
-                <ScalarProperty Name="ProductTestId" ColumnName="ProductTestId" />
-                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductTests">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
-              <MappingFragment StoreEntitySet="ProductTests">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-                <ScalarProperty Name="Units" ColumnName="Units" />
-                <ScalarProperty Name="TestId" ColumnName="TestId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ArchivedProductTests">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedProductTest">
               <MappingFragment StoreEntitySet="ArchivedProductTests">
@@ -1893,6 +1941,53 @@
                 <ScalarProperty Name="TesterMKB" ColumnName="TesterMKB" />
                 <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestMethods">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.TestMethod">
+              <MappingFragment StoreEntitySet="TestMethods">
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Test">
+              <MappingFragment StoreEntitySet="Tests">
+                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="AcredetationLevelId" ColumnName="AcredetationLevelId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TestCategoryId" ColumnName="TestCategoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProtocolResults">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProtocolResult">
+              <MappingFragment StoreEntitySet="ProtocolResults">
+                <ScalarProperty Name="Results" ColumnName="Results" />
+                <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
+                <ScalarProperty Name="ProductTestId" ColumnName="ProductTestId" />
+                <ScalarProperty Name="ProtocolId" ColumnName="ProtocolId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTests">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
+              <MappingFragment StoreEntitySet="ProductTests">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+                <ScalarProperty Name="Units" ColumnName="Units" />
+                <ScalarProperty Name="TestMethodId" ColumnName="TestMethodId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

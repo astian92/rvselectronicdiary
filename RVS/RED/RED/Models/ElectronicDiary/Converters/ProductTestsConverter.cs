@@ -18,7 +18,7 @@ namespace RED.Models.ElectronicDiary.Converters
             productTest.Test = new Test();
             productTest.Test.Name = aproductTest.TestName;
             productTest.Test.UnitName = aproductTest.TestUnitName;
-            productTest.Test.TestMethods = aproductTest.TestMethods;
+            productTest.TestMethod = new TestMethod() { Method = aproductTest.TestMethods };
             productTest.Test.AcredetationLevel = new AcredetationLevel();
             productTest.Test.AcredetationLevel.Level = aproductTest.TestAcredetationLevel;
             productTest.Test.Temperature = aproductTest.TestTemperature;
@@ -43,7 +43,7 @@ namespace RED.Models.ElectronicDiary.Converters
 
             archivedProductTest.TestName = productTest.Test.Name;
             archivedProductTest.TestUnitName = productTest.Test.UnitName;
-            archivedProductTest.TestMethods = productTest.Test.TestMethods;
+            archivedProductTest.TestMethods = productTest.TestMethod.Method;
             archivedProductTest.TestAcredetationLevel = productTest.Test.AcredetationLevel.Level;
             archivedProductTest.TestTemperature = productTest.Test.Temperature;
             archivedProductTest.TestCategory = productTest.Test.TestCategory.Name;

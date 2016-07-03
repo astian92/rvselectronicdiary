@@ -16,8 +16,8 @@ namespace RED.Models.DataContext
     {
         public Protocol()
         {
-            this.ProtocolResults = new HashSet<ProtocolResult>();
             this.ProtocolsRemarks = new HashSet<ProtocolsRemark>();
+            this.ProtocolResults = new HashSet<ProtocolResult>();
         }
     
         public System.Guid Id { get; set; }
@@ -27,8 +27,8 @@ namespace RED.Models.DataContext
         public string TesterFZH { get; set; }
         public string LabLeader { get; set; }
     
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
         public virtual Request Request { get; set; }
         public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }
 }

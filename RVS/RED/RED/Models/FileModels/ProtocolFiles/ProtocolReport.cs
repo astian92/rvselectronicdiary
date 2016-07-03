@@ -248,7 +248,7 @@ namespace RED.Models.FileModels.ProtocolFiles
                 row.Cells[2].Paragraphs[0].InsertText(item.ProductTest.Product.Name, false, textStyle);
                 row.Cells[3].Paragraphs[0].InsertText(item.ProductTest.Test.Name, false, textStyle);
                 row.Cells[4].Paragraphs[0].InsertText(item.ProductTest.Test.UnitName, false, textStyle);
-                row.Cells[5].Paragraphs[0].InsertText(item.ProductTest.Test.TestMethods, false, textStyle);
+                row.Cells[5].Paragraphs[0].InsertText(item.ProductTest.TestMethod.Method, false, textStyle);
                 row.Cells[6].Paragraphs[0].InsertText(item.Results, false, textStyle);
                 row.Cells[7].Paragraphs[0].InsertText(item.ProductTest.MethodValue, false, textStyle);
                 row.Cells[8].Paragraphs[0].InsertText(item.ProductTest.Test.Temperature, false, textStyle);

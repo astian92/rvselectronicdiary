@@ -167,6 +167,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestMethodId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Units" Type="int" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="400" />
     <Property Name="Remark" Type="nvarchar" MaxLength="400" />
@@ -252,6 +253,14 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="120" Nullable="false" />
   </EntityType>
+  <EntityType Name="TestMethods">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Method" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
   <EntityType Name="Tests">
     <Key>
       <PropertyRef Name="Id" />
@@ -260,7 +269,6 @@
     <Property Name="TestCategoryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TypeId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="TestMethods" Type="nvarchar" MaxLength="150" />
     <Property Name="AcredetationLevelId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Temperature" Type="nvarchar" MaxLength="50" />
     <Property Name="UnitName" Type="nvarchar" MaxLength="60" />
@@ -422,9 +430,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProductTests_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
@@ -432,6 +438,18 @@
       </Principal>
       <Dependent Role="ProductTests">
         <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTests_TestMethods">
+    <End Role="TestMethods" Type="Self.TestMethods" Multiplicity="1" />
+    <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestMethods">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductTests">
+        <PropertyRef Name="TestMethodId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -447,7 +465,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProtocolResults_Products">
+  <Association Name="FK_ProtocolResults_ProductTests">
     <End Role="ProductTests" Type="Self.ProductTests" Multiplicity="1" />
     <End Role="ProtocolResults" Type="Self.ProtocolResults" Multiplicity="*" />
     <ReferentialConstraint>
@@ -577,6 +595,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TestMethods_Tests">
+    <End Role="Tests" Type="Self.Tests" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TestMethods" Type="Self.TestMethods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestMethods">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tests_AcredetationLevels">
     <End Role="AcredetationLevels" Type="Self.AcredetationLevels" Multiplicity="1" />
     <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
@@ -650,6 +682,7 @@
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeatures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestCategories" EntityType="Self.TestCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestMethods" EntityType="Self.TestMethods" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestTypes" EntityType="Self.TestTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -697,11 +730,15 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="ProductTests" EntitySet="ProductTests" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProductTests_TestMethods" Association="Self.FK_ProductTests_TestMethods">
+      <End Role="TestMethods" EntitySet="TestMethods" />
+      <End Role="ProductTests" EntitySet="ProductTests" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProductTests_Tests" Association="Self.FK_ProductTests_Tests">
       <End Role="Tests" EntitySet="Tests" />
       <End Role="ProductTests" EntitySet="ProductTests" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProtocolResults_Products" Association="Self.FK_ProtocolResults_Products">
+    <AssociationSet Name="FK_ProtocolResults_ProductTests" Association="Self.FK_ProtocolResults_ProductTests">
       <End Role="ProductTests" EntitySet="ProductTests" />
       <End Role="ProtocolResults" EntitySet="ProtocolResults" />
     </AssociationSet>
@@ -740,6 +777,10 @@
     <AssociationSet Name="FK_RolesFeatures_Roles" Association="Self.FK_RolesFeatures_Roles">
       <End Role="Roles" EntitySet="Roles" />
       <End Role="RolesFeatures" EntitySet="RolesFeatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestMethods_Tests" Association="Self.FK_TestMethods_Tests">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="TestMethods" EntitySet="TestMethods" />
     </AssociationSet>
     <AssociationSet Name="FK_Tests_AcredetationLevels" Association="Self.FK_Tests_AcredetationLevels">
       <End Role="AcredetationLevels" EntitySet="AcredetationLevels" />

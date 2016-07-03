@@ -72,7 +72,7 @@ namespace RED.Models.FileModels
                                     {
                                         TestType = pt.Test.TestType.ShortName,
                                         TestName = pt.Test.Name,
-                                        Method = pt.Test.TestMethods,
+                                        Method = pt.TestMethod.Method,
                                         MethodValue = pt.Test.MethodValue,
                                         Remark = pt.Remark
                                     }).ToList();
@@ -152,7 +152,7 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("Products", products);
             //var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
             var methods = products.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category)
-                            .Select(pt => new MethodsModel() { TestName = pt.Test.Name, TestMethod = pt.Test.TestMethods })).ToList().Distinct();
+                            .Select(pt => new MethodsModel() { TestName = pt.Test.Name, TestMethod = pt.TestMethod.Method })).ToList().Distinct();
             model.ReportParameters.Add("Methods", methods);
             var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
             model.ReportParameters.Add("Quantities", quantities);

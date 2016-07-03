@@ -22,11 +22,13 @@ namespace RED.Models.DataContext
         public System.Guid Id { get; set; }
         public System.Guid ProductId { get; set; }
         public System.Guid TestId { get; set; }
+        public System.Guid TestMethodId { get; set; }
         public int Units { get; set; }
         public string MethodValue { get; set; }
         public string Remark { get; set; }
     
         public virtual Product Product { get; set; }
+        public virtual TestMethod TestMethod { get; set; }
         public virtual Test Test { get; set; }
         public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }

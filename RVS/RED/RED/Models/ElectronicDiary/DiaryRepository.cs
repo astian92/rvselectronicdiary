@@ -325,7 +325,7 @@ namespace RED.Models.ElectronicDiary
                         aptest.Id = Guid.NewGuid();
                         aptest.TestName = ptest.Test.Name;
                         aptest.TestUnitName = ptest.Test.UnitName;
-                        aptest.TestMethods = ptest.Test.TestMethods;
+                        aptest.TestMethods = ptest.TestMethod.Method;
                         aptest.TestAcredetationLevel = ptest.Test.AcredetationLevel.Level;
                         aptest.TestTemperature = ptest.Test.Temperature;
                         aptest.TestCategory = ptest.Test.TestCategory.Name;

@@ -16,21 +16,22 @@ namespace RED.Models.DataContext
     {
         public Test()
         {
+            this.TestMethods = new HashSet<TestMethod>();
             this.ProductTests = new HashSet<ProductTest>();
         }
     
         public System.Guid Id { get; set; }
         public System.Guid TestCategoryId { get; set; }
+        public System.Guid TypeId { get; set; }
         public string Name { get; set; }
-        public string TestMethods { get; set; }
         public System.Guid AcredetationLevelId { get; set; }
         public string Temperature { get; set; }
         public string UnitName { get; set; }
-        public System.Guid TypeId { get; set; }
         public string MethodValue { get; set; }
     
-        public virtual TestCategory TestCategory { get; set; }
         public virtual AcredetationLevel AcredetationLevel { get; set; }
+        public virtual TestCategory TestCategory { get; set; }
+        public virtual ICollection<TestMethod> TestMethods { get; set; }
         public virtual TestType TestType { get; set; }
         public virtual ICollection<ProductTest> ProductTests { get; set; }
     }
