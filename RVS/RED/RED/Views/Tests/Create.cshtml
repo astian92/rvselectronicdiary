@@ -50,14 +50,9 @@
 
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <input type="button" class="btn btn-primary" value="Добави Метод" />
-                <table class="table table-hover product-list-table" style="margin-top: 10px; margin-bottom: 0px;">
-                    <tr>
-                        <td>This is the first method</td>
-                    </tr>
-                    <tr>
-                        <td>Това е втори метод</td>
-                    </tr>
+                <input type="button" class="btn btn-primary" value="Добави Метод" onclick="addMethod()"/>
+                <table id="test-methods-table" class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
+                   @*HERE BE TEST METHODS*@
                 </table>
             </div>
         </div>
@@ -142,5 +137,38 @@
         value += '°';
 
         $('#' + Id).val(value);
+    }
+
+    function addMethod() {
+        var methodsBox = $('#methods-box');
+        var methodText = methodsBox.val();
+
+        if (methodText) {
+            methodsBox.val('');
+
+            var method = $('<tr><td>\
+                            <input type="hidden" class="testMethod" name="" value="' + methodText + '" />\
+                            ' + methodText + '\
+                            <i class="fa fa-times pull-right" onclick="removeMethod(this)"></i>\
+                        </td></tr>');
+
+            $('#test-methods-table').append(method);
+            renumerateMethods();
+        }
+    }
+
+    function removeMethod(x) {
+        var tr = $(x).parent().parent();
+        tr.remove();
+        renumerateMethods();
+    }
+
+    function renumerateMethods() {
+        var methods = $('.testMethod');
+        var i = 0;
+        methods.each(function () {
+            $(this).attr("name", "TestMethods[" + i + "].Method");
+            i++;
+        });
     }
 </script>

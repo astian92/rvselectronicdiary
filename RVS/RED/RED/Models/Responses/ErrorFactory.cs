@@ -10,7 +10,8 @@ namespace RED.Models.Responses
         UnkownError = 0,
         InvalidUsernameOrPassword, 
         ConnectingToDatabaseFailure,
-        ServerError
+        ServerError,
+        MethodInUseError
     }
 
     public static class ErrorFactory
@@ -52,6 +53,14 @@ namespace RED.Models.Responses
             get
             {
                 return new ActionError("Възникна грешка при опит за опресняване на архивиран протокол!", ErrorTypes.ServerError);
+            }
+        }
+
+        public static ActionError MethodInUseError
+        {
+            get
+            {
+                return new ActionError("Направен е опит да се изтрие метод, който се използва в Активен дневник! Моля архивирайте дневника ако държите да изтриете използван метод", ErrorTypes.MethodInUseError);
             }
         }
     }
