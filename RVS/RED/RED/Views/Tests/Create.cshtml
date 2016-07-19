@@ -6,10 +6,10 @@
 
 <h2>Създай</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Изследване</h4>
         <hr />
@@ -43,8 +43,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TestMethods, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TestMethods, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="text" id="methods-box" class="form-control" />
                 @Html.ValidationMessageFor(model => model.TestMethods, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="button" class="btn btn-primary" value="Добави Метод" />
+                <table class="table table-hover product-list-table" style="margin-top: 10px; margin-bottom: 0px;">
+                    <tr>
+                        <td>This is the first method</td>
+                    </tr>
+                    <tr>
+                        <td>Това е втори метод</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
