@@ -121,7 +121,7 @@
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
 
-            api.column(6, { page: 'current' }).data().each(function (group, i) {
+            api.column(5, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
                         '<tr class="group"><td colspan="7">' + group + '</td></tr>'
