@@ -1,5 +1,6 @@
 ﻿using RED.Filters;
 using RED.Models.ControllerBases;
+using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Tests;
 using System;
 using System.Collections.Generic;
@@ -162,8 +163,7 @@ namespace RED.Controllers
             {
                 Rep.Add(test);
                 return RedirectToAction("Index");
-
-                ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
+                //ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name");
@@ -201,10 +201,16 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Edit(test);
-                return RedirectToAction("Index");
+                var response = Rep.Edit(test);
 
-                ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("ErrorExists", response.Error.ErrorText);
+                }
             }
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
