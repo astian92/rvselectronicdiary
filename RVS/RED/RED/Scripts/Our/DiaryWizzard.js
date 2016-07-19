@@ -192,6 +192,7 @@ $('.add-product-btn').click(function () {
     //$('.product-list-validation').addClass('collapse');
     $('.product-list-table tbody .error-msg').remove();
     $('.current').removeClass('error');
+    $('#Products').focus();
 });
 
 function deleteProduct(e, number) {

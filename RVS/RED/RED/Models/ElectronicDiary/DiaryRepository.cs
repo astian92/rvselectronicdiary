@@ -150,6 +150,14 @@ namespace RED.Models.ElectronicDiary
                 {
                     pt.Id = Guid.NewGuid();
                     pt.ProductId = item.Id;
+
+                    pt.TestMethodId = Guid.NewGuid();
+                    var testMethod = new TestMethod();
+                    testMethod.Id = pt.TestMethodId;
+                    testMethod.Method = "test method";
+                    testMethod.TestId = pt.TestId;
+
+                    pt.TestMethod = testMethod;
                 }
             }
 
@@ -190,6 +198,12 @@ namespace RED.Models.ElectronicDiary
             var selectList = db.Tests.OrderBy(x => x.TestCategory.Name).Select(x => new TestW { FullName = x.Name + " - " + x.TestCategory.Name,
                                                                                                 FullValue = x.TestType.ShortName + "_" + x.Id });
             return selectList;
+        }
+
+        public IEnumerable<TestMethod> GetTestMethods(Guid testId)
+        {
+            var methods = db.TestMethods.Where(x => x.TestId == testId);
+            return methods;
         }
 
         public string GenerateRequest(Guid diaryId, int testingPeriod)

@@ -2,7 +2,8 @@
 @using RED.Models.ElectronicDiary;
 @using RED.Models;
 
-@foreach(var product in Model)
+
+@foreach (var product in Model)
 {
     <div class="row">
         <div class="col-lg-6">
@@ -11,23 +12,22 @@
                 <label for="Tests">Тест</label>
                 @Html.DropDownList("Tests", null, htmlAttributes: new { @class = "form-control tests chosen-select" })
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label for="TestMethodId">Метод</label>
-                @Html.DropDownList("Tests")
-            </div>*@
+                @*@Html.DropDownList("Tests", null, htmlAttributes: new { @class = "form-control tests chosen-select" })*@
+            </div>
             <div class="form-group">
                 <label class="control-label" for="Units">Единици</label>
                 <input class="form-control text-box single-line valid unitBox" data-val-range="Невалиден номер" data-val-range-max="2147483647" data-val-range-min="0" id="Products[0].ProductTests[0].Units" name="LetterNumber" type="number" value="">
                 <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="units-name-validation collapse">Единиците са задължителни</span></span>
             </div>
 
-
             <div class="form-group">
                 <label class="control-label" for="methodValueBox">Стойност на показателя</label>
-                <textarea id="methodValueBox" class="form-control no-resize methodValueBox"></textarea>
+                <textarea id="methodValueBox-@product.Key" class="form-control no-resize methodValueBox"></textarea>
                 <span class="special-chars-holder pull-right">
-                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" for="methodValueBox" tabindex="-1" />
-                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" for="methodValueBox" tabindex="-1" />
+                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" for="methodValueBox-@product.Key" tabindex="-1" />
+                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" for="methodValueBox-@product.Key" tabindex="-1" />
                 </span>
                 @*<div class="clearfix"></div>*@
             </div>
