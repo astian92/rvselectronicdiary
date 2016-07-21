@@ -1,4 +1,5 @@
-﻿using RED.Models.RepositoryBases;
+﻿using RED.Models.DataContext;
+using RED.Models.RepositoryBases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,11 @@ namespace RED.Models.ElectronicDiary.Clients
             return new ClientW(client);
         }
 
-        public IEnumerable<ClientW> GetClients()
+        public IQueryable<Client> GetClients()
         {
             var clients = db.Clients.ToList();
-            var result = clients.Select(c => new ClientW(c));
-
-            return result;
+            //var result = clients.Select(c => new ClientW(c));
+            return clients.AsQueryable();
         }
         
         public void Add(ClientW clientW)
