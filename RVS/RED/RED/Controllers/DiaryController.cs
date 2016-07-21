@@ -219,8 +219,13 @@ namespace RED.Controllers
         public ActionResult ProductsTests(SimpleProduct[] products)
         {
             ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "FullValue", "FullName");
-            
             return PartialView(products);
+        }
+
+        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        public JsonResult GetTestMethods(Guid testId)
+        {
+            return Json(Rep.GetTestMethods(testId), JsonRequestBehavior.AllowGet);
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]

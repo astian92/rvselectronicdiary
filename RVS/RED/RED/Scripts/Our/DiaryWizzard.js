@@ -84,6 +84,8 @@ $("#form").steps({
 
                 var testId = test.find('.testId');
                 testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
+                var testMethodId = test.find('.testMethodId');
+                testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
                 var units = test.find('.units');
                 units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
                 var methodValue = test.find('.methodValue');
@@ -192,6 +194,7 @@ $('.add-product-btn').click(function () {
     //$('.product-list-validation').addClass('collapse');
     $('.product-list-table tbody .error-msg').remove();
     $('.current').removeClass('error');
+    $('#Products').focus();
 });
 
 function deleteProduct(e, number) {
@@ -215,4 +218,23 @@ function hideQuantityValidation() {
     if ($('#Quantity').val() != '') {
         $('.product-quantity-validation').addClass('collapse');
     }
+}
+
+function loadTestMethods() {
+    var value = $('#Tests').val();
+    var testId = value.substr(4, value.length);
+    $.ajax({
+        type: "GET",
+        url: '/Diary/GetTestMethods?testId=' + testId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            var methods = JSON.parse(data);
+            var optionsAsString = "";
+            for (var i = 0; i < methods.length; i++) {
+                optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
+            }
+            $('#TestMethods').empty().append(optionsAsString);
+        }
+    });
 }

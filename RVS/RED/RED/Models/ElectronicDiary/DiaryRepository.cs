@@ -192,6 +192,12 @@ namespace RED.Models.ElectronicDiary
             return selectList;
         }
 
+        public IEnumerable<TestMethodW> GetTestMethods(Guid testId)
+        {
+            var methods = db.TestMethods.Where(x => x.TestId == testId).ToList().Select(x => new TestMethodW(x));
+            return methods;
+        }
+
         public string GenerateRequest(Guid diaryId, int testingPeriod)
         {
             if(db.Diaries.Any(x => x.Id == diaryId))
