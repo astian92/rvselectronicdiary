@@ -14,6 +14,8 @@
             </div>
             <div class="form-group">
                 <label for="TestMethodId">Метод</label>
+                <select id="TestMethods" name="TestMethods" class="form-control testMethods">
+                </select>
                 @*@Html.DropDownList("Tests", null, htmlAttributes: new { @class = "form-control tests chosen-select" })*@
             </div>
             <div class="form-group">
@@ -89,6 +91,10 @@
 
 @*<script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>*@
 <script>
+    $(document).ready(function () {
+        loadTestMethods();
+    });
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },
@@ -120,9 +126,12 @@
         }
       
         var testsDd = groupParent.find('.tests option:selected');
+        var testMethodDd = groupParent.find('.testMethods option:selected');
         var selectedTestValue = testsDd.val();
+        var selectedTestMethodValue = testMethodDd.val();
         var array = selectedTestValue.split('_');
         var selectedTestId = array[1];
+        var selectedTestMethodId = selectedTestMethodValue;
         var selectedTestType = array[0];
         var selectedTestText = testsDd.text();
         //console.log(selectedTestId, selectedTestText);
@@ -149,6 +158,7 @@
 
         var testsHolder = $('<span class="test" id="' + testKey + '"></span>');
         var testIdInput = $('<input type="hidden" class="testId" value="' + selectedTestId + '" />');
+        var testMethodIdInput = $('<input type="hidden" class="testMethodId" value="' + selectedTestMethodId + '" />');
         var unitsInput = $('<input type="hidden" class="units" value="' + units + '" />');
         var testNameInput = $('<input type="hidden" class="name" value="' + selectedTestText + '" />');
         var testTypeInput = $('<input type="hidden" class="type" value="' + selectedTestType + '" />')
@@ -156,6 +166,7 @@
         var remarkInput = $('<input type="hidden" class="remark" value="' + remark + '" />')
 
         testsHolder.append(testIdInput);
+        testsHolder.append(testMethodIdInput);
         testsHolder.append(unitsInput);
         testsHolder.append(testNameInput);
         testsHolder.append(testTypeInput);
@@ -187,4 +198,10 @@
             $('.units-name-validation').addClass('collapse');
         }
     })
+
+    $('#Tests').on('change', function () {
+        loadTestMethods();
+    });
+
+    
 </script>

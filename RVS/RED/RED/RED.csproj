@@ -340,6 +340,7 @@
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
     <Compile Include="Models\ElectronicDiary\SimpleProduct.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
+    <Compile Include="Models\ElectronicDiary\Tests\TestMethodW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\FileModels\DirUtility.cs" />

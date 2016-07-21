@@ -150,14 +150,6 @@ namespace RED.Models.ElectronicDiary
                 {
                     pt.Id = Guid.NewGuid();
                     pt.ProductId = item.Id;
-
-                    pt.TestMethodId = Guid.NewGuid();
-                    var testMethod = new TestMethod();
-                    testMethod.Id = pt.TestMethodId;
-                    testMethod.Method = "test method";
-                    testMethod.TestId = pt.TestId;
-
-                    pt.TestMethod = testMethod;
                 }
             }
 
@@ -200,9 +192,9 @@ namespace RED.Models.ElectronicDiary
             return selectList;
         }
 
-        public IEnumerable<TestMethod> GetTestMethods(Guid testId)
+        public IEnumerable<TestMethodW> GetTestMethods(Guid testId)
         {
-            var methods = db.TestMethods.Where(x => x.TestId == testId);
+            var methods = db.TestMethods.Where(x => x.TestId == testId).ToList().Select(x => new TestMethodW(x));
             return methods;
         }
 
