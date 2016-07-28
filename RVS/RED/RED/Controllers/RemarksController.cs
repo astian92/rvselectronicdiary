@@ -84,8 +84,12 @@ namespace RED.Controllers
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            var isDeleted = Rep.Delete(id);
-            return RedirectToAction("Index");
+            bool isDeleted = Rep.Delete(id);
+
+            if (isDeleted)
+                return RedirectToAction("Index");
+
+            return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Remarks/Index" });
         }
     }
 }

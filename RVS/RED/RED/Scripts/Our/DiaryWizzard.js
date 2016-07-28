@@ -106,7 +106,18 @@ $("#form").steps({
 
         if (dataIsValid == false) {
             $('.current').addClass('error');
-            $('.test-list-table tbody').append('<tr class="error-msg"><td><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+            
+            var testListTables = $('.test-list-table tbody');
+
+            for (var i = 0; i < testListTables.length; i++) {
+                var tableBody = $(testListTables[i]);
+                var bodyChildren = tableBody.children();
+                var count = bodyChildren.length;
+                
+                if (count == 0) {
+                    $(tableBody).append('<tr class="error-msg"><td colspan="2"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+                }
+            }
         }
 
         var form = $(this);

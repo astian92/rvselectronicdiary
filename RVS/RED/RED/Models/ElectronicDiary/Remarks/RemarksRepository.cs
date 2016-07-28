@@ -48,7 +48,17 @@ namespace RED.Models.ElectronicDiary.Remarks
         {
             var remark = db.Remarks.Find(id);
             db.Remarks.Remove(remark);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception exc)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(exc);
+                return false;
+            }
+
             return true;
         }
     }

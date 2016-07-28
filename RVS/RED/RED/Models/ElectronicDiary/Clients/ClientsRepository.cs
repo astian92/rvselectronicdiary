@@ -17,7 +17,7 @@ namespace RED.Models.ElectronicDiary.Clients
 
         public IQueryable<Client> GetClients()
         {
-            var clients = db.Clients.ToList();
+            var clients = db.Clients;//.ToList();
             //var result = clients.Select(c => new ClientW(c));
             return clients.AsQueryable();
         }
