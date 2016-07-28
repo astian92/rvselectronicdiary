@@ -55,6 +55,8 @@ namespace RED.Models.ElectronicDiary.Requests
             }
         }
 
+        public int TestingPeriod { get; set; }
+     
         //public ICollection<Protocol> Protocols { get; set; }
 
         public ArchivedRequest(ArchivedDiary adiary)
@@ -63,6 +65,7 @@ namespace RED.Models.ElectronicDiary.Requests
             this.Date = adiary.RequestDate;
             this.AcceptedBy = adiary.RequestAcceptedBy;
             this.IsAccepted = true;
+            this.TestingPeriod = adiary.RequestTestingPeriod ?? 0;
 
             this.Diary = adiary;
         }

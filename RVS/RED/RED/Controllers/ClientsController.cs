@@ -1,5 +1,7 @@
 ﻿using RED.Filters;
+using RED.Models;
 using RED.Models.ControllerBases;
+using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using System;
 using System.Collections.Generic;
@@ -18,18 +20,93 @@ namespace RED.Controllers
             return View();
         }
 
+        //public JsonResult GetClients()
+        //{
+        //    var clients = Rep.GetClients();
+
+        //    var jsonData = clients.Select(c => new
+        //    {
+        //        Name = c.Name,
+        //        Mobile = c.Mobile,
+        //        Id = c.Id
+        //    });
+
+        //    return Json(new { data = jsonData });
+        //}
+
         public JsonResult GetClients()
         {
-            var clients = Rep.GetClients();
+            var dtParams = new DtParameters(Request); //get the parameters from the Datatable
 
-            var jsonData = clients.Select(c => new
+            var entities = Rep.GetClients();
+            int totalRecords = entities.Count();
+
+            if (dtParams.IsBeingSearched)
             {
-                Name = c.Name,
-                Mobile = c.Mobile,
-                Id = c.Id
-            });
+                entities = entities.Where(e => e.Name.ToLower().Contains(dtParams.SearchValue) ||
+                                               (e.Mobile != null ?
+                                                    e.Mobile.ToLower().Contains(dtParams.SearchValue) : 
+                                                    false));
+            }
 
-            return Json(new { data = jsonData });
+            int filteredRecords = entities.Count();
+
+            if (dtParams.IsBeingFiltered)
+            {
+                entities = Filter(entities, dtParams.FilterColIndex, dtParams.FilterAsc);
+            }
+            else //defaultOrder
+            {
+                entities = entities.OrderBy(e => e.Name);
+            }
+
+            var data = entities.Skip(dtParams.Skip).Take(dtParams.PageSize)
+                .ToList().Select(c => new ClientW
+                {
+                    Name = c.Name,
+                    Mobile = c.Mobile,
+                    Id = c.Id
+                });
+
+            var jsonResult = new JqueryListResult<ClientW>(
+                    data,
+                    dtParams.Draw,
+                    filteredRecords,
+                    totalRecords
+                );
+
+            return Json(jsonResult);
+        }
+
+        private IQueryable<Client> Filter(IQueryable<Client> entities, int colIndex, bool asc)
+        {
+            switch (colIndex)
+            {
+                case 0:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Name);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Name);
+                    }
+                    break;
+                case 1:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Mobile);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Mobile);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return entities;
         }
 
         [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]

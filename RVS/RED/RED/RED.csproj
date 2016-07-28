@@ -316,6 +316,7 @@
     <Compile Include="Models\DataContext\User.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DtParameters.cs" />
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Models\FileModels\RequestList\RequestListModel.cs" />
     <Compile Include="Models\FileModels\RequestList\RequestListReport.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JqueryListResult.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
     <Compile Include="Models\Logs\LogRepository.cs" />
     <Compile Include="Models\ReportGeneration\DocXApi\DocXBase.cs" />
