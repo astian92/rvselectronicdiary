@@ -231,8 +231,8 @@ function hideQuantityValidation() {
     }
 }
 
-function loadTestMethods() {
-    var value = $('#Tests').val();
+function loadTestMethods(dropDown) {
+    var value = $(dropDown).val();
     var testId = value.substr(4, value.length);
     $.ajax({
         type: "GET",
@@ -245,7 +245,9 @@ function loadTestMethods() {
             for (var i = 0; i < methods.length; i++) {
                 optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
             }
-            $('#TestMethods').empty().append(optionsAsString);
+
+            var testMethodsDd = $(dropDown).parent().parent().find('.testMethods');
+            $(testMethodsDd).empty().append(optionsAsString);
         }
     });
 }

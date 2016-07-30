@@ -1,10 +1,18 @@
-﻿var protocolIdToOpen;
+﻿//var protocolIdToOpen;
 var tabId = 'active-protocols';
 var url = '/Protocols/FilterActiveProtocols';
 var isActiveTab = true;
 
 $(document).ready(function () {
     $('.' + tabId).html(spiner);
+
+    if (isArchived) {
+        url = '/Protocols/FilterArchivedProtocols';
+    }
+    else {
+        url = '/Protocols/FilterActiveProtocols';
+    }
+
     $.ajax({
         cache: false,
         type: 'GET',
@@ -14,6 +22,18 @@ $(document).ready(function () {
         },
         success: function (result) {
             $('.' + tabId).html(result);
+            if (protocolIdToOpen) {
+                $('a[href="#' + protocolIdToOpen + '"]').click();
+                $('html, body').animate({
+                    scrollTop: $("#" + protocolIdToOpen).offset().top - 50
+                }, 500);
+                protocolIdToOpen = undefined;
+            }
+
+            if (isArchived) {
+                $('.nav.nav-tabs').children().removeClass('active');
+                $('.archived-tab-btn').parent().addClass('active');
+            }
         },
         error: function () {
             var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на активните протоколи</div>");

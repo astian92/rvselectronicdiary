@@ -101,6 +101,7 @@
 
 <script>
     var isArchived = @(((bool)ViewBag.IsArchived).ToString().ToLower());
+    var protocolIdToOpen = '@(ViewBag.IdToOpen)';
 
     $('#filter-date-from .input-group.date').datepicker({
         format: "dd.m.yyyy",
@@ -120,15 +121,4 @@
         autoclose: true
     });
 
-    @*$(document).ready(function () { 
-        protocolIdToOpen = '@(ViewBag.IdToOpen)';
-
-        if (isArchived) { 
-            $('.archived-tab-btn').click();
-            window.location = "#" + protocolIdToOpen;
-        }
-        else {
-            $('.active-tab-btn').click();
-        }
-    });*@
 </script>

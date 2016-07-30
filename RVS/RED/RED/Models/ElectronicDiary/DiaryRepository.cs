@@ -72,7 +72,13 @@ namespace RED.Models.ElectronicDiary
             diary.ClientId = diaryW.ClientId;
             
             //diary.Products.Clear();
+            foreach (var item in diary.Products)
+            {
+                var pts = db.ProductTests.Where(pt => pt.ProductId == item.Id);
+                db.ProductTests.RemoveRange(pts);
+            }
             db.Products.RemoveRange(diary.Products);
+
             int i = 1;
             foreach (var item in diaryW.Products)
             {
@@ -85,6 +91,7 @@ namespace RED.Models.ElectronicDiary
                 foreach (var test in item.ProductTests)
                 {
                     test.Id = Guid.NewGuid();
+                    test.ProductId = item.Id;
                 }
 
                 diary.Products.Add(item);
