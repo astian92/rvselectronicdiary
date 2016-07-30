@@ -205,7 +205,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult AddComment(Guid? diaryId, string comment)
         {
-            if (diaryId != null && comment != null && comment != "")
+            if (diaryId != null && comment != null)
             {
                 bool isSaved = Rep.AddComment(diaryId.Value, comment);
 
