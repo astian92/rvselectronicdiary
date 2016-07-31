@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Protocols.ProtocolW>
 @using RED.Models.ElectronicDiary
 @using System.Collections.Generic
-
-@using Microsoft.AspNet.Identity
+@using RED.Models
 @using RED.Models.Account
 
 @{
@@ -31,7 +30,7 @@
                                 <h4 class="text-navy text-center">Протокол №: @item.Request.Diary.Number</h4>
                             </div>
                             @{
-                                var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited);
+                                var acredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited);
                             }
 
                             @if (acredited.Count() > 0)
@@ -58,31 +57,67 @@
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
                                     
+                                    <tr>
+                                        <td colspan="5">
+                                            <b>Акредитирани (А):</b>
+                                        </td>
+                                        <td>
+                                            <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=A">Изтегли протокол</a>
+                                        </td>
+                                    </tr>
+
+                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == @TestTypes.MKB))
+                                    { 
                                         <tr>
-                                            <td colspan="5">
-                                                <b>Акредитирани (А):</b>
-                                            </td>
-                                            <td>
-                                                <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=A">Изтегли протокол</a>
+                                            <td colspan="6">
+                                                <b>Резултати от микробиологично изпитване:</b>
                                             </td>
                                         </tr>
+                                    }
+                                    @{ 
+                                        var orderedAcreditedResultsMKB = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB)
+                                            .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                    }
+                                    @foreach (var result in orderedAcreditedResultsMKB)
+                                    {
+                                        <tr>
+                                            <td>@result.ProductTest.Test.Name</td>
+                                            <td>@result.ProductTest.TestMethod.Method</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            <td>@result.ProductTest.MethodValue</td>
+                                            <td>@result.ProductTest.Test.Temperature</td>
+                                        </tr>
+                                    }
 
-                                        @{ 
-                                            var orderedAcreditedResults = acredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
-                                        }
-                                        @foreach (var result in orderedAcreditedResults)
-                                        {
-                                            <tr>
-                                                <td>@result.ProductTest.Test.Name</td>
-                                                <td>@result.ProductTest.Test.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
-                                                <td>@result.ProductTest.Test.Temperature</td>
-                                            </tr>
-                                        }
+                                    @*FZH*@
+                                    @if (acredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от физикохимично и органолептично изпитване:</b>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @{
+                                        var orderedAcreditedResultsFZH = acredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH)
+                                            .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                    }
+                                    @foreach (var result in orderedAcreditedResultsFZH)
+                                    {
+                                        <tr>
+                                            <td>@result.ProductTest.Test.Name</td>
+                                            <td>@result.ProductTest.TestMethod.Method</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            <td>@result.ProductTest.MethodValue</td>
+                                            <td>@result.ProductTest.Test.Temperature</td>
+                                        </tr>
+                                    }
                                 </table>
                             </div>
                             <div class="row" style="margin-bottom: 20px;">
@@ -99,7 +134,7 @@
                             }
                             
                             @{
-                                var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited);
+                                var notAcredited = item.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited);
                             }
 
                             @if (notAcredited.Count() > 0)
@@ -126,32 +161,70 @@
                                         <th>Условия на заобикалящата среда</th>
                                     </tr>
                                    
+                                    <tr>
+                                        <td colspan="5">
+                                            <b>Не акредитирани (Б):</b>
+                                        </td>
+                                        <td>
+                                            <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=B">Изтегли протокол</a>
+                                        </td>
+                                    </tr>
+
+                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB))
+                                    {
                                         <tr>
-                                            <td colspan="5">
-                                                <b>Не акредитирани (Б):</b>
-                                            </td>
-                                            <td>
-                                                <a href="/Files/GetProtocolFile?protocolId=@(item.Id)&category=B">Изтегли протокол</a>
+                                            <td colspan="6">
+                                                <b>Резултати от микробиологично изпитване:</b>
                                             </td>
                                         </tr>
+                                    }
 
-                                        @{
-                                            var orderedNotAcreditedResults = notAcredited.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
-                                        }
+                                    @{
+                                        var orderedNotAcreditedResultsMKB = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.MKB)
+                                            .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                    }
 
-                                        @foreach (var result in orderedNotAcreditedResults)
-                                        {
-                                            <tr>
-                                                <td>@result.ProductTest.Test.Name</td>
-                                                <td>@result.ProductTest.Test.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.MethodValue</td>
-                                                <td>@result.ProductTest.Test.Temperature</td>
-                                            </tr>
-                                        }
+                                    @foreach (var result in orderedNotAcreditedResultsMKB)
+                                    {
+                                        <tr>
+                                            <td>@result.ProductTest.Test.Name</td>
+                                            <td>@result.ProductTest.TestMethod.Method</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            <td>@result.ProductTest.MethodValue</td>
+                                            <td>@result.ProductTest.Test.Temperature</td>
+                                        </tr>
+                                    }
+
+                                    @*ФЗХ*@
+                                    @if (notAcredited.Any(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <b>Резултати от физикохимично и органолептично изпитване:</b>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @{
+                                        var orderedNotAcreditedResultsFZH = notAcredited.Where(a => a.ProductTest.Test.TestType.ShortName == TestTypes.FZH)
+                                            .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+                                    }
+
+                                    @foreach (var result in orderedNotAcreditedResultsFZH)
+                                    {
+                                        <tr>
+                                            <td>@result.ProductTest.Test.Name</td>
+                                            <td>@result.ProductTest.TestMethod.Method</td>
+                                            <td>
+                                                @(result.ResultNumber != null ? result.ResultNumber : "")
+                                            </td>
+                                            <td>@result.Results</td>
+                                            <td>@result.ProductTest.MethodValue</td>
+                                            <td>@result.ProductTest.Test.Temperature</td>
+                                        </tr>
+                                    }
                                 </table>
                             </div>
 
@@ -167,8 +240,17 @@
                                 </div>
                             </div>
                             }
+
                             <div class="status-container">
-                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
+                                @if (item.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB))
+                                {
+                                    <h5>Извършил изпитването (МКБ): <strong>@item.TesterMKB</strong></h5>
+                                }
+
+                                @if (item.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
+                                {
+                                    <h5>Извършил изпитването (ФЗХ): <strong>@item.TesterFZH</strong></h5>
+                                }
                                 <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
 

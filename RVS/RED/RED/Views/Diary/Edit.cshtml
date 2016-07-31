@@ -95,7 +95,7 @@
 
                                     @foreach (var test in product.ProductTests)
                                     {
-                                        <span class="test" id="' + testKey + '">
+                                        <span class="test" id="@test.Id">
                                             <input type="hidden" class="testId" value="@test.TestId" />
                                             <input type="hidden" class="testMethodId" value="@test.TestMethodId" />
                                             <input type="hidden" class="units" value="@test.Units" />

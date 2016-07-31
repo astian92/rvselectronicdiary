@@ -251,3 +251,16 @@ function loadTestMethods(dropDown) {
         }
     });
 }
+
+function loadTestMethodValue(dropDown) {
+    var value = $(dropDown).val();
+    var testId = value.substr(4, value.length);
+    $.ajax({
+        type: "GET",
+        url: '/Diary/GetMethodValueForTest?testId=' + testId,
+        contentType: "application/json; charset=utf-8",
+        success: function (methodValue) {
+            $(dropDown).parent().parent().find('.methodValueBox').val(methodValue);
+        }
+    });
+}

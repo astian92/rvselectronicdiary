@@ -246,7 +246,7 @@ function DenyRequest(btn) {
 
     var promise = $.ajax({
         type: "POST",
-        url: "DenyRequest",
+        url: "/Requests/DenyRequest",
         data: { requestId: id },
         success: function (result) {
             if (result == "True") {

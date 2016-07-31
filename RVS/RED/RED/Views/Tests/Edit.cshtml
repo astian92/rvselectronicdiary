@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Изследване</h4>
         <hr />
@@ -55,18 +55,21 @@
                 <input type="button" class="btn btn-primary" value="Добави Метод" onclick="addMethod()" />
                 <table id="test-methods-table" class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
                     @*HERE BE TEST METHODS*@
-                    @{ 
+                    @{
                         int i = 0;
                     }
-                    @foreach (var method in Model.TestMethods)
+                    @if (Model.TestMethods != null)
                     {
-                        <tr>
-                            <td>
-                                <input type="hidden" class="testMethod" name="TestMethods[@(i++)].Method" value="@method.Method" />
-                                @method.Method
-                                <i class="fa fa-times pull-right" onclick="removeMethod(this)"></i>
-                            </td>
-                        </tr>
+                        foreach (var method in Model.TestMethods)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="hidden" class="testMethod" name="TestMethods[@(i++)].Method" value="@method.Method" />
+                                    @method.Method
+                                    <i class="fa fa-times pull-right" onclick="removeMethod(this)"></i>
+                                </td>
+                            </tr>
+                        }
                     }
                 </table>
             </div>
@@ -132,9 +135,36 @@
             </div>
         </div>
     </div>
-}
+                        }
 
 <script>
+    $(document).ready(function () {
+        $('#TypeId').on('change', function () {
+            CheckTestTypeAndHandleMethodValue(this);
+        });
+
+        CheckTestTypeAndHandleMethodValue($('#TypeId'));
+    });
+
+    function CheckTestTypeAndHandleMethodValue(testTypeDropDown) {
+        var id = $(testTypeDropDown).val();
+
+        $.ajax({
+            url: "/Tests/GetTestTypeFromId",
+            type: "GET",
+            data: { testId: id },
+            success: function (result) {
+                if (result == "ФЗХ") {
+                    $('#MethodValue').val('');
+                    $('#MethodValue').attr('disabled', 'disabled');
+                }
+                else if (result == "МКБ") {
+                    $('#MethodValue').removeAttr('disabled');
+                }
+            }
+        });
+    }
+
     function addPlusMinus(e) {
         var Id = $(e).attr('for');
         var value = $('#' + Id).val();

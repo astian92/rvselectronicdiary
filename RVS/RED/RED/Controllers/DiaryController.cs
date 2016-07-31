@@ -243,5 +243,18 @@ namespace RED.Controllers
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
+
+        public string GetMethodValueForTest(Guid testId)
+        {
+            var tests = Rep.GetTests();
+            if (tests.Any(t => t.Id == testId))
+            {
+                var test = tests.Single(t => t.Id == testId);
+                //because FZH is forbidden to take MethodValue just return the method value directly
+                return test.MethodValue;
+            }
+
+            return "";
+        }
     }
 }

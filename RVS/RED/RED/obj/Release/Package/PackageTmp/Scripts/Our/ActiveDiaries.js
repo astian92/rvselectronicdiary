@@ -86,9 +86,10 @@ function closeComment(diaryId) {
 
 function generateRequest(target) {
     var diaryId = $(target).attr('id');
-    var testingPeriod = $('#testingPeriod').val();
+    var testingPeriod = $('#testingPeriod-' + diaryId).val();
+    var parent = $(target).parent();
+    parent.html(spiner);
 
-    $('.status-container').html(spiner);
     $.ajax({
         type: "POST",
         url: '/Diary/GenerateRequest?diaryId=' + diaryId + '&&testingPeriod=' + testingPeriod,
@@ -96,20 +97,31 @@ function generateRequest(target) {
         //contentType: "application/json; charset=utf-8",
         success: function (data) {
             var html = '';
-            if (data == 'Ok') {
-                html = '<div class="alert alert-success">Заявката е в очакване да бъде приета.\
-                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '">\
+
+            if (data == "Failed") {
+                html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
+            }
+            else {
+                if (data.indexOf("A") > -1) { //if there was a A request generated
+                    html = '<div class="alert alert-success">Заявката (A) е в очакване да бъде приета.\
+                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '&category=A">\
                                 <i class="fa fa-download"></i>\
                                 Изтегли заявка\
                                 </a>\
-                            </div>\
-                        <button url="/Diary/DeleteRequest?diaryId=' + diaryId + '" diaryId="' + diaryId + '" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката </button>';
-            }
-            else {
-                html = '<div class="alert alert-danger">Възникна грешка при генерирането на заявката.</div>';
+                            </div>'
+                }
+                if (data.indexOf("B") > -1) {
+                    html += '<div class="alert alert-success">Заявката (B) е в очакване да бъде приета.\
+                            <a class="pull-right" href="/Files/GetRequestFile?diaryId=' + diaryId + '&category=B">\
+                                <i class="fa fa-download"></i>\
+                                Изтегли заявка\
+                                </a>\
+                            </div>'
+                }
+                html += '<button url="/Diary/DeleteRequest?diaryId=' + diaryId + '" diaryId="' + diaryId + '" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката </button>';
             }
 
-            $('.status-container').html(html);
+            parent.html(html);
         }
     });
 
@@ -119,8 +131,9 @@ function generateRequest(target) {
 function deleteRequest(target) {
     var url = $(target).attr('url');
     var diaryId = $(target).attr('diaryId');
-    
-    $('.status-container').html(spiner);
+    var parent = $(target).parent();
+
+    parent.html(spiner);
     $.ajax({
         type: "POST",
         url: url,
@@ -129,7 +142,7 @@ function deleteRequest(target) {
             var html = '';
             if (res == 'Ok') {
                 html = '<label for="testingPeriod">Срок на изпитване (дни):</label>' +
-                       '<input type="number" min="1" max="365" id="testingPeriod" />' +
+                       '<input type="number" min="1" max="365" id="testingPeriod-' + diaryId + '" />' +
                        '<br />' +
                        '<button id="' + diaryId + '" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>';
             }
@@ -137,7 +150,7 @@ function deleteRequest(target) {
                 html = '<div class="alert alert-danger">Възникна грешка при изтриването на заявката.</div>';
             }
 
-            $('.status-container').html(html);
+            parent.html(html);
         }
     });
 }

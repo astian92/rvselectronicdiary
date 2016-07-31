@@ -143,10 +143,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProtocolTester, new { @class = "control-label col-md-3" })
+            @Html.LabelFor(model => model.ProtocolTesterMKB, new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.EditorFor(model => model.ProtocolTester)
-                @Html.ValidationMessageFor(model => model.ProtocolTester, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ProtocolTesterMKB)
+                @Html.ValidationMessageFor(model => model.ProtocolTesterMKB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProtocolTesterFZH, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ProtocolTesterFZH)
+                @Html.ValidationMessageFor(model => model.ProtocolTesterFZH, "", new { @class = "text-danger" })
             </div>
         </div>
 

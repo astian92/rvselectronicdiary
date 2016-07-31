@@ -11,48 +11,33 @@
     <link rel="icon" type="image/png" href="~/Images/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="~/Images/favicon-16x16.png" sizes="16x16">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Minified css -->
+    <link href="~/Content/rvs-electronic-diary-theme.min.css" rel="stylesheet" />
 
-    <!-- Add jQuery Style direct - used for jQGrid plugin -->
-    <link href="@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <!-- Full css -->
+    @*<link href="~/Scripts/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/Content/animate.css" rel="stylesheet">
-    <link href="~/Content/style.css" rel="stylesheet">
-    <link href="~/Content/Our/shared.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet">*@
 
     <!-- Mainly scripts -->
     <script src="~/Scripts/jquery.shared.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
-    @*<script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>*@
     <script src="~/Scripts/Our/Shared.js"></script>
 </head>
 <body class="pace-done">
-    <div class="pace pace-inactive">
-        <div class="pace-progress" data--progress-text="100%" date-progress="99" style="width:100%">
-            <div class="pace-progress-inner"></div>
-        </div>
-        <div class="pace-activity"></div>
-    </div>
-    <!-- Wrapper-->
     <div id="wrapper">
-
-        <!-- Navigation -->
         @Html.Partial("_Navigation")
-
-        <!-- Page wraper -->
         <div id="page-wrapper" class="white-bg @ViewBag.SpecialClass">
-
-            <!-- Top Navbar -->
             @Html.Partial("_TopNavbar")
-
             <div class="row wrapper border-bottom animated fadeInRight">
-                <!-- Main view  -->
                 @RenderBody()
                 <div class="clearfix"></div>
             </div>
         </div>
-        <!-- End page wrapper-->
         <div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content animated bounceInRight">
@@ -60,10 +45,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Custom and plugin javascript -->
-    <script src="~/Scripts/plugins/pace/pace.min.js"></script>
-    <script src="~/Scripts/app/inspinia.min.js"></script>
 
     <!-- jQuery UI -->
     <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>

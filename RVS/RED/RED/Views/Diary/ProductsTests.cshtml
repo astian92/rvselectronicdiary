@@ -31,6 +31,7 @@
                     <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" for="methodValueBox-@product.Key" tabindex="-1" />
                     <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" for="methodValueBox-@product.Key" tabindex="-1" />
                 </span>
+                <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="methodValue-validation collapse">Стойност на показателя е задължителен!</span></span>
                 @*<div class="clearfix"></div>*@
             </div>
             <div class="form-group">
@@ -96,6 +97,7 @@
         var testDropDowns = $('.tests');
         testDropDowns.each(function () {
             loadTestMethods(this);
+            loadTestMethodValue(this);
         });
     });
 
@@ -124,8 +126,18 @@
         var methodValue = groupParent.find('.methodValueBox').val();
         var remark = groupParent.find('.remarkBox').val();
 
+        var validForm = true;
         if (units == '') {
             groupParent.find('.units-name-validation').removeClass('collapse');
+            validForm = false;
+        }
+
+        if (methodValue == '') {
+            groupParent.find('.methodValue-validation').removeClass('collapse');
+            validForm = false;
+        }
+
+        if (!validForm) {
             return false;
         }
       
@@ -199,12 +211,19 @@
 
     $('.unitBox').on('input', function () {
         if ($(this).val() != '') {
-            $('.units-name-validation').addClass('collapse');
+            $(this).parent().parent().find('.units-name-validation').addClass('collapse');
+        }
+    })
+
+    $('.methodValueBox').on('input', function () {
+        if ($(this).val() != '') {
+            $(this).parent().parent().find('.methodValue-validation').addClass('collapse');
         }
     })
 
     $('.tests').on('change', function () {
         loadTestMethods(this);
+        loadTestMethodValue(this);
     });
 
     

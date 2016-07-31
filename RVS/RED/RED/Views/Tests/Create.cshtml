@@ -121,6 +121,33 @@
 }
 
 <script>
+    $(document).ready(function () {
+        $('#TypeId').on('change', function () {
+            CheckTestTypeAndHandleMethodValue(this);
+        });
+
+        CheckTestTypeAndHandleMethodValue($('#TypeId'));
+    });
+
+    function CheckTestTypeAndHandleMethodValue(testTypeDropDown) {
+        var id = $(testTypeDropDown).val();
+
+        $.ajax({
+            url: "/Tests/GetTestTypeFromId",
+            type: "GET",
+            data: { testId: id },
+            success: function (result) {
+                if (result == "ФЗХ") {
+                    $('#MethodValue').val('');
+                    $('#MethodValue').attr('disabled', 'disabled');
+                }
+                else if (result == "МКБ") {
+                    $('#MethodValue').removeAttr('disabled');
+                }
+            }
+        });
+    }
+
     function addPlusMinus(e) {
         var Id = $(e).attr('for');
         var value = $('#' + Id).val();

@@ -6,10 +6,10 @@
 
 <h2>Създай</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Изследване</h4>
         <hr />
@@ -43,8 +43,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TestMethods, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TestMethods, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="text" id="methods-box" class="form-control" />
                 @Html.ValidationMessageFor(model => model.TestMethods, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="button" class="btn btn-primary" value="Добави Метод" onclick="addMethod()"/>
+                <table id="test-methods-table" class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
+                   @*HERE BE TEST METHODS*@
+                </table>
             </div>
         </div>
 
@@ -71,10 +80,34 @@
                 @Html.ValidationMessageFor(model => model.Temperature, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus()" />
-                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees()" />
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus(this)" for="Temperature" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees(this)" for="Temperature" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypeId, "Вид", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MethodValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MethodValue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MethodValue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus(this)" for="MethodValue" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees(this)" for="MethodValue" />
             </div>
         </div>
 
@@ -88,19 +121,81 @@
 }
 
 <script>
-    function addPlusMinus() {
-        var value = $('#Temperature').val();
+    $(document).ready(function () {
+        $('#TypeId').on('change', function () {
+            CheckTestTypeAndHandleMethodValue(this);
+        });
+
+        CheckTestTypeAndHandleMethodValue($('#TypeId'));
+    });
+
+    function CheckTestTypeAndHandleMethodValue(testTypeDropDown) {
+        var id = $(testTypeDropDown).val();
+
+        $.ajax({
+            url: "/Tests/GetTestTypeFromId",
+            type: "GET",
+            data: { testId: id },
+            success: function (result) {
+                if (result == "ФЗХ") {
+                    $('#MethodValue').val('');
+                    $('#MethodValue').attr('disabled', 'disabled');
+                }
+                else if (result == "МКБ") {
+                    $('#MethodValue').removeAttr('disabled');
+                }
+            }
+        });
+    }
+
+    function addPlusMinus(e) {
+        var Id = $(e).attr('for');
+        var value = $('#' + Id).val();
 
         value += '±';
 
-        $('#Temperature').val(value);
+        $('#' + Id).val(value);
     }
 
-    function addDegrees() {
-        var value = $('#Temperature').val();
+    function addDegrees(e) {
+        var Id = $(e).attr('for');
+        var value = $('#' + Id).val();
 
         value += '°';
 
-        $('#Temperature').val(value);
+        $('#' + Id).val(value);
+    }
+
+    function addMethod() {
+        var methodsBox = $('#methods-box');
+        var methodText = methodsBox.val();
+
+        if (methodText) {
+            methodsBox.val('');
+
+            var method = $('<tr><td>\
+                            <input type="hidden" class="testMethod" name="" value="' + methodText + '" />\
+                            ' + methodText + '\
+                            <i class="fa fa-times pull-right" onclick="removeMethod(this)"></i>\
+                        </td></tr>');
+
+            $('#test-methods-table').append(method);
+            renumerateMethods();
+        }
+    }
+
+    function removeMethod(x) {
+        var tr = $(x).parent().parent();
+        tr.remove();
+        renumerateMethods();
+    }
+
+    function renumerateMethods() {
+        var methods = $('.testMethod');
+        var i = 0;
+        methods.each(function () {
+            $(this).attr("name", "TestMethods[" + i + "].Method");
+            i++;
+        });
     }
 </script>

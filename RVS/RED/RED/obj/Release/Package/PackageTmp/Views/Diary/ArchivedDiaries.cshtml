@@ -55,7 +55,8 @@
                                                 <th>№</th>
                                                 <th class="text-left">Наименoвание</th>
                                                 <th class="text-center">Количество</th>
-                                                <th class="text-right">Показател за изпитване</th>
+                                                <th class="text-center">Показател за изпитване</th>
+                                                <th class="text-right">Метод</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,15 +75,22 @@
                                                     {
                                                         if (i == 0)
                                                         {
+                                                            <td class="text-center">
+                                                                <span>(@test.TestTypeShortName) @test.TestName</span>
+                                                            </td>
                                                             <td class="text-right">
-                                                                <span>@test.TestName</span>
+                                                                <span>@test.TestMethods</span>
                                                             </td>
                                                         }
                                                         else
                                                         {
                                                         <tr>
-                                                            <td colspan="4" style="text-align: right">
-                                                                <span>@test.TestName</span>
+                                                            <td colspan="3" ></td>
+                                                            <td style="text-align: center">
+                                                                <span>(@test.TestTypeShortName) @test.TestName</span>
+                                                            </td>
+                                                            <td style="text-align: right">
+                                                                <span>@test.TestMethods</span>
                                                             </td>
                                                         </tr>
                                                         }
@@ -112,9 +120,9 @@
                                 </div>
                             </div>
 
-                            <div class="ibox-content comment-container" style="margin-bottom:10px;">
+                            <div class="row comment-container" style="margin-bottom:30px;">
                                 <div class="form-group">
-                                    <div class="col-md-12 no-padding">
+                                    <div class="col-md-12">
                                         <textarea disabled class="comment form-control message-input" name="Comment">@item.Comment</textarea>
                                     </div>
                                 </div>
@@ -123,15 +131,17 @@
                             @if(user.Id == Guid.Parse("0f68da69-5c82-480b-9474-54c133439b0c") || user.Id == Guid.Parse("613b0faa-8828-44a9-8bbe-09ba68cc33ae"))
                             {
                                 <div class="row">
-                                    <div class="text-right">
-                                        <a class="btn btn-primary" adiaryId="@item.Id" onclick="refreshProtocol(this)">
-                                            <i class="fa fa-refresh"></i>
-                                            Опресни протокол
-                                        </a>
-                                        <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
-                                            <i class="fa fa-edit"></i>
-                                            Промени
-                                        </a>
+                                    <div class="col-xs-12">
+                                        <div class="text-right">
+                                            <a class="btn btn-primary" adiaryId="@item.Id" onclick="refreshProtocol(this)">
+                                                <i class="fa fa-refresh"></i>
+                                                Опресни протокол
+                                            </a>
+                                            <a class="btn btn-primary" href="/ArchivedDiary/Edit?id=@item.Id">
+                                                <i class="fa fa-edit"></i>
+                                                Промени
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             }

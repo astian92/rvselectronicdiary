@@ -29,8 +29,11 @@ $("#form").steps({
                     var id = $(this).find('.testId').val();
                     var units = $(this).find('.units').val();
                     var name = $(this).find('.name').val();
+                    var type = $(this).find('.type').val();
+                    var methodValue = $(this).find('.methodValue').val();
+                    var remark = $(this).find('.remark').val();
 
-                    tests.push({ Id: id, Units: units, Name: name, Key: key });
+                    tests.push({ Id: id, Units: units, Name: name, Key: key, MethodValue: methodValue, Remark: remark, Type: type });
                 });
                 products.push({ Name: productName, Key: productKey, Tests: tests });
             });
@@ -81,8 +84,14 @@ $("#form").steps({
 
                 var testId = test.find('.testId');
                 testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
+                var testMethodId = test.find('.testMethodId');
+                testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
                 var units = test.find('.units');
                 units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
+                var methodValue = test.find('.methodValue');
+                methodValue.attr('name', 'Products[' + i + '].ProductTests[' + j + '].MethodValue');
+                var remark = test.find('.remark');
+                remark.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Remark');
             }
         }
 
@@ -97,7 +106,18 @@ $("#form").steps({
 
         if (dataIsValid == false) {
             $('.current').addClass('error');
-            $('.test-list-table tbody').append('<tr class="error-msg"><td><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+            
+            var testListTables = $('.test-list-table tbody');
+
+            for (var i = 0; i < testListTables.length; i++) {
+                var tableBody = $(testListTables[i]);
+                var bodyChildren = tableBody.children();
+                var count = bodyChildren.length;
+                
+                if (count == 0) {
+                    $(tableBody).append('<tr class="error-msg"><td colspan="2"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+                }
+            }
         }
 
         var form = $(this);
@@ -185,6 +205,7 @@ $('.add-product-btn').click(function () {
     //$('.product-list-validation').addClass('collapse');
     $('.product-list-table tbody .error-msg').remove();
     $('.current').removeClass('error');
+    $('#Products').focus();
 });
 
 function deleteProduct(e, number) {
@@ -208,4 +229,38 @@ function hideQuantityValidation() {
     if ($('#Quantity').val() != '') {
         $('.product-quantity-validation').addClass('collapse');
     }
+}
+
+function loadTestMethods(dropDown) {
+    var value = $(dropDown).val();
+    var testId = value.substr(4, value.length);
+    $.ajax({
+        type: "GET",
+        url: '/Diary/GetTestMethods?testId=' + testId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            var methods = JSON.parse(data);
+            var optionsAsString = "";
+            for (var i = 0; i < methods.length; i++) {
+                optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
+            }
+
+            var testMethodsDd = $(dropDown).parent().parent().find('.testMethods');
+            $(testMethodsDd).empty().append(optionsAsString);
+        }
+    });
+}
+
+function loadTestMethodValue(dropDown) {
+    var value = $(dropDown).val();
+    var testId = value.substr(4, value.length);
+    $.ajax({
+        type: "GET",
+        url: '/Diary/GetMethodValueForTest?testId=' + testId,
+        contentType: "application/json; charset=utf-8",
+        success: function (methodValue) {
+            $(dropDown).parent().parent().find('.methodValueBox').val(methodValue);
+        }
+    });
 }

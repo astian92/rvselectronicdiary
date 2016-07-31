@@ -40,7 +40,8 @@
                                                     <th></th>
                                                     <th class="text-left">Наименoвание</th>
                                                     <th class="text-center">Количество</th>
-                                                    <th class="text-right">Показател за изпитване</th>
+                                                    <th class="text-center">Показател за изпитване</th>
+                                                    <th class="text-right">Метод</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,15 +60,22 @@
                                                         {
                                                             if (i == 0)
                                                             {
-                                                                <td class="text-right">
+                                                                <td class="text-center">
                                                                     <span>@test.TestName</span>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <span>@test.TestMethods</span>
                                                                 </td>
                                                             }
                                                             else
                                                             {
                                                             <tr>
-                                                                <td colspan="4" style="text-align: right">
+                                                                <td colspan="3"></td>
+                                                                <td style="text-align: center">
                                                                     <span>@test.TestName</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <span>@test.TestMethods</span>
                                                                 </td>
                                                             </tr>
                                                             }
@@ -79,7 +87,7 @@
                                             </tbody>
                                         </table>
 
-                                        <h5>Срок на изпитване (дни): <strong></strong></h5>
+                                        <h5>Срок на изпитване (дни): <strong>@item.TestingPeriod</strong></h5>
                                         
                                         @if (principal.IsAuthorize("93b1ccf0-c462-464a-9294-524e5088b93b")) //виждай протоколи
                                         {

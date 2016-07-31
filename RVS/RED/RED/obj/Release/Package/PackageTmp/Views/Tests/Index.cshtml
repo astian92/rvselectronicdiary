@@ -36,8 +36,9 @@
             <table id="TestsTable" class="display table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" style="min-width: 100%">
                 <thead>
                     <tr>
+                        <th>Вид</th>
                         <th>Име</th>
-                        <th>Методи</th>
+                        @*<th>Методи</th>*@
                         <th>Ниво</th>
                         <th>Единица на величината</th>
                         <th>Температура</th>
@@ -75,8 +76,9 @@
             url: "/Tests/GetTests",
         },
         columns: [
+            { "data": "TestType" },
             { "data": "Name" },
-            { "data": "TestMethods" },
+            //{ "data": "TestMethods" },
             { "data": "Level" },
             { "data": "UnitName" },
             { "data": "Temperature" },
@@ -122,7 +124,7 @@
             api.column(5, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="6">' + group + '</td></tr>'
+                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
                     );
 
                     last = group;

@@ -1,11 +1,14 @@
 ﻿@model RED.Models.ElectronicDiary.Requests.RequestW
 @using RED.Models.ElectronicDiary
+@using RED.Models;
 @using System.Collections.Generic
 
 @{
     ViewBag.Title = "Create";
 }
 
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
 <link href="~/Content/Our/protocols.css" rel="stylesheet" />
 <link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
 
@@ -50,7 +53,7 @@
                             <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
                         </label>
                         <label class="col-md-9 modified-label-notbold">
-                            @test.Test.TestMethods
+                            @test.TestMethod.Method
                         </label>
                     </div>
                     <div class="form-group">
@@ -79,7 +82,7 @@
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
                             Стойност на показателя
                             <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
@@ -92,7 +95,7 @@
                             </span>
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label for="test-method" class="control-label col-md-3">
                             Условия на заобикалящата среда
@@ -111,15 +114,59 @@
 	        }
         }
 
-        <div class="form-group">
-            <label for="Tester" class="control-label col-md-3">
-                Ивършил изпитването:
-            </label>
-            <div class="col-md-9">
-                @Html.TextBox("Tester", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
-                @Html.ValidationMessage("Tester", new { @class = "text-danger" })
+        <div class="form-group" id="issued-date">
+            @Html.Label("IssuedDate", "Издаден на:", new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" id="IssuedDate" name="IssuedDate" type="datetime" value=""
+                           data-val="true" data-val-required="Полето &quot;Издаден на (дата)&quot; е задължително!">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group clockpicker" data-autoclose="true">
+                    <input type="text" class="form-control" id="IssuedTime" name="IssuedTime" value=""
+                           data-val="true" data-val-required="Полето &quot;Издаден на (час)&quot; е задължително!">
+                    <span class="input-group-addon">
+                        <span class="fa fa-clock-o"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9 col-md-offset-3">
+                @Html.ValidationMessage("IssuedDate", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-9 col-md-offset-3">
+                @Html.ValidationMessage("IssuedTime", new { @class = "text-danger" })
             </div>
         </div>
+
+
+        @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.MKB)))
+        {
+            <div class="form-group">
+                <label for="Tester" class="control-label col-md-3">
+                    Ивършил изпитването (МКБ):
+                </label>
+                <div class="col-md-9">
+                    @Html.TextBox("TesterMKB", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
+                    @Html.ValidationMessage("TesterMKB", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+       @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.FZH)))
+       {
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Ивършил изпитването (ФЗХ):
+            </label>
+            <div class="col-md-9">
+                @Html.TextBox("TesterFZH", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (ФЗХ) е задължително поле!" })
+                @Html.ValidationMessage("TesterFZH", new { @class = "text-danger" })
+            </div>
+        </div>
+       }
+
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
                 Ръководител:
@@ -130,7 +177,7 @@
             </div>
         </div>
 
-        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.Acredited)))
+        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited)))
         {
             <div class="form-group">
                 <label for="RemarkId" class="control-label col-md-3">
@@ -149,7 +196,7 @@
                 </div>
             </div>
         }
-        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcredetationLevels.NotAcredited)))
+        @if (Model.Diary.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited)))
         {
             <div class="form-group">
                 <label for="RemarkId" class="control-label col-md-3">
@@ -184,8 +231,21 @@
 <script src="~/Scripts/Our/Helpers.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/Our/Protocols.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 
 <script>
+    $('.clockpicker').clockpicker();
+
+    $('#issued-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': { allow_single_deselect: true },

@@ -8,3 +8,7 @@
     margin-bottom: 0px;
     font-weight: normal;
 }
+
+.no-resize {
+    resize: none;
+}

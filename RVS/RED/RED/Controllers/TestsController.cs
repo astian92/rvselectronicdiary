@@ -254,5 +254,17 @@ namespace RED.Controllers
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Index" });
         }
+
+        public string GetTestTypeFromId(Guid testId)
+        {
+            var testType = Rep.GetTestTypes();
+
+            if (testType.Any(t => t.Id == testId))
+            {
+                return testType.Single(t => t.Id == testId).ShortName;
+            }
+
+            return "Unknown";
+        }
     }
 }

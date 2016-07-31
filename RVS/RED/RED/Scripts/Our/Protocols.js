@@ -5,6 +5,10 @@ var isActiveTab = true;
 
 $(document).ready(function () {
     $('.' + tabId).html(spiner);
+    
+    if (isArchived) {
+        var isArchived = false;
+    }
 
     if (isArchived) {
         url = '/Protocols/FilterArchivedProtocols';

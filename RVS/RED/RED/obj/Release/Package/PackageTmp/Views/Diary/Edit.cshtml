@@ -6,9 +6,11 @@
     ViewBag.Title = "Edit";
 }
 
-
 <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 <link href="~/Content/plugins/wizzard/jquery.steps.css" rel="stylesheet" />
+<link href="~/Content/Our/create-diary-custom.css" rel="stylesheet" />
+
+
 <h2>Промени писмо</h2>
 
 @using (Html.BeginForm("Edit", "Diary", FormMethod.Post, new { @class = "wizard-big", @id = "form" }))
@@ -93,10 +95,14 @@
 
                                     @foreach (var test in product.ProductTests)
                                     {
-                                        <span class="test" id="' + testKey + '">
+                                        <span class="test" id="@test.Id">
                                             <input type="hidden" class="testId" value="@test.TestId" />
+                                            <input type="hidden" class="testMethodId" value="@test.TestMethodId" />
                                             <input type="hidden" class="units" value="@test.Units" />
                                             <input type="hidden" class="name" value="@test.Test.Name" />
+                                            <input type="hidden" class="type" value="@test.Test.TestType.ShortName" />
+                                            <input type="hidden" class="methodValue" value="@test.MethodValue" />
+                                            <input type="hidden" class="remark" value="@test.Remark" />
                                         </span>
                                     }
                                 </td>
@@ -131,7 +137,6 @@
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/Our/Helpers.js"></script>
-
 <script src="~/Scripts/Our/DiaryWizzard.js"></script>
 
 <script>
