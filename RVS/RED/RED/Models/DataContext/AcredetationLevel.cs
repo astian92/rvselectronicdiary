@@ -11,8 +11,7 @@ namespace RED.Models.DataContext
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class AcredetationLevel
     {
         public AcredetationLevel()
@@ -22,7 +21,6 @@ namespace RED.Models.DataContext
         }
     
         public System.Guid Id { get; set; }
-        [Display(Name = "Ниво Aкредитация")]
         public string Level { get; set; }
         public string Description { get; set; }
     

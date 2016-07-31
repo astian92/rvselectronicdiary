@@ -215,8 +215,7 @@ namespace RED.Models.FileModels
             var quantities = products.OrderBy(p => p.Number).Select(p => p.Quantity);
             model.ReportParameters.Add("Quantities", quantities);
 
-            var protocolResults = protocol.ProtocolResults.Where(pr =>
-                pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
+            var protocolResults = protocol.ProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
                 .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
             model.ReportParameters.Add("ProtocolResults", protocolResults);
 
@@ -328,7 +327,9 @@ namespace RED.Models.FileModels
             }
 
             model.ReportParameters.Add("Products", convertedProducts);
-            var methods = convertedProducts.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            //var methods = convertedProducts.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category).Select(pt => pt.Test.TestMethods)).Distinct();
+            var methods = convertedProducts.SelectMany(p => p.ProductTests.Where(pt => pt.Test.AcredetationLevel.Level.Trim() == category)
+                            .Select(pt => new MethodsModel() { TestName = pt.Test.Name, TestMethod = pt.TestMethod.Method })).ToList().Distinct();
             model.ReportParameters.Add("Methods", methods);
             var quantities = convertedProducts.OrderBy(p => p.Number).Select(p => p.Quantity);
             model.ReportParameters.Add("Quantities", quantities);
@@ -336,9 +337,9 @@ namespace RED.Models.FileModels
             var protocolResultsConverter = new ProtocolResultsConverter();
             var theProtocolResults = adiary.ArchivedProtocolResults.Select(apr => protocolResultsConverter.ConvertFromArchived(apr));
 
-            var protocolResults = theProtocolResults.Where(pr =>
-                pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
+            var protocolResults = theProtocolResults.Where(pr => pr.ProductTest.Test.AcredetationLevel.Level.Trim() == category)
                 .OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber);
+
             model.ReportParameters.Add("ProtocolResults", protocolResults);
 
             model.ReportParameters.Add("Contractor", adiary.Contractor);
@@ -347,7 +348,8 @@ namespace RED.Models.FileModels
             model.ReportParameters.Add("LetterDate", adiary.LetterDate);
             model.ReportParameters.Add("RequestDate", adiary.RequestDate.ToLocalTime());
             model.ReportParameters.Add("LabLeader", adiary.ProtocolLabLeader);
-            model.ReportParameters.Add("Tester", adiary.ProtocolTester);
+            model.ReportParameters.Add("TesterMKB", adiary.ProtocolTesterMKB);
+            model.ReportParameters.Add("TesterFZH", adiary.ProtocolTesterFZH);
 
             var remarksConverter = new RemarksConverter();
             var remarks = adiary.ArchivedProtocolRemarks.Where(r => r.AcredetationLevel.Trim() == category).

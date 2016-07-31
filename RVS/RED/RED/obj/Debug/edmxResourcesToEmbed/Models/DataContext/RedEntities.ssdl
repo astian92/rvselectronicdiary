@@ -55,7 +55,8 @@
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="RequestTestingPeriod" Type="int" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
-    <Property Name="ProtocolTester" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="ProtocolTesterMKB" Type="nvarchar" MaxLength="300" />
+    <Property Name="ProtocolTesterFZH" Type="nvarchar" MaxLength="300" />
     <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="8" />
   </EntityType>

@@ -34,15 +34,11 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_AcredetationLevels" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolsRemarks_Remarks" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" Width="1.5" PointX="11" PointY="1.375" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" Width="1.5" PointX="8.75" PointY="1.625" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Client" Width="1.5" PointX="3.75" PointY="1.5" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Diary_Clients" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.TestType" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" Width="1.5" PointX="13.25" PointY="3.5" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Width="1.5" PointX="15.5" PointY="3.25" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Protocol" Width="1.5" PointX="10.5" PointY="8" />
@@ -61,6 +57,10 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" Width="1.5" PointX="8.875" PointY="1.375" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

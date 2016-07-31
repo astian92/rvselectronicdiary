@@ -43,7 +43,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<AcredetationLevel> AcredetationLevels { get; set; }
         public virtual DbSet<ProtocolsRemark> ProtocolsRemarks { get; set; }
         public virtual DbSet<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
-        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<TestType> TestTypes { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
@@ -53,5 +52,6 @@ namespace RED.Models.DataContext
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
         public virtual DbSet<ProductTest> ProductTests { get; set; }
+        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
     }
 }
