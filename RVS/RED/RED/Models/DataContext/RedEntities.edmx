@@ -60,7 +60,8 @@
           <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RequestTestingPeriod" Type="int" />
           <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
-          <Property Name="ProtocolTester" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="ProtocolTesterMKB" Type="nvarchar" MaxLength="300" />
+          <Property Name="ProtocolTesterFZH" Type="nvarchar" MaxLength="300" />
           <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="8" />
         </EntityType>
@@ -1075,16 +1076,7 @@
             <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
           </AssociationSet>
           <EntitySet Name="ArchivedProtocolRemarks" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" />
-          <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
           <EntitySet Name="Clients" EntityType="DB_9BCA69_RedDbModel.Client" />
-          <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
-            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-            <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ArchivedProtocolRemarks_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary">
-            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-            <End Role="ArchivedProtocolRemark" EntitySet="ArchivedProtocolRemarks" />
-          </AssociationSet>
           <AssociationSet Name="FK_Diary_Clients" Association="DB_9BCA69_RedDbModel.FK_Diary_Clients">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Diary" EntitySet="Diaries" />
@@ -1092,10 +1084,6 @@
           <EntitySet Name="TestTypes" EntityType="DB_9BCA69_RedDbModel.TestType" />
           <EntitySet Name="ArchivedProductTests" EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" />
           <EntitySet Name="ArchivedProtocolResults" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" />
-          <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
-            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
-            <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
-          </AssociationSet>
           <AssociationSet Name="FK_ArchivedProductTests_ArchivedProducts" Association="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts">
             <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
             <End Role="ArchivedProductTest" EntitySet="ArchivedProductTests" />
@@ -1152,6 +1140,19 @@
           <AssociationSet Name="FK_ProtocolResults_ProductTests" Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests">
             <End Role="ProductTest" EntitySet="ProductTests" />
             <End Role="ProtocolResult" EntitySet="ProtocolResults" />
+          </AssociationSet>
+          <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
+          <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
+            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+            <End Role="ArchivedProduct" EntitySet="ArchivedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArchivedProtocolRemarks_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary">
+            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+            <End Role="ArchivedProtocolRemark" EntitySet="ArchivedProtocolRemarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArchivedProtocolResults_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary">
+            <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
+            <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Diary">
@@ -1241,8 +1242,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProduct" ToRole="ArchivedDiary" />
           <NavigationProperty Name="ArchivedProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProductTests_ArchivedProducts" FromRole="ArchivedProduct" ToRole="ArchivedProductTest" />
+          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedProduct" ToRole="ArchivedDiary" />
         </EntityType>
         <EntityType Name="AcredetationLevel">
           <Key>
@@ -1299,32 +1300,8 @@
           <Property Name="ArchivedDiaryId" Type="Guid" Nullable="false" />
           <Property Name="Remark" Type="String" Nullable="false" MaxLength="3500" FixedLength="false" Unicode="true" />
           <Property Name="AcredetationLevel" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedProtocolRemark" ToRole="ArchivedDiary" />
-          <Property Name="Number" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ArchivedDiary">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Number" Type="Int32" Nullable="false" />
-          <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LetterNumber" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Contractor" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Client" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ClientMobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RequestAcceptedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RequestTestingPeriod" Type="Int32" />
-          <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProtocolTester" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ProtocolLabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
-          <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
-          <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -1335,34 +1312,6 @@
           <Property Name="Mobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Diaries" Relationship="DB_9BCA69_RedDbModel.FK_Diary_Clients" FromRole="Client" ToRole="Diary" />
         </EntityType>
-        <Association Name="FK_ArchivedProducts_ArchivedDiary">
-          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ArchivedDiary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArchivedProduct">
-              <PropertyRef Name="ArchivedDiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
-          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" Role="ArchivedProtocolRemark" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ArchivedDiary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArchivedProtocolRemark">
-              <PropertyRef Name="ArchivedDiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Diary_Clients">
           <End Type="DB_9BCA69_RedDbModel.Client" Role="Client" Multiplicity="1" />
           <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="*" />
@@ -1412,21 +1361,9 @@
           <Property Name="ArchivedProductTestId" Type="Guid" Nullable="false" />
           <Property Name="ResultNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Results" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
           <NavigationProperty Name="ArchivedProductTest" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedProductTests" FromRole="ArchivedProtocolResult" ToRole="ArchivedProductTest" />
+          <NavigationProperty Name="ArchivedDiary" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedProtocolResult" ToRole="ArchivedDiary" />
         </EntityType>
-        <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
-          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
-          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ArchivedDiary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArchivedProtocolResult">
-              <PropertyRef Name="ArchivedDiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ArchivedProductTests_ArchivedProducts">
           <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1663,6 +1600,71 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ArchivedDiary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LetterNumber" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contractor" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Client" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ClientMobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestAcceptedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RequestTestingPeriod" Type="Int32" />
+          <Property Name="ProtocolIssuedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProtocolTesterMKB" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ProtocolTesterFZH" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ProtocolLabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
+          <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
+          <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
+        </EntityType>
+        <Association Name="FK_ArchivedProducts_ArchivedDiary">
+          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.ArchivedProduct" Role="ArchivedProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArchivedDiary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedProduct">
+              <PropertyRef Name="ArchivedDiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArchivedProtocolRemarks_ArchivedDiary">
+          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" Role="ArchivedProtocolRemark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArchivedDiary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedProtocolRemark">
+              <PropertyRef Name="ArchivedDiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArchivedProtocolResults_ArchivedDiary">
+          <End Type="DB_9BCA69_RedDbModel.ArchivedDiary" Role="ArchivedDiary" Multiplicity="1" />
+          <End Type="DB_9BCA69_RedDbModel.ArchivedProtocolResult" Role="ArchivedProtocolResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArchivedDiary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArchivedProtocolResult">
+              <PropertyRef Name="ArchivedDiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1864,28 +1866,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ArchivedDiaries">
-            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
-              <MappingFragment StoreEntitySet="ArchivedDiary">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="ProtocolLabLeader" ColumnName="ProtocolLabLeader" />
-                <ScalarProperty Name="ProtocolTester" ColumnName="ProtocolTester" />
-                <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
-                <ScalarProperty Name="RequestTestingPeriod" ColumnName="RequestTestingPeriod" />
-                <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ClientMobile" ColumnName="ClientMobile" />
-                <ScalarProperty Name="Client" ColumnName="Client" />
-                <ScalarProperty Name="Contractor" ColumnName="Contractor" />
-                <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
-                <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
-                <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Client">
               <MappingFragment StoreEntitySet="Clients">
@@ -1988,6 +1968,29 @@
                 <ScalarProperty Name="TestMethodId" ColumnName="TestMethodId" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArchivedDiaries">
+            <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
+              <MappingFragment StoreEntitySet="ArchivedDiary">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ProtocolLabLeader" ColumnName="ProtocolLabLeader" />
+                <ScalarProperty Name="ProtocolTesterFZH" ColumnName="ProtocolTesterFZH" />
+                <ScalarProperty Name="ProtocolTesterMKB" ColumnName="ProtocolTesterMKB" />
+                <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
+                <ScalarProperty Name="RequestTestingPeriod" ColumnName="RequestTestingPeriod" />
+                <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ClientMobile" ColumnName="ClientMobile" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="Contractor" ColumnName="Contractor" />
+                <ScalarProperty Name="LetterDate" ColumnName="LetterDate" />
+                <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
+                <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -37,7 +37,8 @@ namespace RED.Models.ElectronicDiary
             archivedDiary.RequestDate = adiary.RequestDate.ToUniversalTime();
             archivedDiary.RequestAcceptedBy = adiary.RequestAcceptedBy;
             archivedDiary.ProtocolIssuedDate = adiary.ProtocolIssuedDate.ToUniversalTime();
-            archivedDiary.ProtocolTester = adiary.ProtocolTester;
+            archivedDiary.ProtocolTesterMKB = adiary.ProtocolTesterMKB;
+            archivedDiary.ProtocolTesterFZH = adiary.ProtocolTesterFZH;
             archivedDiary.ProtocolLabLeader = adiary.ProtocolLabLeader;
             archivedDiary.Remark = adiary.Remark;
             archivedDiary.RequestTestingPeriod = adiary.RequestTestingPeriod;

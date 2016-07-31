@@ -18,12 +18,13 @@ namespace RED.Models.ElectronicDiary.Converters
             productTest.Test = new Test();
             productTest.Test.Name = aproductTest.TestName;
             productTest.Test.UnitName = aproductTest.TestUnitName;
-            productTest.TestMethod = new TestMethod() { Method = aproductTest.TestMethods };
+            productTest.TestMethod = new TestMethod() { Id = Guid.NewGuid(), Method = aproductTest.TestMethods };
             productTest.Test.AcredetationLevel = new AcredetationLevel();
             productTest.Test.AcredetationLevel.Level = aproductTest.TestAcredetationLevel;
             productTest.Test.Temperature = aproductTest.TestTemperature;
             productTest.Test.TestCategory = new TestCategory();
             productTest.Test.TestCategory.Name = aproductTest.TestCategory;
+            productTest.Test.TestType = new TestType() { Id = Guid.NewGuid(), Type = aproductTest.TestType, ShortName = aproductTest.TestTypeShortName };
 
             productTest.Product = new Product(); //not using converter because RECURSION
             productTest.Product.Number = aproductTest.ArchivedProduct.Number;
