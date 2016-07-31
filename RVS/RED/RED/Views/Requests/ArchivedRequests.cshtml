@@ -40,7 +40,8 @@
                                                     <th></th>
                                                     <th class="text-left">Наименoвание</th>
                                                     <th class="text-center">Количество</th>
-                                                    <th class="text-right">Показател за изпитване</th>
+                                                    <th class="text-center">Показател за изпитване</th>
+                                                    <th class="text-right">Метод</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,15 +60,22 @@
                                                         {
                                                             if (i == 0)
                                                             {
-                                                                <td class="text-right">
+                                                                <td class="text-center">
                                                                     <span>@test.TestName</span>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <span>@test.TestMethods</span>
                                                                 </td>
                                                             }
                                                             else
                                                             {
                                                             <tr>
-                                                                <td colspan="4" style="text-align: right">
+                                                                <td colspan="3"></td>
+                                                                <td style="text-align: center">
                                                                     <span>@test.TestName</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <span>@test.TestMethods</span>
                                                                 </td>
                                                             </tr>
                                                             }
