@@ -1,10 +1,8 @@
-﻿using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RED.Models.DataContext;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models.ElectronicDiary.Remarks
 {
@@ -12,46 +10,46 @@ namespace RED.Models.ElectronicDiary.Remarks
     {
         public RemarksRepository()
         {
-            this.db = new RvsDbContext();
+            this.Db = new RvsDbContext();
         }
 
         public IEnumerable<RemarkW> GetRemarks()
         {
-            var remarks = db.Remarks.ToList();
+            var remarks = Db.Remarks.ToList();
             return remarks.Select(r => new RemarkW(r));
         }
 
         public RemarkW GetRemark(Guid remarkId)
         {
-            return new RemarkW(db.Remarks.Single(r => r.Id == remarkId));
+            return new RemarkW(Db.Remarks.Single(r => r.Id == remarkId));
         }
 
         public bool Create(RemarkW remark)
         {
             remark.Id = Guid.NewGuid();
-            db.Remarks.Add(remark.ToBase());
-            db.SaveChanges();
+            Db.Remarks.Add(remark.ToBase());
+            Db.SaveChanges();
 
             return true;
         }
 
         public bool Edit(RemarkW remark)
         {
-            var r = db.Remarks.Find(remark.Id);
+            var r = Db.Remarks.Find(remark.Id);
             r.Text = remark.Text;
-            db.SaveChanges();
+            Db.SaveChanges();
 
             return true;
         }
 
         public bool Delete(Guid id)
         {
-            var remark = db.Remarks.Find(id);
-            db.Remarks.Remove(remark);
+            var remark = Db.Remarks.Find(id);
+            Db.Remarks.Remove(remark);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception exc)
             {

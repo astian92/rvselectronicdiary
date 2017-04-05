@@ -28,8 +28,6 @@ namespace RED.Models.ElectronicDiary.Converters
             productTest.Product.Name = aproductTest.ArchivedProduct.Name;
             productTest.Product.Quantity = aproductTest.ArchivedProduct.Quantity;
             
-            //and no product tests in it !
-
             return productTest;
         }
 

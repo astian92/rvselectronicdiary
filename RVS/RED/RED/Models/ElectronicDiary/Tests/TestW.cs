@@ -1,14 +1,35 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Tests
 {
     public class TestW
     {
+        public TestW()
+        {
+        }
+
+        public TestW(Test test)
+        {
+            this.Id = test.Id;
+            this.TestCategoryId = test.TestCategoryId;
+            this.Name = test.Name;
+            this.FullName = test.Name + " - " + test.TestCategory.Name;
+            this.FullValue = test.TestType.ShortName + "_" + test.Id;
+            this.AcredetationLevelId = test.AcredetationLevelId;
+            this.Temperature = test.Temperature;
+            this.UnitName = test.UnitName;
+            this.TypeId = test.TypeId;
+            this.MethodValue = test.MethodValue;
+
+            this.AcredetationLevel = test.AcredetationLevel;
+            this.TestCategory = test.TestCategory;
+            this.TestType = test.TestType;
+            this.TestMethods = test.TestMethods;
+        }
+
         public Guid Id { get; set; }
 
         [Display(Name = "Категория")]
@@ -39,36 +60,14 @@ namespace RED.Models.ElectronicDiary.Tests
         public Guid TypeId { get; set; }
 
         public virtual AcredetationLevel AcredetationLevel { get; set; }
+
         public virtual TestCategory TestCategory { get; set; }
+
         public virtual TestType TestType { get; set; }
 
         [Required(ErrorMessage = "Полето Методи е задължително!")]
         [Display(Name = "Методи")]
         public virtual ICollection<TestMethod> TestMethods { get; set; }
-
-        public TestW()
-        {
-
-        }
-
-        public TestW(Test test)
-        {
-            this.Id = test.Id;
-            this.TestCategoryId = test.TestCategoryId;
-            this.Name = test.Name;
-            this.FullName = test.Name + " - " + test.TestCategory.Name;
-            this.FullValue = test.TestType.ShortName + "_" + test.Id;
-            this.AcredetationLevelId = test.AcredetationLevelId;
-            this.Temperature = test.Temperature;
-            this.UnitName = test.UnitName;
-            this.TypeId = test.TypeId;
-            this.MethodValue = test.MethodValue;
-
-            this.AcredetationLevel = test.AcredetationLevel;
-            this.TestCategory = test.TestCategory;
-            this.TestType = test.TestType;
-            this.TestMethods = test.TestMethods;
-        }
 
         public Test ToBase()
         {
@@ -90,6 +89,5 @@ namespace RED.Models.ElectronicDiary.Tests
 
             return test;
         }
-
     }
 }

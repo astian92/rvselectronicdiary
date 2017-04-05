@@ -66,11 +66,13 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             UserW user = Rep.GetUser(id.Value);
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
@@ -85,6 +87,7 @@ namespace RED.Controllers
                 Rep.EditUser(user);
                 return RedirectToAction("Index");
             }
+
             ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
@@ -96,6 +99,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             UserW user = Rep.GetUser(id.Value);
             if (user == null)
             {
@@ -103,7 +107,10 @@ namespace RED.Controllers
             }
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(user);
+            }
+
             return View(user);
         }
 

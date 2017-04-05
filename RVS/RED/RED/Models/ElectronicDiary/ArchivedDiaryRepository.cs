@@ -1,10 +1,9 @@
-﻿using RED.Models.DataContext;
-using RED.Models.ElectronicDiary.ArchivedWrappers;
-using RED.Models.RepositoryBases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
+using RED.Models.ElectronicDiary.ArchivedWrappers;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models.ElectronicDiary
 {
@@ -12,7 +11,7 @@ namespace RED.Models.ElectronicDiary
     {
         public ArchivedDiary GetArchivedDiary(Guid archivedDiaryId)
         {
-            var archivedDiary = db.ArchivedDiaries.Single(ad => ad.Id == archivedDiaryId);
+            var archivedDiary = Db.ArchivedDiaries.Single(ad => ad.Id == archivedDiaryId);
             return archivedDiary;
         }
 
@@ -24,7 +23,7 @@ namespace RED.Models.ElectronicDiary
 
         public void Edit(ArchivedDiaryW adiary)
         {
-            var archivedDiary = db.ArchivedDiaries.Single(ad => ad.Id == adiary.Id);
+            var archivedDiary = Db.ArchivedDiaries.Single(ad => ad.Id == adiary.Id);
 
             archivedDiary.Number = adiary.Number;
             archivedDiary.LetterNumber = adiary.LetterNumber;
@@ -43,12 +42,12 @@ namespace RED.Models.ElectronicDiary
             archivedDiary.Remark = adiary.Remark;
             archivedDiary.RequestTestingPeriod = adiary.RequestTestingPeriod;
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public ArchivedProduct GetArchivedProduct(Guid archivedProductId)
         {
-            var archivedProduct = db.ArchivedProducts.Single(ap => ap.Id == archivedProductId);
+            var archivedProduct = Db.ArchivedProducts.Single(ap => ap.Id == archivedProductId);
             return archivedProduct;
         }
 
@@ -60,7 +59,7 @@ namespace RED.Models.ElectronicDiary
 
         public ArchivedProductTest GetArchivedProductTest(Guid archivedProductTestId)
         {
-            var archivedProductTest = db.ArchivedProductTests.Single(apt => apt.Id == archivedProductTestId);
+            var archivedProductTest = Db.ArchivedProductTests.Single(apt => apt.Id == archivedProductTestId);
             return archivedProductTest;
         }
 
@@ -72,7 +71,7 @@ namespace RED.Models.ElectronicDiary
 
         public ArchivedProtocolResult GetArchivedProtocolResult(Guid archivedProtocolResultId)
         {
-            var archivedProtocolResult = db.ArchivedProtocolResults.Single(apr => apr.Id == archivedProtocolResultId);
+            var archivedProtocolResult = Db.ArchivedProtocolResults.Single(apr => apr.Id == archivedProtocolResultId);
             return archivedProtocolResult;
         }
 
@@ -84,7 +83,7 @@ namespace RED.Models.ElectronicDiary
 
         public IEnumerable<ArchivedProductW> GetProducts(Guid archivedDiaryId)
         {
-            var products = db.ArchivedProducts.Where(ap => ap.ArchivedDiaryId == archivedDiaryId);
+            var products = Db.ArchivedProducts.Where(ap => ap.ArchivedDiaryId == archivedDiaryId);
             var result = products.ToList().Select(p => new ArchivedProductW(p));
 
             return result;
@@ -93,15 +92,15 @@ namespace RED.Models.ElectronicDiary
         public void AddProduct(ArchivedProductW aproduct)
         {
             aproduct.Id = Guid.NewGuid();
-            db.ArchivedProducts.Add(aproduct.ToBase());
+            Db.ArchivedProducts.Add(aproduct.ToBase());
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public void EditProduct(ArchivedProductW aproduct)
         {
             //1 - edit the product properties
-            var product = db.ArchivedProducts.Single(p => p.Id == aproduct.Id);
+            var product = Db.ArchivedProducts.Single(p => p.Id == aproduct.Id);
 
             product.Number = aproduct.Number;
             product.Name = aproduct.Name;
@@ -115,21 +114,21 @@ namespace RED.Models.ElectronicDiary
                     var parts = result.ResultNumber.Split('-');
 
                     result.ResultNumber = test.TestAcredetationLevel.Trim() + product.ArchivedDiary.Number + "-" + product.Number.ToString() +
-                        (parts.Length > 2 ? "-" + parts[2].Trim() : "");
+                        (parts.Length > 2 ? "-" + parts[2].Trim() : string.Empty);
                 }
             }
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool DeleteProduct(Guid id)
         {
-            var aproduct = db.ArchivedProducts.Single(c => c.Id == id);
-            db.ArchivedProducts.Remove(aproduct);
+            var aproduct = Db.ArchivedProducts.Single(c => c.Id == id);
+            Db.ArchivedProducts.Remove(aproduct);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception exc)
             {
@@ -142,7 +141,7 @@ namespace RED.Models.ElectronicDiary
 
         public IEnumerable<ArchivedProductTestW> GetProductTests(Guid aproductId)
         {
-            var productTests = db.ArchivedProductTests.Where(ap => ap.ArchivedProductId == aproductId);
+            var productTests = Db.ArchivedProductTests.Where(ap => ap.ArchivedProductId == aproductId);
             var result = productTests.ToList().Select(pt => new ArchivedProductTestW(pt));
 
             return result;
@@ -150,20 +149,20 @@ namespace RED.Models.ElectronicDiary
 
         public IEnumerable<AcredetationLevel> GetPossibleAcredetationLevels()
         {
-            return db.AcredetationLevels;
+            return Db.AcredetationLevels;
         }
 
         public void AddProductTest(ArchivedProductTestW aproductTest)
         {
             aproductTest.Id = Guid.NewGuid();
-            db.ArchivedProductTests.Add(aproductTest.ToBase());
+            Db.ArchivedProductTests.Add(aproductTest.ToBase());
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public void EditProductTest(ArchivedProductTestW aproductTest)
         {
-            var productTest = db.ArchivedProductTests.Single(pt => pt.Id == aproductTest.Id);
+            var productTest = Db.ArchivedProductTests.Single(pt => pt.Id == aproductTest.Id);
 
             productTest.ArchivedProductId = aproductTest.ArchivedProductId;
             productTest.TestCategory = aproductTest.TestCategory;
@@ -177,17 +176,17 @@ namespace RED.Models.ElectronicDiary
             productTest.MethodValue = aproductTest.MethodValue;
             productTest.Remark = aproductTest.Remark;
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool DeleteProductTest(Guid id)
         {
-            var aproductTest = db.ArchivedProductTests.Single(c => c.Id == id);
-            db.ArchivedProductTests.Remove(aproductTest);
+            var aproductTest = Db.ArchivedProductTests.Single(c => c.Id == id);
+            Db.ArchivedProductTests.Remove(aproductTest);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception exc)
             {
@@ -200,7 +199,7 @@ namespace RED.Models.ElectronicDiary
 
         public IEnumerable<ArchivedProtocolResultW> GetProtocolResults(Guid aproductTestId)
         {
-            var protocolResults = db.ArchivedProtocolResults.Where(ap => ap.ArchivedProductTestId == aproductTestId);
+            var protocolResults = Db.ArchivedProtocolResults.Where(ap => ap.ArchivedProductTestId == aproductTestId);
             var result = protocolResults.ToList().Select(pr => new ArchivedProtocolResultW(pr));
 
             return result;
@@ -209,30 +208,29 @@ namespace RED.Models.ElectronicDiary
         public void AddProtocolResult(ArchivedProtocolResultW aprotocolResult)
         {
             aprotocolResult.Id = Guid.NewGuid();
-            db.ArchivedProtocolResults.Add(aprotocolResult.ToBase());
+            Db.ArchivedProtocolResults.Add(aprotocolResult.ToBase());
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public void EditProtocolResult(ArchivedProtocolResultW aprotocolResult)
         {
-            var protocolResult = db.ArchivedProtocolResults.Single(apr => apr.Id == aprotocolResult.Id);
+            var protocolResult = Db.ArchivedProtocolResults.Single(apr => apr.Id == aprotocolResult.Id);
 
             protocolResult.ResultNumber = aprotocolResult.ResultNumber;
-            //protocolResult.MethodValue = aprotocolResult.MethodValue;
             protocolResult.Results = aprotocolResult.Results;
             
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool DeleteProtocolResult(Guid id)
         {
-            var aprotocolResult = db.ArchivedProtocolResults.Single(c => c.Id == id);
-            db.ArchivedProtocolResults.Remove(aprotocolResult);
+            var aprotocolResult = Db.ArchivedProtocolResults.Single(c => c.Id == id);
+            Db.ArchivedProtocolResults.Remove(aprotocolResult);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception exc)
             {
@@ -242,6 +240,5 @@ namespace RED.Models.ElectronicDiary
 
             return true;
         }
-
     }
 }

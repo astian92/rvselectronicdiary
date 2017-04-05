@@ -11,7 +11,6 @@ namespace RED.Controllers
     {
         public ActionResult Index()
         {
-            //var remarks = Rep.GetRemarks();
             return View();
         }
 
@@ -20,7 +19,6 @@ namespace RED.Controllers
             var remarks = Rep.GetRemarks();
             return Json(new { data = remarks });
         }
-
 
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult Create()
@@ -59,6 +57,7 @@ namespace RED.Controllers
                 var isEdited = Rep.Edit(remark);
                 return RedirectToAction("Index");
             }
+
             return View(remark);
         }
 
@@ -68,7 +67,10 @@ namespace RED.Controllers
             var remark = Rep.GetRemark(id);
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(remark);
+            }
+
             return View(remark);
         }
 
@@ -80,7 +82,9 @@ namespace RED.Controllers
             bool isDeleted = Rep.Delete(id);
 
             if (isDeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Remarks/Index" });
         }

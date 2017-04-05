@@ -62,37 +62,6 @@ namespace RED.Controllers
             return Json(jsonResult);
         }
 
-        private IQueryable<Client> Filter(IQueryable<Client> entities, int colIndex, bool asc)
-        {
-            switch (colIndex)
-            {
-                case 0:
-                    if (asc == true)
-                    {
-                        entities = entities.OrderBy(e => e.Name);
-                    }
-                    else
-                    {
-                        entities = entities.OrderByDescending(e => e.Name);
-                    }
-                    break;
-                case 1:
-                    if (asc == true)
-                    {
-                        entities = entities.OrderBy(e => e.Mobile);
-                    }
-                    else
-                    {
-                        entities = entities.OrderByDescending(e => e.Mobile);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return entities;
-        }
-
         [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult Create()
         {
@@ -189,6 +158,39 @@ namespace RED.Controllers
             }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Clients/Index" });
+        }
+
+        private IQueryable<Client> Filter(IQueryable<Client> entities, int colIndex, bool asc)
+        {
+            switch (colIndex)
+            {
+                case 0:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Name);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Name);
+                    }
+
+                    break;
+                case 1:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Mobile);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Mobile);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            return entities;
         }
     }
 }

@@ -4,11 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using RED.Models.DataContext;
-using RED.Filters;
 
 namespace RED.Controllers
 {
-    [RoleFilter()]
     public class FeaturesController : Controller
     {
         private RvsDbContext db = DbContextFactory.GetDbContext();
@@ -24,11 +22,13 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Feature feature = db.Features.Find(id);
             if (feature == null)
             {
                 return HttpNotFound();
             }
+
             return View(feature);
         }
 
@@ -58,11 +58,13 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Feature feature = db.Features.Find(id);
             if (feature == null)
             {
                 return HttpNotFound();
             }
+
             return View(feature);
         }
 
@@ -76,6 +78,7 @@ namespace RED.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(feature);
         }
 
@@ -85,11 +88,13 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Feature feature = db.Features.Find(id);
             if (feature == null)
             {
                 return HttpNotFound();
             }
+
             return View(feature);
         }
 

@@ -1,16 +1,12 @@
-﻿using RED.Filters;
-using RED.Models.Account;
-using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using RED.Models.Account;
 
 namespace RED
 {
@@ -26,9 +22,7 @@ namespace RED
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
         }
 
-        
-
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
             if (FormsAuthentication.CookiesSupported == true)
             {

@@ -15,7 +15,7 @@ namespace RED.Models.ElectronicDiary.Protocols
         public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var protocols = db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number));
+            var protocols = Db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number));
             protocols = protocols.Where(d => d.IssuedDate >= (from == null ? d.IssuedDate : from.Value) &&
                                                    d.IssuedDate <= (to == null ? d.IssuedDate : to.Value));
 
@@ -32,7 +32,7 @@ namespace RED.Models.ElectronicDiary.Protocols
         public IEnumerable<ArchivedProtocol> GetArchivedProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var protocols = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
+            var protocols = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
             protocols = protocols.Where(d => d.ProtocolIssuedDate >= (from == null ? d.ProtocolIssuedDate : from.Value) &&
                                                    d.ProtocolIssuedDate <= (to == null ? d.ProtocolIssuedDate : to.Value));
 
@@ -47,70 +47,73 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public RequestW GetRequest(Guid id)
         {
-            var request = db.Requests.Single(r => r.Id == id);
+            var request = Db.Requests.Single(r => r.Id == id);
             return new RequestW(request);
         }
 
         public void Create(ProtocolW protocolW)
         {
-            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
+            var acreditedLevel = Db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
             foreach (var remark in protocolW.ProtocolsRemarksA)
             {
                 remark.AcredetationLevelId = acreditedLevel.Id;
-                remark.Remark = db.Remarks.Single(r => r.Id == remark.RemarkId);
+                remark.Remark = Db.Remarks.Single(r => r.Id == remark.RemarkId);
             }
-            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
+
+            var notAcreditedLevel = Db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
             foreach (var remark in protocolW.ProtocolsRemarksB)
             {
                 remark.AcredetationLevelId = notAcreditedLevel.Id;
-                remark.Remark = db.Remarks.Single(r => r.Id == remark.RemarkId);
+                remark.Remark = Db.Remarks.Single(r => r.Id == remark.RemarkId);
             }
 
             var protocol = protocolW.ToBase();
             protocol.IssuedDate = protocol.IssuedDate.ToUniversalTime();
-            db.Protocols.Add(protocol);
-            var request = db.Requests.Single(r => r.Id == protocol.RequestId);
+            Db.Protocols.Add(protocol);
+            var request = Db.Requests.Single(r => r.Id == protocol.RequestId);
             GeneratePorotocolReport(protocol, request);
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public ProtocolW GetProtocol(Guid protocolId)
         {
-            var protocol = db.Protocols.Single(x => x.Id == protocolId);
+            var protocol = Db.Protocols.Single(x => x.Id == protocolId);
             return new ProtocolW(protocol);
         }
 
         public void EditProtocol(ProtocolW protocolW)
         {
-            var protocol = db.Protocols.Single(p => p.Id == protocolW.Id);
+            var protocol = Db.Protocols.Single(p => p.Id == protocolW.Id);
 
-            db.ProtocolResults.RemoveRange(protocol.ProtocolResults);
+            Db.ProtocolResults.RemoveRange(protocol.ProtocolResults);
             protocol.ProtocolResults.Clear();
             foreach (var item in protocolW.ProtocolResults)
             {
                 protocol.ProtocolResults.Add(item);
             }
-            db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
+
+            Db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
             protocol.ProtocolsRemarks.Clear();
-            var acreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
+            var acreditedLevel = Db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.Acredited);
             foreach (var item in protocolW.ProtocolsRemarksA)
             {
                 item.AcredetationLevelId = acreditedLevel.Id;
 
                 //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
                 //needed inside the protocol generating
-                item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId); 
+                item.Remark = Db.Remarks.Single(r => r.Id == item.RemarkId); 
                 protocol.ProtocolsRemarks.Add(item);
             }
-            var notAcreditedLevel = db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
+
+            var notAcreditedLevel = Db.AcredetationLevels.Single(al => al.Level.Trim() == AcreditationLevels.NotAcredited);
             foreach (var item in protocolW.ProtocolsRemarksB)
             {
                 item.AcredetationLevelId = notAcreditedLevel.Id;
 
                 //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
                 //needed inside the protocol generating
-                item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId);
+                item.Remark = Db.Remarks.Single(r => r.Id == item.RemarkId);
                 protocol.ProtocolsRemarks.Add(item);
             }
 
@@ -121,7 +124,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             using (TransactionScope scope = new TransactionScope())
             {
-                db.SaveChanges();
+                Db.SaveChanges();
                 GeneratePorotocolReport(protocol);
 
                 scope.Complete();
@@ -130,12 +133,12 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public bool Delete(Guid protocolId)
         {
-            var protocol = db.Protocols.Single(p => p.Id == protocolId);
-            db.Protocols.Remove(protocol);
+            var protocol = Db.Protocols.Single(p => p.Id == protocolId);
+            Db.Protocols.Remove(protocol);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception ex)
             {

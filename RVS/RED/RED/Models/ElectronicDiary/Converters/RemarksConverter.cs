@@ -1,5 +1,5 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Converters
 {

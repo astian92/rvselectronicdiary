@@ -17,8 +17,7 @@ namespace RED.Controllers
             return View();
         }
 
-        public ActionResult FilterActiveProtocols(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterActiveProtocols(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "active-protocols";
             ViewBag.page = page;
@@ -27,8 +26,7 @@ namespace RED.Controllers
             return PartialView("ActiveProtocols", protocols);
         }
 
-        public ActionResult FilterArchivedProtocols(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterArchivedProtocols(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "archived-protocols";
             ViewBag.page = page;
@@ -44,7 +42,6 @@ namespace RED.Controllers
             var request = Rep.GetRequest(requestId);
 
             ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
-            //ViewBag.request = request;
 
             return View(request);
         }
@@ -77,6 +74,7 @@ namespace RED.Controllers
                 Rep.EditProtocol(protocol);
                 return RedirectToAction("Index");
             }
+
             ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
             return View(protocol);
         }

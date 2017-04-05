@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(RED.Startup))]
+
 namespace RED
 {
     public partial class Startup

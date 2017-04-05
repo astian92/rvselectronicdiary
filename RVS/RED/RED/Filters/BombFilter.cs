@@ -29,7 +29,7 @@ namespace RED.Filters
                                 new RouteValueDictionary
                                     {
                                         { "controller", "Error" },
-                                        { "action" , "ProductExpired" }
+                                        { "action", "ProductExpired" }
                                     });
                 }
             }

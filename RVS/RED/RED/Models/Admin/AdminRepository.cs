@@ -1,13 +1,11 @@
-﻿using RED.Models.Admin.Roles;
-using RED.Models.Admin.Users;
-using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
-using RED.Models.Responses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using RED.Models.Admin.Roles;
+using RED.Models.Admin.Users;
+using RED.Models.DataContext;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models.Admin
 {
@@ -15,50 +13,50 @@ namespace RED.Models.Admin
     {
         public Role GetBaseRole(Guid id)
         {
-            return db.Roles.FirstOrDefault(r => r.Id == id);
+            return Db.Roles.FirstOrDefault(r => r.Id == id);
         }
 
         public RoleW GetRole(Guid id)
         {
-            var dbRole = db.Roles.FirstOrDefault(r => r.Id == id);
-            RoleW role = new RoleW(dbRole);
-            role.Connections = db.RolesFeatures.Where(x => x.RoleId == id).ToList();
+            var role = Db.Roles.FirstOrDefault(r => r.Id == id);
+            var roleW = new RoleW(role);
+            roleW.Connections = Db.RolesFeatures.Where(x => x.RoleId == id).ToList();
             
-            return role;
+            return roleW;
         }
 
         public IEnumerable<RoleW> GetRoles()
         {
-            var roles = db.Roles.ToList();
+            var roles = Db.Roles.ToList();
             return roles.Select(r => new RoleW(r));
         }
 
         public void AddRole(RoleW role, string[] features)
         {
             role.Id = Guid.NewGuid();
-            db.Roles.Add(role.ToBase());
+            Db.Roles.Add(role.ToBase());
             MakeRoleFeatureConnections(role.Id, features);
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
-        public void EditRole(RoleW role, string[] features)
+        public void EditRole(RoleW roleW, string[] features)
         {
-            var dbRole = this.GetBaseRole(role.Id);
-            dbRole.DisplayName = role.DisplayName;
-            MakeRoleFeatureConnections(dbRole.Id, features);
+            var role = this.GetBaseRole(roleW.Id);
+            role.DisplayName = roleW.DisplayName;
+            MakeRoleFeatureConnections(role.Id, features);
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool DeleteRole(Guid id)
         {
-            var dbRole = this.GetBaseRole(id);
-            db.Roles.Remove(dbRole);
+            var role = this.GetBaseRole(id);
+            Db.Roles.Remove(role);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception)
             {
@@ -70,18 +68,18 @@ namespace RED.Models.Admin
 
         public User GetBaseUser(Guid id)
         {
-            return db.Users.FirstOrDefault(x => x.Id == id);
+            return Db.Users.FirstOrDefault(x => x.Id == id);
         }
 
         public UserW GetUser(Guid id)
         {
-            var user = db.Users.FirstOrDefault(x => x.Id == id);
+            var user = Db.Users.FirstOrDefault(x => x.Id == id);
             return new UserW(user);
         }
 
         public IEnumerable<UserW> GetUsers()
         {
-            var users = db.Users.Where(x => x.Id.ToString() != "613b0faa-8828-44a9-8bbe-09ba68cc33ae" && x.Id.ToString() != "0F68DA69-5C82-480B-9474-54C133439B0C").Include(x => x.Role)
+            var users = Db.Users.Where(x => x.Id.ToString() != "613b0faa-8828-44a9-8bbe-09ba68cc33ae" && x.Id.ToString() != "0F68DA69-5C82-480B-9474-54C133439B0C").Include(x => x.Role)
                 .OrderBy(u => u.Username)
                 .ToList();
             return users.Select(u => new UserW(u));
@@ -90,33 +88,33 @@ namespace RED.Models.Admin
         public void AddUser(UserW user)
         {
             user.Id = Guid.NewGuid();
-            db.Users.Add(user.ToBase());
-            db.SaveChanges();
+            Db.Users.Add(user.ToBase());
+            Db.SaveChanges();
         }
 
-        public void EditUser(UserW user)
+        public void EditUser(UserW userW)
         {
-            var dbUser = this.GetBaseUser(user.Id);
-            dbUser.Username = user.Username;
-            dbUser.Password = user.Password;
-            dbUser.FirstName = user.FirstName;
-            dbUser.MiddleName = user.MiddleName;
-            dbUser.LastName = user.LastName;
-            dbUser.Position = user.Position;
-            dbUser.RoleId = user.RoleId;
-            dbUser.Role = user.Role;
+            var user = this.GetBaseUser(userW.Id);
+            user.Username = userW.Username;
+            user.Password = userW.Password;
+            user.FirstName = userW.FirstName;
+            user.MiddleName = userW.MiddleName;
+            user.LastName = userW.LastName;
+            user.Position = userW.Position;
+            user.RoleId = userW.RoleId;
+            user.Role = userW.Role;
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool DeleteUser(Guid id)
         {
             User user = this.GetBaseUser(id);
-            db.Users.Remove(user);
+            Db.Users.Remove(user);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception)
             {
@@ -128,14 +126,14 @@ namespace RED.Models.Admin
 
         public IEnumerable<Feature> GetFeatures()
         {
-            return db.Features.OrderBy(x => x.DisplayName).ToList();
+            return Db.Features.OrderBy(x => x.DisplayName).ToList();
         }
 
         private void MakeRoleFeatureConnections(Guid roleId, string[] features)
         {
             if (features.Count() > 0)
             {
-                db.RolesFeatures.RemoveRange(db.RolesFeatures.Where(x => x.RoleId == roleId));
+                Db.RolesFeatures.RemoveRange(Db.RolesFeatures.Where(x => x.RoleId == roleId));
 
                 foreach (var item in features)
                 {
@@ -147,11 +145,11 @@ namespace RED.Models.Admin
                         RolesFeature con = new RolesFeature();
                         con.RoleId = roleId;
                         con.FeatureId = featureId;
-                        db.RolesFeatures.Add(con);
+                        Db.RolesFeatures.Add(con);
                     }
                 }
 
-                db.SaveChanges();
+                Db.SaveChanges();
             }
         }
     }

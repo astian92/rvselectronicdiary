@@ -5,6 +5,10 @@ namespace RED.Models.Logs
 {
     public class ActionLogW
     {
+        public ActionLogW()
+        {
+        }
+
         public ActionLogW(ActionLog log, User user)
         {
             this.Id = log.Id;
@@ -32,11 +36,6 @@ namespace RED.Models.Logs
         public int ActionTypeId { get; set; }
 
         public string TableNameBg { get; set; }
-
-        public ActionLogW()
-        {
-
-        }
 
         public ActionLog ToBase()
         {

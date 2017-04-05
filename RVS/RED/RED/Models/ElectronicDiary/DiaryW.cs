@@ -14,6 +14,22 @@ namespace RED.Models.ElectronicDiary
             this.Products = new List<Product>();
         }
 
+        public DiaryW(Diary diary)
+        {
+            this.Id = diary.Id;
+            this.Number = diary.Number;
+            this.LetterNumber = diary.LetterNumber;
+            this.LetterDate = diary.LetterDate;
+            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            this.Contractor = diary.Contractor;
+            this.ClientId = diary.ClientId;
+            this.Comment = diary.Comment;
+
+            this.Client = diary.Client;
+            this.Request = diary.Requests.FirstOrDefault();
+            this.Products = diary.Products;
+        }
+
         public Guid Id { get; set; }
 
         [Required]
@@ -21,10 +37,8 @@ namespace RED.Models.ElectronicDiary
 
         public DateTime AcceptanceDateAndTime { get; set; }
 
-        //[Required(ErrorMessage = "Номерът на писмото е задължителен")]
-        //[Range(0, int.MaxValue, ErrorMessage = "Невалиден номер")]
         [Display(Name = "Писмо №")]
-        public Nullable<int> LetterNumber { get; set; }
+        public int? LetterNumber { get; set; }
 
         [Required(ErrorMessage = "Датата на писмото е задължителна")]
         [Display(Name = "Писмо дата")]
@@ -69,7 +83,7 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                string remark = "";
+                string remark = string.Empty;
                 bool hasAcredited = false;
                 bool hasNotAcredited = false;
 
@@ -104,22 +118,6 @@ namespace RED.Models.ElectronicDiary
 
                 return remark;
             }
-        }
-
-        public DiaryW(Diary diary)
-        {
-            this.Id = diary.Id;
-            this.Number = diary.Number;
-            this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate;
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            this.Contractor = diary.Contractor;
-            this.ClientId = diary.ClientId;
-            this.Comment = diary.Comment;
-
-            this.Client = diary.Client;
-            this.Request = diary.Requests.FirstOrDefault();
-            this.Products = diary.Products;
         }
 
         public Diary ToBase()

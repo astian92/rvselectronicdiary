@@ -1,9 +1,7 @@
-﻿using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models.ElectronicDiary.Clients
 {
@@ -11,42 +9,41 @@ namespace RED.Models.ElectronicDiary.Clients
     {
         public ClientW GetClient(Guid id)
         {
-            var client = db.Clients.Single(c => c.Id == id);
+            var client = Db.Clients.Single(c => c.Id == id);
             return new ClientW(client);
         }
 
         public IQueryable<Client> GetClients()
         {
-            var clients = db.Clients;//.ToList();
-            //var result = clients.Select(c => new ClientW(c));
-            return clients.AsQueryable();
+            var clients = Db.Clients.AsQueryable();
+            return clients;
         }
         
         public void Add(ClientW clientW)
         {
             clientW.Id = Guid.NewGuid();
-            db.Clients.Add(clientW.ToBase());
+            Db.Clients.Add(clientW.ToBase());
 
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public void Edit(ClientW clientW)
         {
-            var client = db.Clients.Single(c => c.Id == clientW.Id);
+            var client = Db.Clients.Single(c => c.Id == clientW.Id);
             client.Name = clientW.Name;
             client.Mobile = clientW.Mobile;
             
-            db.SaveChanges();
+            Db.SaveChanges();
         }
 
         public bool Delete(Guid id)
         {
-            var client = db.Clients.Single(c => c.Id == id);
-            db.Clients.Remove(client);
+            var client = Db.Clients.Single(c => c.Id == id);
+            Db.Clients.Remove(client);
 
             try
             {
-                db.SaveChanges();
+                Db.SaveChanges();
             }
             catch (Exception exc)
             {
@@ -59,9 +56,11 @@ namespace RED.Models.ElectronicDiary.Clients
 
         public bool IsExisting(ClientW client)
         {
-            var foundedClient = db.Clients.FirstOrDefault(x => x.Name.ToLower() == client.Name.ToLower() && x.Id != client.Id);
+            var foundedClient = Db.Clients.FirstOrDefault(x => x.Name.ToLower() == client.Name.ToLower() && x.Id != client.Id);
             if (foundedClient != null)
+            {
                 return true;
+            }
 
             return false;
         }

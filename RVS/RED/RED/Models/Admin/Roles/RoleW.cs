@@ -9,13 +9,15 @@ namespace RED.Models.Admin.Roles
     {
         public RoleW()
         {
-
+            Connections = new List<RolesFeature>();
         }
 
-        public RoleW(Role dbRole)
+        public RoleW(Role role)
         {
-            this.Id = dbRole.Id;
-            this.DisplayName = dbRole.DisplayName;
+            this.Id = role.Id;
+            this.DisplayName = role.DisplayName;
+
+            Connections = new List<RolesFeature>();
         }
 
         public Guid Id { get; set; }
@@ -24,15 +26,15 @@ namespace RED.Models.Admin.Roles
         [Display(Name = "Име")]
         public string DisplayName { get; set; }
 
-        public List<RolesFeature> Connections = new List<RolesFeature>();
+        public List<RolesFeature> Connections { get; set; }
 
         public Role ToBase()
         {
-            var dbRole = new Role();
-            dbRole.Id = this.Id;
-            dbRole.DisplayName = this.DisplayName;
+            var role = new Role();
+            role.Id = this.Id;
+            role.DisplayName = this.DisplayName;
 
-            return dbRole;
+            return role;
         }
     }
 }

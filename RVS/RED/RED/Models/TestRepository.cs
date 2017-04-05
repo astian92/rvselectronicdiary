@@ -1,8 +1,5 @@
-﻿using RED.Models.RepositoryBases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models
 {
@@ -10,7 +7,7 @@ namespace RED.Models
     {
         public string GetUser()
         {
-            return db.Users.First().Username;
+            return Db.Users.First().Username;
         }
     }
 }

@@ -54,6 +54,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             TestCategoryW category = Rep.GetCategory(id.Value);
             if (category == null)
             {
@@ -133,7 +134,6 @@ namespace RED.Controllers
             {
                 TestType = t.TestType.ShortName,
                 Name = t.Name,
-                //TestMethods = t.TestMethods,
                 Level = t.AcredetationLevel.Level,
                 UnitName = t.UnitName,
                 Temperature = t.Temperature,
@@ -162,7 +162,6 @@ namespace RED.Controllers
             {
                 Rep.Add(test);
                 return RedirectToAction("Index");
-                //ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
 
             ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name");

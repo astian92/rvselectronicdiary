@@ -1,33 +1,16 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.Account
 {
     public class RvsPrincipal : GenericPrincipal
     {
-        private Guid GetRoleId()
-        {
-            var context = DbContextFactory.GetDbContext();
-            var user = context.Users.FirstOrDefault(u => u.Username == this.Identity.Name);
-
-            if (user != null)
-            {
-                return user.RoleId;
-            }
-            else
-            {
-                return Guid.Empty;
-            }
-        }
-
         public RvsPrincipal(IIdentity identity)
             : base(identity, null)
         {
-
         }
 
         public override bool IsInRole(string role)
@@ -84,22 +67,6 @@ namespace RED.Models.Account
             return true;
         }
 
-        private bool IsGod()
-        {
-            var context = DbContextFactory.GetDbContext();
-            var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
-
-            if (user != null)
-            {
-                if (user.Id.ToString() == "613b0faa-8828-44a9-8bbe-09ba68cc33ae")
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public User GetUserData()
         {
             User user = new User();
@@ -127,6 +94,37 @@ namespace RED.Models.Account
             }
 
             return user.Id;
+        }
+
+        private bool IsGod()
+        {
+            var context = DbContextFactory.GetDbContext();
+            var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
+
+            if (user != null)
+            {
+                if (user.Id.ToString() == "613b0faa-8828-44a9-8bbe-09ba68cc33ae")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private Guid GetRoleId()
+        {
+            var context = DbContextFactory.GetDbContext();
+            var user = context.Users.FirstOrDefault(u => u.Username == this.Identity.Name);
+
+            if (user != null)
+            {
+                return user.RoleId;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
     }
 }

@@ -1,17 +1,25 @@
-﻿using RED.Models.DataContext.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using RED.Models.DataContext.Logging;
+using RED.Models.ElectronicDiary.Tests;
+using RED.Models.ElectronicDiary.Clients;
+using RED.Models.ElectronicDiary.Requests;
 
 namespace RED.Models.DataContext
 {
     public class RvsDbContext : RedDataEntities
     {
+        public DbSet<TestW> TestWs { get; set; }
+
+        public DbSet<TestCategoryW> TestCategoryWs { get; set; }
+
+        public DbSet<ClientW> ClientWs { get; set; }
+
+        public DbSet<RequestW> RequestWs { get; set; }
+
         public override int SaveChanges()
         {
             IEnumerable<ActionLog> logs = new List<ActionLog>();
@@ -45,25 +53,6 @@ namespace RED.Models.DataContext
             //save actual changes
             int changesCount = base.SaveChanges();
 
-            #region testProperties
-            ////THIS IS A WAY TO TRACE THE VALIDATION FIELDS THAT GIVE PROBLEMS
-            //int changesCount = 0;
-            //try
-            //{
-            //    changesCount = base.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbEx)
-            //{
-            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
-            //    {
-            //        foreach (var validationError in validationErrors.ValidationErrors)
-            //        {
-            //            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-            //        }
-            //    }
-            //}
-            #endregion
-
             //use the same context to commit the logs
             try
             {
@@ -81,14 +70,5 @@ namespace RED.Models.DataContext
 
             return changesCount;
         }
-
-        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Tests.TestW> TestWs { get; set; }
-
-        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Tests.TestCategoryW> TestCategoryWs { get; set; }
-
-        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Clients.ClientW> ClientWs { get; set; }
-
-        public System.Data.Entity.DbSet<RED.Models.ElectronicDiary.Requests.RequestW> RequestWs { get; set; }
-
     }
 }

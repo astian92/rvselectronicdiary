@@ -50,11 +50,13 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.Features = Rep.GetFeatures();
             return View(role);
         }
@@ -69,6 +71,7 @@ namespace RED.Controllers
                 Rep.EditRole(role, features);
                 return RedirectToAction("Index");
             }
+
             return View(role);
         }
 
@@ -79,6 +82,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
@@ -86,7 +90,10 @@ namespace RED.Controllers
             }
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(role);
+            }
+
             return View(role);
         }
 

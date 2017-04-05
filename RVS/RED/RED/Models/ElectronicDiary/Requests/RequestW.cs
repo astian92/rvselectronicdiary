@@ -1,15 +1,30 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Requests
 {
     public class RequestW
     {
+        public RequestW()
+        {
+        }
+
+        public RequestW(Request request)
+        {
+            this.Id = request.Id;
+            this.DiaryId = request.DiaryId;
+            this.Date = request.Date;
+            this.AcceptedBy = request.AcceptedBy;
+            this.IsAccepted = request.IsAccepted;
+            this.TestingPeriod = request.TestingPeriod;
+
+            this.Diary = request.Diary;
+            this.User = request.User;
+            this.Protocols = request.Protocols;
+        }
+
         public Guid Id { get; set; }
 
         public Guid DiaryId { get; set; }
@@ -34,7 +49,7 @@ namespace RED.Models.ElectronicDiary.Requests
             }
         }
 
-        public Nullable<Guid> AcceptedBy { get; set; }
+        public Guid? AcceptedBy { get; set; }
 
         public bool IsAccepted { get; set; }
 
@@ -61,7 +76,7 @@ namespace RED.Models.ElectronicDiary.Requests
                     return this.User.FirstName.Substring(0, 1) + ". " + this.User.LastName;
                 }
 
-                return "";
+                return string.Empty;
             }
         }
 
@@ -69,24 +84,6 @@ namespace RED.Models.ElectronicDiary.Requests
         public int? TestingPeriod { get; set; }
 
         public ICollection<Protocol> Protocols { get; set; }
-
-        public RequestW()
-        {
-        }
-
-        public RequestW(Request request)
-        {
-            this.Id = request.Id;
-            this.DiaryId = request.DiaryId;
-            this.Date = request.Date;
-            this.AcceptedBy = request.AcceptedBy;
-            this.IsAccepted = request.IsAccepted;
-            this.TestingPeriod = request.TestingPeriod;
-
-            this.Diary = request.Diary;
-            this.User = request.User;
-            this.Protocols = request.Protocols;
-        }
 
         public Request ToBase()
         {

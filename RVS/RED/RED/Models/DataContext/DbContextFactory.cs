@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.DataContext
+﻿namespace RED.Models.DataContext
 {
     public static class DbContextFactory
     {
@@ -29,7 +24,6 @@ namespace RED.Models.DataContext
 
         public static void Log()
         {
-            
         }
     }
 }

@@ -26,8 +26,7 @@ namespace RED.Controllers
             return PartialView(diaryEntries);
         }
 
-        public ActionResult FilterActiveDiaries(int page, int pageSize,
-            int number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterActiveDiaries(int page, int pageSize, int number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
         {
             var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             ViewBag.page = page;
@@ -40,8 +39,7 @@ namespace RED.Controllers
             return PartialView(archivedDiaries);
         }
 
-        public ActionResult FilterArchivedDiaries(int page, int pageSize,
-            int number, int diaryNumber, string client, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterArchivedDiaries(int page, int pageSize, int number, int diaryNumber, string client, DateTime? fromDate, DateTime? toDate)
         {
             var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             ViewBag.page = page;
@@ -52,7 +50,6 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name");
-            //ViewBag.Tests = new SelectList(Rep.GetTests(), "Id", "Name");
             return View();
         }
 
@@ -116,7 +113,9 @@ namespace RED.Controllers
             }
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(client);
+            }
 
             return View(client);
         }
@@ -131,7 +130,9 @@ namespace RED.Controllers
             }
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(diary);
+            }
 
             return View(diary);
         }
@@ -162,8 +163,8 @@ namespace RED.Controllers
         public ActionResult GetPagedEntries()
         {
             //therefore, I implemented the paging before the enumeration.
-            var pagedEntries = Rep.GetDiaryEntries(2, 10);
             //here we have 10 records per page and get the second page
+            var pagedEntries = Rep.GetDiaryEntries(2, 10);
 
             return Json(pagedEntries, JsonRequestBehavior.AllowGet);
         }
@@ -192,7 +193,9 @@ namespace RED.Controllers
                 bool isDeleted = Rep.DeleteRequest(diaryId.Value);
 
                 if (isDeleted)
+                {
                     return Json("Ok", JsonRequestBehavior.AllowGet);
+                }
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);
@@ -207,7 +210,9 @@ namespace RED.Controllers
                 bool isSaved = Rep.AddComment(diaryId.Value, comment);
 
                 if (isSaved)
+                {
                     return Json("Ok", JsonRequestBehavior.AllowGet);
+                }
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);
@@ -247,11 +252,12 @@ namespace RED.Controllers
             if (tests.Any(t => t.Id == testId))
             {
                 var test = tests.Single(t => t.Id == testId);
+
                 //because FZH is forbidden to take MethodValue just return the method value directly
                 return test.MethodValue;
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }

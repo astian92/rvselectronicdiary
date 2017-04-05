@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 
 namespace Inspinia_MVC5
 {
@@ -15,14 +11,17 @@ namespace Inspinia_MVC5
             string currentAction = (string)html.ViewContext.RouteData.Values["action"];
             string currentController = (string)html.ViewContext.RouteData.Values["controller"];
 
-            if (String.IsNullOrEmpty(controller))
+            if (string.IsNullOrEmpty(controller))
+            {
                 controller = currentController;
+            }
 
-            if (String.IsNullOrEmpty(action))
+            if (string.IsNullOrEmpty(action))
+            {
                 action = currentAction;
+            }
 
-            return controller == currentController && action == currentAction ?
-                cssClass : String.Empty;
+            return controller == currentController && action == currentAction ? cssClass : string.Empty;
         }
 
         public static string PageClass(this HtmlHelper html)

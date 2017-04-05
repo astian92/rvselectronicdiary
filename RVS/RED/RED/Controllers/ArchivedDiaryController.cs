@@ -15,7 +15,6 @@ namespace RED.Controllers
         public ActionResult Index()
         {
             return View();
-            //extensions test
         }
 
         public ActionResult Edit(Guid id)
@@ -66,8 +65,6 @@ namespace RED.Controllers
                 Rep.AddProduct(aproduct);
                 return RedirectToAction("ProductsIndex", new { archivedDiaryId = aproduct.ArchivedDiaryId });
             }
-
-            //ModelState.AddModelError("ErrorExists", "Клиент с това име вече съществува. Моля опитайте друго име.");
 
             return View(aproduct);
         }

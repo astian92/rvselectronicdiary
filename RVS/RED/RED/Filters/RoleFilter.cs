@@ -9,9 +9,17 @@ namespace RED.Filters
     {
         private string featureId;
 
+        public RoleFilter()
+        {
+        }
+
+        public RoleFilter(string featureId)
+        {
+            this.featureId = featureId;
+        }
+
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            //TODO
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -23,18 +31,9 @@ namespace RED.Filters
                             new RouteValueDictionary    
                                 {
                                     { "controller", "Home" },
-                                    { "action" , "Index" }
+                                    { "action", "Index" }
                                 });
             }
-        }
-
-        public RoleFilter()
-        {
-        }
-
-        public RoleFilter(string featureId)
-        {
-            this.featureId = featureId;
         }
     }
 }

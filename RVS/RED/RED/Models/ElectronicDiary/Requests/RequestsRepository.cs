@@ -11,14 +11,14 @@ namespace RED.Models.ElectronicDiary.Requests
     {
         public RequestW GetRequest(Guid id)
         {
-            var request = db.Requests.Single(r => r.Id == id);
+            var request = Db.Requests.Single(r => r.Id == id);
             return new RequestW(request);
         }
 
         public IEnumerable<RequestW> GetNotAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
             requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
                                                    d.Date <= (to == null ? d.Date : to.Value));
 
@@ -32,7 +32,7 @@ namespace RED.Models.ElectronicDiary.Requests
         public IEnumerable<RequestW> GetAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
             requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
                                                    d.Date <= (to == null ? d.Date : to.Value));
 
@@ -46,7 +46,7 @@ namespace RED.Models.ElectronicDiary.Requests
         public IEnumerable<RequestW> GetMyRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
             requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
                                                    d.Date <= (to == null ? d.Date : to.Value));
 
@@ -64,7 +64,7 @@ namespace RED.Models.ElectronicDiary.Requests
         public IEnumerable<RequestW> GetCompletedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
             requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
                                                    d.Date <= (to == null ? d.Date : to.Value));
 
@@ -78,7 +78,7 @@ namespace RED.Models.ElectronicDiary.Requests
         public IEnumerable<ArchivedRequest> GetArchivedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
+            var requests = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
             requests = requests.Where(d => d.RequestDate >= (from == null ? d.RequestDate : from.Value) &&
                                                    d.RequestDate <= (to == null ? d.RequestDate : to.Value));
 
@@ -94,12 +94,12 @@ namespace RED.Models.ElectronicDiary.Requests
             var issSuccess = false;
             try
             {
-                var request = db.Requests.Single(r => r.Id == requestId);
+                var request = Db.Requests.Single(r => r.Id == requestId);
                 var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
 
                 request.AcceptedBy = userId;
                 request.IsAccepted = true;
-                db.SaveChanges();
+                Db.SaveChanges();
 
                 issSuccess = true;
             }
@@ -117,12 +117,11 @@ namespace RED.Models.ElectronicDiary.Requests
             var issSuccess = false;
             try
             {
-                var request = db.Requests.Single(r => r.Id == requestId);
-                //var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
+                var request = Db.Requests.Single(r => r.Id == requestId);
 
                 request.AcceptedBy = null;
                 request.IsAccepted = false;
-                db.SaveChanges();
+                Db.SaveChanges();
 
                 issSuccess = true;
             }

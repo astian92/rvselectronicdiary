@@ -1,8 +1,6 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Converters
 {
@@ -12,7 +10,6 @@ namespace RED.Models.ElectronicDiary.Converters
         {
             var product = new Product();
 
-            //product.Diary - not needed yet
             product.Number = aproduct.Number;
             product.Name = aproduct.Name;
             product.Quantity = aproduct.Quantity;

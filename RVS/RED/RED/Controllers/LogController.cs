@@ -13,7 +13,9 @@ namespace RED.Controllers
             var logs = Rep.GetAllActionLogs(page, pageSize);
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(logs);
+            }
 
             return View(logs);
         }
