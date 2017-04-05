@@ -1,16 +1,9 @@
-﻿using RED.Filters;
-using RED.Models.ControllerBases;
-using RED.Models.DataContext;
-using RED.Models.ElectronicDiary;
-using RED.Models.ElectronicDiary.Clients;
-using RED.Models.FileModels;
-using RED.Models.Responses;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using RED.Filters;
+using RED.Models.ControllerBases;
+using RED.Models.ElectronicDiary;
 
 namespace RED.Controllers
 {

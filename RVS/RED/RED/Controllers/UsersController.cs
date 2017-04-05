@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using RED.Models.DataContext;
 using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Users;
@@ -41,7 +37,6 @@ namespace RED.Controllers
             return Json(new { data = usersUnwrapped });
         }
 
-        // GET: Users/Create
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create()
         {
@@ -49,9 +44,6 @@ namespace RED.Controllers
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
@@ -67,7 +59,6 @@ namespace RED.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Edit(Guid? id)
         {
@@ -84,9 +75,6 @@ namespace RED.Controllers
             return View(user);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
@@ -101,7 +89,6 @@ namespace RED.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Delete(Guid? id)
         {
@@ -120,7 +107,6 @@ namespace RED.Controllers
             return View(user);
         }
 
-        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]

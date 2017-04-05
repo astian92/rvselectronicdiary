@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using RED.Models.DataContext;
 using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Roles;
@@ -28,7 +22,6 @@ namespace RED.Controllers
             return Json(new { data = roles });
         }
 
-        // GET: Roles/Create
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create()
         {
@@ -36,7 +29,6 @@ namespace RED.Controllers
             return View();
         }
 
-        // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
@@ -51,7 +43,6 @@ namespace RED.Controllers
             return View(role);
         }
 
-        // GET: Roles/Edit/5
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Edit(Guid? id)
         {
@@ -68,7 +59,6 @@ namespace RED.Controllers
             return View(role);
         }
 
-        // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]

@@ -1,17 +1,14 @@
-﻿using RED.Models.DataContext;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Linq;
+using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Models.FileModels;
 using RED.Models.RepositoryBases;
 using RED.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace RED.Models.ElectronicDiary
 {
@@ -143,7 +140,6 @@ namespace RED.Models.ElectronicDiary
             }
 
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
-
             diary.AcceptanceDateAndTime = DateTime.UtcNow;
 
             int i = 1;

@@ -1,14 +1,12 @@
-﻿using RED.Filters;
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using RED.Filters;
 using RED.Models;
 using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
 
 namespace RED.Controllers
 {
@@ -19,20 +17,6 @@ namespace RED.Controllers
         {
             return View();
         }
-
-        //public JsonResult GetClients()
-        //{
-        //    var clients = Rep.GetClients();
-
-        //    var jsonData = clients.Select(c => new
-        //    {
-        //        Name = c.Name,
-        //        Mobile = c.Mobile,
-        //        Id = c.Id
-        //    });
-
-        //    return Json(new { data = jsonData });
-        //}
 
         public JsonResult GetClients()
         {

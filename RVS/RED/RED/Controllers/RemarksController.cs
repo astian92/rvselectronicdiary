@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ControllerBases;
 using RED.Filters;

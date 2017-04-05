@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+using System.Web.Security;
 using RED.Models;
 using RED.Models.Account;
 using RED.Models.ControllerBases;
-using System.Web.Security;
 using RED.Models.Responses;
-using System.Net;
 using RED.Models.DataContext;
 
 namespace RED.Controllers
@@ -25,7 +16,6 @@ namespace RED.Controllers
         {
         }
 
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -33,7 +23,6 @@ namespace RED.Controllers
             return View();
         }
 
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -57,14 +46,12 @@ namespace RED.Controllers
             return View(model);
         }
 
-        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -91,7 +78,6 @@ namespace RED.Controllers
             return View(model);
         }
 
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
