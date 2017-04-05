@@ -23,6 +23,7 @@ namespace RED.Controllers
         {
             return View();
         }
+
         public ActionResult Peity()
         {
             return View();

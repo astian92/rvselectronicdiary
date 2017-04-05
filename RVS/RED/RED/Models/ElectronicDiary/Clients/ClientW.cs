@@ -1,9 +1,7 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Clients
 {
@@ -11,8 +9,8 @@ namespace RED.Models.ElectronicDiary.Clients
     {
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage="Името е задължително")]
-        [Display(Name="Име")]
+        [Required(ErrorMessage = "Името е задължително")]
+        [Display(Name = "Име")]
         public string Name { get; set; }
 
         [MaxLength(30, ErrorMessage = "Телефонът на клиента трябва да е не по-дълъг от 30 символа.")]

@@ -1,15 +1,12 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Converters
 {
     public class ProductTestsConverter
     {
         /// <summary>
-        /// Shallow copy !
+        /// Shallow copy.
         /// </summary>
         public ProductTest ConvertFromArchived(ArchivedProductTest aproductTest)
         {
@@ -30,13 +27,14 @@ namespace RED.Models.ElectronicDiary.Converters
             productTest.Product.Number = aproductTest.ArchivedProduct.Number;
             productTest.Product.Name = aproductTest.ArchivedProduct.Name;
             productTest.Product.Quantity = aproductTest.ArchivedProduct.Quantity;
+            
             //and no product tests in it !
 
             return productTest;
         }
 
         /// <summary>
-        /// Shallow copy !
+        /// Shallow copy.
         /// </summary>
         public ArchivedProductTest ConvertToArchived(ProductTest productTest)
         {

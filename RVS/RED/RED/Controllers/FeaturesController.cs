@@ -104,7 +104,7 @@ namespace RED.Controllers
             {
                 db.SaveChanges();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Features/Index" });
             }

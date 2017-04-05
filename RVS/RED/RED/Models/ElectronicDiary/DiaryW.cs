@@ -1,17 +1,21 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
 {
     public class DiaryW
     {
+        public DiaryW()
+        {
+            this.Products = new List<Product>();
+        }
+
         public Guid Id { get; set; }
+
         [Required]
         public int Number { get; set; }
 
@@ -27,7 +31,7 @@ namespace RED.Models.ElectronicDiary
         public DateTime LetterDate { get; set; }
 
         [Required(ErrorMessage = "Възложителя е задължителен")]
-        [Display(Name="Възложител")]
+        [Display(Name = "Възложител")]
         public string Contractor { get; set; }
 
         [Display(Name = "Бележка")]
@@ -46,19 +50,18 @@ namespace RED.Models.ElectronicDiary
         [Display(Name = "Продукти")]
         public virtual ICollection<Product> Products { get; set; }
 
-        public DiaryW()
-        {
-            this.Products = new List<Product>();
-        }
-
         public string LetterInfo
         {
             get
             {
-                if(this.LetterNumber != null)
+                if (this.LetterNumber != null)
+                {
                     return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
                 else
+                {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
             }
         }
 

@@ -1,9 +1,9 @@
-﻿using RED.Models.Account;
-using RED.Models.RepositoryBases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RED.Models.Account;
+using RED.Models.RepositoryBases;
 
 namespace RED.Models.ElectronicDiary.Requests
 {
@@ -15,8 +15,7 @@ namespace RED.Models.ElectronicDiary.Requests
             return new RequestW(request);
         }
 
-        public IEnumerable<RequestW> GetNotAcceptedRequests(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<RequestW> GetNotAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
@@ -30,8 +29,7 @@ namespace RED.Models.ElectronicDiary.Requests
             return notAccepted.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<RequestW> GetAcceptedRequests(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<RequestW> GetAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
@@ -45,8 +43,7 @@ namespace RED.Models.ElectronicDiary.Requests
             return accepted.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<RequestW> GetMyRequests(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<RequestW> GetMyRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
@@ -64,8 +61,7 @@ namespace RED.Models.ElectronicDiary.Requests
             return myRequests.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<RequestW> GetCompletedRequests(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<RequestW> GetCompletedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var requests = db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
@@ -79,8 +75,7 @@ namespace RED.Models.ElectronicDiary.Requests
             return completed.Select(r => new RequestW(r));
         }
 
-        public IEnumerable<ArchivedRequest> GetArchivedRequests(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<ArchivedRequest> GetArchivedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var requests = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));

@@ -1,22 +1,12 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.Admin.Roles
 {
     public class RoleW
     {
-        public Guid Id { get; set; }
-
-        [Required(ErrorMessage = "Името на ролята е задължително.")]
-        [Display(Name="Име")]
-        public string DisplayName { get; set; }
-
-        public List<RolesFeature> Connections = new List<RolesFeature>();
-
         public RoleW()
         {
 
@@ -27,6 +17,14 @@ namespace RED.Models.Admin.Roles
             this.Id = dbRole.Id;
             this.DisplayName = dbRole.DisplayName;
         }
+
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "Името на ролята е задължително.")]
+        [Display(Name = "Име")]
+        public string DisplayName { get; set; }
+
+        public List<RolesFeature> Connections = new List<RolesFeature>();
 
         public Role ToBase()
         {

@@ -14,8 +14,7 @@ namespace RED.Controllers
             return View();
         }
 
-        public ActionResult FilterNotAcceptedRequests(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterNotAcceptedRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "notAccepted";
             ViewBag.page = page;
@@ -24,21 +23,21 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
-        public ActionResult FilterAcceptedRequests(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterAcceptedRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "accepted";
             ViewBag.page = page;
 
-            if(toDate != null)
+            if (toDate != null)
+            {
                 toDate = new DateTime(toDate.Value.Year, toDate.Value.Month, toDate.Value.Day, 23, 59, 59);
+            }
 
             var requests = Rep.GetAcceptedRequests(page, pageSize, number, fromDate, toDate);
             return PartialView("Requests", requests);
         }
 
-        public ActionResult FilterMyRequests(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterMyRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Mine = true;
             ViewBag.Label = "mine";
@@ -48,8 +47,7 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
         
-        public ActionResult FilterCompletedRequests(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterCompletedRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "completed";
             ViewBag.page = page;
@@ -58,8 +56,7 @@ namespace RED.Controllers
             return PartialView("Requests", requests);
         }
 
-        public ActionResult FilterArchivedRequests(int page, int pageSize,
-            int number, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterArchivedRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "archived";
             ViewBag.page = page;

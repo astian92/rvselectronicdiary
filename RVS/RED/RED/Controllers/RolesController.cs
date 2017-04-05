@@ -97,8 +97,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.DeleteRole(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Roles/Index" });
         }

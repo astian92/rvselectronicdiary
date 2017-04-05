@@ -105,8 +105,10 @@ namespace RED.Controllers
         {
             bool isdelete = Rep.Delete(id);
 
-            if(isdelete)
+            if (isdelete)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Protocols/Index" });
         }

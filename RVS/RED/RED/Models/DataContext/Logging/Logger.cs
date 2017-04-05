@@ -68,12 +68,12 @@ namespace RED.Models.DataContext.Logging
 
                     if (actionTypeId == (int)ActionTypesEnum.Add)
                     {
-                        logProp.NewValue = (property.CurrentValue ?? string.Empty).ToString(); ;
+                        logProp.NewValue = (property.CurrentValue ?? string.Empty).ToString();
                         log.LogProperties.Add(logProp);
                     }
                     else if (actionTypeId == (int)ActionTypesEnum.Delete)
                     {
-                        logProp.OldValue = (property.OriginalValue ?? string.Empty).ToString(); ;
+                        logProp.OldValue = (property.OriginalValue ?? string.Empty).ToString();
                         log.LogProperties.Add(logProp);
                     }
                     else if (actionTypeId == (int)ActionTypesEnum.Edit)

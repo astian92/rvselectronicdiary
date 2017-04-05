@@ -60,7 +60,7 @@ namespace RED.Models.Admin
             {
                 db.SaveChanges();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -118,7 +118,7 @@ namespace RED.Models.Admin
             {
                 db.SaveChanges();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

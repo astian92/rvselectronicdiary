@@ -344,8 +344,8 @@ namespace RED.Models.FileModels.ProtocolFiles
             var labLeaderHeader = document2.InsertParagraph(
                     "Ръководител на лабораторията:",
                     false,
-                    textStyle
-                );
+                    textStyle);
+
             labLeaderHeader.Alignment = Alignment.right;
             labLeaderHeader.IndentationAfter = 2;
 
@@ -357,11 +357,10 @@ namespace RED.Models.FileModels.ProtocolFiles
                     //Environment.NewLine +
                     "/" + labLeader + "/",
                     false,
-                    ts2
-                );
+                    ts2);
+
             nameBox.Alignment = Alignment.right;
             nameBox.IndentationAfter = 1;
         }
-
     }
 }

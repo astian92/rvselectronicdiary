@@ -1,10 +1,8 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
 {
@@ -12,7 +10,7 @@ namespace RED.Models.ElectronicDiary
     {
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage="Полето \"Номер\" е задължително!")]
+        [Required(ErrorMessage = "Полето \"Номер\" е задължително!")]
         [Display(Name = "Номер")]
         public int Number { get; set; }
 
@@ -84,10 +82,14 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                if(this.LetterNumber != "")
+                if (this.LetterNumber != "")
+                {
                     return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
                 else
+                {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
             }
         }
 

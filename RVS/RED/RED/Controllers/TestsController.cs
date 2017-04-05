@@ -111,8 +111,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.DeleteCategory(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Categories");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Categories" });
         }
@@ -246,8 +248,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.Delete(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Index" });
         }

@@ -39,8 +39,9 @@ namespace RED.Controllers
             {
                 entities = Filter(entities, dtParams.FilterColIndex, dtParams.FilterAsc);
             }
-            else //defaultOrder
+            else
             {
+                //defaultOrder
                 entities = entities.OrderBy(e => e.Name);
             }
 
@@ -56,8 +57,7 @@ namespace RED.Controllers
                     data,
                     dtParams.Draw,
                     filteredRecords,
-                    totalRecords
-                );
+                    totalRecords);
 
             return Json(jsonResult);
         }
@@ -106,7 +106,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(!Rep.IsExisting(client))
+                if (!Rep.IsExisting(client))
                 {
                     Rep.Add(client);
                     return RedirectToAction("Index");
@@ -183,8 +183,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.Delete(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Clients/Index" });
         }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using RED.Models.ReportGeneration;
-using RED.Models.ReportGeneration.EPPlus;
-using OfficeOpenXml;
 using System.Globalization;
+using RED.Models.ReportGeneration.EPPlus;
 
 namespace RED.Models.FileModels.RequestList
 {
@@ -32,15 +28,12 @@ namespace RED.Models.FileModels.RequestList
             }
 
             row++;
-            //Insert only MKB Tests
 
+            //Insert only MKB Tests
             if (reportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.FZH)))
             {
                 CreateTableInTemplate("7.2 ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.FZH);
             }
-
-            //Insert only FZH Tests
-            
         }
 
         private void CreateTableInTemplate(string title, ref int row, string diaryNumber, int testingPeriod, DateTime? requestDate, string testType)
@@ -56,6 +49,7 @@ namespace RED.Models.FileModels.RequestList
 
             Cells["A" + row].Value = title;
             FormatCategoryRow(row);
+
             //style title
             row++;
 
@@ -66,6 +60,7 @@ namespace RED.Models.FileModels.RequestList
             Cells["E" + row].Value = "Допуск";
             Cells["F" + row].Value = "Забележка";
             FormatHeaderRow(row);
+
             //style table header cells
             row += 1;
 

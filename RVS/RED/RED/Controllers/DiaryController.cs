@@ -143,8 +143,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.Delete(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Diary/Index" });
         }
@@ -169,12 +171,14 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult GenerateRequest(Guid? diaryId, int testingPeriod)
         {
-            if(diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
+            if (diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
             {
                 string charGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
 
-                if(!string.IsNullOrEmpty(charGenerated))
+                if (!string.IsNullOrEmpty(charGenerated))
+                {
                     return Json(charGenerated, JsonRequestBehavior.AllowGet);  
+                }
             }
 
             return Json("Failed", JsonRequestBehavior.AllowGet);  

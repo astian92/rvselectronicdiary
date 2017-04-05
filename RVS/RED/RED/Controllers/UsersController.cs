@@ -114,8 +114,10 @@ namespace RED.Controllers
         {
             bool isdeleted = Rep.DeleteUser(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Users/Index" });
         }

@@ -30,6 +30,5 @@ namespace Inspinia_MVC5
             string currentAction = (string)html.ViewContext.RouteData.Values["action"];
             return currentAction;
         }
-
-	}
+    }
 }

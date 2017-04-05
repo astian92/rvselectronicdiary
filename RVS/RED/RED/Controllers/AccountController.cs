@@ -32,7 +32,7 @@ namespace RED.Controllers
             {
                 ActionResponse response = Rep.Authenticate(model.Username, model.Password);
 
-                if(response.IsSuccess)
+                if (response.IsSuccess)
                 {
                     FormsAuthentication.SetAuthCookie(model.Username, false);
                     return RedirectToAction("Index", "Home");

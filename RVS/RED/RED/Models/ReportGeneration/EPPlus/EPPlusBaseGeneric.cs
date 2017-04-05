@@ -47,8 +47,9 @@ namespace RED.Models.ReportGeneration.EPPlus
 
                 string address = "";
                 string firstColumn = attr.column;
-                if (attr.merged) //to merge cells if neccessary
+                if (attr.merged)
                 {
+                    //to merge cells if neccessary
                     string lastColumn = attr.lastColumn;
                     address = firstColumn + row + ":" + lastColumn + row;
                 }
@@ -114,8 +115,9 @@ namespace RED.Models.ReportGeneration.EPPlus
 
                 string address = "";
                 string firstColumn = attr.column;
-                if (attr.merged) //to merge cells if neccessary
+                if (attr.merged)
                 {
+                    //to merge cells if neccessary
                     string lastColumn = attr.lastColumn;
                     address = firstColumn + row + ":" + lastColumn + row;
                 }

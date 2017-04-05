@@ -14,8 +14,7 @@ namespace RED.Models.ElectronicDiary
 {
     public class DiaryRepository : RepositoryBase
     {
-        public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10,
-            int number = -1, int diaryNumber = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
+        public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10, int number = -1, int diaryNumber = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var diaryEntries = db.Diaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
@@ -32,8 +31,7 @@ namespace RED.Models.ElectronicDiary
             return wrapped;
         }
 
-        public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10,
-            int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
+        public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10, int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var adiaries = db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
@@ -115,7 +113,7 @@ namespace RED.Models.ElectronicDiary
             {
                 db.SaveChanges();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -171,7 +169,7 @@ namespace RED.Models.ElectronicDiary
         {
             var selectList = new List<Client>();
 
-            if(allValue)
+            if (allValue)
             {
                 var nullable = new Client();
                 nullable.Id = Guid.Empty;
@@ -205,7 +203,7 @@ namespace RED.Models.ElectronicDiary
 
         public string GenerateRequest(Guid diaryId, int testingPeriod)
         {
-            if(db.Diaries.Any(x => x.Id == diaryId))
+            if (db.Diaries.Any(x => x.Id == diaryId))
             {
                 Request request = new Request();
                 request.Id = Guid.NewGuid();
@@ -223,7 +221,7 @@ namespace RED.Models.ElectronicDiary
 
                     return charGenerated;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 }
@@ -248,7 +246,7 @@ namespace RED.Models.ElectronicDiary
                     return true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
@@ -259,7 +257,7 @@ namespace RED.Models.ElectronicDiary
         public bool AddComment(Guid diaryId, string comment)
         {
             var diary = db.Diaries.FirstOrDefault(x => x.Id == diaryId);
-            if(diary != null)
+            if (diary != null)
             {
                 diary.Comment = comment;
 
@@ -268,7 +266,7 @@ namespace RED.Models.ElectronicDiary
                     db.SaveChanges();
                     return true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 }

@@ -1,20 +1,18 @@
-﻿using RED.Models.DataContext;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
+using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ElectronicDiary.Requests;
 using RED.Models.FileModels;
 using RED.Models.RepositoryBases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using System.Web;
 
 namespace RED.Models.ElectronicDiary.Protocols
 {
     public class ProtocolsRepository : RepositoryBase
     {
-        public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var protocols = db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number));
@@ -31,8 +29,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             return result;
         }
 
-        public IEnumerable<ArchivedProtocol> GetArchivedProtocols(int page = 1, int pageSize = 10,
-            int number = -1, DateTime? from = null, DateTime? to = null)
+        public IEnumerable<ArchivedProtocol> GetArchivedProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
             var protocols = db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
@@ -70,7 +67,6 @@ namespace RED.Models.ElectronicDiary.Protocols
             }
 
             var protocol = protocolW.ToBase();
-            //protocol.IssuedDate = DateTime.Now.ToUniversalTime();
             protocol.IssuedDate = protocol.IssuedDate.ToUniversalTime();
             db.Protocols.Add(protocol);
             var request = db.Requests.Single(r => r.Id == protocol.RequestId);
@@ -101,6 +97,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             foreach (var item in protocolW.ProtocolsRemarksA)
             {
                 item.AcredetationLevelId = acreditedLevel.Id;
+
                 //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
                 //needed inside the protocol generating
                 item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId); 
@@ -110,6 +107,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             foreach (var item in protocolW.ProtocolsRemarksB)
             {
                 item.AcredetationLevelId = notAcreditedLevel.Id;
+
                 //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
                 //needed inside the protocol generating
                 item.Remark = db.Remarks.Single(r => r.Id == item.RemarkId);
@@ -139,7 +137,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             {
                 db.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }

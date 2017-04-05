@@ -1,10 +1,7 @@
-﻿using RED.Models.Account;   
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RED.Models.Account;   
 
 namespace RED.Filters
 {
@@ -20,7 +17,7 @@ namespace RED.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var currentUser = (RvsPrincipal)HttpContext.Current.User;
-            if(!currentUser.IsAuthorize(this.featureId))
+            if (!currentUser.IsAuthorize(this.featureId))
             {
                 filterContext.Result = new RedirectToRouteResult(
                             new RouteValueDictionary    
@@ -29,12 +26,10 @@ namespace RED.Filters
                                     { "action" , "Index" }
                                 });
             }
-            
         }
 
         public RoleFilter()
         {
-
         }
 
         public RoleFilter(string featureId)
