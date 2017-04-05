@@ -21,7 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-	<StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -301,9 +301,6 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\RvsDbContext.cs" />
-    <Compile Include="Models\DataContext\sysdiagram.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataContext\Test.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>

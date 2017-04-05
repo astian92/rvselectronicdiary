@@ -26,7 +26,7 @@ namespace RED.Controllers
             return PartialView(diaryEntries);
         }
 
-        public ActionResult FilterActiveDiaries(int page, int pageSize, int number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
+        public ActionResult FilterActiveDiaries(int page, int pageSize, string number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
         {
             var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             ViewBag.page = page;

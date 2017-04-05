@@ -16,18 +16,18 @@ namespace RED.Models.ElectronicDiary
 
         public DiaryW(Diary diary)
         {
-            this.Id = diary.Id;
-            this.Number = diary.Number;
-            this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate;
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            this.Contractor = diary.Contractor;
-            this.ClientId = diary.ClientId;
-            this.Comment = diary.Comment;
+            Id = diary.Id;
+            Number = diary.Number;
+            LetterNumber = diary.LetterNumber;
+            LetterDate = diary.LetterDate;
+            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            Contractor = diary.Contractor;
+            ClientId = diary.ClientId;
+            Comment = diary.Comment;
 
-            this.Client = diary.Client;
-            this.Request = diary.Requests.FirstOrDefault();
-            this.Products = diary.Products;
+            Client = diary.Client;
+            Request = diary.Requests.FirstOrDefault();
+            Products = diary.Products;
         }
 
         public Guid Id { get; set; }
@@ -38,7 +38,7 @@ namespace RED.Models.ElectronicDiary
         public DateTime AcceptanceDateAndTime { get; set; }
 
         [Display(Name = "Писмо №")]
-        public int? LetterNumber { get; set; }
+        public string LetterNumber { get; set; }
 
         [Required(ErrorMessage = "Датата на писмото е задължителна")]
         [Display(Name = "Писмо дата")]

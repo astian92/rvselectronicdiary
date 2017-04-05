@@ -23,14 +23,14 @@ namespace RED.Models.DataContext
         public System.Guid Id { get; set; }
         public int Number { get; set; }
         public System.DateTime AcceptanceDateAndTime { get; set; }
-        public Nullable<int> LetterNumber { get; set; }
+        public string LetterNumber { get; set; }
         public System.DateTime LetterDate { get; set; }
         public string Contractor { get; set; }
         public System.Guid ClientId { get; set; }
         public string Comment { get; set; }
     
+        public virtual Client Client { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
-        public virtual Client Client { get; set; }
     }
 }

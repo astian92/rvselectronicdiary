@@ -68,8 +68,8 @@
     <Property Name="Number" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Quantity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
     <NavigationProperty Name="ProductTests" Relationship="DB_9BCA69_RedDbModel.FK_ProductTests_Products" FromRole="Product" ToRole="ProductTest" />
+    <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Products_Diary" FromRole="Product" ToRole="Diary" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -89,16 +89,6 @@
     <Property Name="FeatureId" Type="Guid" Nullable="false" />
     <NavigationProperty Name="Feature" Relationship="Self.FK_RolesFeatures_Features" FromRole="RolesFeatures" ToRole="Features" />
     <NavigationProperty Name="Role" Relationship="Self.FK_RolesFeatures_Roles" FromRole="RolesFeatures" ToRole="Roles" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="TestCategory">
     <Key>
@@ -213,7 +203,6 @@
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="RolesFeatures" EntityType="Self.RolesFeature" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="TestCategories" EntityType="Self.TestCategory" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="FK_ActionLogProperties_ToTable" Association="Self.FK_ActionLogProperties_ToTable">
@@ -240,16 +229,7 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <EntitySet Name="Diaries" EntityType="DB_9BCA69_RedDbModel.Diary" />
-    <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
-      <End Role="Diary" EntitySet="Diaries" />
-      <End Role="Product" EntitySet="Products" />
-    </AssociationSet>
     <EntitySet Name="Requests" EntityType="DB_9BCA69_RedDbModel.Request" />
-    <AssociationSet Name="FK_Requests_Diary" Association="DB_9BCA69_RedDbModel.FK_Requests_Diary">
-      <End Role="Diary" EntitySet="Diaries" />
-      <End Role="Request" EntitySet="Requests" />
-    </AssociationSet>
     <AssociationSet Name="FK_Requests_Users" Association="DB_9BCA69_RedDbModel.FK_Requests_Users">
       <End Role="User" EntitySet="Users" />
       <End Role="Request" EntitySet="Requests" />
@@ -268,10 +248,6 @@
     </AssociationSet>
     <EntitySet Name="ArchivedProtocolRemarks" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolRemark" />
     <EntitySet Name="Clients" EntityType="DB_9BCA69_RedDbModel.Client" />
-    <AssociationSet Name="FK_Diary_Clients" Association="DB_9BCA69_RedDbModel.FK_Diary_Clients">
-      <End Role="Client" EntitySet="Clients" />
-      <End Role="Diary" EntitySet="Diaries" />
-    </AssociationSet>
     <EntitySet Name="TestTypes" EntityType="DB_9BCA69_RedDbModel.TestType" />
     <EntitySet Name="ArchivedProductTests" EntityType="DB_9BCA69_RedDbModel.ArchivedProductTest" />
     <EntitySet Name="ArchivedProtocolResults" EntityType="DB_9BCA69_RedDbModel.ArchivedProtocolResult" />
@@ -332,6 +308,19 @@
       <End Role="ProductTest" EntitySet="ProductTests" />
       <End Role="ProtocolResult" EntitySet="ProtocolResults" />
     </AssociationSet>
+    <EntitySet Name="Diaries" EntityType="DB_9BCA69_RedDbModel.Diary" />
+    <AssociationSet Name="FK_Diary_Clients" Association="DB_9BCA69_RedDbModel.FK_Diary_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Diary" EntitySet="Diaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Diary" Association="DB_9BCA69_RedDbModel.FK_Products_Diary">
+      <End Role="Diary" EntitySet="Diaries" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Diary" Association="DB_9BCA69_RedDbModel.FK_Requests_Diary">
+      <End Role="Diary" EntitySet="Diaries" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
     <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
     <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
       <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
@@ -346,36 +335,6 @@
       <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Diary">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="Number" Type="Int32" Nullable="false" />
-    <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="LetterNumber" Type="Int32" />
-    <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Contractor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ClientId" Type="Guid" Nullable="false" />
-    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Products" Relationship="DB_9BCA69_RedDbModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
-    <NavigationProperty Name="Requests" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
-    <NavigationProperty Name="Client" Relationship="DB_9BCA69_RedDbModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
-  </EntityType>
-  <Association Name="FK_Products_Diary">
-    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="DB_9BCA69_RedDbModel.Product" Role="Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Diary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Product">
-        <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Request">
     <Key>
       <PropertyRef Name="Id" />
@@ -386,24 +345,10 @@
     <Property Name="AcceptedBy" Type="Guid" />
     <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
     <Property Name="TestingPeriod" Type="Int32" />
-    <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
     <NavigationProperty Name="User" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Users" FromRole="Request" ToRole="User" />
     <NavigationProperty Name="Protocols" Relationship="DB_9BCA69_RedDbModel.FK_Protocols_Requests" FromRole="Request" ToRole="Protocol" />
+    <NavigationProperty Name="Diary" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Diary" FromRole="Request" ToRole="Diary" />
   </EntityType>
-  <Association Name="FK_Requests_Diary">
-    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Diary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Request">
-        <PropertyRef Name="DiaryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Requests_Users">
     <End Type="DB_9BCA69_RedDbModel.User" Role="User" Multiplicity="0..1" />
     <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="*" />
@@ -503,18 +448,6 @@
     <Property Name="Mobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Diaries" Relationship="DB_9BCA69_RedDbModel.FK_Diary_Clients" FromRole="Client" ToRole="Diary" />
   </EntityType>
-  <Association Name="FK_Diary_Clients">
-    <End Type="DB_9BCA69_RedDbModel.Client" Role="Client" Multiplicity="1" />
-    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Client">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Diary">
-        <PropertyRef Name="ClientId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="TestType">
     <Key>
       <PropertyRef Name="Id" />
@@ -788,6 +721,62 @@
       </Principal>
       <Dependent Role="ProtocolResult">
         <PropertyRef Name="ProductTestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Diary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Number" Type="Int32" Nullable="false" />
+    <Property Name="AcceptanceDateAndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LetterNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="LetterDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Contractor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ClientId" Type="Guid" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Client" Relationship="DB_9BCA69_RedDbModel.FK_Diary_Clients" FromRole="Diary" ToRole="Client" />
+    <NavigationProperty Name="Products" Relationship="DB_9BCA69_RedDbModel.FK_Products_Diary" FromRole="Diary" ToRole="Product" />
+    <NavigationProperty Name="Requests" Relationship="DB_9BCA69_RedDbModel.FK_Requests_Diary" FromRole="Diary" ToRole="Request" />
+  </EntityType>
+  <Association Name="FK_Diary_Clients">
+    <End Type="DB_9BCA69_RedDbModel.Client" Role="Client" Multiplicity="1" />
+    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Diary">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Diary">
+    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DB_9BCA69_RedDbModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="DiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Diary">
+    <End Type="DB_9BCA69_RedDbModel.Diary" Role="Diary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DB_9BCA69_RedDbModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="DiaryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
