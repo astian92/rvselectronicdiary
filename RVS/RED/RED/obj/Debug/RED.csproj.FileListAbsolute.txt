@@ -524,3 +524,4 @@ C:\Helpers\RVS\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Helpers\RVS\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Helpers\RVS\RVS\RED\RED\obj\Debug\RED.dll
 C:\Helpers\RVS\RVS\RED\RED\obj\Debug\RED.pdb
+C:\Helpers\RVS\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache

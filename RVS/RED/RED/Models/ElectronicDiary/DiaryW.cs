@@ -124,18 +124,18 @@ namespace RED.Models.ElectronicDiary
         {
             Diary diary = new Diary();
 
-            diary.Id = this.Id;
-            diary.Number = this.Number;
-            diary.LetterNumber = this.LetterNumber;
-            diary.LetterDate = this.LetterDate;
-            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
-            diary.Contractor = this.Contractor;
-            diary.ClientId = this.ClientId;
-            diary.Comment = this.Comment;
+            diary.Id = Id;
+            diary.Number = Number;
+            diary.LetterNumber = LetterNumber;
+            diary.LetterDate = LetterDate;
+            diary.AcceptanceDateAndTime = AcceptanceDateAndTime;
+            diary.Contractor = Contractor;
+            diary.ClientId = ClientId;
+            diary.Comment = Comment;
 
-            diary.Client = this.Client;
-            diary.Requests.Add(this.Request);
-            diary.Products = this.Products;
+            diary.Client = Client;
+            diary.Requests.Add(Request);
+            diary.Products = Products;
 
             return diary;
         }
