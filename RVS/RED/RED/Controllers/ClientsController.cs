@@ -28,9 +28,7 @@ namespace RED.Controllers
             if (dtParams.IsBeingSearched)
             {
                 entities = entities.Where(e => e.Name.ToLower().Contains(dtParams.SearchValue) ||
-                                               (e.Mobile != null ?
-                                                    e.Mobile.ToLower().Contains(dtParams.SearchValue) : 
-                                                    false));
+                                        (e.Mobile != null ? e.Mobile.ToLower().Contains(dtParams.SearchValue) : false));
             }
 
             int filteredRecords = entities.Count();
