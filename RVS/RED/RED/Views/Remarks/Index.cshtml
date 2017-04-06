@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Remarks.RemarkW>
 @using RED.Models.Account
+@using RED.Models.DataContext.Concrete
+
 @{
     ViewBag.Title = "Index";
 }
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
     var user = principal.GetUserData();
 }
 

@@ -213,6 +213,9 @@
     </Compile>
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
+    <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
+    <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />
     <Compile Include="Repositories\Abstract\IFeaturesRepository.cs" />
     <Compile Include="Repositories\Concrete\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
@@ -254,7 +257,6 @@
     <Compile Include="Models\DataContext\Client.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext\DbContextFactory.cs" />
     <Compile Include="Models\DataContext\Diary.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -388,11 +390,9 @@
     <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportHeaderPropertyAttribute.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportPropertyAttribute.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\ReportModel.cs" />
-    <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
     <Compile Include="Models\Responses\ActionError.cs" />
     <Compile Include="Models\Responses\ActionResponse.cs" />
     <Compile Include="Models\Responses\ErrorFactory.cs" />
-    <Compile Include="Models\TestRepository.cs" />
     <Compile Include="Models\TestTypes.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -761,20 +761,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />

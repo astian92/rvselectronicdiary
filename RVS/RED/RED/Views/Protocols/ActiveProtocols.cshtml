@@ -3,9 +3,10 @@
 @using System.Collections.Generic
 @using RED.Models
 @using RED.Models.Account
+@using RED.Models.DataContext.Concrete
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <div class="panel-group" id="accordion_@ViewBag.Label">

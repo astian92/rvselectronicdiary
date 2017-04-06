@@ -3,21 +3,24 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Models.Account
 {
     public class RvsPrincipal : GenericPrincipal
     {
-        public RvsPrincipal(IIdentity identity)
+        private readonly RvsDbContext Db;
+
+        public RvsPrincipal(IIdentity identity, IRvsContextFactory factory)
             : base(identity, null)
         {
+            Db = factory.CreateConcrete();
         }
 
         public override bool IsInRole(string role)
         {
             //DO NOT USE THIS METHOD
-            var context = DbContextFactory.GetDbContext();
-            var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
+            var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
 
             if (user != null)
             {
@@ -32,10 +35,8 @@ namespace RED.Models.Account
 
         public bool HasFeature(Guid featureId)
         {
-            var context = DbContextFactory.GetDbContext();
-            
             var roleId = GetRoleId();
-            if (context.RolesFeatures.Any(f => f.RoleId == roleId && f.FeatureId == featureId))
+            if (Db.RolesFeatures.Any(f => f.RoleId == roleId && f.FeatureId == featureId))
             {
                 return true;
             }
@@ -69,10 +70,7 @@ namespace RED.Models.Account
 
         public User GetUserData()
         {
-            User user = new User();
-            var context = DbContextFactory.GetDbContext();
-            user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
-
+            var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user == null)
             {
                 user = new User();
@@ -84,10 +82,7 @@ namespace RED.Models.Account
 
         public Guid GetId()
         {
-            User user = new User();
-            var context = DbContextFactory.GetDbContext();
-            user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
-
+            var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user == null)
             {
                 return Guid.Empty;
@@ -98,9 +93,7 @@ namespace RED.Models.Account
 
         private bool IsGod()
         {
-            var context = DbContextFactory.GetDbContext();
-            var user = context.Users.FirstOrDefault(u => u.Username == Identity.Name);
-
+            var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user != null)
             {
                 if (user.Id.ToString() == "613b0faa-8828-44a9-8bbe-09ba68cc33ae")
@@ -114,9 +107,7 @@ namespace RED.Models.Account
 
         private Guid GetRoleId()
         {
-            var context = DbContextFactory.GetDbContext();
-            var user = context.Users.FirstOrDefault(u => u.Username == this.Identity.Name);
-
+            var user = Db.Users.FirstOrDefault(u => u.Username == this.Identity.Name);
             if (user != null)
             {
                 return user.RoleId;

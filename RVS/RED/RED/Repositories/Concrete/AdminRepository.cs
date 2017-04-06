@@ -5,13 +5,20 @@ using System.Linq;
 using RED.Models.Admin.Roles;
 using RED.Models.Admin.Users;
 using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class AdminRepository : RepositoryBase, IAdminRepository
+    public class AdminRepository : IAdminRepository
     {
+        private readonly RvsDbContext Db;
+
+        public AdminRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public Role GetBaseRole(Guid id)
         {
             return Db.Roles.FirstOrDefault(r => r.Id == id);

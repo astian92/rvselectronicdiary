@@ -5,15 +5,24 @@ using System.Transactions;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ElectronicDiary.Requests;
-using RED.Models.RepositoryBases;
 using RED.Models.ElectronicDiary.Protocols;
 using RED.Repositories.Abstract;
 using RED.Models.ElectronicDiary;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class ProtocolsRepository : RepositoryBase, IProtocolsRepository
+    public class ProtocolsRepository : IProtocolsRepository
     {
+        private readonly RvsDbContext Db;
+        private readonly IFilesRepository _filesRepo;
+
+        public ProtocolsRepository(IRvsContextFactory factory, IFilesRepository filesRepo)
+        {
+            Db = factory.CreateConcrete();
+            _filesRepo = filesRepo;
+        }
+
         public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
@@ -152,14 +161,13 @@ namespace RED.Repositories.Concrete
 
         public void GeneratePorotocolReport(Protocol protocol, Request request = null)
         {
-            var filesRep = new FilesRepository();
-            filesRep.GenerateProtocolReport(protocol, request);
+            _filesRepo.GenerateProtocolReport(protocol, request);
         }
 
         public IEnumerable<RemarkW> GetRemarks()
         {
-            RemarksRepository RRep = new RemarksRepository();
-            return RRep.GetRemarks();
+            var remarks = Db.Remarks.ToList();
+            return remarks.Select(r => new RemarkW(r));
         }
     }
 }

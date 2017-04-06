@@ -3,12 +3,19 @@ using System.Linq;
 using System.Data.Entity;
 using RED.Repositories.Abstract;
 using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class FeaturesRepository : RepositoryBase, IFeaturesRepository
+    public class FeaturesRepository : IFeaturesRepository
     {
+        private readonly RvsDbContext Db;
+
+        public FeaturesRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public Feature Get(Guid id)
         {
             return Db.Features.FirstOrDefault(x => x.Id == id);

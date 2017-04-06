@@ -2,6 +2,8 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Integration.Mvc;
+using RED.Models.DataContext.Concrete;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.App_Start
 {
@@ -20,6 +22,8 @@ namespace RED.App_Start
             builder.RegisterAssemblyTypes(dataAccess)
                    .Where(t => t.Name.EndsWith("Repository"))
                    .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterType<RvsContextFactory>().As<IRvsContextFactory>().InstancePerRequest();
 
             builder.RegisterModelBinderProvider();
 

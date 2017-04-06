@@ -4,11 +4,11 @@
     ViewBag.Title = "Клиенти";
 }
 
-@using Microsoft.AspNet.Identity
+@using RED.Models.DataContext.Concrete
 @using RED.Models.Account
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />

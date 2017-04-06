@@ -6,16 +6,24 @@ using System.Linq;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
-using RED.Models.FileModels;
-using RED.Models.RepositoryBases;
 using RED.Models.Responses;
 using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class DiaryRepository : RepositoryBase, IDiaryRepository
+    public class DiaryRepository : IDiaryRepository
     {
+        private readonly RvsDbContext Db;
+        private readonly IFilesRepository _filesRepo;
+
+        public DiaryRepository(IRvsContextFactory factory, IFilesRepository filesRepo)
+        {
+            Db = factory.CreateConcrete();
+            _filesRepo = filesRepo;
+        }
+
         public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10, string number = "-1", int diaryNumber = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
         {
             //Filter
@@ -100,8 +108,7 @@ namespace RED.Repositories.Concrete
             var request = diary.Requests.FirstOrDefault();
             if (request != null)
             {
-                var filesRepository = new FilesRepository();
-                string charGenerated = filesRepository.GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
+                string charGenerated = _filesRepo.GenerateRequestListReport(diary.Id, request.Date, request.TestingPeriod ?? 0);
             }
         }
 
@@ -218,8 +225,7 @@ namespace RED.Repositories.Concrete
                 try
                 {
                     Db.Requests.Add(request);
-                    var filesRepository = new FilesRepository();
-                    string charGenerated = filesRepository.GenerateRequestListReport(diaryId, date, testingPeriod);
+                    string charGenerated = _filesRepo.GenerateRequestListReport(diaryId, date, testingPeriod);
                     Db.SaveChanges();
 
                     return charGenerated;
@@ -410,8 +416,7 @@ namespace RED.Repositories.Concrete
 
             try
             {
-                var filesRep = new FilesRepository();
-                filesRep.RegenerateProtocolReport(adiary);
+                _filesRepo.RegenerateProtocolReport(adiary);
 
                 response.IsSuccess = true;
                 response.SuccessMsg = "Успешно опресняване на архивирания протокол!";

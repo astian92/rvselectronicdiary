@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using RED.Models.RepositoryBases;
 using RED.Models.DataContext;
 using RED.Models.Responses;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class TestsRepository : RepositoryBase, ITestsRepository
+    public class TestsRepository : ITestsRepository
     {
+        private readonly RvsDbContext Db;
+
+        public TestsRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public IEnumerable<AcredetationLevel> GetAcredetationLevels()
         {
             return Db.AcredetationLevels.ToList();

@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Linq;
 using RED.Models.DataContext;
-using RED.Models.RepositoryBases;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class ClientsRepository : RepositoryBase, IClientsRepository
+    public class ClientsRepository : IClientsRepository
     {
+        private readonly RvsDbContext Db;
+
+        public ClientsRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public ClientW GetClient(Guid id)
         {
             var client = Db.Clients.Single(c => c.Id == id);

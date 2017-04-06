@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RED.Models.Account;
-using RED.Models.RepositoryBases;
 using RED.Models.ElectronicDiary.Requests;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
+using RED.Models.DataContext;
 
 namespace RED.Repositories.Concrete
 {
-    public class RequestsRepository : RepositoryBase, IRequestsRepository
+    public class RequestsRepository : IRequestsRepository
     {
+        private readonly RvsDbContext Db;
+
+        public RequestsRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public RequestW GetRequest(Guid id)
         {
             var request = Db.Requests.Single(r => r.Id == id);

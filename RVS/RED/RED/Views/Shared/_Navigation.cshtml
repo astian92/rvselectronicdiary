@@ -1,8 +1,8 @@
-﻿@using Microsoft.AspNet.Identity
-@using RED.Models.Account
+﻿@using RED.Models.Account
+@using RED.Models.DataContext.Concrete
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
     var user = principal.GetUserData();
 }
 <nav class="navbar-default navbar-static-side" role="navigation">

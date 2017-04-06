@@ -5,23 +5,26 @@ using System.IO;
 using System.Linq;
 using RED.Models.FileModels.RequestList;
 using RED.Models.ReportGeneration.EPPlus;
-using RED.Models.RepositoryBases;
 using RED.Models.DataContext;
 using RED.Models.FileModels.ProtocolFiles;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Converters;
 using RED.Repositories.Abstract;
 using RED.Models.FileModels;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class FilesRepository : RepositoryBase, IFilesRepository
+    public class FilesRepository : IFilesRepository
     {
-        public FilesRepository()
+        private readonly RvsDbContext Db;
+
+        public FilesRepository(IRvsContextFactory factory)
         {
+            Db = factory.CreateConcrete();
             this.FileTreePath = ConfigurationManager.AppSettings["FilesDestination"];
         }
-
+        
         public string FileTreePath { get; set; }
 
         public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)

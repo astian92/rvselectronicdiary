@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "Profile";
 }
-@using Microsoft.AspNet.Identity
+@using RED.Models.DataContext.Concrete
 @using RED.Models.Account
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
+    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <h2>Профил</h2>

@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.ArchivedWrappers;
-using RED.Models.RepositoryBases;
 using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class ArchivedDiaryRepository : RepositoryBase, IArchivedDiaryRepository
+    public class ArchivedDiaryRepository : IArchivedDiaryRepository
     {
+        private readonly RvsDbContext Db;
+
+        public ArchivedDiaryRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public ArchivedDiary GetArchivedDiary(Guid archivedDiaryId)
         {
             var archivedDiary = Db.ArchivedDiaries.Single(ad => ad.Id == archivedDiaryId);

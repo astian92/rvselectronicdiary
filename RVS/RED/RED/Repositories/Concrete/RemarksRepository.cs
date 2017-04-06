@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RED.Models.RepositoryBases;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
-    public class RemarksRepository : RepositoryBase, IRemarksRepository
+    public class RemarksRepository : IRemarksRepository
     {
-        public RemarksRepository()
+        private readonly RvsDbContext Db;
+
+        public RemarksRepository(IRvsContextFactory factory)
         {
+            Db = factory.CreateConcrete();
         }
 
         public IEnumerable<RemarkW> GetRemarks()

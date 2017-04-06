@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RED.Models.RepositoryBases;
 using RED.Models.Dashboard;
 using RED.Repositories.Abstract;
+using RED.Models.DataContext.Abstract;
+using RED.Models.DataContext;
 
 namespace RED.Repositories.Concrete
 {
-    public class DashboardRepository : RepositoryBase, IDashboardRepository
+    public class DashboardRepository : IDashboardRepository
     {
+        private readonly RvsDbContext Db;
+
+        public DashboardRepository(IRvsContextFactory factory)
+        {
+            Db = factory.CreateConcrete();
+        }
+
         public DashboardW GetDashboard()
         {
             DashboardW dash = new DashboardW();

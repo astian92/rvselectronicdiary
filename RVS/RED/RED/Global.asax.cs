@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using RED.Models.Account;
 using RED.App_Start;
+using RED.Models.DataContext.Concrete;
 
 namespace RED
 {
@@ -35,7 +36,7 @@ namespace RED
                         //let us take out the username now                
                         string username = FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name;
                         
-                        HttpContext.Current.User = new RvsPrincipal(new System.Security.Principal.GenericIdentity(username, "Forms"));
+                        HttpContext.Current.User = new RvsPrincipal(new System.Security.Principal.GenericIdentity(username, "Forms"), new RvsContextFactory());
                     }
                     catch (Exception)
                     {
