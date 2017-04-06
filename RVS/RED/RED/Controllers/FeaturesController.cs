@@ -1,29 +1,28 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using RED.Models.DataContext;
+using RED.Models.ControllerBases;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
-    public class FeaturesController : Controller
+    public class FeaturesController : BaseController
     {
-        private RvsDbContext db = DbContextFactory.GetDbContext();
+        private readonly IFeaturesRepository _rep;
+
+        public FeaturesController(IFeaturesRepository featuresRepo)
+        {
+            _rep = featuresRepo;
+        }
 
         public ActionResult Index()
         {
-            return View(db.Features.ToList());
+            return View(_rep.GetAll());
         }
 
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Feature feature = db.Features.Find(id);
+            var feature = _rep.Get(id);
             if (feature == null)
             {
                 return HttpNotFound();
@@ -43,23 +42,16 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                feature.Id = Guid.NewGuid();
-                db.Features.Add(feature);
-                db.SaveChanges();
+                _rep.Create(feature);
                 return RedirectToAction("Index");
             }
 
             return View(feature);
         }
 
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Feature feature = db.Features.Find(id);
+            var feature = _rep.Get(id);
             if (feature == null)
             {
                 return HttpNotFound();
@@ -74,22 +66,16 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(feature).State = EntityState.Modified;
-                db.SaveChanges();
+                _rep.Edit(feature);
                 return RedirectToAction("Index");
             }
 
             return View(feature);
         }
 
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Feature feature = db.Features.Find(id);
+            var feature = _rep.Get(id);
             if (feature == null)
             {
                 return HttpNotFound();
@@ -102,14 +88,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Feature feature = db.Features.Find(id);
-            db.Features.Remove(feature);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (Exception)
+            var isDeleted = _rep.Delete(id);
+            if (!isDeleted)
             {
                 return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Features/Index" });
             }

@@ -3,25 +3,31 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Users;
 using RED.Filters;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
-    public class UsersController : ControllerBase<AdminRepository>
+    public class UsersController : BaseController
     {
+        private readonly IAdminRepository _rep;
+
+        public UsersController(IAdminRepository adminRepo)
+        {
+            _rep = adminRepo;
+        }
+
         public ActionResult Index()
         {
-            //var users = Rep.GetUsers();
             return View();
         }
 
         public JsonResult GetUsers()
         {
-            var users = Rep.GetUsers();
+            var users = _rep.GetUsers();
 
             var usersUnwrapped = users.Select(u => new
             {
@@ -40,7 +46,7 @@ namespace RED.Controllers
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName");
+            ViewBag.RoleId = new SelectList(_rep.GetRoles(), "Id", "DisplayName");
             return View();
         }
 
@@ -51,11 +57,11 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddUser(user);
+                _rep.AddUser(user);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(_rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -67,13 +73,13 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            UserW user = Rep.GetUser(id.Value);
+            UserW user = _rep.GetUser(id.Value);
             if (user == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(_rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -84,11 +90,11 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditUser(user);
+                _rep.EditUser(user);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleId = new SelectList(Rep.GetRoles(), "Id", "DisplayName", user.RoleId);
+            ViewBag.RoleId = new SelectList(_rep.GetRoles(), "Id", "DisplayName", user.RoleId);
             return View(user);
         }
 
@@ -100,7 +106,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            UserW user = Rep.GetUser(id.Value);
+            UserW user = _rep.GetUser(id.Value);
             if (user == null)
             {
                 return HttpNotFound();
@@ -119,7 +125,7 @@ namespace RED.Controllers
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.DeleteUser(id);
+            bool isdeleted = _rep.DeleteUser(id);
 
             if (isdeleted)
             {

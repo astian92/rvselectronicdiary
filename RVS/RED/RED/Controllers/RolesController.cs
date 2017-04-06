@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Net;
 using System.Web.Mvc;
-using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Roles;
 using RED.Filters;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
-    public class RolesController : ControllerBase<AdminRepository>
+    public class RolesController : BaseController
     {
+        private readonly IAdminRepository _rep;
+
+        public RolesController(IAdminRepository adminRepo)
+        {
+            _rep = adminRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -18,14 +25,14 @@ namespace RED.Controllers
 
         public ActionResult GetRoles()
         {
-            var roles = Rep.GetRoles();
+            var roles = _rep.GetRoles();
             return Json(new { data = roles });
         }
 
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult Create()
         {
-            ViewBag.Features = Rep.GetFeatures();
+            ViewBag.Features = _rep.GetFeatures();
             return View();
         }
 
@@ -36,7 +43,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddRole(role, features);
+                _rep.AddRole(role, features);
                 return RedirectToAction("Index");
             }
 
@@ -51,13 +58,13 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RoleW role = Rep.GetRole(id.Value);
+            RoleW role = _rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.Features = Rep.GetFeatures();
+            ViewBag.Features = _rep.GetFeatures();
             return View(role);
         }
 
@@ -68,7 +75,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditRole(role, features);
+                _rep.EditRole(role, features);
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +90,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RoleW role = Rep.GetRole(id.Value);
+            RoleW role = _rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
@@ -102,7 +109,7 @@ namespace RED.Controllers
         [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.DeleteRole(id);
+            bool isdeleted = _rep.DeleteRole(id);
 
             if (isdeleted)
             {

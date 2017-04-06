@@ -1,19 +1,26 @@
 ﻿using System.Web.Mvc;
 using RED.Models.ControllerBases;
-using RED.Models.Dashboard;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
-    public class HomeController : ControllerBase<DashboardRepository>
+    public class HomeController : BaseController
     {
+        private readonly IDashboardRepository _rep;
+
+        public HomeController(IDashboardRepository dashboardRepo)
+        {
+            _rep = dashboardRepo;
+        }
+
         public ActionResult Index()
         {
-            return View(Rep.GetDashboard());
+            return View(_rep.GetDashboard());
         }
 
         public ActionResult TestsReference(int type)
         {
-            return PartialView(Rep.GetTestsReference(type));
+            return PartialView(_rep.GetTestsReference(type));
         }
     }
 }

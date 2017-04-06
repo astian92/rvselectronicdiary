@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.1\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DocX, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DocX.1.0.0.19\lib\net40\DocX.dll</HintPath>
       <Private>True</Private>
@@ -175,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DependencyInjection.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -204,14 +213,15 @@
     </Compile>
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Models\Account\AccountRepository.cs" />
+    <Compile Include="Repositories\Abstract\IFeaturesRepository.cs" />
+    <Compile Include="Repositories\Concrete\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\RvsPrincipal.cs" />
-    <Compile Include="Models\Admin\AdminRepository.cs" />
+    <Compile Include="Repositories\Concrete\AdminRepository.cs" />
     <Compile Include="Models\Admin\Roles\RoleW.cs" />
     <Compile Include="Models\Admin\Users\UserW.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
-    <Compile Include="Models\Dashboard\DashboardRepository.cs" />
+    <Compile Include="Repositories\Concrete\DashboardRepository.cs" />
     <Compile Include="Models\Dashboard\DashboardW.cs" />
     <Compile Include="Models\Dashboard\TestsReferenceW.cs" />
     <Compile Include="Models\DataContext\AcredetationLevel.cs">
@@ -318,36 +328,49 @@
     </Compile>
     <Compile Include="Models\DtParameters.cs" />
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
-    <Compile Include="Models\ElectronicDiary\ArchivedDiaryRepository.cs" />
+    <Compile Include="Repositories\Concrete\ArchivedDiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductTestW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProtocolResultW.cs" />
-    <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
+    <Compile Include="Repositories\Concrete\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProductConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProductTestsConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProtocolResultsConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\RemarksConverter.cs" />
-    <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
+    <Compile Include="Repositories\Concrete\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ArchivedProtocol.cs" />
-    <Compile Include="Models\ElectronicDiary\Protocols\ProtocolsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IAccountRepository.cs" />
+    <Compile Include="Repositories\Abstract\IAdminRepository.cs" />
+    <Compile Include="Repositories\Abstract\IArchivedDiaryRepository.cs" />
+    <Compile Include="Repositories\Abstract\IClientsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IDashboardRepository.cs" />
+    <Compile Include="Repositories\Abstract\IDiaryRepository.cs" />
+    <Compile Include="Repositories\Abstract\IFilesRepository.cs" />
+    <Compile Include="Repositories\Abstract\ILogRepository.cs" />
+    <Compile Include="Repositories\Abstract\IProtocolsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IRemarksRepository.cs" />
+    <Compile Include="Repositories\Abstract\IRequestsRepository.cs" />
+    <Compile Include="Repositories\Abstract\ITestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\FeaturesRepository.cs" />
+    <Compile Include="Repositories\Concrete\ProtocolsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
-    <Compile Include="Models\ElectronicDiary\Remarks\RemarksRepository.cs" />
+    <Compile Include="Repositories\Concrete\RemarksRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Remarks\RemarkW.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\ArchivedRequest.cs" />
-    <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
     <Compile Include="Models\ElectronicDiary\SimpleProduct.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestMethodW.cs" />
-    <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\FileModels\DirUtility.cs" />
     <Compile Include="Models\FileModels\FileNames.cs" />
     <Compile Include="Models\FileModels\FileProperties.cs" />
-    <Compile Include="Models\FileModels\FilesRepository.cs" />
+    <Compile Include="Repositories\Concrete\FilesRepository.cs" />
     <Compile Include="Models\FileModels\MethodsModel.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolProduct.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolReport.cs" />
@@ -356,7 +379,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JqueryListResult.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
-    <Compile Include="Models\Logs\LogRepository.cs" />
+    <Compile Include="Repositories\Concrete\LogRepository.cs" />
     <Compile Include="Models\ReportGeneration\DocXApi\DocXBase.cs" />
     <Compile Include="Models\ReportGeneration\DocXApi\DocXReportBase.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\EPPlusBaseGeneric.cs" />

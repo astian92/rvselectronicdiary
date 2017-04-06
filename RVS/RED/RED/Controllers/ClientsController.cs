@@ -7,12 +7,20 @@ using RED.Models;
 using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("4177b39a-ddce-46ad-812b-55d5935012ed")]
-    public class ClientsController : ControllerBase<ClientsRepository>
+    public class ClientsController : BaseController
     {
+        private readonly IClientsRepository _rep;
+
+        public ClientsController(IClientsRepository clientsRepo)
+        {
+            _rep = clientsRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -23,7 +31,7 @@ namespace RED.Controllers
             //get the parameters from the Datatable
             var dtParams = new DtParameters(Request);
 
-            var entities = Rep.GetClients();
+            var entities = _rep.GetClients();
             int totalRecords = entities.Count();
 
             if (dtParams.IsBeingSearched)
@@ -74,9 +82,9 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsExisting(client))
+                if (!_rep.IsExisting(client))
                 {
-                    Rep.Add(client);
+                    _rep.Add(client);
                     return RedirectToAction("Index");
                 }
 
@@ -94,7 +102,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ClientW client = Rep.GetClient(id.Value);
+            ClientW client = _rep.GetClient(id.Value);
             if (client == null)
             {
                 return HttpNotFound();
@@ -110,9 +118,9 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsExisting(client))
+                if (!_rep.IsExisting(client))
                 {
-                    Rep.Edit(client);
+                    _rep.Edit(client);
                     return RedirectToAction("Index");
                 }
 
@@ -130,7 +138,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ClientW client = Rep.GetClient(id.Value);
+            ClientW client = _rep.GetClient(id.Value);
             if (client == null)
             {
                 return HttpNotFound();
@@ -149,7 +157,7 @@ namespace RED.Controllers
         [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.Delete(id);
+            bool isdeleted = _rep.Delete(id);
 
             if (isdeleted)
             {

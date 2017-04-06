@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using RED.Models.Account;
+using RED.App_Start;
 
 namespace RED
 {
@@ -14,6 +15,7 @@ namespace RED
     {
         protected void Application_Start()
         {
+            DependencyInjection.Register();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

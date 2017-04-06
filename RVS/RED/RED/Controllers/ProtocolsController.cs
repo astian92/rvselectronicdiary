@@ -4,12 +4,20 @@ using System.Web.Mvc;
 using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Protocols;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("93b1ccf0-c462-464a-9294-524e5088b93b")]
-    public class ProtocolsController : ControllerBase<ProtocolsRepository>
+    public class ProtocolsController : BaseController
     {
+        private readonly IProtocolsRepository _rep;
+
+        public ProtocolsController(IProtocolsRepository protocolsRepo)
+        {
+            _rep = protocolsRepo;
+        }
+
         public ActionResult Index(Guid? idToOpen, bool IsArchived = false)
         {
             ViewBag.IsArchived = IsArchived;
@@ -22,7 +30,7 @@ namespace RED.Controllers
             ViewBag.Label = "active-protocols";
             ViewBag.page = page;
 
-            var protocols = Rep.GetActiveProtocols(page, pageSize, number, fromDate, toDate);
+            var protocols = _rep.GetActiveProtocols(page, pageSize, number, fromDate, toDate);
             return PartialView("ActiveProtocols", protocols);
         }
 
@@ -31,7 +39,7 @@ namespace RED.Controllers
             ViewBag.Label = "archived-protocols";
             ViewBag.page = page;
 
-            var protocols = Rep.GetArchivedProtocols(page, pageSize, number, fromDate, toDate);
+            var protocols = _rep.GetArchivedProtocols(page, pageSize, number, fromDate, toDate);
             return PartialView("ArchivedProtocols", protocols);
         }
 
@@ -39,9 +47,9 @@ namespace RED.Controllers
         [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
         public ActionResult Create(Guid requestId)
         {
-            var request = Rep.GetRequest(requestId);
+            var request = _rep.GetRequest(requestId);
 
-            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
+            ViewBag.RemarkId = new SelectList(_rep.GetRemarks(), "Id", "Text");
 
             return View(request);
         }
@@ -51,7 +59,7 @@ namespace RED.Controllers
         [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
         public ActionResult Create(ProtocolW protocol)
         {
-            Rep.Create(protocol);
+            _rep.Create(protocol);
             return RedirectToAction("Index", "Requests");
         }
 
@@ -59,8 +67,8 @@ namespace RED.Controllers
         [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
         public ActionResult Edit(Guid protocolId)
         {
-            var protocol = Rep.GetProtocol(protocolId);
-            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
+            var protocol = _rep.GetProtocol(protocolId);
+            ViewBag.RemarkId = new SelectList(_rep.GetRemarks(), "Id", "Text");
             return View(protocol);
         }
 
@@ -71,11 +79,11 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditProtocol(protocol);
+                _rep.EditProtocol(protocol);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RemarkId = new SelectList(Rep.GetRemarks(), "Id", "Text");
+            ViewBag.RemarkId = new SelectList(_rep.GetRemarks(), "Id", "Text");
             return View(protocol);
         }
 
@@ -87,7 +95,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ProtocolW protocol = Rep.GetProtocol(id.Value);
+            ProtocolW protocol = _rep.GetProtocol(id.Value);
             if (Request.IsAjaxRequest())
             {
                 return PartialView(protocol);
@@ -101,7 +109,7 @@ namespace RED.Controllers
         [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdelete = Rep.Delete(id);
+            bool isdelete = _rep.Delete(id);
 
             if (isdelete)
             {

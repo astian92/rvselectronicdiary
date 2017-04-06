@@ -2,18 +2,24 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using RED.Models;
-using RED.Models.Account;
 using RED.Models.ControllerBases;
 using RED.Models.DataContext;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [Authorize]
-    public class AccountController : ControllerBase<AccountRepository>
+    public class AccountController : BaseController
     {
+        private readonly IAccountRepository _rep;
+
+        public AccountController(IAccountRepository accRepo)
+        {
+            _rep = accRepo;
+        }
+
         public AccountController()
         {
-            //mai proraboti we
         }
 
         [AllowAnonymous]
@@ -30,7 +36,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = Rep.Authenticate(model.Username, model.Password);
+                var response = _rep.Authenticate(model.Username, model.Password);
                 if (response.IsSuccess)
                 {
                     FormsAuthentication.SetAuthCookie(model.Username, false);

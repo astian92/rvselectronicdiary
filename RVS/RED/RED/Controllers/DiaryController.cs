@@ -4,15 +4,23 @@ using System.Web.Mvc;
 using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("fd53f97f-8bec-42ae-b17a-80cc7fee522f")]
-    public class DiaryController : ControllerBase<DiaryRepository>
+    public class DiaryController : BaseController
     {
+        private readonly IDiaryRepository _rep;
+
+        public DiaryController(IDiaryRepository diaryRepo)
+        {
+            _rep = diaryRepo;
+        }
+
         public ActionResult Index(Guid? IdToOpen, bool isArchived = false)
         {
-            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(), "Id", "Name");
             ViewBag.IdToOpen = IdToOpen;
             ViewBag.IsArchived = isArchived;
 
@@ -21,27 +29,27 @@ namespace RED.Controllers
 
         public ActionResult ActiveDiaries()
         {
-            var diaryEntries = Rep.GetDiaryEntries();
+            var diaryEntries = _rep.GetDiaryEntries();
             ViewBag.page = 1;
             return PartialView(diaryEntries);
         }
 
         public ActionResult FilterActiveDiaries(int page, int pageSize, string number, int diaryNumber, Guid client, DateTime? fromDate, DateTime? toDate)
         {
-            var diaryEntries = Rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
+            var diaryEntries = _rep.GetDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             ViewBag.page = page;
             return PartialView("ActiveDiaries", diaryEntries);
         }
 
         public ActionResult ArchivedDiaries()
         {
-            var archivedDiaries = Rep.GetArchivedDiaryEntries();
+            var archivedDiaries = _rep.GetArchivedDiaryEntries();
             return PartialView(archivedDiaries);
         }
 
         public ActionResult FilterArchivedDiaries(int page, int pageSize, int number, int diaryNumber, string client, DateTime? fromDate, DateTime? toDate)
         {
-            var archivedDiaries = Rep.GetArchivedDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
+            var archivedDiaries = _rep.GetArchivedDiaryEntries(page, pageSize, number, diaryNumber, client, fromDate, toDate);
             ViewBag.page = page;
             return PartialView("ArchivedDiaries", archivedDiaries);
         }
@@ -49,7 +57,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Create()
         {
-            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name");
+            ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
             return View();
         }
 
@@ -61,11 +69,11 @@ namespace RED.Controllers
             ModelState.Remove("LetterNumber");
             if (ModelState.IsValid && diary.Products.Count > 0)
             {
-                Rep.AddLetter(diary);
+                _rep.AddLetter(diary);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
+            ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
 
             return View(diary);
         }
@@ -73,14 +81,14 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Edit(Guid id)
         {
-            var diary = Rep.GetDiary(id);
+            var diary = _rep.GetDiary(id);
             if (diary == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
-            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(_rep.GetSelectListTests(), "Id", "Name");
 
             return View(diary);
         }
@@ -93,12 +101,12 @@ namespace RED.Controllers
             ModelState.Remove("LetterNumber");
             if (ModelState.IsValid)
             {
-                Rep.Edit(diary);
+                _rep.Edit(diary);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientId = new SelectList(Rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
-            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
+            ViewBag.Tests = new SelectList(_rep.GetSelectListTests(), "Id", "Name");
 
             return View(diary);
         }
@@ -106,7 +114,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Delete(Guid id)
         {
-            var client = Rep.GetDiary(id);
+            var client = _rep.GetDiary(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -123,7 +131,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult Archive(Guid id)
         {
-            var diary = Rep.GetDiary(id);
+            var diary = _rep.GetDiary(id);
             if (diary == null)
             {
                 return HttpNotFound();
@@ -142,7 +150,7 @@ namespace RED.Controllers
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.Delete(id);
+            bool isdeleted = _rep.Delete(id);
 
             if (isdeleted)
             {
@@ -155,7 +163,7 @@ namespace RED.Controllers
         public ActionResult GetAllDiaryEntries()
         {
             //All diary entries - problem is that to get them as DiaryW (wrapped) I have to enumerate them!
-            var diaryEntries = Rep.GetDiaryEntries();
+            var diaryEntries = _rep.GetDiaryEntries();
 
             return Json(diaryEntries, JsonRequestBehavior.AllowGet);
         }
@@ -164,7 +172,7 @@ namespace RED.Controllers
         {
             //therefore, I implemented the paging before the enumeration.
             //here we have 10 records per page and get the second page
-            var pagedEntries = Rep.GetDiaryEntries(2, 10);
+            var pagedEntries = _rep.GetDiaryEntries(2, 10);
 
             return Json(pagedEntries, JsonRequestBehavior.AllowGet);
         }
@@ -174,7 +182,7 @@ namespace RED.Controllers
         {
             if (diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
             {
-                string charGenerated = Rep.GenerateRequest(diaryId.Value, testingPeriod);
+                string charGenerated = _rep.GenerateRequest(diaryId.Value, testingPeriod);
 
                 if (!string.IsNullOrEmpty(charGenerated))
                 {
@@ -190,7 +198,7 @@ namespace RED.Controllers
         {
             if (diaryId != null)
             {
-                bool isDeleted = Rep.DeleteRequest(diaryId.Value);
+                bool isDeleted = _rep.DeleteRequest(diaryId.Value);
 
                 if (isDeleted)
                 {
@@ -207,7 +215,7 @@ namespace RED.Controllers
         {
             if (diaryId != null && comment != null)
             {
-                bool isSaved = Rep.AddComment(diaryId.Value, comment);
+                bool isSaved = _rep.AddComment(diaryId.Value, comment);
 
                 if (isSaved)
                 {
@@ -220,35 +228,35 @@ namespace RED.Controllers
 
         public ActionResult ProductsTests(SimpleProduct[] products)
         {
-            ViewBag.Tests = new SelectList(Rep.GetSelectListTests(), "FullValue", "FullName");
+            ViewBag.Tests = new SelectList(_rep.GetSelectListTests(), "FullValue", "FullName");
             return PartialView(products);
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult GetTestMethods(Guid testId)
         {
-            return Json(Rep.GetTestMethods(testId), JsonRequestBehavior.AllowGet);
+            return Json(_rep.GetTestMethods(testId), JsonRequestBehavior.AllowGet);
         }
 
         [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
         public JsonResult ArchiveDiary(Guid diaryId)
         {
-            var response = Rep.ArchiveDiary(diaryId);
+            var response = _rep.ArchiveDiary(diaryId);
             return Json(response);
         }
 
         [UserFilter]
         public JsonResult RefreshArchivedProtocol(Guid adiaryId)
         {
-            var adiary = Rep.GetArchivedDiary(adiaryId);
-            var response = Rep.RegenerateArchivedProtocol(adiary);
+            var adiary = _rep.GetArchivedDiary(adiaryId);
+            var response = _rep.RegenerateArchivedProtocol(adiary);
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         public string GetMethodValueForTest(Guid testId)
         {
-            var tests = Rep.GetTests();
+            var tests = _rep.GetTests();
             if (tests.Any(t => t.Id == testId))
             {
                 var test = tests.Single(t => t.Id == testId);

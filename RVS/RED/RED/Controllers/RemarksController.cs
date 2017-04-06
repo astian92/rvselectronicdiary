@@ -3,12 +3,20 @@ using System.Web.Mvc;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ControllerBases;
 using RED.Filters;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [RoleFilter("54471a7f-866f-4ccd-8501-ec6e08c7f052")]
-    public class RemarksController : ControllerBase<RemarksRepository>
+    public class RemarksController : BaseController
     {
+        private readonly IRemarksRepository _rep;
+
+        public RemarksController(IRemarksRepository remarksRepo)
+        {
+            _rep = remarksRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -16,7 +24,7 @@ namespace RED.Controllers
 
         public JsonResult GetRemarks()
         {
-            var remarks = Rep.GetRemarks();
+            var remarks = _rep.GetRemarks();
             return Json(new { data = remarks });
         }
 
@@ -33,7 +41,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isCreated = Rep.Create(remark);
+                var isCreated = _rep.Create(remark);
                 return RedirectToAction("Index");
             }
 
@@ -43,7 +51,7 @@ namespace RED.Controllers
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult Edit(Guid id)
         {
-            var remark = Rep.GetRemark(id);
+            var remark = _rep.GetRemark(id);
             return View(remark);
         }
 
@@ -54,7 +62,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isEdited = Rep.Edit(remark);
+                var isEdited = _rep.Edit(remark);
                 return RedirectToAction("Index");
             }
 
@@ -64,7 +72,7 @@ namespace RED.Controllers
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult Delete(Guid id)
         {
-            var remark = Rep.GetRemark(id);
+            var remark = _rep.GetRemark(id);
 
             if (Request.IsAjaxRequest())
             {
@@ -79,7 +87,7 @@ namespace RED.Controllers
         [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isDeleted = Rep.Delete(id);
+            bool isDeleted = _rep.Delete(id);
 
             if (isDeleted)
             {
