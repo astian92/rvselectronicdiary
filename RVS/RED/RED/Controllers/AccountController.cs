@@ -13,6 +13,7 @@ namespace RED.Controllers
     {
         public AccountController()
         {
+            //mai proraboti we
         }
 
         [AllowAnonymous]
