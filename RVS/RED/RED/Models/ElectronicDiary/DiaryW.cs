@@ -87,7 +87,7 @@ namespace RED.Models.ElectronicDiary
                 bool hasAcredited = false;
                 bool hasNotAcredited = false;
 
-                foreach (var product in this.Products)
+                foreach (var product in Products)
                 {
                     foreach (var ptest in product.ProductTests)
                     {
