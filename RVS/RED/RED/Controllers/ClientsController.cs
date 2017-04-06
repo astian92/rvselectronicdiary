@@ -20,7 +20,8 @@ namespace RED.Controllers
 
         public JsonResult GetClients()
         {
-            var dtParams = new DtParameters(Request); //get the parameters from the Datatable
+            //get the parameters from the Datatable
+            var dtParams = new DtParameters(Request);
 
             var entities = Rep.GetClients();
             int totalRecords = entities.Count();
