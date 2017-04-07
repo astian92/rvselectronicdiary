@@ -26,8 +26,6 @@ namespace RED
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
         }
 
-        
-
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
             if (FormsAuthentication.CookiesSupported == true)

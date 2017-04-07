@@ -30,9 +30,17 @@
         @foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
         {
             foreach (var test in item.ProductTests)
-	        {
+            {
                 for (int j = 0; j < test.Units; j++)
                 {
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            Име на продукта
+                        </label>
+                        <label class="col-md-9 modified-label">
+                            @test.Product.Name
+                        </label>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3">
                             Наименование на показателя
@@ -82,6 +90,14 @@
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">
+                            Допуск
+                        </label>
+                        <label class="col-md-9 modified-label-notbold">
+                            @test.MethodValue
+                        </label>
+                    </div>
                     @*<div class="form-group">
                         <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
                             Стойност на показателя
@@ -116,14 +132,14 @@
 
         <div class="form-group" id="issued-date">
             @Html.Label("IssuedDate", "Издаден на:", new { @class = "control-label col-md-3" })
-            <div class="col-md-5">
+            <div class="col-md-9">
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     <input class="form-control text-box single-line" id="IssuedDate" name="IssuedDate" type="datetime" value=""
                            data-val="true" data-val-required="Полето &quot;Издаден на (дата)&quot; е задължително!">
                 </div>
             </div>
-            <div class="col-md-4">
+            @*<div class="col-md-4">
                 <div class="input-group clockpicker" data-autoclose="true">
                     <input type="text" class="form-control" id="IssuedTime" name="IssuedTime" value=""
                            data-val="true" data-val-required="Полето &quot;Издаден на (час)&quot; е задължително!">
@@ -131,13 +147,13 @@
                         <span class="fa fa-clock-o"></span>
                     </span>
                 </div>
-            </div>
+            </div>*@
             <div class="col-md-9 col-md-offset-3">
                 @Html.ValidationMessage("IssuedDate", new { @class = "text-danger" })
             </div>
-            <div class="col-md-9 col-md-offset-3">
+            @*<div class="col-md-9 col-md-offset-3">
                 @Html.ValidationMessage("IssuedTime", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
 
@@ -235,7 +251,7 @@
 <script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 
 <script>
-    $('.clockpicker').clockpicker();
+    //$('.clockpicker').clockpicker();
 
     $('#issued-date .input-group.date').datepicker({
         format: "dd.m.yyyy",

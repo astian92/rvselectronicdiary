@@ -69,7 +69,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
             protocol.Id = this.Id;
             protocol.RequestId = this.RequestId;
-            protocol.IssuedDate = this.IssuedDate;
+            protocol.IssuedDate = this.IssuedDate.ToUniversalTime();
             protocol.TesterMKB = this.TesterMKB;
             protocol.TesterFZH = this.TesterFZH;
             protocol.LabLeader = this.LabLeader;
