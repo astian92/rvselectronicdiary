@@ -27,6 +27,13 @@ namespace RED.Controllers
             return View();
         }
 
+        //[HttpGet]
+        //public JsonResult GetClients()
+        //{
+        //    var clients = _rep.GetClients();
+        //    return Json(new { data = clients });
+        //}
+        [HttpPost]
         public JsonResult GetClients()
         {
             //get the parameters from the Datatable
