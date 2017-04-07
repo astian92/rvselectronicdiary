@@ -1,52 +1,44 @@
-﻿using RED.Filters;
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using RED.Filters;
 using RED.Models;
 using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("4177b39a-ddce-46ad-812b-55d5935012ed")]
-    public class ClientsController : ControllerBase<ClientsRepository>
+    [RoleFilter(FeaturesCollection.ViewClients)]
+    public class ClientsController : BaseController
     {
+        private readonly IClientsRepository _rep;
+
+        public ClientsController(IClientsRepository clientsRepo)
+        {
+            _rep = clientsRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        //public JsonResult GetClients()
-        //{
-        //    var clients = Rep.GetClients();
-
-        //    var jsonData = clients.Select(c => new
-        //    {
-        //        Name = c.Name,
-        //        Mobile = c.Mobile,
-        //        Id = c.Id
-        //    });
-
-        //    return Json(new { data = jsonData });
-        //}
-
         public JsonResult GetClients()
         {
-            var dtParams = new DtParameters(Request); //get the parameters from the Datatable
+            //get the parameters from the Datatable
+            var dtParams = new DtParameters(Request);
 
-            var entities = Rep.GetClients();
+            var entities = _rep.GetClients();
             int totalRecords = entities.Count();
 
             if (dtParams.IsBeingSearched)
             {
                 entities = entities.Where(e => e.Name.ToLower().Contains(dtParams.SearchValue) ||
-                                               (e.Mobile != null ?
-                                                    e.Mobile.ToLower().Contains(dtParams.SearchValue) : 
-                                                    false));
+                                        (e.Mobile != null ? e.Mobile.ToLower().Contains(dtParams.SearchValue) : false));
             }
 
             int filteredRecords = entities.Count();
@@ -55,8 +47,9 @@ namespace RED.Controllers
             {
                 entities = Filter(entities, dtParams.FilterColIndex, dtParams.FilterAsc);
             }
-            else //defaultOrder
+            else
             {
+                //defaultOrder
                 entities = entities.OrderBy(e => e.Name);
             }
 
@@ -72,44 +65,12 @@ namespace RED.Controllers
                     data,
                     dtParams.Draw,
                     filteredRecords,
-                    totalRecords
-                );
+                    totalRecords);
 
             return Json(jsonResult);
         }
 
-        private IQueryable<Client> Filter(IQueryable<Client> entities, int colIndex, bool asc)
-        {
-            switch (colIndex)
-            {
-                case 0:
-                    if (asc == true)
-                    {
-                        entities = entities.OrderBy(e => e.Name);
-                    }
-                    else
-                    {
-                        entities = entities.OrderByDescending(e => e.Name);
-                    }
-                    break;
-                case 1:
-                    if (asc == true)
-                    {
-                        entities = entities.OrderBy(e => e.Mobile);
-                    }
-                    else
-                    {
-                        entities = entities.OrderByDescending(e => e.Mobile);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return entities;
-        }
-
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Create()
         {
             return View();
@@ -117,14 +78,14 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Create(ClientW client)
         {
             if (ModelState.IsValid)
             {
-                if(!Rep.IsExisting(client))
+                if (!_rep.IsExisting(client))
                 {
-                    Rep.Add(client);
+                    _rep.Add(client);
                     return RedirectToAction("Index");
                 }
 
@@ -134,7 +95,7 @@ namespace RED.Controllers
             return View(client);
         }
 
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -142,7 +103,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ClientW client = Rep.GetClient(id.Value);
+            ClientW client = _rep.GetClient(id.Value);
             if (client == null)
             {
                 return HttpNotFound();
@@ -153,14 +114,14 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Edit(ClientW client)
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsExisting(client))
+                if (!_rep.IsExisting(client))
                 {
-                    Rep.Edit(client);
+                    _rep.Edit(client);
                     return RedirectToAction("Index");
                 }
 
@@ -170,7 +131,7 @@ namespace RED.Controllers
             return View(client);
         }
 
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -178,7 +139,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ClientW client = Rep.GetClient(id.Value);
+            ClientW client = _rep.GetClient(id.Value);
             if (client == null)
             {
                 return HttpNotFound();
@@ -194,15 +155,50 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.Delete(id);
+            bool isdeleted = _rep.Delete(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Clients/Index" });
+        }
+
+        private IQueryable<Client> Filter(IQueryable<Client> entities, int colIndex, bool asc)
+        {
+            switch (colIndex)
+            {
+                case 0:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Name);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Name);
+                    }
+
+                    break;
+                case 1:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(e => e.Mobile);
+                    }
+                    else
+                    {
+                        entities = entities.OrderByDescending(e => e.Mobile);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            return entities;
         }
     }
 }

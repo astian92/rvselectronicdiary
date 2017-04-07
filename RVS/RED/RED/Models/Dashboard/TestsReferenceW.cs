@@ -1,22 +1,11 @@
 ﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RED.Models.Dashboard
 {
     public class TestsReferenceW
     {
-        public string TestName { get; set; }
-        public string ProductName { get; set; }
-        public string ProductQuantity { get; set; }
-        public string ClientName { get; set; }
-
         public TestsReferenceW()
         {
-
         }
 
         public TestsReferenceW(ProductTest test)
@@ -34,5 +23,13 @@ namespace RED.Models.Dashboard
             this.ProductQuantity = test.ArchivedProduct.Quantity;
             this.ClientName = test.ArchivedProduct.ArchivedDiary.Client;
         }
+
+        public string TestName { get; set; }
+
+        public string ProductName { get; set; }
+
+        public string ProductQuantity { get; set; }
+
+        public string ClientName { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace RED.Filters
             string actionName = filterContext.ActionDescriptor.ActionName;
             string controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
 
-            if(privateKey != publickey && trialExpireDate < DateTime.Now)
+            if (privateKey != publickey && trialExpireDate < DateTime.Now)
             {
                 if (controllerName != "Error" && actionName != "ProductExpired")
                 {
@@ -29,7 +29,7 @@ namespace RED.Filters
                                 new RouteValueDictionary
                                     {
                                         { "controller", "Error" },
-                                        { "action" , "ProductExpired" }
+                                        { "action", "ProductExpired" }
                                     });
                 }
             }

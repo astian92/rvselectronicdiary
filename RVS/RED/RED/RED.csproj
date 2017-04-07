@@ -21,6 +21,9 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.1\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DocX, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DocX.1.0.0.19\lib\net40\DocX.dll</HintPath>
       <Private>True</Private>
@@ -172,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DependencyInjection.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -199,16 +211,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FeaturesCollection.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Models\Account\AccountRepository.cs" />
+    <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
+    <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
+    <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />
+    <Compile Include="Repositories\Abstract\IFeaturesRepository.cs" />
+    <Compile Include="Repositories\Concrete\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\RvsPrincipal.cs" />
-    <Compile Include="Models\Admin\AdminRepository.cs" />
+    <Compile Include="Repositories\Concrete\AdminRepository.cs" />
     <Compile Include="Models\Admin\Roles\RoleW.cs" />
     <Compile Include="Models\Admin\Users\UserW.cs" />
     <Compile Include="Models\ControllerBases\ControllerBase.cs" />
-    <Compile Include="Models\Dashboard\DashboardRepository.cs" />
+    <Compile Include="Repositories\Concrete\DashboardRepository.cs" />
     <Compile Include="Models\Dashboard\DashboardW.cs" />
     <Compile Include="Models\Dashboard\TestsReferenceW.cs" />
     <Compile Include="Models\DataContext\AcredetationLevel.cs">
@@ -241,7 +258,6 @@
     <Compile Include="Models\DataContext\Client.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext\DbContextFactory.cs" />
     <Compile Include="Models\DataContext\Diary.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -298,9 +314,6 @@
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataContext\RvsDbContext.cs" />
-    <Compile Include="Models\DataContext\sysdiagram.cs">
-      <DependentUpon>RedEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataContext\Test.cs">
       <DependentUpon>RedEntities.tt</DependentUpon>
     </Compile>
@@ -318,36 +331,49 @@
     </Compile>
     <Compile Include="Models\DtParameters.cs" />
     <Compile Include="Models\ElectronicDiary\AcredetationLevels.cs" />
-    <Compile Include="Models\ElectronicDiary\ArchivedDiaryRepository.cs" />
+    <Compile Include="Repositories\Concrete\ArchivedDiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedDiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductTestW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProductW.cs" />
     <Compile Include="Models\ElectronicDiary\ArchivedWrappers\ArchivedProtocolResultW.cs" />
-    <Compile Include="Models\ElectronicDiary\Clients\ClientsRepository.cs" />
+    <Compile Include="Repositories\Concrete\ClientsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Clients\ClientW.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProductConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProductTestsConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\ProtocolResultsConverter.cs" />
     <Compile Include="Models\ElectronicDiary\Converters\RemarksConverter.cs" />
-    <Compile Include="Models\ElectronicDiary\DiaryRepository.cs" />
+    <Compile Include="Repositories\Concrete\DiaryRepository.cs" />
     <Compile Include="Models\ElectronicDiary\DiaryW.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ArchivedProtocol.cs" />
-    <Compile Include="Models\ElectronicDiary\Protocols\ProtocolsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IAccountRepository.cs" />
+    <Compile Include="Repositories\Abstract\IAdminRepository.cs" />
+    <Compile Include="Repositories\Abstract\IArchivedDiaryRepository.cs" />
+    <Compile Include="Repositories\Abstract\IClientsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IDashboardRepository.cs" />
+    <Compile Include="Repositories\Abstract\IDiaryRepository.cs" />
+    <Compile Include="Repositories\Abstract\IFilesRepository.cs" />
+    <Compile Include="Repositories\Abstract\ILogRepository.cs" />
+    <Compile Include="Repositories\Abstract\IProtocolsRepository.cs" />
+    <Compile Include="Repositories\Abstract\IRemarksRepository.cs" />
+    <Compile Include="Repositories\Abstract\IRequestsRepository.cs" />
+    <Compile Include="Repositories\Abstract\ITestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\FeaturesRepository.cs" />
+    <Compile Include="Repositories\Concrete\ProtocolsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Protocols\ProtocolW.cs" />
-    <Compile Include="Models\ElectronicDiary\Remarks\RemarksRepository.cs" />
+    <Compile Include="Repositories\Concrete\RemarksRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Remarks\RemarkW.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\ArchivedRequest.cs" />
-    <Compile Include="Models\ElectronicDiary\Requests\RequestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\RequestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Requests\RequestW.cs" />
     <Compile Include="Models\ElectronicDiary\SimpleProduct.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestCategoryW.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestMethodW.cs" />
-    <Compile Include="Models\ElectronicDiary\Tests\TestsRepository.cs" />
+    <Compile Include="Repositories\Concrete\TestsRepository.cs" />
     <Compile Include="Models\ElectronicDiary\Tests\TestW.cs" />
     <Compile Include="Models\FileModels\DirUtility.cs" />
     <Compile Include="Models\FileModels\FileNames.cs" />
     <Compile Include="Models\FileModels\FileProperties.cs" />
-    <Compile Include="Models\FileModels\FilesRepository.cs" />
+    <Compile Include="Repositories\Concrete\FilesRepository.cs" />
     <Compile Include="Models\FileModels\MethodsModel.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolProduct.cs" />
     <Compile Include="Models\FileModels\ProtocolFiles\ProtocolReport.cs" />
@@ -356,7 +382,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JqueryListResult.cs" />
     <Compile Include="Models\Logs\ActionLogW.cs" />
-    <Compile Include="Models\Logs\LogRepository.cs" />
+    <Compile Include="Repositories\Concrete\LogRepository.cs" />
     <Compile Include="Models\ReportGeneration\DocXApi\DocXBase.cs" />
     <Compile Include="Models\ReportGeneration\DocXApi\DocXReportBase.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\EPPlusBaseGeneric.cs" />
@@ -365,11 +391,9 @@
     <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportHeaderPropertyAttribute.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\ReportAttributes\ReportPropertyAttribute.cs" />
     <Compile Include="Models\ReportGeneration\EPPlus\ReportModel.cs" />
-    <Compile Include="Models\RepositoryBases\RepositoryBase.cs" />
     <Compile Include="Models\Responses\ActionError.cs" />
     <Compile Include="Models\Responses\ActionResponse.cs" />
     <Compile Include="Models\Responses\ErrorFactory.cs" />
-    <Compile Include="Models\TestRepository.cs" />
     <Compile Include="Models\TestTypes.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -738,21 +762,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
@@ -884,6 +894,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.55.0\build\StyleCop.MSBuild.Targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

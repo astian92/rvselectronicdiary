@@ -1,22 +1,13 @@
-﻿using RED.Filters;
-using RED.Models.RepositoryBases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using RED.Filters;
 
 namespace RED.Models.ControllerBases
 {
     [BombFilter]
-    public class ControllerBase<T> : Controller
-        where T : RepositoryBase, new()
+    public class BaseController : Controller
     {
-        protected T Rep { get; set; }
-
-        public ControllerBase()
+        public BaseController()
         {
-            this.Rep = new T();
         }
     }
 }

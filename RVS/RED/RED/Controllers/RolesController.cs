@@ -1,22 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using RED.Models.DataContext;
-using RED.Models.Admin;
 using RED.Models.ControllerBases;
 using RED.Models.Admin.Roles;
 using RED.Filters;
+using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
-    public class RolesController : ControllerBase<AdminRepository>
+    [RoleFilter(FeaturesCollection.ViewAdminsNRoles)]
+    public class RolesController : BaseController
     {
+        private readonly IAdminRepository Rep;
+
+        public RolesController(IAdminRepository adminRepo)
+        {
+            Rep = adminRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -28,18 +30,16 @@ namespace RED.Controllers
             return Json(new { data = roles });
         }
 
-        // GET: Roles/Create
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create()
         {
             ViewBag.Features = Rep.GetFeatures();
             return View();
         }
 
-        // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
@@ -51,27 +51,27 @@ namespace RED.Controllers
             return View(role);
         }
 
-        // GET: Roles/Edit/5
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.Features = Rep.GetFeatures();
             return View(role);
         }
 
-        // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
@@ -79,16 +79,18 @@ namespace RED.Controllers
                 Rep.EditRole(role, features);
                 return RedirectToAction("Index");
             }
+
             return View(role);
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
@@ -96,19 +98,24 @@ namespace RED.Controllers
             }
 
             if (Request.IsAjaxRequest())
+            {
                 return PartialView(role);
+            }
+
             return View(role);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = Rep.DeleteRole(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Roles/Index" });
         }

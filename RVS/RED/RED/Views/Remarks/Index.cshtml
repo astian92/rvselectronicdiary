@@ -1,12 +1,8 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Remarks.RemarkW>
-@using RED.Models.Account
-@{
-    ViewBag.Title = "Index";
-}
+@using RED.Helpers
 
 @{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-    var user = principal.GetUserData();
+    ViewBag.Title = "Index";
 }
 
 <link href="~/Content/Our/RemarksTextAreasStyle.css" rel="stylesheet" />
@@ -23,7 +19,7 @@
 
 <h2>Забележки</h2>
 
-@if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+@if (Html.IsAuthorized(FeaturesCollection.ModifyRemarks))
 {
     <p>
         <a href="/Remarks/Create">
@@ -40,7 +36,7 @@
                 <thead>
                     <tr>
                         <th>Текст</th>
-                        @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyRemarks))
                         {
                             <th></th>
                         }
@@ -75,14 +71,14 @@
             },
             columns: [
                 { "data": "Text", "class": "multilineText" },
-                @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+                @if (Html.IsAuthorized(FeaturesCollection.ModifyRemarks))
             {
                 <text>
                 { "data": "Id" }
                 </text>
             }
         ],
-        @if (principal.IsAuthorize("95342ca3-d105-4e5e-9b37-d7205afd463e"))
+        @if (Html.IsAuthorized(FeaturesCollection.ModifyRemarks))
         {
             <text>
             columnDefs: [

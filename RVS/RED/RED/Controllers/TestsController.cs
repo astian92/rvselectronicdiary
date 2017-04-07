@@ -1,19 +1,25 @@
-﻿using RED.Filters;
-using RED.Models.ControllerBases;
-using RED.Models.DataContext;
-using RED.Models.ElectronicDiary.Tests;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using RED.Filters;
+using RED.Models.ControllerBases;
+using RED.Models.ElectronicDiary.Tests;
+using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("0e161082-3d84-4887-8bef-968e1ca53256")]
-    public class TestsController : ControllerBase<TestsRepository>
+    [RoleFilter(FeaturesCollection.ViewTests)]
+    public class TestsController : BaseController
     {
+        private readonly ITestsRepository _rep;
+
+        public TestsController(ITestsRepository testsRepo)
+        {
+            _rep = testsRepo;
+        }
+
         public ActionResult Categories()
         {
             return View();
@@ -21,11 +27,11 @@ namespace RED.Controllers
 
         public JsonResult GetCategories()
         {
-            var categories = Rep.GetCategories();
+            var categories = _rep.GetCategories();
             return Json(new { data = categories });
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult CreateCategory()
         {
             return View();
@@ -33,14 +39,14 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult CreateCategory(TestCategoryW category)
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsExisting(category))
+                if (!_rep.IsExisting(category))
                 {
-                    Rep.AddCategory(category);
+                    _rep.AddCategory(category);
                     return RedirectToAction("Categories");
                 }
 
@@ -50,14 +56,15 @@ namespace RED.Controllers
             return View(category);
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult EditCategory(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TestCategoryW category = Rep.GetCategory(id.Value);
+
+            TestCategoryW category = _rep.GetCategory(id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -68,14 +75,14 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult EditCategory(TestCategoryW category)
         {
             if (ModelState.IsValid)
             {
-                if (!Rep.IsExisting(category))
+                if (!_rep.IsExisting(category))
                 {
-                    Rep.EditCategory(category);
+                    _rep.EditCategory(category);
                     return RedirectToAction("Categories");
                 }
 
@@ -85,7 +92,7 @@ namespace RED.Controllers
             return View(category);
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult DeleteCategory(Guid? id)
         {
             if (id == null)
@@ -93,7 +100,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            TestCategoryW category = Rep.GetCategory(id.Value);
+            TestCategoryW category = _rep.GetCategory(id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -109,32 +116,33 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("DeleteCategory")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult DeleteCategoryConfirmed(Guid id)
         {
-            bool isdeleted = Rep.DeleteCategory(id);
+            bool isdeleted = _rep.DeleteCategory(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Categories");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Categories" });
         }
 
         public ActionResult Index()
         {
-            var tests = Rep.GetTests();
+            var tests = _rep.GetTests();
             return View(tests);
         }
 
         public JsonResult GetTests()
         {
-            var tests = Rep.GetTests();
+            var tests = _rep.GetTests();
 
             var jsonData = tests.Select(t => new
             {
                 TestType = t.TestType.ShortName,
                 Name = t.Name,
-                //TestMethods = t.TestMethods,
                 Level = t.AcredetationLevel.Level,
                 UnitName = t.UnitName,
                 Temperature = t.Temperature,
@@ -145,35 +153,34 @@ namespace RED.Controllers
             return Json(new { data = jsonData });
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Create()
         {
-            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name"); 
-            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level");
-            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type");
+            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name"); 
+            ViewBag.AcredetationLevelId = new SelectList(_rep.GetAcredetationLevels(), "Id", "Level");
+            ViewBag.TypeId = new SelectList(_rep.GetTestTypes(), "Id", "Type");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Create(TestW test)
         {
             if (ModelState.IsValid)
             {
-                Rep.Add(test);
+                _rep.Add(test);
                 return RedirectToAction("Index");
-                //ModelState.AddModelError("ErrorExists", "Изследване с това име вече съществува. Моля опитайте друго име.");
             }
 
-            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name");
-            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level");
-            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type");
+            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name");
+            ViewBag.AcredetationLevelId = new SelectList(_rep.GetAcredetationLevels(), "Id", "Level");
+            ViewBag.TypeId = new SelectList(_rep.GetTestTypes(), "Id", "Type");
 
             return View(test);
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -181,27 +188,27 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            TestW test = Rep.GetTest(id.Value);
+            TestW test = _rep.GetTest(id.Value);
             if (test == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
-            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
-            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type", test.TypeId);
+            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name", test.TestCategoryId);
+            ViewBag.AcredetationLevelId = new SelectList(_rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
+            ViewBag.TypeId = new SelectList(_rep.GetTestTypes(), "Id", "Type", test.TypeId);
 
             return View(test);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Edit(TestW test)
         {
             if (ModelState.IsValid)
             {
-                var response = Rep.Edit(test);
+                var response = _rep.Edit(test);
 
                 if (response.IsSuccess)
                 {
@@ -213,14 +220,14 @@ namespace RED.Controllers
                 }
             }
 
-            ViewBag.TestCategoryId = new SelectList(Rep.GetCategories(), "Id", "Name", test.TestCategoryId);
-            ViewBag.AcredetationLevelId = new SelectList(Rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
-            ViewBag.TypeId = new SelectList(Rep.GetTestTypes(), "Id", "Type", test.TypeId);
+            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name", test.TestCategoryId);
+            ViewBag.AcredetationLevelId = new SelectList(_rep.GetAcredetationLevels(), "Id", "Level", test.AcredetationLevelId);
+            ViewBag.TypeId = new SelectList(_rep.GetTestTypes(), "Id", "Type", test.TypeId);
 
             return View(test);
         }
 
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -228,7 +235,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            TestW test = Rep.GetTest(id.Value);
+            TestW test = _rep.GetTest(id.Value);
             if (test == null)
             {
                 return HttpNotFound();
@@ -244,20 +251,22 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("e8d6d039-d94d-4465-9302-c2f6fde5d330")]
+        [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = Rep.Delete(id);
+            bool isdeleted = _rep.Delete(id);
 
-            if(isdeleted)
+            if (isdeleted)
+            {
                 return RedirectToAction("Index");
+            }
 
             return RedirectToAction("DeleteConflicted", "Error", new { returnUrl = "/Tests/Index" });
         }
 
         public string GetTestTypeFromId(Guid testId)
         {
-            var testType = Rep.GetTestTypes();
+            var testType = _rep.GetTestTypes();
 
             if (testType.Any(t => t.Id == testId))
             {

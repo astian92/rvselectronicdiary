@@ -1,25 +1,12 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using RED.Models.DataContext;
 
 namespace RED.Models.Logs
 {
     public class ActionLogW
     {
-        public int Id { get; set; }
-        public Guid UserId { get; set; }
-        public string UserName { get; set; }
-        public string TableName { get; set; }
-        public string FullTableName { get; set; }
-        public DateTime On { get; set; }
-        public int ActionTypeId { get; set; }
-        public string TableNameBg { get; set; }
-
         public ActionLogW()
         {
-
         }
 
         public ActionLogW(ActionLog log, User user)
@@ -33,6 +20,22 @@ namespace RED.Models.Logs
             this.TableNameBg = log.TableNameBg;
             this.UserName = user.Username;
         }
+
+        public int Id { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string UserName { get; set; }
+
+        public string TableName { get; set; }
+
+        public string FullTableName { get; set; }
+
+        public DateTime On { get; set; }
+
+        public int ActionTypeId { get; set; }
+
+        public string TableNameBg { get; set; }
 
         public ActionLog ToBase()
         {

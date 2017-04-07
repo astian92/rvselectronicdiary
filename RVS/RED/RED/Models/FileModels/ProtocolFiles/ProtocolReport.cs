@@ -1,24 +1,33 @@
-﻿using Novacode;
-using RED.Models.DataContext;
-using RED.Models.ElectronicDiary;
-using RED.Models.ReportGeneration.DocXApi;
-using RED.Models.ReportGeneration.EPPlus;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Web;
+using Novacode;
+using RED.Models.DataContext;
+using RED.Models.ReportGeneration.DocXApi;
+using RED.Models.ReportGeneration.EPPlus;
 
 namespace RED.Models.FileModels.ProtocolFiles
 {
     public class ProtocolReport : DocXReportBase
     {
         private IOrderedEnumerable<ProtocolResult> modelItems;
+
         private double[] cellsWidth = { 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 };
 
         private bool hasMKB;
+
         private bool hasFZH;
+
+        public ProtocolReport(ReportModel model) 
+            : base(model, "ProtocolTemplate.docx")
+        {
+            this.modelItems = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
+            this.hasMKB = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
+            this.hasFZH = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
+        }
+
         private bool HasBoth
         {
             get
@@ -27,12 +36,21 @@ namespace RED.Models.FileModels.ProtocolFiles
             }
         }
 
-        public ProtocolReport(ReportModel model) 
-            : base(model, "ProtocolTemplate.docx")
+        public DocX CreateLandscapePart()
         {
-            this.modelItems = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
-            this.hasMKB = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
-            this.hasFZH = this.modelItems.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
+            System.IO.MemoryStream ms2 = new System.IO.MemoryStream();
+            DocX document2 = DocX.Create(ms2);
+            document2.PageLayout.Orientation = Novacode.Orientation.Landscape;
+
+            var titleStyle = new Formatting();
+            titleStyle.Size = 12;
+            titleStyle.Bold = true;
+            titleStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+
+            Paragraph p = document2.InsertParagraph("7. РЕЗУЛТАТИ ОТ ИЗПИТВАНЕ", false, titleStyle);
+            p.IndentationBefore = 2;
+
+            return document2;
         }
 
         protected override void FillContent()
@@ -53,6 +71,7 @@ namespace RED.Models.FileModels.ProtocolFiles
                 CreateResultsTable(secondDocument, tableTitle, data);
                 InsertTesterSignature(secondDocument, tester);
             }
+
             if (this.hasFZH)
             {
                 string number = "1";
@@ -75,10 +94,6 @@ namespace RED.Models.FileModels.ProtocolFiles
 
             this.Document.InsertSection();
             this.Document.InsertDocument(secondDocument);
-
-            //InsertSignatures();
-
-            //InsertTable();
         }
 
         private void ReplaceItems()
@@ -92,7 +107,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             var requestDate = (DateTime)ReportModel.ReportParameters["RequestDate"];
             var labLeader = ReportModel.ReportParameters["LabLeader"] as string;
 
-            string acredetationString = "";
+            string acredetationString = string.Empty;
             if (ReportModel.ReportParameters.ContainsKey("AcredetationString"))
             {
                 acredetationString = ReportModel.ReportParameters["AcredetationString"] as string;
@@ -102,7 +117,7 @@ namespace RED.Models.FileModels.ProtocolFiles
             Document.ReplaceText("#PROTOCOLISSUEDDATE", protocolIssuedDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#CONTRACTOR", contractor);
             Document.ReplaceText("#CLIENT", client);
-            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() + " " : "");
+            Document.ReplaceText("#LETTERNUMBER", letterNumber.HasValue ? "№" + letterNumber.ToString() + " " : string.Empty);
             Document.ReplaceText("#LETTERDATE", letterDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQUESTDATE", requestDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#REQHOUR", requestDate.Hour.ToString());
@@ -149,23 +164,6 @@ namespace RED.Models.FileModels.ProtocolFiles
             }
 
             Document.ReplaceText("#PRODUCTSLIST", builder.ToString());
-        }
-
-        public DocX CreateLandscapePart()
-        {
-            System.IO.MemoryStream ms2 = new System.IO.MemoryStream();
-            DocX document2 = DocX.Create(ms2);
-            document2.PageLayout.Orientation = Novacode.Orientation.Landscape;
-
-            var titleStyle = new Formatting();
-            titleStyle.Size = 12;
-            titleStyle.Bold = true;
-            titleStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
-
-            Paragraph p = document2.InsertParagraph("7. РЕЗУЛТАТИ ОТ ИЗПИТВАНЕ", false, titleStyle);
-            p.IndentationBefore = 2;
-
-            return document2;
         }
 
         private void CreateResultsTable(DocX document2, string tableTitle, IEnumerable<ProtocolResult> data) //add items later
@@ -228,10 +226,10 @@ namespace RED.Models.FileModels.ProtocolFiles
         {
             var textStyle = new Formatting();
             textStyle.Size = 9;
-            textStyle.FontFamily = new System.Drawing.FontFamily("Times New Roman");
+            textStyle.FontFamily = new FontFamily("Times New Roman");
 
             int productIndex = 1;
-            string lastProductName = "";
+            string lastProductName = string.Empty;
 
             foreach (var item in data)
             {
@@ -252,7 +250,6 @@ namespace RED.Models.FileModels.ProtocolFiles
                 row.Cells[6].Paragraphs[0].InsertText(item.Results, false, textStyle);
                 row.Cells[7].Paragraphs[0].InsertText(item.ProductTest.MethodValue, false, textStyle);
                 row.Cells[8].Paragraphs[0].InsertText(item.ProductTest.Test.Temperature, false, textStyle);
-                //rowIndex++;
             }
         }
 
@@ -304,15 +301,15 @@ namespace RED.Models.FileModels.ProtocolFiles
                     Environment.NewLine +
                     "Извършил изпитването:",
                     false,
-                    textStyle
-                );
+                    textStyle);
+
             signatureHeader.IndentationBefore = 2;
 
             var nameBox = document2.InsertParagraph(
                     "/" + tester + "/" + Environment.NewLine,
                     false,
-                    textStyle
-                );
+                    textStyle);
+
             nameBox.IndentationBefore = 2;
         }
 
@@ -325,7 +322,9 @@ namespace RED.Models.FileModels.ProtocolFiles
             foreach (var remark in remarks.OrderBy(r => r.Number))
             {
                 if (remark.Remark != null)
+                {
                     remarksText.Append("\rЗабележка " + remark.Number + ": " + remark.Remark.Text + Environment.NewLine + Environment.NewLine);
+                }
             }
 
             var remarksParagraph = document2.InsertParagraph(remarksText.ToString());
@@ -344,8 +343,8 @@ namespace RED.Models.FileModels.ProtocolFiles
             var labLeaderHeader = document2.InsertParagraph(
                     "Ръководител на лабораторията:",
                     false,
-                    textStyle
-                );
+                    textStyle);
+
             labLeaderHeader.Alignment = Alignment.right;
             labLeaderHeader.IndentationAfter = 2;
 
@@ -354,14 +353,12 @@ namespace RED.Models.FileModels.ProtocolFiles
             ts2.FontFamily = new System.Drawing.FontFamily("Times New Roman");
 
             var nameBox = document2.InsertParagraph(
-                    //Environment.NewLine +
                     "/" + labLeader + "/",
                     false,
-                    ts2
-                );
+                    ts2);
+
             nameBox.Alignment = Alignment.right;
             nameBox.IndentationAfter = 1;
         }
-
     }
 }

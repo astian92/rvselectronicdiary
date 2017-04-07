@@ -1,15 +1,12 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Converters
 {
     public class ProtocolResultsConverter
     {
         /// <summary>
-        /// Shallow copy !
+        /// Shallow copy.
         /// </summary>
         public ProtocolResult ConvertFromArchived(ArchivedProtocolResult aProtocolResult)
         {
@@ -17,7 +14,6 @@ namespace RED.Models.ElectronicDiary.Converters
 
             protocolResult.ResultNumber = aProtocolResult.ResultNumber;
             protocolResult.Results = aProtocolResult.Results;
-            //protocolResult.MethodValue = aProtocolResult.MethodValue;
 
             var converter = new ProductTestsConverter();
             protocolResult.ProductTest = converter.ConvertFromArchived(aProtocolResult.ArchivedProductTest);
@@ -26,7 +22,7 @@ namespace RED.Models.ElectronicDiary.Converters
         }
 
         /// <summary>
-        /// Shallow copy !
+        /// Shallow copy.
         /// </summary>
         public ArchivedProtocolResult ConvertToArchived(ProtocolResult productTest)
         {

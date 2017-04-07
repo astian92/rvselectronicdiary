@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace RED.Controllers
 {
@@ -27,6 +23,7 @@ namespace RED.Controllers
         {
             return View();
         }
+
         public ActionResult Peity()
         {
             return View();

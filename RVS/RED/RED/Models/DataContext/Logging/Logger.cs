@@ -8,6 +8,12 @@ namespace RED.Models.DataContext.Logging
 {
     public class Logger
     {
+        public Logger(Guid userId)
+        {
+            this.UserId = userId;
+            this.Logs = new List<LogW>();
+        }
+
         private List<DbEntityEntry> AddedEntites { get; set; }
 
         private List<DbEntityEntry> EditedEntities { get; set; }
@@ -18,10 +24,20 @@ namespace RED.Models.DataContext.Logging
 
         private List<LogW> Logs { get; set; }
 
-        public Logger(Guid userId)
+        public void SetChanges(List<DbEntityEntry> changes)
         {
-            this.UserId = userId;
-            this.Logs = new List<LogW>();
+            this.AddedEntites = changes.Where(c => c.State == System.Data.Entity.EntityState.Added).ToList();
+            this.EditedEntities = changes.Where(c => c.State == System.Data.Entity.EntityState.Modified).ToList();
+            this.DeletedEntities = changes.Where(c => c.State == System.Data.Entity.EntityState.Deleted).ToList();
+        }
+
+        public IEnumerable<ActionLog> GetLogs()
+        {
+            CreateLogs(this.AddedEntites, (int)ActionTypesEnum.Add);
+            CreateLogs(this.EditedEntities, (int)ActionTypesEnum.Edit);
+            CreateLogs(this.DeletedEntities, (int)ActionTypesEnum.Delete);
+
+            return Logs.Select(l => l.ToBase());
         }
 
         private void CreateLogs(List<DbEntityEntry> entries, int actionTypeId)
@@ -46,7 +62,7 @@ namespace RED.Models.DataContext.Logging
 
                 log.TableName = name;
                 log.FullTableName = fullName;
-                
+
                 log.TableNameBg = TableNameToBg.Get(log.TableName);
 
                 IEnumerable<string> propertyNames = null;
@@ -68,12 +84,12 @@ namespace RED.Models.DataContext.Logging
 
                     if (actionTypeId == (int)ActionTypesEnum.Add)
                     {
-                        logProp.NewValue = (property.CurrentValue ?? string.Empty).ToString(); ;
+                        logProp.NewValue = (property.CurrentValue ?? string.Empty).ToString();
                         log.LogProperties.Add(logProp);
                     }
                     else if (actionTypeId == (int)ActionTypesEnum.Delete)
                     {
-                        logProp.OldValue = (property.OriginalValue ?? string.Empty).ToString(); ;
+                        logProp.OldValue = (property.OriginalValue ?? string.Empty).ToString();
                         log.LogProperties.Add(logProp);
                     }
                     else if (actionTypeId == (int)ActionTypesEnum.Edit)
@@ -93,22 +109,6 @@ namespace RED.Models.DataContext.Logging
 
                 this.Logs.Add(log);
             }
-        }
-
-        public void SetChanges(List<DbEntityEntry> changes)
-        {
-            this.AddedEntites = changes.Where(c => c.State == System.Data.Entity.EntityState.Added).ToList();
-            this.EditedEntities = changes.Where(c => c.State == System.Data.Entity.EntityState.Modified).ToList();
-            this.DeletedEntities = changes.Where(c => c.State == System.Data.Entity.EntityState.Deleted).ToList();
-        }
-
-        public IEnumerable<ActionLog> GetLogs()
-        {
-            CreateLogs(this.AddedEntites, (int)ActionTypesEnum.Add);
-            CreateLogs(this.EditedEntities, (int)ActionTypesEnum.Edit);
-            CreateLogs(this.DeletedEntities, (int)ActionTypesEnum.Delete);
-
-            return Logs.Select(l => l.ToBase());
         }
     }
 }

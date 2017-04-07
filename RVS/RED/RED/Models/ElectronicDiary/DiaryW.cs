@@ -1,33 +1,51 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
 {
     public class DiaryW
     {
+        public DiaryW()
+        {
+            this.Products = new List<Product>();
+        }
+
+        public DiaryW(Diary diary)
+        {
+            Id = diary.Id;
+            Number = diary.Number;
+            LetterNumber = diary.LetterNumber;
+            LetterDate = diary.LetterDate;
+            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            Contractor = diary.Contractor;
+            ClientId = diary.ClientId;
+            Comment = diary.Comment;
+
+            Client = diary.Client;
+            Request = diary.Requests.FirstOrDefault();
+            Products = diary.Products;
+        }
+
         public Guid Id { get; set; }
+
         [Required]
         public int Number { get; set; }
 
         public DateTime AcceptanceDateAndTime { get; set; }
 
-        //[Required(ErrorMessage = "Номерът на писмото е задължителен")]
-        //[Range(0, int.MaxValue, ErrorMessage = "Невалиден номер")]
         [Display(Name = "Писмо №")]
-        public Nullable<int> LetterNumber { get; set; }
+        public string LetterNumber { get; set; }
 
         [Required(ErrorMessage = "Датата на писмото е задължителна")]
         [Display(Name = "Писмо дата")]
         public DateTime LetterDate { get; set; }
 
         [Required(ErrorMessage = "Възложителя е задължителен")]
-        [Display(Name="Възложител")]
+        [Display(Name = "Възложител")]
         public string Contractor { get; set; }
 
         [Display(Name = "Бележка")]
@@ -46,19 +64,18 @@ namespace RED.Models.ElectronicDiary
         [Display(Name = "Продукти")]
         public virtual ICollection<Product> Products { get; set; }
 
-        public DiaryW()
-        {
-            this.Products = new List<Product>();
-        }
-
         public string LetterInfo
         {
             get
             {
-                if(this.LetterNumber != null)
+                if (this.LetterNumber != null)
+                {
                     return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
                 else
+                {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
             }
         }
 
@@ -66,11 +83,11 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                string remark = "";
+                string remark = string.Empty;
                 bool hasAcredited = false;
                 bool hasNotAcredited = false;
 
-                foreach (var product in this.Products)
+                foreach (var product in Products)
                 {
                     foreach (var ptest in product.ProductTests)
                     {
@@ -103,38 +120,22 @@ namespace RED.Models.ElectronicDiary
             }
         }
 
-        public DiaryW(Diary diary)
-        {
-            this.Id = diary.Id;
-            this.Number = diary.Number;
-            this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate;
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            this.Contractor = diary.Contractor;
-            this.ClientId = diary.ClientId;
-            this.Comment = diary.Comment;
-
-            this.Client = diary.Client;
-            this.Request = diary.Requests.FirstOrDefault();
-            this.Products = diary.Products;
-        }
-
         public Diary ToBase()
         {
             Diary diary = new Diary();
 
-            diary.Id = this.Id;
-            diary.Number = this.Number;
-            diary.LetterNumber = this.LetterNumber;
-            diary.LetterDate = this.LetterDate;
-            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
-            diary.Contractor = this.Contractor;
-            diary.ClientId = this.ClientId;
-            diary.Comment = this.Comment;
+            diary.Id = Id;
+            diary.Number = Number;
+            diary.LetterNumber = LetterNumber;
+            diary.LetterDate = LetterDate;
+            diary.AcceptanceDateAndTime = AcceptanceDateAndTime;
+            diary.Contractor = Contractor;
+            diary.ClientId = ClientId;
+            diary.Comment = Comment;
 
-            diary.Client = this.Client;
-            diary.Requests.Add(this.Request);
-            diary.Products = this.Products;
+            diary.Client = Client;
+            diary.Requests.Add(Request);
+            diary.Products = Products;
 
             return diary;
         }

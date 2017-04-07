@@ -1,18 +1,45 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
 {
     public class ArchivedDiaryW
     {
+        public ArchivedDiaryW()
+        {
+        }
+
+        public ArchivedDiaryW(ArchivedDiary diary)
+        {
+            this.Id = diary.Id;
+            this.Number = diary.Number;
+            this.LetterNumber = diary.LetterNumber;
+            this.LetterDate = diary.LetterDate.ToLocalTime();
+            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
+            this.Contractor = diary.Contractor;
+            this.Client = diary.Client;
+            this.ClientMobile = diary.ClientMobile;
+            this.Comment = diary.Comment;
+            this.RequestDate = diary.RequestDate.ToLocalTime();
+            this.RequestAcceptedBy = diary.RequestAcceptedBy;
+            this.ProtocolIssuedDate = diary.ProtocolIssuedDate.ToLocalTime();
+            this.ProtocolTesterMKB = diary.ProtocolTesterMKB;
+            this.ProtocolTesterFZH = diary.ProtocolTesterFZH;
+            this.ProtocolLabLeader = diary.ProtocolLabLeader;
+            this.Remark = diary.Remark;
+            this.RequestTestingPeriod = diary.RequestTestingPeriod;
+
+            this.ArchivedProducts = diary.ArchivedProducts;
+            this.ArchivedProtocolResults = diary.ArchivedProtocolResults;
+            this.ArchivedProtocolRemarks = diary.ArchivedProtocolRemarks;
+        }
+
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage="Полето \"Номер\" е задължително!")]
+        [Required(ErrorMessage = "Полето \"Номер\" е задължително!")]
         [Display(Name = "Номер")]
         public int Number { get; set; }
 
@@ -71,7 +98,7 @@ namespace RED.Models.ElectronicDiary
 
         [Required(ErrorMessage = "Полето \"Срок на изпитването\" е задължителнo!")]
         [Display(Name = "Срок на изпитването")]
-        public Nullable<int> RequestTestingPeriod { get; set; }
+        public int? RequestTestingPeriod { get; set; }
 
         [Display(Name = "Продукти")]
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
@@ -84,10 +111,14 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                if(this.LetterNumber != "")
+                if (!string.IsNullOrEmpty(LetterNumber))
+                {
                     return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
                 else
+                {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
             }
         }
 
@@ -97,6 +128,7 @@ namespace RED.Models.ElectronicDiary
             {
                 return this.AcceptanceDateAndTime.ToString("HH:mm");
             }
+
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -117,6 +149,7 @@ namespace RED.Models.ElectronicDiary
             {
                 return this.RequestDate.ToString("HH:mm");
             }
+
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -129,35 +162,6 @@ namespace RED.Models.ElectronicDiary
                     this.RequestDate = this.RequestDate.AddMinutes(minutes);
                 }
             }
-        }
-
-        public ArchivedDiaryW()
-        {
-        }
-
-        public ArchivedDiaryW(ArchivedDiary diary)
-        {
-            this.Id = diary.Id;
-            this.Number = diary.Number;
-            this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate.ToLocalTime();
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
-            this.Contractor = diary.Contractor;
-            this.Client = diary.Client;
-            this.ClientMobile = diary.ClientMobile;
-            this.Comment = diary.Comment;
-            this.RequestDate = diary.RequestDate.ToLocalTime();
-            this.RequestAcceptedBy = diary.RequestAcceptedBy;
-            this.ProtocolIssuedDate = diary.ProtocolIssuedDate.ToLocalTime();
-            this.ProtocolTesterMKB = diary.ProtocolTesterMKB;
-            this.ProtocolTesterFZH = diary.ProtocolTesterFZH;
-            this.ProtocolLabLeader = diary.ProtocolLabLeader;
-            this.Remark = diary.Remark;
-            this.RequestTestingPeriod = diary.RequestTestingPeriod;
-
-            this.ArchivedProducts = diary.ArchivedProducts;
-            this.ArchivedProtocolResults = diary.ArchivedProtocolResults;
-            this.ArchivedProtocolRemarks = diary.ArchivedProtocolRemarks;
         }
 
         public ArchivedDiary ToBase()

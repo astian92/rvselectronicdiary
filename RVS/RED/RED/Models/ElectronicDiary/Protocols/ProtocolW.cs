@@ -1,46 +1,12 @@
-﻿using RED.Models.DataContext;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Protocols
 {
     public class ProtocolW
     {
-        public Guid Id { get; set; }
-        public Guid RequestId { get; set; }
-        public DateTime IssuedDate { get; set; }
-        public string TesterMKB { get; set; }
-        public string TesterFZH { get; set; }
-        public string LabLeader { get; set; }
-
-        public ICollection<ProtocolResult> ProtocolResults { get; set; }
-        public Request Request { get; set; }
-        //public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
-        public ICollection<ProtocolsRemark> ProtocolsRemarksA { get; set; }
-        public ICollection<ProtocolsRemark> ProtocolsRemarksB { get; set; }
-
-        public string IssuedTime
-        {
-            get
-            {
-                return this.IssuedDate.ToString("HH:mm");
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var arguments = value.Split(':');
-                    var hours = int.Parse(arguments[0]);
-                    var minutes = int.Parse(arguments[1]);
-
-                    this.IssuedDate = this.IssuedDate.AddHours(hours);
-                    this.IssuedDate = this.IssuedDate.AddMinutes(minutes);
-                }
-            }
-        }
-
         public ProtocolW()
         {
             this.ProtocolResults = new List<ProtocolResult>();
@@ -61,6 +27,47 @@ namespace RED.Models.ElectronicDiary.Protocols
             this.Request = protocol.Request;
             this.ProtocolsRemarksA = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcreditationLevels.Acredited).ToList();
             this.ProtocolsRemarksB = protocol.ProtocolsRemarks.Where(pr => pr.AcredetationLevel.Level.Trim() == AcreditationLevels.NotAcredited).ToList();
+        }
+
+        public Guid Id { get; set; }
+
+        public Guid RequestId { get; set; }
+
+        public DateTime IssuedDate { get; set; }
+
+        public string TesterMKB { get; set; }
+
+        public string TesterFZH { get; set; }
+
+        public string LabLeader { get; set; }
+
+        public ICollection<ProtocolResult> ProtocolResults { get; set; }
+
+        public Request Request { get; set; }
+
+        public ICollection<ProtocolsRemark> ProtocolsRemarksA { get; set; }
+
+        public ICollection<ProtocolsRemark> ProtocolsRemarksB { get; set; }
+
+        public string IssuedTime
+        {
+            get
+            {
+                return this.IssuedDate.ToString("HH:mm");
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.IssuedDate = this.IssuedDate.AddHours(hours);
+                    this.IssuedDate = this.IssuedDate.AddMinutes(minutes);
+                }
+            }
         }
 
         public Protocol ToBase()

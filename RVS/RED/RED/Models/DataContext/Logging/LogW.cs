@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace RED.Models.DataContext.Logging
 {
     public class LogW
     {
+        public LogW()
+        {
+            this.LogProperties = new List<ActionLogProperty>();
+        }
+
         public Guid UserId { get; set; }
 
         public string TableName { get; set; }
@@ -20,11 +23,6 @@ namespace RED.Models.DataContext.Logging
         public string TableNameBg { get; set; }
 
         public List<ActionLogProperty> LogProperties { get; set; }
-
-        public LogW()
-        {
-            this.LogProperties = new List<ActionLogProperty>();
-        }
 
         public ActionLog ToBase()
         {

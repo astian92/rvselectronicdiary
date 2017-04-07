@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Novacode;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
+using Novacode;
 
 namespace RED.Models.ReportGeneration.DocXApi
 {
@@ -12,32 +8,7 @@ namespace RED.Models.ReportGeneration.DocXApi
     {
         private string mappedHomePath;
         private string fileName;
-
-        public bool NoTemplate
-        {
-            get { return string.IsNullOrEmpty(fileName); }
-        }
-
         private DocX document;
-        public DocX Document
-        {
-            get
-            {
-                return this.document;
-            }
-        }
-
-        private void Initialize()
-        {
-            if (NoTemplate)
-            {
-                this.document = DocX.Create(mappedHomePath + "NoTemplate.docx");
-            }
-            else
-            {
-                this.document = DocX.Load(mappedHomePath + fileName);
-            }
-        }
 
         public DocXBase()
         {
@@ -51,10 +22,18 @@ namespace RED.Models.ReportGeneration.DocXApi
             Initialize();
         }
 
-        /// <summary>
-        /// Override to write content in the excel file.
-        /// </summary>
-        protected abstract void FillContent();
+        public bool NoTemplate
+        {
+            get { return string.IsNullOrEmpty(fileName); }
+        }
+
+        public DocX Document
+        {
+            get
+            {
+                return this.document;
+            }
+        }
 
         public byte[] GenerateReport()
         {
@@ -64,6 +43,23 @@ namespace RED.Models.ReportGeneration.DocXApi
             this.Document.SaveAs(memoryStr);
 
             return memoryStr.ToArray();
+        }
+
+        /// <summary>
+        /// Override to write content in the excel file.
+        /// </summary>
+        protected abstract void FillContent();
+
+        private void Initialize()
+        {
+            if (NoTemplate)
+            {
+                this.document = DocX.Create(mappedHomePath + "NoTemplate.docx");
+            }
+            else
+            {
+                this.document = DocX.Load(mappedHomePath + fileName);
+            }
         }
     }
 }

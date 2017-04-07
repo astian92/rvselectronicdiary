@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using RED.Models.ElectronicDiary.Tests;
 
 namespace RED.Models.ElectronicDiary
 {
     public class SimpleProduct
     {
+        public SimpleProduct()
+        {
+            this.Tests = new List<TestSignature>();
+        }
+
         public string Name { get; set; }
 
         public Guid Key { get; set; }
 
         public List<TestSignature> Tests { get; set; }
-
-        public SimpleProduct()
-        {
-            this.Tests = new List<TestSignature>();
-        }
     }
 
     public class TestSignature

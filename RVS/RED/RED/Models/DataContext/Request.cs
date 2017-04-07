@@ -26,8 +26,8 @@ namespace RED.Models.DataContext
         public bool IsAccepted { get; set; }
         public Nullable<int> TestingPeriod { get; set; }
     
-        public virtual Diary Diary { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Protocol> Protocols { get; set; }
+        public virtual Diary Diary { get; set; }
     }
 }

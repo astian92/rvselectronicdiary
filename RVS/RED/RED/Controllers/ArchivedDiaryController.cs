@@ -1,28 +1,33 @@
-﻿using RED.Filters;
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.ArchivedWrappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
     [UserFilter]
-    public class ArchivedDiaryController : ControllerBase<ArchivedDiaryRepository>
+    public class ArchivedDiaryController : BaseController
     {
+        private readonly IArchivedDiaryRepository _rep;
+
+        public ArchivedDiaryController(IArchivedDiaryRepository archivedDiaryRepo)
+        {
+            _rep = archivedDiaryRepo;
+        }
+
         public ActionResult Index()
         {
             return View();
-            //extensions test
         }
 
         public ActionResult Edit(Guid id)
         {
-            var archivedDiary = Rep.GetArchivedDiaryW(id);
+            var archivedDiary = _rep.GetArchivedDiaryW(id);
             return View(archivedDiary);
         }
 
@@ -31,7 +36,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.Edit(adiary);
+                _rep.Edit(adiary);
                 return RedirectToAction("Index", "Diary");
             }
 
@@ -40,7 +45,7 @@ namespace RED.Controllers
 
         public ActionResult ProductsIndex(Guid archivedDiaryId)
         {
-            var adiary = Rep.GetArchivedDiary(archivedDiaryId);
+            var adiary = _rep.GetArchivedDiary(archivedDiaryId);
             ViewBag.ADiaryNumber = adiary.Number;
             ViewBag.ArchivedDiaryId = archivedDiaryId;
             return View();
@@ -48,7 +53,7 @@ namespace RED.Controllers
 
         public JsonResult GetProducts(Guid archivedDiaryId)
         {
-            var products = Rep.GetProducts(archivedDiaryId).OrderBy(p => p.Number);
+            var products = _rep.GetProducts(archivedDiaryId).OrderBy(p => p.Number);
             return Json(new { data = products }, JsonRequestBehavior.AllowGet);
         }
 
@@ -65,11 +70,9 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddProduct(aproduct);
+                _rep.AddProduct(aproduct);
                 return RedirectToAction("ProductsIndex", new { archivedDiaryId = aproduct.ArchivedDiaryId });
             }
-
-            //ModelState.AddModelError("ErrorExists", "Клиент с това име вече съществува. Моля опитайте друго име.");
 
             return View(aproduct);
         }
@@ -77,7 +80,7 @@ namespace RED.Controllers
         [HttpGet]
         public ActionResult EditProduct(Guid id)
         {
-            var aproduct = Rep.GetArchivedProductW(id);
+            var aproduct = _rep.GetArchivedProductW(id);
             ViewBag.ADiaryId = aproduct.ArchivedDiaryId;
             return View(aproduct);
         }
@@ -88,7 +91,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditProduct(aproduct);
+                _rep.EditProduct(aproduct);
                 return RedirectToAction("ProductsIndex", new { archivedDiaryId = aproduct.ArchivedDiaryId });
             }
 
@@ -103,7 +106,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var aproduct = Rep.GetArchivedProductW(id.Value);
+            var aproduct = _rep.GetArchivedProductW(id.Value);
             if (aproduct == null)
             {
                 return HttpNotFound();
@@ -121,8 +124,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProduct(Guid id)
         {
-            var product = Rep.GetArchivedProduct(id);
-            bool isdeleted = Rep.DeleteProduct(id);
+            var product = _rep.GetArchivedProduct(id);
+            bool isdeleted = _rep.DeleteProduct(id);
 
             if (isdeleted)
             {
@@ -134,7 +137,7 @@ namespace RED.Controllers
 
         public ActionResult ProductTestsIndex(Guid aproductId)
         {
-            var aproduct = Rep.GetArchivedProductW(aproductId);
+            var aproduct = _rep.GetArchivedProductW(aproductId);
             ViewBag.ArchivedProductId = aproductId;
             ViewBag.AProductName = aproduct.Name;
 
@@ -143,14 +146,14 @@ namespace RED.Controllers
 
         public JsonResult GetProductTests(Guid aproductId)
         {
-            var products = Rep.GetProductTests(aproductId);
+            var products = _rep.GetProductTests(aproductId);
             return Json(new { data = products }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult CreateProductTest(Guid aproductId)
         {
-            ViewBag.TestAcredetationLevel = new SelectList(Rep.GetPossibleAcredetationLevels(), "Level", "Level");
+            ViewBag.TestAcredetationLevel = new SelectList(_rep.GetPossibleAcredetationLevels(), "Level", "Level");
             ViewBag.AProductId = aproductId;
             return View();
         }
@@ -161,7 +164,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddProductTest(aproductTest);
+                _rep.AddProductTest(aproductTest);
                 return RedirectToAction("ProductTestsIndex", new { aproductId = aproductTest.ArchivedProductId });
             }
 
@@ -171,8 +174,8 @@ namespace RED.Controllers
         [HttpGet]
         public ActionResult EditProductTest(Guid aproductTestId)
         {
-            var aProductTest = Rep.GetArchivedProductTestW(aproductTestId);
-            ViewBag.TestAcredetationLevel = new SelectList(Rep.GetPossibleAcredetationLevels(), "Level", "Level", aProductTest.TestAcredetationLevel);
+            var aProductTest = _rep.GetArchivedProductTestW(aproductTestId);
+            ViewBag.TestAcredetationLevel = new SelectList(_rep.GetPossibleAcredetationLevels(), "Level", "Level", aProductTest.TestAcredetationLevel);
             ViewBag.AProductId = aProductTest.ArchivedProductId;
             return View(aProductTest);
         }
@@ -183,7 +186,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditProductTest(aproductTest);
+                _rep.EditProductTest(aproductTest);
                 return RedirectToAction("ProductTestsIndex", new { aproductId = aproductTest.ArchivedProductId });
             }
 
@@ -198,7 +201,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var aproductTest = Rep.GetArchivedProductTestW(id.Value);
+            var aproductTest = _rep.GetArchivedProductTestW(id.Value);
             if (aproductTest == null)
             {
                 return HttpNotFound();
@@ -216,8 +219,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProductTest(Guid id)
         {
-            var productTest = Rep.GetArchivedProductTest(id);
-            bool isdeleted = Rep.DeleteProductTest(id);
+            var productTest = _rep.GetArchivedProductTest(id);
+            bool isdeleted = _rep.DeleteProductTest(id);
 
             if (isdeleted)
             {
@@ -229,7 +232,7 @@ namespace RED.Controllers
 
         public ActionResult ProtocolResultsIndex(Guid aproductTestId)
         {
-            var aproductTest = Rep.GetArchivedProductTestW(aproductTestId);
+            var aproductTest = _rep.GetArchivedProductTestW(aproductTestId);
             ViewBag.ArchivedProductTestId = aproductTestId;
             ViewBag.AProductTestName = aproductTest.TestName;
 
@@ -238,14 +241,14 @@ namespace RED.Controllers
 
         public JsonResult GetProtocolResults(Guid aproductTestId)
         {
-            var products = Rep.GetProtocolResults(aproductTestId);
+            var products = _rep.GetProtocolResults(aproductTestId);
             return Json(new { data = products }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CreateProtocolResult(Guid aproductTestId)
         {
-            var productTest = Rep.GetArchivedProductTestW(aproductTestId);
-            var product = Rep.GetArchivedProductW(productTest.ArchivedProductId);
+            var productTest = _rep.GetArchivedProductTestW(aproductTestId);
+            var product = _rep.GetArchivedProductW(productTest.ArchivedProductId);
 
             ViewBag.ADiaryId = product.ArchivedDiaryId;
             ViewBag.AProductTestId = aproductTestId;
@@ -258,7 +261,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.AddProtocolResult(aprotocolResult);
+                _rep.AddProtocolResult(aprotocolResult);
                 return RedirectToAction("ProtocolResultsIndex", new { aproductTestId = aprotocolResult.ArchivedProductTestId });
             }
 
@@ -268,7 +271,7 @@ namespace RED.Controllers
         [HttpGet]    
         public ActionResult EditProtocolResult(Guid aprotocolResultId)
         {
-            var aprotocolResult = Rep.GetArchivedProtocolResultW(aprotocolResultId);
+            var aprotocolResult = _rep.GetArchivedProtocolResultW(aprotocolResultId);
             ViewBag.AProductTestId = aprotocolResult.ArchivedProductTestId;
             return View(aprotocolResult);
         }
@@ -279,7 +282,7 @@ namespace RED.Controllers
         {
             if (ModelState.IsValid)
             {
-                Rep.EditProtocolResult(aprotocolResult);
+                _rep.EditProtocolResult(aprotocolResult);
                 return RedirectToAction("ProtocolResultsIndex", new { aproductTestId = aprotocolResult.ArchivedProductTestId });
             }
 
@@ -294,7 +297,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var aprotocolResult = Rep.GetArchivedProtocolResultW(id.Value);
+            var aprotocolResult = _rep.GetArchivedProtocolResultW(id.Value);
             if (aprotocolResult == null)
             {
                 return HttpNotFound();
@@ -312,8 +315,8 @@ namespace RED.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProtocolResult(Guid id)
         {
-            var protocolResult = Rep.GetArchivedProtocolResult(id);
-            bool isdeleted = Rep.DeleteProtocolResult(id);
+            var protocolResult = _rep.GetArchivedProtocolResult(id);
+            bool isdeleted = _rep.DeleteProtocolResult(id);
 
             if (isdeleted)
             {

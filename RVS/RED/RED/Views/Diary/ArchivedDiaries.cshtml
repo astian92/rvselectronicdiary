@@ -1,11 +1,6 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.ArchivedDiaryW>
 @using System.Globalization;
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-    var user = principal.GetUserData();
-}
+@using RED.Helpers
 
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
@@ -128,7 +123,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            @if(user.Id == Guid.Parse("0f68da69-5c82-480b-9474-54c133439b0c") || user.Id == Guid.Parse("613b0faa-8828-44a9-8bbe-09ba68cc33ae"))
+                            @if(Html.IsSuperUser())
                             {
                                 <div class="row">
                                     <div class="col-xs-12">

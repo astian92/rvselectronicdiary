@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.Responses
+﻿namespace RED.Models.Responses
 {
     public class ActionResponse
     {
+        public ActionResponse()
+        {
+            this.Error = new ActionError();
+            this.IsSuccess = false;
+        }
+
         public bool IsSuccess { get; set; }
 
         public string SuccessMsg { get; set; }
@@ -14,11 +15,5 @@ namespace RED.Models.Responses
         public ActionError Error { get; set; }
 
         public object ResponseObject { get; set; }
-
-        public ActionResponse()
-        {
-            this.Error = new ActionError();
-            this.IsSuccess = false;
-        }
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using RED.Models.ReportGeneration;
-using RED.Models.ReportGeneration.EPPlus;
-using OfficeOpenXml;
 using System.Globalization;
+using RED.Models.ReportGeneration.EPPlus;
 
 namespace RED.Models.FileModels.RequestList
 {
@@ -14,7 +10,6 @@ namespace RED.Models.FileModels.RequestList
         public RequestListReport(ReportModel model)
             : base(model, "RequestTemplate.xlsx")
         {
-
         }
 
         protected override void FillContent()
@@ -26,21 +21,18 @@ namespace RED.Models.FileModels.RequestList
 
             int row = 6;
 
-            if (reportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.MKB)))
+            if (ReportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.MKB)))
             {
                 CreateTableInTemplate("7.1 МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.MKB);
             }
 
             row++;
-            //Insert only MKB Tests
 
-            if (reportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.FZH)))
+            //Insert only MKB Tests
+            if (ReportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.FZH)))
             {
                 CreateTableInTemplate("7.2 ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.FZH);
             }
-
-            //Insert only FZH Tests
-            
         }
 
         private void CreateTableInTemplate(string title, ref int row, string diaryNumber, int testingPeriod, DateTime? requestDate, string testType)
@@ -48,7 +40,8 @@ namespace RED.Models.FileModels.RequestList
             //1 the title
             var head = Cells["A" + row + ":F" + row];
             head.Merge = true;
-            head.Value = string.Format("ЗАЯВКА № {0} / Дата {1}", diaryNumber, requestDate?.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); // / Час #TIME					
+            head.Value = string.Format("ЗАЯВКА № {0} / Дата {1}", diaryNumber, requestDate?.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)); //Час #TIME
+
             //style the head
             FormatTitleRow(row);
              
@@ -56,6 +49,7 @@ namespace RED.Models.FileModels.RequestList
 
             Cells["A" + row].Value = title;
             FormatCategoryRow(row);
+
             //style title
             row++;
 
@@ -66,6 +60,7 @@ namespace RED.Models.FileModels.RequestList
             Cells["E" + row].Value = "Допуск";
             Cells["F" + row].Value = "Забележка";
             FormatHeaderRow(row);
+
             //style table header cells
             row += 1;
 
@@ -89,10 +84,10 @@ namespace RED.Models.FileModels.RequestList
 
         private void PopulateData(ref int row, string testType, string diaryNumber)
         {
-            var products = reportData.Where(r => r.ProductTests.Any(pt => pt.TestType == testType));
+            var products = ReportData.Where(r => r.ProductTests.Any(pt => pt.TestType == testType));
 
-            Cells["A" + row].Value = diaryNumber;
             //no row increment ! products start on the same row
+            Cells["A" + row].Value = diaryNumber;
 
             foreach (var product in products)
             {
@@ -188,6 +183,5 @@ namespace RED.Models.FileModels.RequestList
             Cells["A" + row].Style.Indent = 3;
             Cells["D" + row].Style.Indent = 3;
         }
-
     }
 }

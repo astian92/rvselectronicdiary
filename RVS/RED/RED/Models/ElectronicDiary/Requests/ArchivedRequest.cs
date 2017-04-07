@@ -1,14 +1,22 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Requests
 {
     public class ArchivedRequest
     {
+        public ArchivedRequest(ArchivedDiary adiary)
+        {
+            this.DiaryId = adiary.Id;
+            this.Date = adiary.RequestDate;
+            this.AcceptedBy = adiary.RequestAcceptedBy;
+            this.IsAccepted = true;
+            this.TestingPeriod = adiary.RequestTestingPeriod ?? 0;
+
+            this.Diary = adiary;
+        }
+
         public Guid DiaryId { get; set; }
 
         public DateTime Date { get; set; }
@@ -56,18 +64,5 @@ namespace RED.Models.ElectronicDiary.Requests
         }
 
         public int TestingPeriod { get; set; }
-     
-        //public ICollection<Protocol> Protocols { get; set; }
-
-        public ArchivedRequest(ArchivedDiary adiary)
-        {
-            this.DiaryId = adiary.Id;
-            this.Date = adiary.RequestDate;
-            this.AcceptedBy = adiary.RequestAcceptedBy;
-            this.IsAccepted = true;
-            this.TestingPeriod = adiary.RequestTestingPeriod ?? 0;
-
-            this.Diary = adiary;
-        }
     }
 }

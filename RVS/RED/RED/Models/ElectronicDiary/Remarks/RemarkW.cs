@@ -1,42 +1,31 @@
-﻿using RED.Models.DataContext;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary.Remarks
 {
     public class RemarkW
     {
-        public Guid Id { get; set; }
-
-        [Display(Name = "Текст")]
-        public string Text { get; set; }
-
-        //public ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
-
         public RemarkW()
         {
-            //this.ProtocolsRemarks = new List<ProtocolsRemark>();
         }
 
         public RemarkW(Remark remark)
         {
             this.Id = remark.Id;
             this.Text = remark.Text;
-
-            //this.ProtocolsRemarks = remark.ProtocolsRemarks;
         }
+
+        public Guid Id { get; set; }
+
+        [Display(Name = "Текст")]
+        public string Text { get; set; }
 
         public Remark ToBase()
         {
             var remark = new Remark();
             remark.Id = this.Id;
             remark.Text = this.Text;
-
-            //remark.ProtocolsRemarks = remark.ProtocolsRemarks;
 
             return remark;
         }

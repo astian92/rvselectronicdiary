@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
 namespace RED.Models
 {
     public class DtParameters
     {
-        public int Draw { get; set; }
-        public int Skip { get; set; }
-        public int PageSize { get; set; }
-        public bool IsBeingSearched { get; set; }
-        public string SearchValue { get; set; }
-        public bool IsBeingFiltered { get; set; }
-        public int FilterColIndex { get; set; }
-        public bool FilterAsc { get; set; }
-
         public DtParameters(HttpRequestBase request)
         {
             int draw = 0;
@@ -23,7 +11,7 @@ namespace RED.Models
             int pageSize = 0;
             int sortCol = 0;
 
-            if (request.Form.Keys.Count > 0) //hmm?
+            if (request.Form.Keys.Count > 0)
             {
                 var drawStr = request.Form["draw"];
                 int.TryParse(drawStr, out draw);
@@ -49,6 +37,7 @@ namespace RED.Models
                 {
                     this.IsBeingFiltered = true;
                 }
+
                 int.TryParse(sortColStr, out sortCol);
                 this.FilterColIndex = sortCol;
 
@@ -60,5 +49,20 @@ namespace RED.Models
             }
         }
 
+        public int Draw { get; set; }
+
+        public int Skip { get; set; }
+
+        public int PageSize { get; set; }
+
+        public bool IsBeingSearched { get; set; }
+
+        public string SearchValue { get; set; }
+
+        public bool IsBeingFiltered { get; set; }
+
+        public int FilterColIndex { get; set; }
+
+        public bool FilterAsc { get; set; }
     }
 }

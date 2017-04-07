@@ -1,14 +1,8 @@
 ﻿@model IEnumerable<RED.Models.Admin.Roles.RoleW>
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Index";
-}
-
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -37,7 +31,7 @@
                 <thead>
                     <tr>
                         <th>Име</th>
-                        @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
                         {
                         <th></th>
                         }
@@ -71,14 +65,14 @@
         },
         columns: [
             { "data": "DisplayName" },
-            @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
             {
                 <text>
             { "data": "Id" }
                 </text>
             }
         ],
-        @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+        @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
         {
             <text>
         columnDefs: [
