@@ -1,14 +1,8 @@
 ﻿@model IEnumerable<RED.Models.Admin.Users.UserW>
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Index";
-}
-
-@using RED.Models.Account
-@using RED.Models.DataContext.Concrete
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -24,7 +18,7 @@
 
 <h2>Потребители</h2>
 
-@if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+@if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
 {
     <p>
         <a href="/Users/Create" >
@@ -45,7 +39,7 @@
                         <th>Фамилия</th>
                         <th>Длъжност</th>
                         <th>Роля</th>
-                        @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
                         {
                         <th></th>
                         }
@@ -83,14 +77,14 @@
             { "data": "LastName" },
             { "data": "Position" },
             { "data": "RoleName" },
-            @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
             {
                 <text>
                 { "data": "Id" }
                 </text>
             }
         ],
-        @if (principal.IsAuthorize("5696d246-25db-4d59-bcf6-139cd303f2f4"))
+        @if (Html.IsAuthorized(FeaturesCollection.ModifyAdminsNRoles))
         {
                 <text>
         columnDefs: [

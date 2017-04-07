@@ -4,10 +4,11 @@ using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ControllerBases;
 using RED.Filters;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("54471a7f-866f-4ccd-8501-ec6e08c7f052")]
+    [RoleFilter(FeaturesCollection.ViewRemarks)]
     public class RemarksController : BaseController
     {
         private readonly IRemarksRepository _rep;
@@ -28,7 +29,7 @@ namespace RED.Controllers
             return Json(new { data = remarks });
         }
 
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult Create()
         {
             return View();
@@ -36,7 +37,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult Create(RemarkW remark)
         {
             if (ModelState.IsValid)
@@ -48,7 +49,7 @@ namespace RED.Controllers
             return View(remark);
         }
 
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult Edit(Guid id)
         {
             var remark = _rep.GetRemark(id);
@@ -57,7 +58,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult Edit(RemarkW remark)
         {
             if (ModelState.IsValid)
@@ -69,7 +70,7 @@ namespace RED.Controllers
             return View(remark);
         }
 
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult Delete(Guid id)
         {
             var remark = _rep.GetRemark(id);
@@ -84,7 +85,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("95342ca3-d105-4e5e-9b37-d7205afd463e")]
+        [RoleFilter(FeaturesCollection.ModifyRemarks)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isDeleted = _rep.Delete(id);

@@ -1,25 +1,11 @@
-﻿@using RED.Models.Account
-@using RED.Models.DataContext.Concrete
+﻿@using RED.Helpers
 
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
-    var user = principal.GetUserData();
-}
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    @*<a href="/Account/Profile?id=@user.Id">
-                    <span> 
-                        <img src="~/Images/default_small.png" alt="image" class="img-circle" />
-                    </span>*@
-                        <span class="clear">
-                            <span class="block m-t-xs">
-                                <strong class="font-bold" style="color: white">@(user.FirstName + " " + user.LastName)</strong>
-                            </span> <span class="text-muted text-xs block">@user.Position</span>
-                        </span>
-                    </a>
+                        <span class="clear">@Html.GetProfile()</span>
                     @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="profile.html">Profile</a></li>
                     </ul>*@
@@ -32,10 +18,9 @@
                 <a href="/Home/Index">
                     <i class="fa fa-th-large">
                     </i> <span class="nav-label">Начало</span> 
-                    @*<span class="fa arrow"></span>*@
                 </a>
             </li>
-            @if (principal.IsAuthorize("132fb592-e0de-4f7b-89dd-e11b4aacc4ff"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewAdminsNRoles))
             {
                 <li class="">
                     <a href="#">
@@ -46,14 +31,14 @@
                     <ul class="nav nav-second-level collapse nav-admin">
                         <li><a href="/Users/Index">Потребители</a></li>
                         <li><a href="/Roles/Index">Роли</a></li>
-                        @if (principal.IsAuthorize())
+                        @if (Html.IsAuthorized(string.Empty))
                         {
                             <li><a href="/Features/Index">Права</a></li>
                         }
                     </ul>
                 </li>
             }
-            @if (principal.IsAuthorize("fd53f97f-8bec-42ae-b17a-80cc7fee522f"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewDiary))
             {
                 <li class="">
                     <a href="/Diary/Index">
@@ -62,7 +47,7 @@
                     </a>
                 </li>
             }
-            @if (principal.IsAuthorize("0e161082-3d84-4887-8bef-968e1ca53256"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewTests))
             {
                 <li class="">
                     <a href="#">
@@ -76,17 +61,16 @@
                     </ul>
                 </li>
             }
-            @if (principal.IsAuthorize("4177b39a-ddce-46ad-812b-55d5935012ed"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewClients))
             {
                 <li class="">
                     <a href="/Clients/Index">
                         <i class="fa fa-users">
                         </i> <span class="nav-label">Клиенти</span>
-                        @*<span class="fa arrow"></span>*@
                     </a>
                 </li>
             }
-            @if (principal.IsAuthorize("b93941bf-aa40-490e-9764-5aea1841de32"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewRequests))
             {
                 <li class="">
                     <a href="/Requests/Index">
@@ -95,7 +79,7 @@
                     </a>
                 </li>
             }
-            @if (principal.IsAuthorize("93b1ccf0-c462-464a-9294-524e5088b93b"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewProtocols))
             {
                 <li class="">
                     <a href="/Protocols/Index">
@@ -104,7 +88,7 @@
                     </a>
                 </li>
             }
-            @if (principal.IsAuthorize("54471a7f-866f-4ccd-8501-ec6e08c7f052"))
+            @if (Html.IsAuthorized(FeaturesCollection.ViewRemarks))
             {
                 <li class="">
                     <a href="/Remarks/Index">

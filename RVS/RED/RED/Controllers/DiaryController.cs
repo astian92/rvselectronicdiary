@@ -5,10 +5,11 @@ using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("fd53f97f-8bec-42ae-b17a-80cc7fee522f")]
+    [RoleFilter(FeaturesCollection.ViewDiary)]
     public class DiaryController : BaseController
     {
         private readonly IDiaryRepository _rep;
@@ -54,7 +55,7 @@ namespace RED.Controllers
             return PartialView("ArchivedDiaries", archivedDiaries);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
@@ -63,7 +64,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Create(DiaryW diary)
         {
             ModelState.Remove("LetterNumber");
@@ -78,7 +79,7 @@ namespace RED.Controllers
             return View(diary);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Edit(Guid id)
         {
             var diary = _rep.GetDiary(id);
@@ -95,7 +96,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Edit(DiaryW diary)
         {
             ModelState.Remove("LetterNumber");
@@ -111,7 +112,7 @@ namespace RED.Controllers
             return View(diary);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Delete(Guid id)
         {
             var client = _rep.GetDiary(id);
@@ -128,7 +129,7 @@ namespace RED.Controllers
             return View(client);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult Archive(Guid id)
         {
             var diary = _rep.GetDiary(id);
@@ -147,7 +148,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = _rep.Delete(id);
@@ -177,7 +178,7 @@ namespace RED.Controllers
             return Json(pagedEntries, JsonRequestBehavior.AllowGet);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult GenerateRequest(Guid? diaryId, int testingPeriod)
         {
             if (diaryId != null && testingPeriod > 0 && testingPeriod <= 365)
@@ -193,7 +194,7 @@ namespace RED.Controllers
             return Json("Failed", JsonRequestBehavior.AllowGet);  
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult DeleteRequest(Guid? diaryId)
         {
             if (diaryId != null)
@@ -210,7 +211,7 @@ namespace RED.Controllers
         }
 
         [HttpPost]
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult AddComment(Guid? diaryId, string comment)
         {
             if (diaryId != null && comment != null)
@@ -232,13 +233,13 @@ namespace RED.Controllers
             return PartialView(products);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult GetTestMethods(Guid testId)
         {
             return Json(_rep.GetTestMethods(testId), JsonRequestBehavior.AllowGet);
         }
 
-        [RoleFilter("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a")]
+        [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult ArchiveDiary(Guid diaryId)
         {
             var response = _rep.ArchiveDiary(diaryId);

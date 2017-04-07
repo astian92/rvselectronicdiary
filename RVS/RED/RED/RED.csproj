@@ -211,6 +211,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FeaturesCollection.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />

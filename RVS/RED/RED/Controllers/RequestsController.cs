@@ -3,10 +3,11 @@ using System.Web.Mvc;
 using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("b93941bf-aa40-490e-9764-5aea1841de32")]
+    [RoleFilter(FeaturesCollection.ViewRequests)]
     public class RequestsController : BaseController
     {
         private readonly IRequestsRepository _rep;
@@ -72,7 +73,7 @@ namespace RED.Controllers
             return PartialView("ArchivedRequests", requests);
         }
 
-        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
+        [RoleFilter(FeaturesCollection.ModifyRequests)]
         public bool AcceptRequest(Guid requestId)
         {
             var result = _rep.AcceptRequest(requestId);
@@ -80,7 +81,7 @@ namespace RED.Controllers
         }
 
         [HttpGet]
-        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
+        [RoleFilter(FeaturesCollection.ModifyRequests)]
         public PartialViewResult ConfirmDenyRequest(Guid requestId)
         {
             var request = _rep.GetRequest(requestId);
@@ -88,7 +89,7 @@ namespace RED.Controllers
         }
 
         [HttpPost]
-        [RoleFilter("4a6fd1e4-7720-4385-841a-d33a58c3130a")]
+        [RoleFilter(FeaturesCollection.ModifyRequests)]
         public bool DenyRequest(Guid requestId)
         {
             var result = _rep.DenyRequest(requestId);

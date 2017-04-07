@@ -2,10 +2,11 @@
 using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("77d2cc10-dc68-4fbf-8c3d-9128df7c1a09")]
+    [RoleFilter(FeaturesCollection.ViewUserActions)]
     public class LogController : BaseController
     {
         private readonly ILogRepository _rep;

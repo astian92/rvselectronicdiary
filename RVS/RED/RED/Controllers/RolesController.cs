@@ -5,17 +5,18 @@ using RED.Models.ControllerBases;
 using RED.Models.Admin.Roles;
 using RED.Filters;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
+    [RoleFilter(FeaturesCollection.ViewAdminsNRoles)]
     public class RolesController : BaseController
     {
-        private readonly IAdminRepository _rep;
+        private readonly IAdminRepository Rep;
 
         public RolesController(IAdminRepository adminRepo)
         {
-            _rep = adminRepo;
+            Rep = adminRepo;
         }
 
         public ActionResult Index()
@@ -25,32 +26,32 @@ namespace RED.Controllers
 
         public ActionResult GetRoles()
         {
-            var roles = _rep.GetRoles();
+            var roles = Rep.GetRoles();
             return Json(new { data = roles });
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create()
         {
-            ViewBag.Features = _rep.GetFeatures();
+            ViewBag.Features = Rep.GetFeatures();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
             {
-                _rep.AddRole(role, features);
+                Rep.AddRole(role, features);
                 return RedirectToAction("Index");
             }
 
             return View(role);
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -58,31 +59,31 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RoleW role = _rep.GetRole(id.Value);
+            RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.Features = _rep.GetFeatures();
+            ViewBag.Features = Rep.GetFeatures();
             return View(role);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit([Bind(Include = "Id,DisplayName")] RoleW role, string[] features)
         {
             if (ModelState.IsValid)
             {
-                _rep.EditRole(role, features);
+                Rep.EditRole(role, features);
                 return RedirectToAction("Index");
             }
 
             return View(role);
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -90,7 +91,7 @@ namespace RED.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            RoleW role = _rep.GetRole(id.Value);
+            RoleW role = Rep.GetRole(id.Value);
             if (role == null)
             {
                 return HttpNotFound();
@@ -106,10 +107,10 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            bool isdeleted = _rep.DeleteRole(id);
+            bool isdeleted = Rep.DeleteRole(id);
 
             if (isdeleted)
             {

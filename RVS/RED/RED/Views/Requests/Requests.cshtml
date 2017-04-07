@@ -1,11 +1,5 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.RequestW>
-
-@using RED.Models.Account
-@using RED.Models.DataContext.Concrete
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
-}
+@using RED.Helpers
 
 <div class="panel-group" id="accordion_@ViewBag.Label">
     @foreach (var item in Model)
@@ -19,17 +13,12 @@
                         {
                             <i class="fa fa-check-circle pull-right"></i>
                         }
-                        @if (item.AcceptedBy == ((RvsPrincipal)HttpContext.Current.User).GetId())
-                        {
-                           <i class="fa fa-user pull-right"></i>
-                        }
-                        else if(item.User != null)
+                        @if(item.User != null)
                         {
                             string name = item.User.FirstName.Substring(0, 1) + ". " + item.User.LastName;
                             <span class="pull-right">@name</span>
                         }
                     </h5>
-                    
                 </div>
             </a>
             <div id="@item.Id" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -96,7 +85,7 @@
                                         </table>
 
                                         <h5>Срок на изпитване (дни): <strong>@item.TestingPeriod</strong></h5>
-                                        @if (principal.IsAuthorize("4a6fd1e4-7720-4385-841a-d33a58c3130a")) //обработване заявки
+                                        @if (Html.IsAuthorized(FeaturesCollection.ModifyRequests))
                                         {
                                             if (ViewBag.Label == "notAccepted")
                                             {
@@ -119,7 +108,7 @@
                                             }
                                         }
                                         
-                                        @if (principal.IsAuthorize("93b1ccf0-c462-464a-9294-524e5088b93b")) //виждай протоколи
+                                        @if (Html.IsAuthorized(FeaturesCollection.ViewProtocols))
                                         {
                                             if (ViewBag.Label == "completed" || ViewBag.Label == "all")
                                             {

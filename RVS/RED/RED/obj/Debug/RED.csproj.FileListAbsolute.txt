@@ -529,6 +529,8 @@ C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\RED.dll.config
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\RED.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\RED.pdb
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Antlr3.Runtime.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\DocX.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Elmah.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\EntityFramework.dll
@@ -557,6 +559,8 @@ C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Deployment.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Razor.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\WebGrease.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.xml
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.xml
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\EntityFramework.xml
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\EntityFramework.SqlServer.xml
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\EPPlus.xml
@@ -584,7 +588,3 @@ C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftA
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.pdb
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
-C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.dll
-C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.dll
-C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.xml
-C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.xml

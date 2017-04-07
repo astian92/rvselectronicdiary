@@ -7,10 +7,11 @@ using RED.Models.ControllerBases;
 using RED.Models.Admin.Users;
 using RED.Filters;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("132fb592-e0de-4f7b-89dd-e11b4aacc4ff")]
+    [RoleFilter(FeaturesCollection.ViewAdminsNRoles)]
     public class UsersController : BaseController
     {
         private readonly IAdminRepository _rep;
@@ -43,7 +44,7 @@ namespace RED.Controllers
             return Json(new { data = usersUnwrapped });
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create()
         {
             ViewBag.RoleId = new SelectList(_rep.GetRoles(), "Id", "DisplayName");
@@ -52,7 +53,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Create([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] UserW user)
         {
             if (ModelState.IsValid)
@@ -65,7 +66,7 @@ namespace RED.Controllers
             return View(user);
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -85,7 +86,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Edit([Bind(Include = "Id,Username,Password,FirstName,MiddleName,LastName,Position,RoleId")] UserW user)
         {
             if (ModelState.IsValid)
@@ -98,7 +99,7 @@ namespace RED.Controllers
             return View(user);
         }
 
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -122,7 +123,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("5696d246-25db-4d59-bcf6-139cd303f2f4")]
+        [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = _rep.DeleteUser(id);

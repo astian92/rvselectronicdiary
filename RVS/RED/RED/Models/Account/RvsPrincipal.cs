@@ -9,6 +9,9 @@ namespace RED.Models.Account
 {
     public class RvsPrincipal : GenericPrincipal
     {
+        public const string MasterId = "613b0faa-8828-44a9-8bbe-09ba68cc33ae";
+        public const string SuperUserId = "0f68da69-5c82-480b-9474-54c133439b0c";
+
         private readonly RvsDbContext Db;
 
         public RvsPrincipal(IIdentity identity, IRvsContextFactory factory)
@@ -74,21 +77,25 @@ namespace RED.Models.Account
             if (user == null)
             {
                 user = new User();
+                user.Id = Guid.Empty;
                 user.FirstName = "Unknown";
             }
 
             return user;
         }
 
-        public Guid GetId()
+        public bool IsSuperUser()
         {
             var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
-            if (user == null)
+            if (user != null)
             {
-                return Guid.Empty;
+                if (user.Id.ToString() == SuperUserId || user.Id.ToString() == MasterId)
+                {
+                    return true;
+                }
             }
 
-            return user.Id;
+            return false;
         }
 
         private bool IsGod()
@@ -96,7 +103,7 @@ namespace RED.Models.Account
             var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user != null)
             {
-                if (user.Id.ToString() == "613b0faa-8828-44a9-8bbe-09ba68cc33ae")
+                if (user.Id.ToString() == MasterId)
                 {
                     return true;
                 }

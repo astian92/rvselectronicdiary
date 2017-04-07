@@ -61,10 +61,10 @@ namespace RED.Repositories.Concrete
                                                    d.Date <= (to == null ? d.Date : to.Value));
 
             //Order and paging
-            var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
+            var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
 
             var myRequests = requests.Where(r => r.IsAccepted == true &&
-                        r.AcceptedBy == userId &&
+                        r.AcceptedBy == user.Id &&
                         r.Protocols.Any() == false) //that were not completed
                 .OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize)
                 .ToList(); 
@@ -105,9 +105,9 @@ namespace RED.Repositories.Concrete
             try
             {
                 var request = Db.Requests.Single(r => r.Id == requestId);
-                var userId = ((RvsPrincipal)HttpContext.Current.User).GetId();
+                var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
 
-                request.AcceptedBy = userId;
+                request.AcceptedBy = user.Id;
                 request.IsAccepted = true;
                 Db.SaveChanges();
 

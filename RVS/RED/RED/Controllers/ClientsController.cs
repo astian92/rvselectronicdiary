@@ -8,10 +8,11 @@ using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("4177b39a-ddce-46ad-812b-55d5935012ed")]
+    [RoleFilter(FeaturesCollection.ViewClients)]
     public class ClientsController : BaseController
     {
         private readonly IClientsRepository _rep;
@@ -69,7 +70,7 @@ namespace RED.Controllers
             return Json(jsonResult);
         }
 
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Create()
         {
             return View();
@@ -77,7 +78,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Create(ClientW client)
         {
             if (ModelState.IsValid)
@@ -94,7 +95,7 @@ namespace RED.Controllers
             return View(client);
         }
 
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -113,7 +114,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Edit(ClientW client)
         {
             if (ModelState.IsValid)
@@ -130,7 +131,7 @@ namespace RED.Controllers
             return View(client);
         }
 
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -154,7 +155,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("a896caa3-43eb-452a-a0ce-4691290f2a19")]
+        [RoleFilter(FeaturesCollection.ModifyClients)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdeleted = _rep.Delete(id);

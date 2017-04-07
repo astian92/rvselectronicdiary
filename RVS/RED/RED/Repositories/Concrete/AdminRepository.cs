@@ -7,6 +7,7 @@ using RED.Models.Admin.Users;
 using RED.Models.DataContext;
 using RED.Repositories.Abstract;
 using RED.Models.DataContext.Abstract;
+using RED.Models.Account;
 
 namespace RED.Repositories.Concrete
 {
@@ -87,7 +88,7 @@ namespace RED.Repositories.Concrete
 
         public IEnumerable<UserW> GetUsers()
         {
-            var users = Db.Users.Where(x => x.Id.ToString() != "613b0faa-8828-44a9-8bbe-09ba68cc33ae" && x.Id.ToString() != "0F68DA69-5C82-480B-9474-54C133439B0C").Include(x => x.Role)
+            var users = Db.Users.Where(x => x.Id.ToString() != RvsPrincipal.MasterId && x.Id.ToString() != RvsPrincipal.SuperUserId).Include(x => x.Role)
                 .OrderBy(u => u.Username)
                 .ToList();
             return users.Select(u => new UserW(u));

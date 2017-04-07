@@ -1,13 +1,8 @@
 ﻿@model RED.Models.DataContext.User
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Profile";
-}
-@using RED.Models.DataContext.Concrete
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <h2>Профил</h2>
@@ -49,7 +44,7 @@
             </div>
         </div>
     </div>
-    @if (principal.IsAuthorize("b93941bf-aa40-490e-9764-5aea1841de32"))
+    @if (Html.IsAuthorized(FeaturesCollection.ViewRequests))
     {
         <div class="col-md-8">
             <div class="ibox float-e-margins">

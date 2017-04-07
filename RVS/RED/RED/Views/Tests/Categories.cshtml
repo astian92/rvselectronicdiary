@@ -1,14 +1,8 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Tests.TestCategoryW>
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Categories";
-}
-
-@using RED.Models.Account
-@using RED.Models.DataContext.Concrete
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -37,7 +31,7 @@
                 <thead>
                     <tr>
                         <th>Име</th>
-                        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
                         {
                         <th></th>
                         }
@@ -71,14 +65,14 @@
         },
         columns: [
             { "data": "Name" },
-            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
             {
             <text>
             { "data": "Id" }
             </text>
             }
         ],
-        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+        @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
         {
             <text>
         columnDefs: [

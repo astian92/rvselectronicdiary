@@ -5,10 +5,11 @@ using RED.Filters;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Protocols;
 using RED.Repositories.Abstract;
+using RED.Helpers;
 
 namespace RED.Controllers
 {
-    [RoleFilter("93b1ccf0-c462-464a-9294-524e5088b93b")]
+    [RoleFilter(FeaturesCollection.ViewProtocols)]
     public class ProtocolsController : BaseController
     {
         private readonly IProtocolsRepository _rep;
@@ -44,7 +45,7 @@ namespace RED.Controllers
         }
 
         [HttpGet]
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult Create(Guid requestId)
         {
             var request = _rep.GetRequest(requestId);
@@ -56,7 +57,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult Create(ProtocolW protocol)
         {
             _rep.Create(protocol);
@@ -64,7 +65,7 @@ namespace RED.Controllers
         }
 
         [HttpGet]
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult Edit(Guid protocolId)
         {
             var protocol = _rep.GetProtocol(protocolId);
@@ -74,7 +75,7 @@ namespace RED.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult Edit(ProtocolW protocol)
         {
             if (ModelState.IsValid)
@@ -87,7 +88,7 @@ namespace RED.Controllers
             return View(protocol);
         }
 
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -106,7 +107,7 @@ namespace RED.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [RoleFilter("b3a0ca2d-428d-4f12-8b93-fc227350fc2c")]
+        [RoleFilter(FeaturesCollection.ModifyProtocols)]
         public ActionResult DeleteConfirmed(Guid id)
         {
             bool isdelete = _rep.Delete(id);

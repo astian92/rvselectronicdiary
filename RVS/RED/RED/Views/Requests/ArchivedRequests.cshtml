@@ -1,11 +1,5 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Requests.ArchivedRequest>
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-@using RED.Models.DataContext.Concrete
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
-}
+@using RED.Helpers
 
 <div class="panel-group" id="accordion_@ViewBag.Label">
     @foreach (var item in Model)
@@ -90,7 +84,7 @@
 
                                         <h5>Срок на изпитване (дни): <strong>@item.TestingPeriod</strong></h5>
                                         
-                                        @if (principal.IsAuthorize("93b1ccf0-c462-464a-9294-524e5088b93b")) //виждай протоколи
+                                        @if (Html.IsAuthorized(FeaturesCollection.ViewProtocols))
                                         {
                                         <div class="status-container">
                                             <a href="/Protocols/Index?IsArchived=true&idToOpen=@item.DiaryId">
