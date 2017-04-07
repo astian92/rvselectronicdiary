@@ -29,8 +29,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
-                                                   d.Date <= (to == null ? d.Date : to.Value));
+            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
 
             //Order and paging
             var notAccepted = requests.Where(r => r.AcceptedBy == null && r.IsAccepted == false)
@@ -43,8 +42,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
-                                                   d.Date <= (to == null ? d.Date : to.Value));
+            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
 
             //Order and paging
             var accepted = requests.Where(r => r.AcceptedBy != null && r.IsAccepted == true && r.Protocols.Any() == false)
@@ -57,8 +55,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
-                                                   d.Date <= (to == null ? d.Date : to.Value));
+            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
 
             //Order and paging
             var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
@@ -75,8 +72,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => d.Date >= (from == null ? d.Date : from.Value) &&
-                                                   d.Date <= (to == null ? d.Date : to.Value));
+            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
 
             //Order and paging
             var completed = requests.Where(r => r.Protocols.Any() == true)
@@ -89,8 +85,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
-            requests = requests.Where(d => d.RequestDate >= (from == null ? d.RequestDate : from.Value) &&
-                                                   d.RequestDate <= (to == null ? d.RequestDate : to.Value));
+            requests = requests.Where(d => (from != null ? d.RequestDate >= from.Value : true) && (to != null ? d.RequestDate <= to.Value : true));
 
             //Order and paging
             var archivedDiaries = requests.OrderByDescending(r => r.RequestDate).Skip((page - 1) * pageSize)
