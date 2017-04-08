@@ -7,7 +7,7 @@
     <configuration>DEBUG;TRACE</configuration>
   </project>
   <project key="1546753490">
-    <configuration>DEBUG;TRACE</configuration>
+    <configuration>TRACE</configuration>
   </project>
   <sourcecode name="BundleConfig.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
