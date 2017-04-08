@@ -11,10 +11,10 @@ namespace RED.Models
 
         public JqueryListResult(IEnumerable<T> data = null, int draw = 0, int recordsFiltered = 0, int recordsTotal = 0)
         {
-            this.Data = data;
-            this.Draw = draw;
-            this.RecordsFiltered = recordsFiltered;
-            this.RecordsTotal = recordsTotal;
+            Data = data;
+            Draw = draw;
+            RecordsFiltered = recordsFiltered;
+            RecordsTotal = recordsTotal;
         }
 
         [JsonProperty(PropertyName = "data")]

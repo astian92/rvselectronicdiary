@@ -9,6 +9,7 @@ using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Repositories.Abstract;
 using RED.Helpers;
+using Newtonsoft.Json;
 
 namespace RED.Controllers
 {
@@ -26,15 +27,9 @@ namespace RED.Controllers
         {
             return View();
         }
-
-        //[HttpGet]
-        //public JsonResult GetClients()
-        //{
-        //    var clients = _rep.GetClients();
-        //    return Json(new { data = clients });
-        //}
+        
         [HttpPost]
-        public JsonResult GetClients()
+        public string GetClients()
         {
             //get the parameters from the Datatable
             var dtParams = new DtParameters(Request);
@@ -74,7 +69,8 @@ namespace RED.Controllers
                     filteredRecords,
                     totalRecords);
 
-            return Json(jsonResult);
+            var json = JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         [RoleFilter(FeaturesCollection.ModifyClients)]
