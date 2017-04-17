@@ -1,14 +1,8 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Tests.TestW>
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Tests";
-}
-
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
 }
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -43,7 +37,7 @@
                         <th>Единица на величината</th>
                         <th>Температура</th>
                         <th>Категория</th>
-                        @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
                         {
                             <th></th>
                         }
@@ -83,7 +77,7 @@
             { "data": "UnitName" },
             { "data": "Temperature" },
             { "data": "Category" },
-            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
             {
             <text>
             { "data": "Id" }
@@ -91,7 +85,7 @@
             }
         ],
         columnDefs: [
-            @if (principal.IsAuthorize("e8d6d039-d94d-4465-9302-c2f6fde5d330"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyTests))
             {
                 <text>
             {

@@ -12,6 +12,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>11/20/2015 14:08:22</publishTime>
     </File>
+    <File Include="bin/Autofac.dll">
+      <publishTime>04/04/2017 06:35:00</publishTime>
+    </File>
+    <File Include="bin/Autofac.Integration.Mvc.dll">
+      <publishTime>01/29/2017 13:03:52</publishTime>
+    </File>
     <File Include="bin/DocX.dll">
       <publishTime>05/24/2016 20:45:42</publishTime>
     </File>
@@ -35,6 +41,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
       <publishTime>11/20/2015 14:08:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Build.Utilities.v3.5.dll">
+      <publishTime>05/25/2016 11:56:00</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
       <publishTime>11/20/2015 14:08:25</publishTime>
@@ -73,7 +82,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:26</publishTime>
     </File>
     <File Include="bin/RED.dll">
-      <publishTime>08/06/2016 20:02:05</publishTime>
+      <publishTime>04/09/2017 11:13:29</publishTime>
+    </File>
+    <File Include="bin/StyleCop.CSharp.dll">
+      <publishTime>11/09/2016 21:13:10</publishTime>
+    </File>
+    <File Include="bin/StyleCop.dll">
+      <publishTime>11/09/2016 21:13:10</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>11/20/2015 14:08:25</publishTime>
@@ -139,7 +154,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:14</publishTime>
     </File>
     <File Include="Content/Our/shared.css">
-      <publishTime>04/17/2016 19:29:50</publishTime>
+      <publishTime>04/07/2017 21:06:26</publishTime>
     </File>
     <File Include="Content/Our/tabs-changes.css">
       <publishTime>04/17/2016 19:20:36</publishTime>
@@ -538,10 +553,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:15</publishTime>
     </File>
     <File Include="Models/DataContext/RedEntities.edmx.diagram">
-      <publishTime>07/31/2016 16:27:01</publishTime>
+      <publishTime>04/07/2017 18:49:52</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>05/24/2016 20:45:43</publishTime>
+      <publishTime>04/07/2017 19:55:33</publishTime>
     </File>
     <File Include="Scripts/app/inspinia.js">
       <publishTime>08/28/2015 20:54:15</publishTime>
@@ -1075,7 +1090,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Account/Profile.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1153,7 +1168,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Clients/Index.cshtml">
-      <publishTime>07/21/2016 17:28:24</publishTime>
+      <publishTime>04/08/2017 18:10:56</publishTime>
     </File>
     <File Include="Views/Dashboards/Dashboard_1.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1171,16 +1186,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Diary/ActiveDiaries.cshtml">
-      <publishTime>07/31/2016 15:41:26</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Diary/Archive.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Diary/ArchivedDiaries.cshtml">
-      <publishTime>07/31/2016 15:44:32</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Diary/Create.cshtml">
-      <publishTime>04/17/2016 19:51:11</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Diary/Delete.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1189,7 +1204,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2016 18:52:48</publishTime>
     </File>
     <File Include="Views/Diary/Index.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Diary/ProductsTests.cshtml">
       <publishTime>07/31/2016 18:37:38</publishTime>
@@ -1240,7 +1255,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Home/TestsReference.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1249,7 +1264,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Protocols/ActiveProtocols.cshtml">
-      <publishTime>07/21/2016 17:49:44</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Protocols/ArchivedProtocols.cshtml">
       <publishTime>07/31/2016 16:27:01</publishTime>
@@ -1276,10 +1291,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Remarks/Index.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Requests/ArchivedRequests.cshtml">
-      <publishTime>07/31/2016 16:09:15</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Requests/Delete.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1288,7 +1303,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Requests/Requests.cshtml">
-      <publishTime>07/31/2016 16:05:02</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Roles/Create.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1300,7 +1315,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Roles/Index.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1312,7 +1327,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/28/2016 22:05:28</publishTime>
+      <publishTime>04/07/2017 21:05:43</publishTime>
     </File>
     <File Include="Views/Shared/_Layout_2.cshtml">
       <publishTime>06/28/2016 22:05:28</publishTime>
@@ -1321,7 +1336,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Shared/_Navigation.cshtml">
-      <publishTime>07/03/2016 17:43:13</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Shared/_SkinConfig.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1333,7 +1348,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Tests/Categories.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Tests/Create.cshtml">
       <publishTime>07/31/2016 18:31:51</publishTime>
@@ -1354,7 +1369,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Tests/Index.cshtml">
-      <publishTime>07/03/2016 17:48:09</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Users/Create.cshtml">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1366,7 +1381,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Views/Users/Index.cshtml">
-      <publishTime>11/20/2015 14:08:17</publishTime>
+      <publishTime>04/07/2017 18:49:53</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>11/20/2015 14:08:17</publishTime>
@@ -1375,7 +1390,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/20/2015 14:08:17</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/31/2016 19:20:37</publishTime>
+      <publishTime>04/09/2017 12:15:58</publishTime>
     </File>
   </ItemGroup>
 </Project>

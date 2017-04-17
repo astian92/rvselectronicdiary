@@ -413,3 +413,11 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Release\RED.csprojResolveAssemblyReference.cache
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Release\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Release\RED.pdb
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Autofac.dll
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.dll
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.CSharp.dll
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.dll
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.dll
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Autofac.xml
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.xml
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml

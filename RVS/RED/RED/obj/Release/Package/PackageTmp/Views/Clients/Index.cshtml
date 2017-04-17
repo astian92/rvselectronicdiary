@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.Clients.ClientW>
+@using RED.Helpers
 
 @{
     ViewBag.Title = "Клиенти";
 }
 
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-}
 
 <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
@@ -24,7 +19,7 @@
 
 <h2>Клиенти</h2>
 
-@if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+@if (Html.IsAuthorized(FeaturesCollection.ModifyClients))
 {
 <p>
     <a href="/Clients/Create">
@@ -41,7 +36,7 @@
                     <tr>
                         <th>Име</th>
                         <th>Телефон</th>
-                        @if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+                        @if (Html.IsAuthorized(FeaturesCollection.ModifyClients))
                         {
                             <th></th>
                         }
@@ -78,14 +73,14 @@
         columns: [
             { "data": "Name" }, 
             { "data": "Mobile" },
-            @if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyClients))
             {
             <text>
             { "data": "Id" }
             </text>
             }
         ],
-        @if (principal.IsAuthorize("a896caa3-43eb-452a-a0ce-4691290f2a19"))
+        @if (Html.IsAuthorized(FeaturesCollection.ModifyClients))
         {
         <text>
         columnDefs: [
@@ -124,9 +119,3 @@
         });
     }
 </script>
-@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-        </div>
-    </div>
-</div>*@

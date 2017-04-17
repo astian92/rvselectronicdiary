@@ -1,22 +1,16 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
-@using System.Globalization;
-<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
-<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+@using RED.Helpers
+
 @{
     ViewBag.Title = "Index";
 }
 
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-}
-
+<link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 <link href="~/Content/Our/custom-pagination.css" rel="stylesheet" />
 
 <h2>Дневник</h2>
-@if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+@if (Html.IsAuthorized(FeaturesCollection.ModifyDiary))
 {
     <p>
         <a href="/Diary/Create">

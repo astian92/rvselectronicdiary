@@ -1,11 +1,6 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
 @using System.Globalization;
-@using Microsoft.AspNet.Identity
-@using RED.Models.Account
-
-@{
-    RvsPrincipal principal = new RvsPrincipal(HttpContext.Current.User.Identity);
-}
+@using RED.Helpers
 
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
@@ -116,7 +111,7 @@
                                     <div class="status-container">
                                         @if (item.Request == null)
                                         {
-                                            if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                            if (Html.IsAuthorized(FeaturesCollection.ModifyDiary))
                                             {
                                                 <label for="testingPeriod">Срок на изпитване (дни):</label>
                                                 <input type="number" min="1" max="365" id="testingPeriod-@item.Id" />
@@ -170,7 +165,7 @@
                                     }
                                 </div>
                             </div>
-                            @if (principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                            @if (Html.IsAuthorized(FeaturesCollection.ModifyDiary))
                             {
                                 <hr />
                                 <div class="row comment-container" style="margin-bottom:30px;">
@@ -195,7 +190,7 @@
                             }
                             <div class="row">
                                 <div class="col-xs-12">
-                                    @if ((item.Request == null || !item.Request.IsAccepted) && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                    @if ((item.Request == null || !item.Request.IsAccepted) && Html.IsAuthorized(FeaturesCollection.ModifyDiary))
                                     {
                                         <div class="text-right">
                                             <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
@@ -209,7 +204,7 @@
                                         </div>
                                     }
 
-                                    @if (item.Request != null && item.Request.Protocols.Any() && principal.IsAuthorize("6b1b671c-0e4b-49fe-a3ac-9f3de4ae7e8a"))
+                                    @if (item.Request != null && item.Request.Protocols.Any() && Html.IsAuthorized(FeaturesCollection.ModifyDiary))
                                     {
                                         <div class="text-right">
                                             <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
