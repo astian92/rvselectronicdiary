@@ -115,13 +115,20 @@ namespace RED.Repositories.Concrete
         public bool Delete(Guid diaryId)
         {
             var diary = Db.Diaries.Single(c => c.Id == diaryId);
+
+            foreach (var product in diary.Products)
+            {
+                Db.ProductTests.RemoveRange(product.ProductTests);
+            }
+
+            Db.Products.RemoveRange(diary.Products);
             Db.Diaries.Remove(diary);
 
             try
             {
                 Db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -146,7 +153,6 @@ namespace RED.Repositories.Concrete
             }
 
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
-            diary.AcceptanceDateAndTime = DateTime.UtcNow;
 
             int i = 1;
             foreach (var item in diary.Products)

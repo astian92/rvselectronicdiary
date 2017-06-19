@@ -121,6 +121,7 @@ $("#form").steps({
         }
 
         var form = $(this);
+
         // Disable validation on fields that are disabled.
         // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
         form.validate().settings.ignore = ":disabled";
@@ -157,6 +158,17 @@ $('#data_1 .input-group.date').datepicker({
     calendarWeeks: true,
     autoclose: true
 });
+
+$('#acceptance-date .input-group.date').datepicker({
+    format: "dd.m.yyyy",
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+    autoclose: true
+});
+
+$('.input-group.time').clockpicker();
 
 $('.add-product-btn').click(function () {
     if ($('#Products').val() == '') {

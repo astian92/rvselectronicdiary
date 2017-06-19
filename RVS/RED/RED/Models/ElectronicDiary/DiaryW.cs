@@ -20,7 +20,7 @@ namespace RED.Models.ElectronicDiary
             Number = diary.Number;
             LetterNumber = diary.LetterNumber;
             LetterDate = diary.LetterDate;
-            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
             Contractor = diary.Contractor;
             ClientId = diary.ClientId;
             Comment = diary.Comment;
@@ -35,6 +35,8 @@ namespace RED.Models.ElectronicDiary
         [Required]
         public int Number { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Дата на приемане\" е задължително!")]
+        [Display(Name = "Дата на приемане")]
         public DateTime AcceptanceDateAndTime { get; set; }
 
         [Display(Name = "Писмо №")]
@@ -75,6 +77,27 @@ namespace RED.Models.ElectronicDiary
                 else
                 {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        public string AcceptanceTime
+        {
+            get
+            {
+                return this.AcceptanceDateAndTime.ToString("HH:mm");
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddHours(hours);
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddMinutes(minutes);
                 }
             }
         }
@@ -128,7 +151,7 @@ namespace RED.Models.ElectronicDiary
             diary.Number = Number;
             diary.LetterNumber = LetterNumber;
             diary.LetterDate = LetterDate;
-            diary.AcceptanceDateAndTime = AcceptanceDateAndTime;
+            diary.AcceptanceDateAndTime = AcceptanceDateAndTime.ToUniversalTime();
             diary.Contractor = Contractor;
             diary.ClientId = ClientId;
             diary.Comment = Comment;

@@ -10,6 +10,8 @@
 <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 <link href="~/Content/plugins/wizzard/jquery.steps.css" rel="stylesheet" />
 <link href="~/Content/Our/create-diary-custom.css" rel="stylesheet" />
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
 
 <h2>Добави писмо</h2>
 
@@ -20,39 +22,47 @@
         <h1>Писмо</h1>
         <fieldset>
             <h2>Информация за писмото</h2>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="form-group">
-                        <label for="ClientId">Клиент</label>
-                        @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control chosen-select" })
-                        @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                <label for="ClientId" class="control-label col-md-3">Клиент</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control chosen-select" })
+                    @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.LetterNumber)
-                        <input class="form-control text-box single-line" id="LetterNumber" name="LetterNumber" value="">
-                    </div>
-                    <div class="form-group" id="data_1">
-                        @Html.LabelFor(model => model.LetterDate)
+            <div class="form-group">
+                @Html.LabelFor(model => model.LetterNumber)
+                <input class="form-control text-box single-line" id="LetterNumber" name="LetterNumber" value="@Model.LetterNumber">
+            </div>
+            <div class="form-group" id="data_1">
+                @Html.LabelFor(model => model.LetterDate)
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Contractor)
+                @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="acceptance-date">
+                @Html.LabelFor(model => model.AcceptanceDateAndTime)
+                <div class="input-group">
+                    <div class="col-md-6">
                         <div class="input-group date">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
-                        </div>
-                        @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Contractor)
-                        @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
-                    </div>
-
-                </div>
-                <div class="col-lg-4">
-                    <div class="text-center">
-                        <div style="margin-top: 20px">
-                            <i class="fa fa-book" style="font-size: 180px;color: #e5e5e5 "></i>
+                            <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
                         </div>
                     </div>
+                    <div class="col-md-6" id="acceptance-time">
+                        <div class="input-group time" data-autoclose="true">
+                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                            <input type="text" class="form-control" id="AcceptanceTime" name="AcceptanceTime" value="@DateTime.Now.ToShortTimeString()">
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })
                 </div>
             </div>
         </fieldset>
@@ -97,8 +107,8 @@
 <script src="~/Scripts/plugins/staps/jquery.steps.min.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 <script src="~/Scripts/Our/Helpers.js"></script>
-
 <script src="~/Scripts/Our/DiaryWizzard.js"></script>
 
 <script>
@@ -113,6 +123,5 @@
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
-
 </script>
 
