@@ -38,7 +38,7 @@
                 @Html.LabelFor(model => model.LetterDate)
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на писмото е задължителна" id="LetterDate" name="LetterDate" type="datetime" value="@Model.LetterDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
                 </div>
                 @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
             </div>
@@ -53,13 +53,13 @@
                     <div class="col-md-6">
                         <div class="input-group date">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@DateTime.Now.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                            <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
                         </div>
                     </div>
                     <div class="col-md-6" id="acceptance-time">
                         <div class="input-group time" data-autoclose="true">
                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                            <input type="text" class="form-control" id="AcceptanceTime" name="AcceptanceTime" value="@DateTime.Now.ToShortTimeString()">
+                            <input type="text" class="form-control" id="AcceptanceTime" name="AcceptanceTime" value="@Model.AcceptanceTime">
                         </div>
                     </div>
                     @Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })

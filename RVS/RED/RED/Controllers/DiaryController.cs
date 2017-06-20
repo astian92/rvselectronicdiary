@@ -59,7 +59,7 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
-            return View();
+            return View(new DiaryW());
         }
 
         [HttpPost]
