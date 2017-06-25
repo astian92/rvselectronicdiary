@@ -7,6 +7,9 @@ using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Repositories.Abstract;
 using RED.Helpers;
+using RED.Models;
+using RED.Models.DataContext;
+using Newtonsoft.Json;
 
 namespace RED.Controllers
 {
@@ -135,28 +138,62 @@ namespace RED.Controllers
             return View(tests);
         }
 
-        public JsonResult GetTests()
+        public string GetTests()
         {
-            var tests = _rep.GetTests();
+            //get the parameters from the Datatable
+            var dtParams = new DtParameters(Request);
 
-            var jsonData = tests.Select(t => new
+            var entities = _rep.GetTests();
+            int totalRecords = entities.Count();
+
+            if (dtParams.IsBeingSearched)
             {
-                TestType = t.TestType.ShortName,
-                Name = t.Name,
-                Level = t.AcredetationLevel.Level,
-                UnitName = t.UnitName,
-                Temperature = t.Temperature,
-                Category = t.TestCategory.Name,
-                Id = t.Id
-            });
+                entities = entities.Where(e => e.Name.ToLower().Contains(dtParams.SearchValue) ||
+                                          e.TestType.ShortName.ToLower().Contains(dtParams.SearchValue) || 
+                                          e.TestCategory.Name.ToLower().Contains(dtParams.SearchValue));
+            }
 
-            return Json(new { data = jsonData });
+            int filteredRecords = entities.Count();
+
+            if (dtParams.IsBeingFiltered)
+            {
+                entities = Filter(entities, dtParams.FilterColIndex, dtParams.FilterAsc);
+            }
+            else
+            {
+                //defaultOrder
+                entities = entities.OrderBy(c => c.TestCategory.Name)
+                    .ThenBy(c => c.TestType.ShortName)
+                    .ThenBy(c => c.Name)
+                    .ThenBy(c => c.AcredetationLevel.Level);
+            }
+
+            var data = entities.Skip(dtParams.Skip).Take(dtParams.PageSize)
+                .ToList().Select(t => new TestVM
+                {
+                    TestType = t.TestType.ShortName,
+                    Name = t.Name,
+                    Level = t.AcredetationLevel.Level,
+                    UnitName = t.UnitName,
+                    Temperature = t.Temperature,
+                    Category = t.TestCategory.Name,
+                    Id = t.Id
+                });
+
+            var jsonResult = new JqueryListResult<TestVM>(
+                    data,
+                    dtParams.Draw,
+                    filteredRecords,
+                    totalRecords);
+
+            var json = JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         [RoleFilter(FeaturesCollection.ModifyTests)]
         public ActionResult Create()
         {
-            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name"); 
+            ViewBag.TestCategoryId = new SelectList(_rep.GetCategories(), "Id", "Name");
             ViewBag.AcredetationLevelId = new SelectList(_rep.GetAcredetationLevels(), "Id", "Level");
             ViewBag.TypeId = new SelectList(_rep.GetTestTypes(), "Id", "Type");
             return View();
@@ -187,7 +224,7 @@ namespace RED.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             TestW test = _rep.GetTest(id.Value);
             if (test == null)
             {
@@ -274,6 +311,72 @@ namespace RED.Controllers
             }
 
             return "Unknown";
+        }
+
+        private IQueryable<Test> Filter(IQueryable<Test> entities, int colIndex, bool asc)
+        {
+            switch (colIndex)
+            {
+                case 0:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenBy(e => e.TestType.ShortName);
+                    }
+                    else
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).OrderByDescending(e => e.TestType.ShortName);
+                    }
+
+                    break;
+                case 1:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenBy(e => e.Name);
+                    }
+                    else
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenByDescending(e => e.Name);
+                    }
+
+                    break;
+                case 2:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenBy(e => e.AcredetationLevel.Level);
+                    }
+                    else
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenByDescending(e => e.AcredetationLevel.Level);
+                    }
+
+                    break;
+                case 3:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenBy(e => e.UnitName);
+                    }
+                    else
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenByDescending(e => e.UnitName);
+                    }
+
+                    break;
+                case 4:
+                    if (asc == true)
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenBy(e => e.Temperature);
+                    }
+                    else
+                    {
+                        entities = entities.OrderBy(c => c.TestCategory.Name).ThenByDescending(e => e.Temperature);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            return entities;
         }
     }
 }
