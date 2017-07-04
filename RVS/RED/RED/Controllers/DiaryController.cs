@@ -59,7 +59,7 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
-            return View(new DiaryW());
+            return View("Create2", new DiaryW());
         }
 
         [HttpPost]
@@ -76,7 +76,7 @@ namespace RED.Controllers
 
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
 
-            return View(diary);
+            return View("Create2", diary);
         }
 
         [RoleFilter(FeaturesCollection.ModifyDiary)]
