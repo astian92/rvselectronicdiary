@@ -1,0 +1,3 @@
+A - Applied on Working Database (gems_dev_rvs) - what we work with
+B - Applied on Demo Database (gems_rvs) - what they see
+X - Applied on Production Server - RVS Server
