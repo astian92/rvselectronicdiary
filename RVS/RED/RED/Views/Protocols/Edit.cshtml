@@ -32,11 +32,13 @@
         @foreach (var item in Model.ProtocolResults.OrderBy(x => x.ProductTest.Test.TypeId).ThenBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber))
         {
             <div class="form-group">
-                <label class="control-label col-md-3">
-                    Име на продукта
+                <label for="test-method" class="control-label col-md-3">
+                    № на образеца
+                    <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                 </label>
                 <label class="col-md-9 modified-label">
-                    @item.ProductTest.Product.Name
+                    @item.ResultNumber
+                    <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@item.ResultNumber">
                 </label>
             </div>
             <div class="form-group">
@@ -63,42 +65,23 @@
                 </label>
             </div>
             <div class="form-group">
-                <label for="test-method" class="control-label col-md-3">
-                    № на образеца
-                    <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                </label>
-                <label class="col-md-9 modified-label">
-                    @item.ResultNumber
-                    <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@item.ResultNumber">
-                </label>
-            </div>
-            <div class="form-group">
                 <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">
                     Резултати от изследването, неопределеност
                 </label>
                 <div class="col-md-9">
-                    @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", item.Results, new { @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
+                    @{  
+                        var uId = Guid.NewGuid();
+                    }
+                    @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", item.Results, new { id= uId, @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
                     <span class="special-chars-holder">
-                        <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
-                        <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
+                        <input type="button" value="±" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
+                        <input type="button" value="°" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
+                        <input type="button" value="²" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
                     </span>
                     @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                 </div>
             </div>
-            @*<div class="form-group">
-                <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
-                    Стойност на показателя
-                    <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                </label>
-                <div class="col-md-9">
-                    @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", item.MethodValue, new { @class = "form-control tarea", data_val = "true", data_val_required = "Стойността е задължителна!" })
-                    <span class="special-chars-holder">
-                        <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
-                        <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
-                    </span>
-                    @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
-                </div>
-            </div>*@
+
             <div class="form-group">
                 <label class="control-label col-md-3">
                     Допуск
@@ -307,19 +290,5 @@
 
     for (var selector in config) {
         $(selector).chosen(config[selector]);
-    }
-
-    function addPlusMinus(item) {
-        var textArea = $(item).parent().parent().find('textarea');
-        var value = textArea.val();
-        value += "±";
-        textArea.val(value);
-    }
-
-    function addDegrees(item) {
-        var textArea = $(item).parent().parent().find('textarea');
-        var value = textArea.val();
-        value += "°";
-        textArea.val(value);
     }
 </script>

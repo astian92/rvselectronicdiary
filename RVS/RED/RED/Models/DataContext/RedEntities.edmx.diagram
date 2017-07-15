@@ -47,11 +47,6 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Tests_TestTypes" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProtocolResult" Width="1.5" PointX="13.25" PointY="15.625" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_Protocols" />
-        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProductTest" Width="1.5" PointX="12.625" PointY="18.875" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" />
-        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests" />
         <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.Diary" Width="1.5" PointX="6" PointY="0.875" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Diary_Clients" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_Products_Diary" />
@@ -60,6 +55,11 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.ProductTest" Width="1.5" PointX="12.625" PointY="19" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Products" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_TestMethods" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProductTests_Tests" />
+        <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ProtocolResults_ProductTests" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

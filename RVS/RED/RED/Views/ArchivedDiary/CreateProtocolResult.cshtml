@@ -32,28 +32,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9">
-                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus()" />
-                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees()" />
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" for="Results" onclick="addSign(this)" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" for="Results" onclick="addSign(this)" />
             </div>
         </div>
-
-        @*<div class="form-group">
-            <label for="MethodValue" class="control-label col-md-3">
-                Стойност на показателя
-                <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-            </label>
-            <div class="col-md-9">
-                @Html.TextAreaFor(model => model.MethodValue, new { @class = "form-control tarea" })
-                @Html.ValidationMessageFor(model => model.MethodValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinusToMethodValue()" />
-                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegreesToMethodValue()" />
-            </div>
-        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9">
@@ -63,29 +45,3 @@
         </div>
     </div>
 }
-
-<script>
-    function addPlusMinus() {
-        var value = $('#Results').val();
-        value += '±';
-        $('#Results').val(value);
-    }
-
-    function addDegrees() {
-        var value = $('#Results').val();
-        value += '°';
-        $('#Results').val(value);
-    }
-
-    function addPlusMinusToMethodValue() {
-        var value = $('#MethodValue').val();
-        value += '±';
-        $('#MethodValue').val(value);
-    }
-
-    function addDegreesToMethodValue() {
-        var value = $('#MethodValue').val();
-        value += '°';
-        $('#MethodValue').val(value);
-    }
-</script>

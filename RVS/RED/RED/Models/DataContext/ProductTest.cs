@@ -23,7 +23,6 @@ namespace RED.Models.DataContext
         public System.Guid ProductId { get; set; }
         public System.Guid TestId { get; set; }
         public System.Guid TestMethodId { get; set; }
-        public int Units { get; set; }
         public string MethodValue { get; set; }
         public string Remark { get; set; }
     

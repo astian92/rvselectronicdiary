@@ -31,14 +31,20 @@
         {
             foreach (var test in item.ProductTests)
             {
-                for (int j = 0; j < test.Units; j++)
-                {
+                //for (int j = 0; j < test.Units; j++)
+                //{
                     <div class="form-group">
-                        <label class="control-label col-md-3">
-                            Име на продукта
+                        <label for="test-method" class="control-label col-md-3">
+                            № на образеца
+                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                         </label>
                         <label class="col-md-9 modified-label">
-                            @test.Product.Name
+                            @{
+                                //var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
+                                var number = test.Test.AcredetationLevel.Level.Trim() + wrappedDiary.Number + "-" + item.Number;
+                            }
+                            @number
+                            <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number">
                         </label>
                     </div>
                     <div class="form-group">
@@ -64,28 +70,20 @@
                             @test.TestMethod.Method
                         </label>
                     </div>
-                    <div class="form-group">
-                        <label for="test-method" class="control-label col-md-3">
-                            № на образеца
-                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                        </label>
-                        <label class="col-md-9 modified-label">
-                            @{
-                                //var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
-                                var number = test.Test.AcredetationLevel.Level.Trim() + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j + 1) : ""); 
-                            }
-                            @number
-                            <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">
                             Резултати от изследването, неопределеност
                         </label>
                         <div class="col-md-9">
-                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
+                            @{  
+                                var uId = Guid.NewGuid();
+                            }
+                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { id = uId, @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
                             <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1"/>
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
+                                <input type="button" value="±" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1"/>
+                                <input type="button" value="°" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
+                                <input type="button" value="²" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
                             </span>
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
@@ -98,20 +96,7 @@
                             @test.MethodValue
                         </label>
                     </div>
-                    @*<div class="form-group">
-                        <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
-                            Стойност на показателя
-                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                        </label>
-                        <div class="col-md-9">
-                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Стойността е задължителна!" })
-                            <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
-                            </span>
-                            @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
+
                     <div class="form-group">
                         <label for="test-method" class="control-label col-md-3">
                             Условия на заобикалящата среда
@@ -126,7 +111,7 @@
 
                     <hr />
                     i++;
-                }
+                //}
 	        }
         }
 

@@ -49,8 +49,8 @@ namespace RED.Models.DataContext
         public virtual DbSet<TestMethod> TestMethods { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
-        public virtual DbSet<ProductTest> ProductTests { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
+        public virtual DbSet<ProductTest> ProductTests { get; set; }
     }
 }

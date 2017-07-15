@@ -28,8 +28,8 @@
                 <label class="control-label" for="methodValueBox">Стойност на показателя</label>
                 <textarea id="methodValueBox-@product.Key" class="form-control no-resize methodValueBox"></textarea>
                 <span class="special-chars-holder pull-right">
-                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" for="methodValueBox-@product.Key" tabindex="-1" />
-                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" for="methodValueBox-@product.Key" tabindex="-1" />
+                    <input type="button" value="±" class="btn btn-xs btn-info" onclick="addSign(this)" for="methodValueBox-@product.Key" tabindex="-1" />
+                    <input type="button" value="°" class="btn btn-xs btn-info" onclick="addSign(this)" for="methodValueBox-@product.Key" tabindex="-1" />
                 </span>
                 <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="methodValue-validation collapse">Стойност на показателя е задължителен!</span></span>
                 @*<div class="clearfix"></div>*@
