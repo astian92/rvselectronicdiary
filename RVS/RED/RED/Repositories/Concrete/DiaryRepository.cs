@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using RED.Mappings;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary;
@@ -35,20 +36,7 @@ namespace RED.Repositories.Concrete
 
             //Order and paging
             var paged = diaryEntries.OrderByDescending(d => d.Number).Skip((page - 1) * pageSize).Take(pageSize);
-            var wrapped = paged.Select(d => new DiaryW()
-                                   {
-                                       Id = d.Id,
-                                       Number = d.Number,
-                                       LetterNumber = d.LetterNumber,
-                                       LetterDate = d.LetterDate,
-                                       AcceptanceDateAndTime = d.AcceptanceDateAndTime,
-                                       Contractor = d.Contractor,
-                                       ClientId = d.ClientId,
-                                       Comment = d.Comment,
-                                       Client = d.Client,
-                                       Request = d.Requests.FirstOrDefault(),
-                                       Products = d.Products
-                                   });
+            var wrapped = paged.Select(DiaryMappings.ToDiaryW);
             
             return wrapped;
         }
@@ -71,22 +59,7 @@ namespace RED.Repositories.Concrete
 
         public DiaryW GetDiary(Guid diaryId)
         {
-            var diary = Db.Diaries.Where(x => x.Id == diaryId)
-                                  .Select(d => new DiaryW()
-                                          {
-                                              Id = d.Id,
-                                              Number = d.Number,
-                                              LetterNumber = d.LetterNumber,
-                                              LetterDate = d.LetterDate,
-                                              AcceptanceDateAndTime = d.AcceptanceDateAndTime,
-                                              Contractor = d.Contractor,
-                                              ClientId = d.ClientId,
-                                              Comment = d.Comment,
-                                              Client = d.Client,
-                                              Request = d.Requests.FirstOrDefault(),
-                                              Products = d.Products
-                                          })
-                                  .FirstOrDefault();
+            var diary = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
             return diary;
         }
 
@@ -322,22 +295,7 @@ namespace RED.Repositories.Concrete
 
             try
             {
-                var diaryW = Db.Diaries.Where(x => x.Id == diaryId)
-                                       .Select(d => new DiaryW()
-                                       {
-                                           Id = d.Id,
-                                           Number = d.Number,
-                                           LetterNumber = d.LetterNumber,
-                                           LetterDate = d.LetterDate,
-                                           AcceptanceDateAndTime = d.AcceptanceDateAndTime,
-                                           Contractor = d.Contractor,
-                                           ClientId = d.ClientId,
-                                           Comment = d.Comment,
-                                           Client = d.Client,
-                                           Request = d.Requests.FirstOrDefault(),
-                                           Products = d.Products
-                                       })
-                                       .FirstOrDefault();
+                var diaryW = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
 
                 var archivedDiary = new ArchivedDiary();
                 archivedDiary.Id = Guid.NewGuid();

@@ -219,6 +219,7 @@
     <Compile Include="Helpers\FeaturesCollection.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Mappings\DiaryMappings.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
     <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />

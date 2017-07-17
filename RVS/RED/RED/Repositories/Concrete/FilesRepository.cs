@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using RED.Mappings;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary;
@@ -29,22 +30,7 @@ namespace RED.Repositories.Concrete
 
         public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
-            var diaryW = Db.Diaries.Where(x => x.Id == diaryId)
-                                   .Select(d => new DiaryW()
-                                           {
-                                               Id = d.Id,
-                                               Number = d.Number,
-                                               LetterNumber = d.LetterNumber,
-                                               LetterDate = d.LetterDate,
-                                               AcceptanceDateAndTime = d.AcceptanceDateAndTime,
-                                               Contractor = d.Contractor,
-                                               ClientId = d.ClientId,
-                                               Comment = d.Comment,
-                                               Client = d.Client,
-                                               Request = d.Requests.FirstOrDefault(),
-                                               Products = d.Products
-                                           })
-                                   .FirstOrDefault();
+            var diaryW = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
 
             var acreditedItems = new List<RequestListModel>();
             var notAcreditedItems = new List<RequestListModel>();
