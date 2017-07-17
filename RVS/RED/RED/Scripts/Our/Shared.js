@@ -71,20 +71,12 @@ function hideMenu() {
     }
 }
 
-function addPlusMinus(e) {
-    var Id = $(e).attr('for');
-    var value = $('#' + Id).val();
+function addSign(item) {
+    var selector = $(item).attr('for');
+    var box = $('#' + selector);
 
-    value += '±';
-
-    $('#' + Id).val(value);
-}
-
-function addDegrees(e) {
-    var Id = $(e).attr('for');
-    var value = $('#' + Id).val();
-
-    value += '°';
-
-    $('#' + Id).val(value);
+    var value = box.val();
+    value += $(item).attr('value');
+    box.val(value);
+    box.focus();
 }

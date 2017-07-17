@@ -222,6 +222,7 @@
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
     <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />
+    <Compile Include="Models\ElectronicDiary\Tests\TestVM.cs" />
     <Compile Include="Repositories\Abstract\IFeaturesRepository.cs" />
     <Compile Include="Repositories\Concrete\AccountRepository.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />

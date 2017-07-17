@@ -20,17 +20,30 @@ namespace RED.Models.FileModels.RequestList
             DateTime? requestDate = ReportModel.ReportParameters["Date"] as DateTime?;
 
             int row = 6;
+            bool thereWasMKB = false;
 
             if (ReportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.MKB)))
             {
+                thereWasMKB = true;
                 CreateTableInTemplate("7.1 МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.MKB);
             }
 
             row++;
+            if (thereWasMKB)
+            {
+                Worksheet.Row(row).PageBreak = true;
+                row++;
+            }
 
             //Insert only MKB Tests
             if (ReportData.Any(rd => rd.ProductTests.Any(pt => pt.TestType == TestTypes.FZH)))
             {
+                if (thereWasMKB)
+                {
+                    Worksheet.Cells[1, 1, 5, 8].Copy(Worksheet.Cells[row, 1]);
+                    row += 5;
+                }
+
                 CreateTableInTemplate("7.2 ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ", ref row, diaryNumber, testingPeriod, requestDate, TestTypes.FZH);
             }
         }

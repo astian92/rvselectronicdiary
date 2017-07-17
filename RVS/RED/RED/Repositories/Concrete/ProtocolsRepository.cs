@@ -133,7 +133,7 @@ namespace RED.Repositories.Concrete
             protocol.TesterFZH = protocolW.TesterFZH;
             protocol.LabLeader = protocolW.LabLeader;
 
-            using (TransactionScope scope = new TransactionScope())
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
             {
                 Db.SaveChanges();
                 GeneratePorotocolReport(protocol);

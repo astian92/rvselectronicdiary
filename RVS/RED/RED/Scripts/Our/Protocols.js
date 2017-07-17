@@ -241,16 +241,4 @@ function recalcuateRemarkNames() {
 
 }
 
-function addPlusMinus(item) {
-    var textArea = $(item).parent().parent().find('textarea');
-    var value = textArea.val();
-    value += "±";
-    textArea.val(value);
-}
 
-function addDegrees(item) {
-    var textArea = $(item).parent().parent().find('textarea');
-    var value = textArea.val();
-    value += "°";
-    textArea.val(value);
-}

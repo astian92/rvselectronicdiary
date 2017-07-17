@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RED.Models.DataContext;
 using RED.Models.Responses;
 using RED.Models.ElectronicDiary.Tests;
@@ -28,7 +29,7 @@ namespace RED.Repositories.Abstract
 
         TestW GetTest(Guid Id);
 
-        IEnumerable<TestW> GetTests();
+        IQueryable<Test> GetTests();
 
         IEnumerable<TestType> GetTestTypes();
 

@@ -89,13 +89,12 @@ namespace RED.Repositories.Concrete
             return new TestW(test);
         }
 
-        public IEnumerable<TestW> GetTests()
+        public IQueryable<Test> GetTests()
         {
             var tests = Db.Tests.Include(x => x.TestCategory)
                             .Include(x => x.AcredetationLevel)
-                            .OrderBy(t => t.TestCategory.Name)
-                            .ToList()
-                            .Select(t => new TestW(t));
+                            .OrderBy(t => t.TestCategory.Name);
+
             return tests;
         }
 
