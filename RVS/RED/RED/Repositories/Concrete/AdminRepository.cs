@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using RED.Models.Account;
 using RED.Models.Admin.Roles;
 using RED.Models.Admin.Users;
 using RED.Models.DataContext;
-using RED.Repositories.Abstract;
 using RED.Models.DataContext.Abstract;
-using RED.Models.Account;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -27,17 +26,14 @@ namespace RED.Repositories.Concrete
 
         public RoleW GetRole(Guid id)
         {
-            var role = Db.Roles.FirstOrDefault(r => r.Id == id);
-            var roleW = new RoleW(role);
-            roleW.Connections = Db.RolesFeatures.Where(x => x.RoleId == id).ToList();
-            
+            var roleW = Db.Roles.Where(r => r.Id == id).Select(x => new RoleW() { Id = x.Id, DisplayName = x.DisplayName, Connections = x.RolesFeatures }).FirstOrDefault();
             return roleW;
         }
 
         public IEnumerable<RoleW> GetRoles()
         {
-            var roles = Db.Roles.ToList();
-            return roles.Select(r => new RoleW(r));
+            var roles = Db.Roles.Select(x => new RoleW() { Id = x.Id, DisplayName = x.DisplayName });
+            return roles;
         }
 
         public void AddRole(RoleW role, string[] features)
@@ -82,16 +78,41 @@ namespace RED.Repositories.Concrete
 
         public UserW GetUser(Guid id)
         {
-            var user = Db.Users.FirstOrDefault(x => x.Id == id);
-            return new UserW(user);
+            var user = Db.Users.Where(x => x.Id == id)
+                               .Select(x => new UserW()
+                                   {
+                                       Id = x.Id,
+                                       Username = x.Username,
+                                       Password = x.Password,
+                                       FirstName = x.FirstName,
+                                       MiddleName = x.MiddleName,
+                                       LastName = x.LastName,
+                                       Position = x.Position,
+                                       RoleId = x.RoleId,
+                                       Role = x.Role
+                                   })
+                               .FirstOrDefault();
+            return user;
         }
 
         public IEnumerable<UserW> GetUsers()
         {
-            var users = Db.Users.Where(x => x.Id.ToString() != RvsPrincipal.MasterId && x.Id.ToString() != RvsPrincipal.SuperUserId).Include(x => x.Role)
-                .OrderBy(u => u.Username)
-                .ToList();
-            return users.Select(u => new UserW(u));
+            var users = Db.Users.Where(x => x.Id.ToString() != RvsPrincipal.MasterId && x.Id.ToString() != RvsPrincipal.SuperUserId)
+                .Select(x => new UserW()
+                    {
+                        Id = x.Id,
+                        Username = x.Username,
+                        Password = x.Password,
+                        FirstName = x.FirstName,
+                        MiddleName = x.MiddleName,
+                        LastName = x.LastName,
+                        Position = x.Position,
+                        RoleId = x.RoleId,
+                        Role = x.Role
+                    })
+                .OrderBy(u => u.Username);
+
+            return users;
         }
 
         public void AddUser(UserW user)
@@ -118,7 +139,7 @@ namespace RED.Repositories.Concrete
 
         public bool DeleteUser(Guid id)
         {
-            User user = this.GetBaseUser(id);
+            var user = GetBaseUser(id);
             Db.Users.Remove(user);
 
             try
@@ -135,7 +156,7 @@ namespace RED.Repositories.Concrete
 
         public IEnumerable<Feature> GetFeatures()
         {
-            return Db.Features.OrderBy(x => x.DisplayName).ToList();
+            return Db.Features.OrderBy(x => x.DisplayName);
         }
 
         private void MakeRoleFeatureConnections(Guid roleId, string[] features)

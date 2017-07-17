@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using RED.Models.DataContext;
+using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Models.Responses;
-using RED.Models.ElectronicDiary;
 
 namespace RED.Repositories.Abstract
 {

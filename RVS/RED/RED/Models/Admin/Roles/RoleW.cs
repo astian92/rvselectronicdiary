@@ -9,15 +9,7 @@ namespace RED.Models.Admin.Roles
     {
         public RoleW()
         {
-            Connections = new List<RolesFeature>();
-        }
-
-        public RoleW(Role role)
-        {
-            this.Id = role.Id;
-            this.DisplayName = role.DisplayName;
-
-            Connections = new List<RolesFeature>();
+            Connections = new HashSet<RolesFeature>();
         }
 
         public Guid Id { get; set; }
@@ -26,7 +18,7 @@ namespace RED.Models.Admin.Roles
         [Display(Name = "Име")]
         public string DisplayName { get; set; }
 
-        public List<RolesFeature> Connections { get; set; }
+        public ICollection<RolesFeature> Connections { get; set; }
 
         public Role ToBase()
         {

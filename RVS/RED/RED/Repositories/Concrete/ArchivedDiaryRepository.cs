@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using RED.Models.DataContext;
-using RED.Models.ElectronicDiary.ArchivedWrappers;
-using RED.Models.ElectronicDiary;
-using RED.Repositories.Abstract;
 using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary;
+using RED.Models.ElectronicDiary.ArchivedWrappers;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -37,7 +37,7 @@ namespace RED.Repositories.Concrete
             archivedDiary.Number = adiary.Number;
             archivedDiary.LetterNumber = adiary.LetterNumber;
             archivedDiary.LetterDate = adiary.LetterDate.ToUniversalTime();
-            archivedDiary.AcceptanceDateAndTime = adiary.AcceptanceDateAndTime.ToUniversalTime();
+            archivedDiary.AcceptanceDateAndTime = adiary.AcceptanceDateAndTime;
             archivedDiary.Contractor = adiary.Contractor;
             archivedDiary.Client = adiary.Client;
             archivedDiary.ClientMobile = adiary.ClientMobile;

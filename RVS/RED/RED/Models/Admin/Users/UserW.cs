@@ -12,19 +12,6 @@ namespace RED.Models.Admin.Users
             this.ActionLogs = new HashSet<ActionLog>();
         }
 
-        public UserW(User user) : this()
-        {
-            this.Id = user.Id;
-            this.Username = user.Username;
-            this.Password = user.Password;
-            this.FirstName = user.FirstName;
-            this.MiddleName = user.MiddleName;
-            this.LastName = user.LastName;
-            this.Position = user.Position;
-            this.RoleId = user.RoleId;
-            this.Role = user.Role;
-        }
-
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Потребителското име е задължително.")]

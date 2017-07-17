@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
@@ -12,22 +11,6 @@ namespace RED.Models.ElectronicDiary
         public DiaryW()
         {
             this.Products = new List<Product>();
-        }
-
-        public DiaryW(Diary diary)
-        {
-            Id = diary.Id;
-            Number = diary.Number;
-            LetterNumber = diary.LetterNumber;
-            LetterDate = diary.LetterDate;
-            AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
-            Contractor = diary.Contractor;
-            ClientId = diary.ClientId;
-            Comment = diary.Comment;
-
-            Client = diary.Client;
-            Request = diary.Requests.FirstOrDefault();
-            Products = diary.Products;
         }
 
         public Guid Id { get; set; }
@@ -151,7 +134,7 @@ namespace RED.Models.ElectronicDiary
             diary.Number = Number;
             diary.LetterNumber = LetterNumber;
             diary.LetterDate = LetterDate;
-            diary.AcceptanceDateAndTime = AcceptanceDateAndTime.ToUniversalTime();
+            diary.AcceptanceDateAndTime = AcceptanceDateAndTime;
             diary.Contractor = Contractor;
             diary.ClientId = ClientId;
             diary.Comment = Comment;

@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using RED.Filters;
+using RED.Helpers;
 using RED.Models.ControllerBases;
 using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
-using RED.Helpers;
 
 namespace RED.Controllers
 {
@@ -59,7 +59,7 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
-            return View("Create2", new DiaryW());
+            return View(new DiaryW());
         }
 
         [HttpPost]
@@ -76,7 +76,7 @@ namespace RED.Controllers
 
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name", diary.ClientId);
 
-            return View("Create2", diary);
+            return View(diary);
         }
 
         [RoleFilter(FeaturesCollection.ModifyDiary)]
