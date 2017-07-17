@@ -3,11 +3,10 @@ using System.Globalization;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
-using RED.Models.Account;
 using RED.App_Start;
+using RED.Models.Account;
 using RED.Models.DataContext.Concrete;
 
 namespace RED
@@ -20,7 +19,6 @@ namespace RED
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
         }
@@ -40,7 +38,6 @@ namespace RED
                     }
                     catch (Exception)
                     {
-                        //somehting went wrong
                     }
                 }
             }

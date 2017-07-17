@@ -4,12 +4,12 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Models.Responses;
-using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -128,7 +128,7 @@ namespace RED.Repositories.Concrete
             {
                 Db.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary;
+using RED.Models.ElectronicDiary.Protocols;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ElectronicDiary.Requests;
-using RED.Models.ElectronicDiary.Protocols;
 using RED.Repositories.Abstract;
-using RED.Models.ElectronicDiary;
-using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -151,7 +151,7 @@ namespace RED.Repositories.Concrete
             {
                 Db.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
