@@ -9,9 +9,9 @@ namespace RED.Models.ElectronicDiary.Protocols
     {
         public ProtocolW()
         {
-            this.ProtocolResults = new List<ProtocolResult>();
-            this.ProtocolsRemarksA = new List<ProtocolsRemark>();
-            this.ProtocolsRemarksB = new List<ProtocolsRemark>();
+            ProtocolResults = new HashSet<ProtocolResult>();
+            ProtocolsRemarksA = new HashSet<ProtocolsRemark>();
+            ProtocolsRemarksB = new HashSet<ProtocolsRemark>();
         }
 
         public Guid Id { get; set; }

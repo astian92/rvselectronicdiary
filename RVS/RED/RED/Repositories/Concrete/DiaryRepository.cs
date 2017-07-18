@@ -218,9 +218,10 @@ namespace RED.Repositories.Concrete
         {
             if (Db.Diaries.Any(x => x.Id == diaryId))
             {
-                Request request = new Request();
+                var date = DateTime.Now;
+
+                var request = new Request();
                 request.Id = Guid.NewGuid();
-                var date = DateTime.Now.ToUniversalTime();
                 request.Date = date;
                 request.DiaryId = diaryId;
                 request.TestingPeriod = testingPeriod;

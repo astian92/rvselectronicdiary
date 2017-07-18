@@ -221,6 +221,7 @@
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Mappings\DiaryMappings.cs" />
     <Compile Include="Mappings\ProtocolMappings.cs" />
+    <Compile Include="Mappings\RequestMappings.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
     <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />
@@ -403,9 +404,6 @@
     <Compile Include="Models\Responses\ActionResponse.cs" />
     <Compile Include="Models\Responses\ErrorFactory.cs" />
     <Compile Include="Models\TestTypes.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

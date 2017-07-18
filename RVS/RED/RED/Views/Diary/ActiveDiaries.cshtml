@@ -126,7 +126,7 @@
                                                 <h5>Срок на изпитване (дни): <strong>@item.Request.TestingPeriod</strong></h5>
                                                 string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
                                                 <h5>Приел пробата: <strong>@name</strong></h5>
-                                                <h5>Дата на приемане: <strong>@item.Request.Date.ToLocalTime().ToString("dd.M.yyyy HH:mm", CultureInfo.InvariantCulture)</strong></h5>
+                                                <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy HH:mm", CultureInfo.InvariantCulture)</strong></h5>
                                             }
                                             else
                                             {

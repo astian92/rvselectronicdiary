@@ -259,7 +259,7 @@ namespace RED.Repositories.Concrete
             model.ReportParameters.Add("Client", request.Diary.Client.Name);
             model.ReportParameters.Add("LetterNumber", request.Diary.LetterNumber);
             model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
-            model.ReportParameters.Add("RequestDate", request.Date.ToLocalTime());
+            model.ReportParameters.Add("RequestDate", request.Date);
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
             model.ReportParameters.Add("TesterMKB", protocol.TesterMKB);
             model.ReportParameters.Add("TesterFZH", protocol.TesterFZH);

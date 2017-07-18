@@ -51,8 +51,8 @@ namespace RED.Repositories.Concrete
 
         public RequestW GetRequest(Guid id)
         {
-            var request = Db.Requests.Single(r => r.Id == id);
-            return new RequestW(request);
+            var requestW = Db.Requests.Single(r => r.Id == id).ToRequestWrapper();
+            return requestW;
         }
 
         public void Create(ProtocolW protocolW)
