@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RED.Mappings;
 using RED.Models.Account;
+using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary.Requests;
 using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
-using RED.Models.DataContext;
 
 namespace RED.Repositories.Concrete
 {
@@ -21,77 +22,69 @@ namespace RED.Repositories.Concrete
 
         public RequestW GetRequest(Guid id)
         {
-            var request = Db.Requests.Single(r => r.Id == id);
-            return new RequestW(request);
+            var requestW = Db.Requests.Single(r => r.Id == id).ToRequestWrapper();
+            return requestW;
         }
 
         public IEnumerable<RequestW> GetNotAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number))
+                                      .Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true))
+                                      .Where(r => r.AcceptedBy == null && r.IsAccepted == false);
 
             //Order and paging
-            var notAccepted = requests.Where(r => r.AcceptedBy == null && r.IsAccepted == false)
-                .OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
-            return notAccepted.Select(r => new RequestW(r));
+            var notAcceptedRequests = requests.OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize).Select(RequestMappings.ToRequestW);
+            return notAcceptedRequests;
         }
 
         public IEnumerable<RequestW> GetAcceptedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number))
+                                      .Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true))
+                                      .Where(r => r.AcceptedBy != null && r.IsAccepted == true && r.Protocols.Any() == false);
 
             //Order and paging
-            var accepted = requests.Where(r => r.AcceptedBy != null && r.IsAccepted == true && r.Protocols.Any() == false)
-                .OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
-            return accepted.Select(r => new RequestW(r));
+            var acceptedRequests = requests.OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize).Select(RequestMappings.ToRequestW);
+            return acceptedRequests;
         }
 
         public IEnumerable<RequestW> GetMyRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
-            //Filter
-            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
-
-            //Order and paging
             var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
 
-            var myRequests = requests.Where(r => r.IsAccepted == true &&
-                        r.AcceptedBy == user.Id &&
-                        r.Protocols.Any() == false) //that were not completed
-                .OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList(); 
-            return myRequests.Select(r => new RequestW(r));
+            //Filter
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number))
+                                      .Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true))
+                                      .Where(r => r.IsAccepted == true && r.AcceptedBy == user.Id && r.Protocols.Any() == false); //that were not completed
+            //Order and paging
+            var myRequests = requests.OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize).Select(RequestMappings.ToRequestW);
+            return myRequests;
         }
 
         public IEnumerable<RequestW> GetCompletedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number));
-            requests = requests.Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true));
+            var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number))
+                                      .Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true))
+                                      .Where(r => r.Protocols.Any() == true);
 
             //Order and paging
-            var completed = requests.Where(r => r.Protocols.Any() == true)
-                .OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
-            return completed.Select(r => new RequestW(r));
+            var completedRequests = requests.OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize).Select(RequestMappings.ToRequestW);
+            return completedRequests;
         }
 
         public IEnumerable<ArchivedRequest> GetArchivedRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var requests = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
-            requests = requests.Where(d => (from != null ? d.RequestDate >= from.Value : true) && (to != null ? d.RequestDate <= to.Value : true));
+            var requests = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number))
+                                             .Where(d => (from != null ? d.RequestDate >= from.Value : true) 
+                                                      && (to != null ? d.RequestDate <= to.Value : true));
 
             //Order and paging
-            var archivedDiaries = requests.OrderByDescending(r => r.RequestDate).Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList();
-
-            return archivedDiaries.Select(ad => new ArchivedRequest(ad));
+            var pagedRequests = requests.OrderByDescending(r => r.RequestDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return pagedRequests.Select(ad => new ArchivedRequest(ad));
         }
 
         public bool AcceptRequest(Guid requestId)

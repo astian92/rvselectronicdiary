@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
@@ -14,27 +13,13 @@ namespace RED.Models.ElectronicDiary
             this.Products = new List<Product>();
         }
 
-        public DiaryW(Diary diary)
-        {
-            Id = diary.Id;
-            Number = diary.Number;
-            LetterNumber = diary.LetterNumber;
-            LetterDate = diary.LetterDate;
-            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            Contractor = diary.Contractor;
-            ClientId = diary.ClientId;
-            Comment = diary.Comment;
-
-            Client = diary.Client;
-            Request = diary.Requests.FirstOrDefault();
-            Products = diary.Products;
-        }
-
         public Guid Id { get; set; }
 
         [Required]
         public int Number { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Дата на приемане\" е задължително!")]
+        [Display(Name = "Дата на приемане")]
         public DateTime AcceptanceDateAndTime { get; set; }
 
         [Display(Name = "Писмо №")]
@@ -75,6 +60,27 @@ namespace RED.Models.ElectronicDiary
                 else
                 {
                     return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        public string AcceptanceTime
+        {
+            get
+            {
+                return this.AcceptanceDateAndTime.ToString("HH:mm");
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddHours(hours);
+                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddMinutes(minutes);
                 }
             }
         }

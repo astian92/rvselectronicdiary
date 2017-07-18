@@ -1,9 +1,7 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
 using RED.Models;
 using RED.Models.ControllerBases;
-using RED.Models.DataContext;
 using RED.Repositories.Abstract;
 
 namespace RED.Controllers
@@ -57,21 +55,6 @@ namespace RED.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult Profile(Guid id)
-        {
-            var db = new RedDataEntities();
-            User user = db.Users.Find(id);
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "DisplayName", user.RoleId);
-
-            return View(user);
         }
     }
 }

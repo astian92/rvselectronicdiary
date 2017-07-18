@@ -1,9 +1,8 @@
-﻿//var count = 0;
-//var products = [];
-
-$("#wizard").steps();
-$("#form").steps({
+﻿$("#form").steps({
+    headerTag: "h1",
     bodyTag: "fieldset",
+    transitionEffect: "fade",
+    autoFocus: true,
     onStepChanging: function (event, currentIndex, newIndex) {
         // Always allow going backward even if the current step contains invalid fields!
         if (currentIndex > newIndex) {
@@ -64,63 +63,66 @@ $("#form").steps({
         // Start validation; Prevent going forward if false
         return form.valid();
     },
-    onStepChanged: function (event, currentIndex, priorIndex) {
-
-    },
     onFinishing: function (event, currentIndex) {
+        var dataIsValid = true;
 
         //Get Products and tests and name them correctly
         var products = $('.product');
         
-        for (var i = 0; i < products.length; i++) {
-            var product = $(products[i]);
+        if (products.length == 0) {
+            dataIsValid = false;
+            //$('.actions').append('<div class="error-msg"><span style="color: red">Необходимо е да въведете поне един продукт!!</span></div>');
+        } else {
+            for (var i = 0; i < products.length; i++) {
+                var product = $(products[i]);
 
-            product.find('.productName').attr('name', 'Products[' + i + '].Name');
-            product.parent().find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
+                product.find('.productName').attr('name', 'Products[' + i + '].Name');
+                product.parent().find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
 
-            var tests = product.find('.test');
-            for (var j = 0; j < tests.length; j++) {
-                var test = $(tests[j]);
+                var tests = product.find('.test');
+                for (var j = 0; j < tests.length; j++) {
+                    var test = $(tests[j]);
 
-                var testId = test.find('.testId');
-                testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
-                var testMethodId = test.find('.testMethodId');
-                testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
-                var units = test.find('.units');
-                units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
-                var methodValue = test.find('.methodValue');
-                methodValue.attr('name', 'Products[' + i + '].ProductTests[' + j + '].MethodValue');
-                var remark = test.find('.remark');
-                remark.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Remark');
+                    var testId = test.find('.testId');
+                    testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
+                    var testMethodId = test.find('.testMethodId');
+                    testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
+                    var units = test.find('.units');
+                    units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
+                    var methodValue = test.find('.methodValue');
+                    methodValue.attr('name', 'Products[' + i + '].ProductTests[' + j + '].MethodValue');
+                    var remark = test.find('.remark');
+                    remark.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Remark');
+                }
             }
-        }
 
-        var dataIsValid = true;
-        for (var k = 0; k < products.length; k++) {
-            product = $(products[k]);
-            var tests = product.find('.test');
-            if (tests.length < 1) {
-                dataIsValid = false;
+            for (var k = 0; k < products.length; k++) {
+                product = $(products[k]);
+                var tests = product.find('.test');
+                if (tests.length < 1) {
+                    dataIsValid = false;
+                }
             }
-        }
 
-        if (dataIsValid == false) {
-            $('.current').addClass('error');
+            if (dataIsValid == false) {
+                $('.current').addClass('error');
             
-            var testListTables = $('.test-list-table tbody');
+                var testListTables = $('.test-list-table tbody');
 
-            for (var i = 0; i < testListTables.length; i++) {
-                var tableBody = $(testListTables[i]);
-                var bodyChildren = tableBody.children();
-                var count = bodyChildren.length;
+                for (var i = 0; i < testListTables.length; i++) {
+                    var tableBody = $(testListTables[i]);
+                    var bodyChildren = tableBody.children();
+                    var count = bodyChildren.length;
                 
-                if (count == 0) {
-                    $(tableBody).append('<tr class="error-msg"><td colspan="2"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+                    if (count == 0) {
+                        $(tableBody).append('<tr class="error-msg"><td colspan="2"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
+                    }
                 }
             }
         }
 
         var form = $(this);
+
         // Disable validation on fields that are disabled.
         // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
         form.validate().settings.ignore = ":disabled";
@@ -143,11 +145,6 @@ $("#form").steps({
         previous: "Назад"
     }
 })
-//.validate({
-//    errorPlacement: function (error, element) {
-//        element.before(error);
-//    }
-//});
 
 $('#data_1 .input-group.date').datepicker({
     format: "dd.m.yyyy",
@@ -157,6 +154,17 @@ $('#data_1 .input-group.date').datepicker({
     calendarWeeks: true,
     autoclose: true
 });
+
+$('#acceptance-date .input-group.date').datepicker({
+    format: "dd.m.yyyy",
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+    autoclose: true
+});
+
+$('.input-group.time').clockpicker();
 
 $('.add-product-btn').click(function () {
     if ($('#Products').val() == '') {

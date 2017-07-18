@@ -604,3 +604,7 @@ D:\Projects\rvs.repository\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Ut
 D:\Projects\rvs.repository\rvselectronicdiary\RVS\RED\RED\bin\Autofac.xml
 D:\Projects\rvs.repository\rvselectronicdiary\RVS\RED\RED\bin\Autofac.Integration.Mvc.xml
 D:\Projects\rvs.repository\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.CSharp.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.dll
+C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml

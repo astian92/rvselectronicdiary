@@ -12,6 +12,9 @@ namespace RED.Models.Account
         public const string MasterId = "613b0faa-8828-44a9-8bbe-09ba68cc33ae";
         public const string SuperUserId = "0f68da69-5c82-480b-9474-54c133439b0c";
 
+        public static readonly Guid MasterGuid = new Guid(MasterId);
+        public static readonly Guid SuperUserGuid = new Guid(SuperUserId);
+
         private readonly RvsDbContext Db;
 
         public RvsPrincipal(IIdentity identity, IRvsContextFactory factory)
@@ -89,7 +92,7 @@ namespace RED.Models.Account
             var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user != null)
             {
-                if (user.Id.ToString() == SuperUserId || user.Id.ToString() == MasterId)
+                if (user.Id.Equals(SuperUserGuid) || user.Id.Equals(MasterGuid))
                 {
                     return true;
                 }
@@ -103,7 +106,7 @@ namespace RED.Models.Account
             var user = Db.Users.FirstOrDefault(u => u.Username == Identity.Name);
             if (user != null)
             {
-                if (user.Id.ToString() == MasterId)
+                if (user.Id.Equals(MasterGuid))
                 {
                     return true;
                 }

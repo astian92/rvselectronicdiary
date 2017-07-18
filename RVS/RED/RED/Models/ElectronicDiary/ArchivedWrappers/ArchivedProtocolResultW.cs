@@ -12,11 +12,11 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
 
         public ArchivedProtocolResultW(ArchivedProtocolResult aresult)
         {
-            this.Id = aresult.Id;
-            this.ArchivedDiaryId = aresult.ArchivedDiaryId;
-            this.ArchivedProductTestId = aresult.ArchivedProductTestId;
-            this.Results = aresult.Results;
-            this.ResultNumber = aresult.ResultNumber;
+            Id = aresult.Id;
+            ArchivedDiaryId = aresult.ArchivedDiaryId;
+            ArchivedProductTestId = aresult.ArchivedProductTestId;
+            Results = aresult.Results;
+            ResultNumber = aresult.ResultNumber;
         }
 
         public Guid Id { get; set; }
@@ -37,11 +37,11 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
         {
             var aresult = new ArchivedProtocolResult();
 
-            aresult.Id = this.Id;
-            aresult.ArchivedDiaryId = this.ArchivedDiaryId;
-            aresult.ArchivedProductTestId = this.ArchivedProductTestId;
-            aresult.Results = this.Results;
-            aresult.ResultNumber = this.ResultNumber;
+            aresult.Id = Id;
+            aresult.ArchivedDiaryId = ArchivedDiaryId;
+            aresult.ArchivedProductTestId = ArchivedProductTestId;
+            aresult.Results = Results;
+            aresult.ResultNumber = ResultNumber;
 
             return aresult;
         }

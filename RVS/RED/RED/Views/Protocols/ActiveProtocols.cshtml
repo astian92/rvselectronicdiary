@@ -7,8 +7,6 @@
 <div class="panel-group" id="accordion_@ViewBag.Label">
     @foreach (var item in Model)
     {
-        var wrappedDiary = new DiaryW(item.Request.Diary);
-
         <div class="panel panel-default">
             <a data-toggle="collapse" data-parent="#accordion_@ViewBag.Label" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
                 <div class="panel-heading">

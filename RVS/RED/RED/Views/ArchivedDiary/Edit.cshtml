@@ -9,7 +9,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        @*<h4>ArchivedDiary</h4>*@
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
@@ -25,12 +24,10 @@
         <div class="form-group" id="acceptance-date">
             @Html.LabelFor(model => model.AcceptanceDateAndTime, new { @class = "control-label col-md-3" })
             <div class="col-md-5">
-                @*@Html.EditorFor(model => model.AcceptanceDateAndTime)*@
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    @*@Html.TextBoxFor(m => m.AcceptanceDateAndTime, new { @class = "form-control single-line", type = "datetime", value = Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) })*@
-                    <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)"></div>
-                @*@Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })*@
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="input-group clockpicker" data-autoclose="true">

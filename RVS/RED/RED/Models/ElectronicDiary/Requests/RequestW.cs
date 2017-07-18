@@ -11,20 +11,6 @@ namespace RED.Models.ElectronicDiary.Requests
         {
         }
 
-        public RequestW(Request request)
-        {
-            this.Id = request.Id;
-            this.DiaryId = request.DiaryId;
-            this.Date = request.Date;
-            this.AcceptedBy = request.AcceptedBy;
-            this.IsAccepted = request.IsAccepted;
-            this.TestingPeriod = request.TestingPeriod;
-
-            this.Diary = request.Diary;
-            this.User = request.User;
-            this.Protocols = request.Protocols;
-        }
-
         public Guid Id { get; set; }
 
         public Guid DiaryId { get; set; }
@@ -36,7 +22,7 @@ namespace RED.Models.ElectronicDiary.Requests
         { 
             get
             {
-                return this.Date.ToLocalTime().ToString("dd.MM.yyyy");
+                return Date.ToString("dd.MM.yyyy");
             }
         }
 
@@ -45,7 +31,7 @@ namespace RED.Models.ElectronicDiary.Requests
         {
             get
             {
-                return this.Date.ToLocalTime().ToString("hh:mm");
+                return Date.ToString("hh:mm");
             }
         }
 
@@ -60,7 +46,7 @@ namespace RED.Models.ElectronicDiary.Requests
         { 
             get
             {
-                return this.Diary.Number;
+                return Diary.Number;
             }
         }
 
@@ -71,9 +57,9 @@ namespace RED.Models.ElectronicDiary.Requests
         {
             get
             {
-                if (this.User != null)
+                if (User != null)
                 {
-                    return this.User.FirstName.Substring(0, 1) + ". " + this.User.LastName;
+                    return User.FirstName.Substring(0, 1) + ". " + User.LastName;
                 }
 
                 return string.Empty;
@@ -87,18 +73,17 @@ namespace RED.Models.ElectronicDiary.Requests
 
         public Request ToBase()
         {
-            Request request = new Request();
+            var request = new Request();
+            request.Id = Id;
+            request.DiaryId = DiaryId;
+            request.Date = Date;
+            request.AcceptedBy = AcceptedBy;
+            request.IsAccepted = IsAccepted;
+            request.TestingPeriod = TestingPeriod;
 
-            request.Id = this.Id;
-            request.DiaryId = this.DiaryId;
-            request.Date = this.Date;
-            request.AcceptedBy = this.AcceptedBy;
-            request.IsAccepted = this.IsAccepted;
-            request.TestingPeriod = this.TestingPeriod;
-
-            request.Diary = this.Diary;
-            request.User = this.User;
-            request.Protocols = this.Protocols;
+            request.Diary = Diary;
+            request.User = User;
+            request.Protocols = Protocols;
 
             return request;
         }

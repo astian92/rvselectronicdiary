@@ -16,7 +16,7 @@ namespace RED.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
-            if (principal.IsSuperUser())
+            if (!principal.IsSuperUser())
             {
                 filterContext.Result = new RedirectToRouteResult(
                             new RouteValueDictionary
