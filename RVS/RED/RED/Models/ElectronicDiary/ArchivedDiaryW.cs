@@ -25,7 +25,7 @@ namespace RED.Models.ElectronicDiary
             Comment = diary.Comment;
             RequestDate = diary.RequestDate.ToLocalTime();
             RequestAcceptedBy = diary.RequestAcceptedBy;
-            ProtocolIssuedDate = diary.ProtocolIssuedDate.ToLocalTime();
+            ProtocolIssuedDate = diary.ProtocolIssuedDate;
             ProtocolTesterMKB = diary.ProtocolTesterMKB;
             ProtocolTesterFZH = diary.ProtocolTesterFZH;
             ProtocolLabLeader = diary.ProtocolLabLeader;
@@ -179,7 +179,7 @@ namespace RED.Models.ElectronicDiary
             diary.Comment = this.Comment;
             diary.RequestDate = this.RequestDate.ToUniversalTime();
             diary.RequestAcceptedBy = this.RequestAcceptedBy;
-            diary.ProtocolIssuedDate = this.ProtocolIssuedDate.ToUniversalTime();
+            diary.ProtocolIssuedDate = this.ProtocolIssuedDate;
             diary.ProtocolTesterMKB = this.ProtocolTesterMKB;
             diary.ProtocolTesterFZH = this.ProtocolTesterFZH;
             diary.ProtocolLabLeader = this.ProtocolLabLeader;

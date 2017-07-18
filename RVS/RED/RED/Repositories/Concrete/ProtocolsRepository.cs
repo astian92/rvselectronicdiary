@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using RED.Mappings;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary;
@@ -26,31 +27,23 @@ namespace RED.Repositories.Concrete
         public IEnumerable<ProtocolW> GetActiveProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var protocols = Db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number));
-            protocols = protocols.Where(d => d.IssuedDate >= (from == null ? d.IssuedDate : from.Value) &&
-                                                   d.IssuedDate <= (to == null ? d.IssuedDate : to.Value));
+            var protocols = Db.Protocols.Where(d => d.Request.Diary.Number == (number == -1 ? d.Request.Diary.Number : number))
+                                        .Where(d => d.IssuedDate >= (from == null ? d.IssuedDate : from.Value) && d.IssuedDate <= (to == null ? d.IssuedDate : to.Value));
 
             //Order and paging
-            var activeProtocols = protocols
-                .OrderByDescending(p => p.IssuedDate).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
-
-            var result = activeProtocols.Select(p => new ProtocolW(p));
-
-            return result;
+            var activeProtocols = protocols.OrderByDescending(p => p.IssuedDate).Skip((page - 1) * pageSize).Take(pageSize).Select(ProtocolMappings.ToProtocolW);
+            return activeProtocols;
         }
 
         public IEnumerable<ArchivedProtocol> GetArchivedProtocols(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var protocols = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number));
-            protocols = protocols.Where(d => d.ProtocolIssuedDate >= (from == null ? d.ProtocolIssuedDate : from.Value) &&
-                                                   d.ProtocolIssuedDate <= (to == null ? d.ProtocolIssuedDate : to.Value));
+            var protocols = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number))
+                                              .Where(d => d.ProtocolIssuedDate >= (from == null ? d.ProtocolIssuedDate : from.Value) &&
+                                                     d.ProtocolIssuedDate <= (to == null ? d.ProtocolIssuedDate : to.Value));
 
             //Order and paging
-            var adiaries = protocols
-                .OrderByDescending(p => p.ProtocolIssuedDate).Skip((page - 1) * pageSize).Take(pageSize)
-                .ToList();
+            var adiaries = protocols.OrderByDescending(p => p.ProtocolIssuedDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             var result = adiaries.Select(ad => new ArchivedProtocol(ad));
 
             return result;
@@ -79,7 +72,7 @@ namespace RED.Repositories.Concrete
             }
 
             var protocol = protocolW.ToBase();
-            protocol.IssuedDate = protocol.IssuedDate.ToUniversalTime();
+            protocol.IssuedDate = protocol.IssuedDate;
             Db.Protocols.Add(protocol);
             var request = Db.Requests.Single(r => r.Id == protocol.RequestId);
             GeneratePorotocolReport(protocol, request);
@@ -89,8 +82,8 @@ namespace RED.Repositories.Concrete
 
         public ProtocolW GetProtocol(Guid protocolId)
         {
-            var protocol = Db.Protocols.Single(x => x.Id == protocolId);
-            return new ProtocolW(protocol);
+            var protocolW = Db.Protocols.Single(x => x.Id == protocolId).ToProtocolWrapper();
+            return protocolW;
         }
 
         public void EditProtocol(ProtocolW protocolW)
@@ -128,7 +121,7 @@ namespace RED.Repositories.Concrete
                 protocol.ProtocolsRemarks.Add(item);
             }
 
-            protocol.IssuedDate = protocolW.IssuedDate.ToUniversalTime();
+            protocol.IssuedDate = protocolW.IssuedDate;
             protocol.TesterMKB = protocolW.TesterMKB;
             protocol.TesterFZH = protocolW.TesterFZH;
             protocol.LabLeader = protocolW.LabLeader;

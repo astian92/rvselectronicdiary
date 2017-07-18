@@ -35,10 +35,8 @@ namespace RED.Repositories.Concrete
                                                    d.LetterDate <= (to == null ? d.LetterDate : to.Value));
 
             //Order and paging
-            var paged = diaryEntries.OrderByDescending(d => d.Number).Skip((page - 1) * pageSize).Take(pageSize);
-            var wrapped = paged.Select(DiaryMappings.ToDiaryW);
-            
-            return wrapped;
+            var activeDiaries = diaryEntries.OrderByDescending(d => d.Number).Skip((page - 1) * pageSize).Take(pageSize).Select(DiaryMappings.ToDiaryW);
+            return activeDiaries;
         }
 
         public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10, int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
