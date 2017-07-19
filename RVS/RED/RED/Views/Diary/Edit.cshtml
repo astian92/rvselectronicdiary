@@ -31,9 +31,7 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.LetterNumber)
-                    @*@Html.EditorFor(model => model.LetterNumber, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input class="form-control text-box single-line" id="LetterNumber" name="LetterNumber" type="number" value="@Model.LetterNumber">
-                    @*@Html.ValidationMessageFor(model => model.LetterNumber, "", new { @class = "text-danger" })*@
                 </div>
                 <div class="form-group" id="data_1">
                     @Html.LabelFor(model => model.LetterDate)
@@ -71,7 +69,6 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="Quantity">Количество</label>
-                    @*<input placeholder="Брой" class="form-control text-box single-line" data-val="true" data-val-number="Полето трябва да е число" data-val-range="Невалидно число" data-val-range-max="2147483647" data-val-range-min="0" id="Quantity" name="Quantity" type="number" tabindex="2">*@
                     <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2">
                     <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-quantity-validation collapse">Количеството е задължително</span></span>
                 </div>
@@ -98,7 +95,6 @@
                                         <span class="test" id="@test.Id">
                                             <input type="hidden" class="testId" value="@test.TestId" />
                                             <input type="hidden" class="testMethodId" value="@test.TestMethodId" />
-                                            <input type="hidden" class="units" value="@test.Units" />
                                             <input type="hidden" class="name" value="@test.Test.Name" />
                                             <input type="hidden" class="type" value="@test.Test.TestType.ShortName" />
                                             <input type="hidden" class="methodValue" value="@test.MethodValue" />
@@ -119,7 +115,6 @@
                         }
                     </tbody>
                 </table>
-                @*<span class="text-danger field-validation-error" data-valmsg-for="product-list-table" data-valmsg-replace="true"><span class="product-list-validation collapse">Въведете поне един продукт!</span></span>*@
             </div>
         </div>
     </fieldset>

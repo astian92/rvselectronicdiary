@@ -10,7 +10,7 @@ namespace RED.Models.ElectronicDiary
     {
         public DiaryW()
         {
-            this.Products = new List<Product>();
+            Products = new HashSet<Product>();
         }
 
         public Guid Id { get; set; }
@@ -53,22 +53,24 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                if (this.LetterNumber != null)
+                if (LetterNumber != null)
                 {
-                    return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    return "Писмо №" + LetterNumber + " от " + LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    return "Писмо от " + LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
                 }
             }
         }
 
+        [Required(ErrorMessage = "Полето \"Час на приемане\" е задължително!")]
+        [Display(Name = "Час на приемане")]
         public string AcceptanceTime
         {
             get
             {
-                return this.AcceptanceDateAndTime.ToString("HH:mm");
+                return AcceptanceDateAndTime.ToString("HH:mm");
             }
 
             set
@@ -79,8 +81,8 @@ namespace RED.Models.ElectronicDiary
                     var hours = int.Parse(arguments[0]);
                     var minutes = int.Parse(arguments[1]);
 
-                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddHours(hours);
-                    this.AcceptanceDateAndTime = this.AcceptanceDateAndTime.AddMinutes(minutes);
+                    AcceptanceDateAndTime = AcceptanceDateAndTime.AddHours(hours);
+                    AcceptanceDateAndTime = AcceptanceDateAndTime.AddMinutes(minutes);
                 }
             }
         }
@@ -128,8 +130,7 @@ namespace RED.Models.ElectronicDiary
 
         public Diary ToBase()
         {
-            Diary diary = new Diary();
-
+            var diary = new Diary();
             diary.Id = Id;
             diary.Number = Number;
             diary.LetterNumber = LetterNumber;

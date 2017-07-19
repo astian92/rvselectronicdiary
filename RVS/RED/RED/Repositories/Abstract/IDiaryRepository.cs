@@ -32,6 +32,8 @@ namespace RED.Repositories.Abstract
 
         DiaryW GetDiary(Guid diaryId);
 
+        DiaryW GetDiaryWithProducts(Guid diaryId);
+
         IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10, string number = "-1", int diaryNumber = -1, Guid client = default(Guid), DateTime? from = default(DateTime?), DateTime? to = default(DateTime?));
 
         IEnumerable<Client> GetSelectListClients(bool allValue = true);

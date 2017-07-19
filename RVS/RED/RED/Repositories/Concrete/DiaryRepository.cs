@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
@@ -58,6 +59,12 @@ namespace RED.Repositories.Concrete
         public DiaryW GetDiary(Guid diaryId)
         {
             var diary = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
+            return diary;
+        }
+
+        public DiaryW GetDiaryWithProducts(Guid diaryId)
+        {
+            var diary = Db.Diaries.Where(x => x.Id == diaryId).Include(x => x.Products).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
             return diary;
         }
 
