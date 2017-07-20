@@ -26,12 +26,12 @@ $('.add-product-btn').click(function () {
     var rowCount = $('.product-list-table tr').length;
 
     var content = '<tr><td class="col-md-2"><span>' + rowCount + '</span></td>' +
-        '<td class="issue-info product" ondblclick="updateVal(this)" key="' + guid() + '">' +
-            $('#Products').val() +
-            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name">' +
+        '<td class="issue-info product" key="' + guid() + '">' +
+            '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
+            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
         '</td><td class="col-md-2">' +
-            $('#Quantity').val() +
-            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity">' +
+            '<div ondblclick="updateVal(this)">' + $('#Quantity').val() + '</div>' +
+            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity" />' +
         '</td><td class="text-right">' +
             '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>' +
         '</td></tr>';
@@ -121,10 +121,12 @@ function loadTestMethodValue(dropDown) {
 }
 
 function updateVal(currentEle) {
-    var value = currentEle.html();
+    var value = $(currentEle).html();
 
-    $(currentEle).html('<input class="thVal" type="text" value="' + value + '" />');
+    $(currentEle).html('');
+    $(currentEle).append('<input class="thVal form-control input-sm" type="text" value="" />');
     $(".thVal").focus();
+    $(".thVal").val(value);
     $(".thVal").keyup(function (event) {
         if (event.keyCode == 13) {
             $(currentEle).html($(".thVal").val().trim());

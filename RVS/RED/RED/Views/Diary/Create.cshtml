@@ -86,14 +86,14 @@
             <div class="col-sm-5 col-md-5">
                 <div class="form-group">
                     <label for="Products">Наименование</label>
-                    <input type="text" id="Products" onchange="hideNameValidation()" class="form-control text-box single-line" tabindex="1">
+                    <input type="text" id="Products" onchange="hideNameValidation()" class="form-control text-box single-line" tabindex="1" />
                     <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-name-validation collapse">Наименованието е задължително</span></span>
                 </div>
             </div>
             <div class="col-sm-4 col-md-5">
                 <div class="form-group">
                     <label for="Quantity">Количество</label>
-                    <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2">
+                    <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2" />
                     <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-quantity-validation collapse">Количеството е задължително</span></span>
                 </div>
             </div>
@@ -106,9 +106,9 @@
                 <table class="table table-hover product-list-table" style="margin-top:23px;">
                     <thead>
                         <tr>
-                            <th>№</th>
-                            <th>Наименование</th>
-                            <th>Количество</th>
+                            <th class="col-sm-3 col-md-2">№</th>
+                            <th class="col-sm-5 col-md-5">Наименование</th>
+                            <th class="col-sm-4 col-md-5">Количество</th>
                         </tr>
                     </thead>
 

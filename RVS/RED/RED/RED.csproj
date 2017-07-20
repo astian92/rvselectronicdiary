@@ -635,7 +635,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Our\ActiveDiaries.js" />
     <Content Include="Scripts\Our\Requests.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
@@ -821,7 +820,6 @@
     <Content Include="Views\Diary\Delete.cshtml" />
     <Content Include="Views\Requests\Delete.cshtml" />
     <Content Include="Views\Protocols\Create.cshtml" />
-    <Content Include="Views\Diary\ActiveDiaries.cshtml" />
     <Content Include="Views\Protocols\Index.cshtml" />
     <Content Include="Views\Diary\ProductsTests.cshtml" />
     <Content Include="Views\Protocols\Edit.cshtml">
@@ -854,6 +852,7 @@
     <Content Include="Views\ArchivedDiary\DeleteProtocolResult.cshtml" />
     <Content Include="Views\Error\ProductExpired.cshtml" />
     <Content Include="Views\Diary\Details.cshtml" />
+    <Content Include="Views\Diary\ActiveDiaries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\plugins\gritter\" />
