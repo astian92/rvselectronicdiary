@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using RED.Models.Logs;
-using RED.Repositories.Abstract;
+using RED.Models.Account;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
-using RED.Models.Account;
+using RED.Models.Logs;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -19,7 +19,7 @@ namespace RED.Repositories.Concrete
 
         public IEnumerable<ActionLogW> GetAllActionLogs(int page = 1, int pageSize = 10)
         {
-            var logs = Db.ActionLogs.Where(x => x.UserId.ToString() != RvsPrincipal.MasterId).OrderByDescending(x => x.On).Skip((page - 1) * pageSize).Take(pageSize);
+            var logs = Db.ActionLogs.Where(x => x.UserId != RvsPrincipal.MasterGuid).OrderByDescending(x => x.On).Skip((page - 1) * pageSize).Take(pageSize);
             return logs.ToList().Select(l => new ActionLogW(l, Db.Users.FirstOrDefault(x => x.Id == l.UserId)));
         }
     }

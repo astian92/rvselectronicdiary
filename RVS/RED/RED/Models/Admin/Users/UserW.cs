@@ -41,24 +41,23 @@ namespace RED.Models.Admin.Users
 
         [Required]
         public Guid RoleId { get; set; }
-    
+
         public virtual Role Role { get; set; }
 
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
 
         public User ToBase()
         {
-            User user = new User();
-
-            user.Id = this.Id;
-            user.Username = this.Username;
-            user.Password = this.Password;
-            user.FirstName = this.FirstName;
-            user.MiddleName = this.MiddleName;
-            user.LastName = this.LastName;
-            user.Position = this.Position;
-            user.RoleId = this.RoleId;
-            user.Role = this.Role;
+            var user = new User();
+            user.Id = Id;
+            user.Username = Username;
+            user.Password = Password;
+            user.FirstName = FirstName;
+            user.MiddleName = MiddleName;
+            user.LastName = LastName;
+            user.Position = Position;
+            user.RoleId = RoleId;
+            user.Role = Role;
 
             return user;
         }

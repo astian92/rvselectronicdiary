@@ -23,8 +23,8 @@ namespace RED.Models.Admin.Roles
         public Role ToBase()
         {
             var role = new Role();
-            role.Id = this.Id;
-            role.DisplayName = this.DisplayName;
+            role.Id = Id;
+            role.DisplayName = DisplayName;
 
             return role;
         }

@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<RED.Models.ElectronicDiary.DiaryW>
-@using System.Globalization;
-@using RED.Helpers
 
 <div class="panel-group" id="accordion">
     @foreach (var item in Model)
     {
         <div class="panel panel-default">
-            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="text-muted collapsed">
+            <a data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" class="collapse"></a>
+            <a onclick="GetDiary('@item.Id')" class="text-muted collapsed">
                 <div class="panel-heading">
                     <h5 class="panel-title">
                         №: @item.Number / @item.LetterInfo /
@@ -27,201 +26,7 @@
                 <div class="panel-body">
                     <div class="animated fadeInDown">
                         <div class="ibox-content">
-                            <div class="row">
-                                <h4 class="text-navy text-center">@item.LetterInfo</h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h5>
-                                        От:
-                                        <strong>@item.Client.Name</strong><br>
-                                    </h5>
-                                    <h5>
-                                        Възложител:
-                                        <strong>@Html.DisplayFor(modelItem => item.Contractor)</strong><br>
-                                    </h5>
-                                </div>
-
-                                <div class="col-sm-6 text-right">
-                                    <h5>№: <strong>@item.Number</strong></h5>
-                                    <h5>Дата на приемане: <strong>@item.AcceptanceDateAndTime.ToString("dd.M.yyyy HH:mm", CultureInfo.InvariantCulture)</strong></h5>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4 class="text-navy text-center">Заявка №: @item.Number</h4>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="text-left">Наименoвание</th>
-                                                <th class="text-center">Количество</th>
-                                                <th class="text-center">Показател за изпитване</th>
-                                                <th class="text-right">Метод</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var product in item.Products.OrderBy(p => p.Number))
-                                            {
-                                                <tr>
-                                                    <td>@product.Number</td>
-                                                    <td>
-                                                        <span>@product.Name</span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span>@product.Quantity</span>
-                                                    </td>
-                                                    @{ int i = 0; }
-                                                    @foreach (var test in product.ProductTests.OrderBy(pt => pt.Test.Name))
-                                                    {
-                                                        if (i == 0)
-                                                        {
-                                                            <td class="text-center">
-                                                                <span>(@test.Test.TestType.ShortName) @test.Test.Name</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span>@test.TestMethod.Method</span>
-                                                            </td>
-                                                        }
-                                                        else
-                                                        {
-                                                        <tr>
-                                                            <td colspan="3" ></td>
-                                                            <td style="text-align: center">
-                                                                <span>(@test.Test.TestType.ShortName) @test.Test.Name</span>
-                                                            </td>
-                                                            <td style="text-align: right"> 
-                                                                <span>@test.TestMethod.Method</span>
-                                                            </td>
-                                                        </tr>
-                                                        }
-
-                                                        i++;
-                                                    }
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-bottom:20px;">
-                                <div class="col-md-6">
-                                    <div class="status-container">
-                                        @if (item.Request == null)
-                                        {
-                                            if (Html.IsAuthorized(FeaturesCollection.ModifyDiary))
-                                            {
-                                                <label for="testingPeriod">Срок на изпитване (дни):</label>
-                                                <input type="number" min="1" max="365" id="testingPeriod-@item.Id" />
-                                                <br />
-                                                <button id="@item.Id" class="btn btn-primary btn-request" onclick="generateRequest(this)"><i class="fa fa-tag"></i> Направи заявка</button>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (item.Request.IsAccepted)
-                                            {
-                                                <h5>Срок на изпитване (дни): <strong>@item.Request.TestingPeriod</strong></h5>
-                                                string name = item.Request.User.FirstName.Substring(0, 1) + ". " + item.Request.User.LastName;
-                                                <h5>Приел пробата: <strong>@name</strong></h5>
-                                                <h5>Дата на приемане: <strong>@item.Request.Date.ToString("dd.M.yyyy HH:mm", CultureInfo.InvariantCulture)</strong></h5>
-                                            }
-                                            else
-                                            {
-                                                if (item.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.Acredited)))
-                                                {
-                                                    <div class="alert alert-success">
-                                                        Заявката (A) е в очакване да бъде приета.
-                                                        <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id&category=A">
-                                                            <i class="fa fa-download"></i>
-                                                            Изтегли заявка
-                                                        </a>
-                                                    </div>
-                                                }
-                                                if (item.Products.Any(p => p.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.NotAcredited)))
-                                                {
-                                                    <div class="alert alert-success">
-                                                        Заявката (B) е в очакване да бъде приета.
-                                                        <a class="pull-right" href="/Files/GetRequestFile?diaryId=@item.Id&category=B">
-                                                            <i class="fa fa-download"></i>
-                                                            Изтегли заявка
-                                                        </a>
-                                                    </div>
-                                                }
-                                                <button url="/Diary/DeleteRequest?diaryId=@item.Id" diaryId="@item.Id" class="btn btn-default btn-delete-request" onclick="deleteRequest(this)"><i class="fa fa-ban"></i> Изтрий заявката</button>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    @if (item.Request != null)
-                                    {
-                                        var protocol = item.Request.Protocols.FirstOrDefault();
-                                        <h5 class="text-right">Протокол № / Дата на издаване: @item.Number / @(protocol != null ? protocol.IssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture) : "") <strong></strong></h5>
-                                        @*<h5 class="text-right">Получил протокола: <strong></strong></h5>*@
-                                        <h5 class="text-right">Забележка: @item.Remark<strong></strong></h5>
-                                    }
-                                </div>
-                            </div>
-                            @if (Html.IsAuthorized(FeaturesCollection.ModifyDiary))
-                            {
-                                <hr />
-                                <div class="row comment-container" style="margin-bottom:30px;">
-                                    <div class="form-group">
-                                        <div class="col-md-10">
-                                            <textarea @(item.Comment == null ? "" : "disabled") class="comment form-control message-input" name="Comment" placeholder="Въведи бележка">@item.Comment</textarea>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <a class="save-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:5px;" onclick="saveComment('@item.Id')"><i class="fa fa-save"></i> Запази</a>
-                                            <a class="close-comment btn btn-primary @(item.Comment == null ? "" : "collapse")" style="margin-top:5px;" onclick="closeComment('@item.Id')"><i class="fa fa-times-circle"></i>Откажи</a>
-                                            <a class="edit-comment btn btn-primary @(item.Comment == null ? "collapse" : "")" style="margin-top:5px;" onclick="editComment('@item.Id')"><i class="fa fa-edit"></i> Промени</a>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="ibox-content comment-container" style="margin-bottom:10px;">
-                                    <p>@item.Comment</p>
-                                </div>
-                            }
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    @if ((item.Request == null || !item.Request.IsAccepted) && Html.IsAuthorized(FeaturesCollection.ModifyDiary))
-                                    {
-                                        <div class="text-right">
-                                            <a class="btn btn-primary" href="/Diary/Edit?id=@item.Id">
-                                                <i class="fa fa-edit"></i>
-                                                Промени
-                                            </a>
-                                            <a class="btn-delete btn btn-primary" href="@item.Id" data-toggle="modal" data-target="#myModal">
-                                                <i class="fa fa-trash"></i>
-                                                Изтрий
-                                            </a>
-                                        </div>
-                                    }
-
-                                    @if (item.Request != null && item.Request.Protocols.Any() && Html.IsAuthorized(FeaturesCollection.ModifyDiary))
-                                    {
-                                        <div class="text-right">
-                                            <a class="btn-archive btn btn-primary" buttonId="@item.Id" data-toggle="modal" data-target="#myModal">
-                                                <i class="fa fa-archive"></i>
-                                                Архивирай
-                                            </a>
-                                            @*<button buttonId="@item.Id" class="btn btn-primary btn-archive" onclick="ArchiveDiary(this)">
-                                                    <i class="fa fa-archive"></i>
-                                                    Архивирай
-                                                </button>*@
-                                        </div>
-                                        <div id="field-error-@item.Id" class="ui-state-error-text pull-right">
-
-                                        </div>
-                                    }
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -234,8 +39,6 @@
 
 </div>
 
-
-<script src="~/Scripts/Our/ActiveDiaries.js"></script>
 <script src="~/Scripts/Our/CustomPagination.js"></script>
 
 <script>

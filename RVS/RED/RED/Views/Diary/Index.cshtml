@@ -22,9 +22,6 @@
 <div class="ibox float-e-margins" style="margin-bottom:0;">
     <div class="ibox-title">
         <div class="ibox-tools">
-            @*<a class="collapse-link">
-                <i class="fa fa-chevron-up"></i>
-            </a>*@
             <a class="close-link">
                 <i class="fa fa-times"></i>
             </a>
@@ -105,12 +102,8 @@
 
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active active-diaries">
-                    @*@{ Html.RenderAction("FilterActiveDiaries", new { page = 1, pageSize = 2,
-                    number = -1, diaryNumber = -1, client = Guid.Empty }); }*@
                 </div>
-
                 <div id="tab-2" class="tab-pane archived-diaries">
-                    @* @{ Html.RenderAction("GetNotAcceptedRequests"); }*@
                 </div>
             </div>
 
@@ -155,26 +148,7 @@
         calendarWeeks: true,
         autoclose: true
     });
-
-    @*$(document).ready(function () {
-        diaryIdtoOpen = '@(ViewBag.IdToOpen)';
-
-        if (isArchived) {
-            $('.archived-tab-btn').click();
-            window.location = "#" + diaryIdtoOpen;
-        }
-        else {
-            $('.active-tab-btn').click(); //- no need it gets called by default in the view !
-        }
-    });*@
 </script>
-
-@*<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-        </div>
-    </div>
-</div>*@
 
 
 

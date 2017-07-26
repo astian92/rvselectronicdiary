@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
+using RED.Helpers;
 using RED.Models;
+using RED.Models.Admin.Users;
 using RED.Models.ControllerBases;
 using RED.Repositories.Abstract;
 
@@ -37,12 +39,12 @@ namespace RED.Controllers
                 var response = _rep.Authenticate(model.Username, model.Password);
                 if (response.IsSuccess)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Username, false);
+                    Response.SetAuthCookie(model.Username, false, (UserW)response.ResponseObject);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                   ModelState.AddModelError("Error", response.Error.ErrorText);
+                    ModelState.AddModelError("Error", response.Error.ErrorText);
                 }
             }
 

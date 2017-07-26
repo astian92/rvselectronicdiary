@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using RED.Mappings;
 using RED.Models.Account;
 using RED.Models.DataContext;
@@ -52,12 +51,10 @@ namespace RED.Repositories.Concrete
 
         public IEnumerable<RequestW> GetMyRequests(int page = 1, int pageSize = 10, int number = -1, DateTime? from = null, DateTime? to = null)
         {
-            var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
-
             //Filter
             var requests = Db.Requests.Where(d => d.Diary.Number == (number == -1 ? d.Diary.Number : number))
                                       .Where(d => (from != null ? d.Date >= from.Value : true) && (to != null ? d.Date <= to.Value : true))
-                                      .Where(r => r.IsAccepted == true && r.AcceptedBy == user.Id && r.Protocols.Any() == false); //that were not completed
+                                      .Where(r => r.IsAccepted == true && r.AcceptedBy == RvsPrincipal.User.Id && r.Protocols.Any() == false); //that were not completed
             //Order and paging
             var myRequests = requests.OrderByDescending(r => r.Date).Skip((page - 1) * pageSize).Take(pageSize).Select(RequestMappings.ToRequestW);
             return myRequests;
@@ -79,7 +76,7 @@ namespace RED.Repositories.Concrete
         {
             //Filter
             var requests = Db.ArchivedDiaries.Where(d => d.Number == (number == -1 ? d.Number : number))
-                                             .Where(d => (from != null ? d.RequestDate >= from.Value : true) 
+                                             .Where(d => (from != null ? d.RequestDate >= from.Value : true)
                                                       && (to != null ? d.RequestDate <= to.Value : true));
 
             //Order and paging
@@ -93,9 +90,8 @@ namespace RED.Repositories.Concrete
             try
             {
                 var request = Db.Requests.Single(r => r.Id == requestId);
-                var user = ((RvsPrincipal)HttpContext.Current.User).GetUserData();
 
-                request.AcceptedBy = user.Id;
+                request.AcceptedBy = RvsPrincipal.User.Id;
                 request.IsAccepted = true;
                 Db.SaveChanges();
 

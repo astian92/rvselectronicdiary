@@ -1,152 +1,4 @@
-﻿$("#form").steps({
-    headerTag: "h1",
-    bodyTag: "fieldset",
-    transitionEffect: "fade",
-    autoFocus: true,
-    onStepChanging: function (event, currentIndex, newIndex) {
-        // Always allow going backward even if the current step contains invalid fields!
-        if (currentIndex > newIndex) {
-            return true;
-        }
-
-        if (currentIndex == 1 && $('.product').length == 0) {
-            //$('.product-list-validation').removeClass('collapse');
-            $('.product-list-table tbody').append('<tr class="error-msg"><td><span style="color: red">Необходимо е да въведете поне един продукт!</span></td></tr>');
-            return false;
-        }
-
-        if (newIndex == 2) {
-            var products = [];
-
-            $('.product').each(function () {
-                var productName = $(this).find('.productName').val();
-                var productKey = $(this).attr('key');
-                var testSpans = $(this).find('.test');
-                var tests = [];
-                $(testSpans).each(function () {
-                    var key = $(this).attr('id');
-                    var id = $(this).find('.testId').val();
-                    var units = $(this).find('.units').val();
-                    var name = $(this).find('.name').val();
-                    var type = $(this).find('.type').val();
-                    var methodValue = $(this).find('.methodValue').val();
-                    var remark = $(this).find('.remark').val();
-
-                    tests.push({ Id: id, Units: units, Name: name, Key: key, MethodValue: methodValue, Remark: remark, Type: type });
-                });
-                products.push({ Name: productName, Key: productKey, Tests: tests });
-            });
-
-            var url = '/Diary/ProductsTests';
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: { products: products },
-                success: function (view) {
-                    $('.products-tests').html(view);
-                }
-            });
-        }
-
-        var form = $(this);
-
-        // Clean up if user went backward before
-        if (currentIndex < newIndex) {
-            // To remove error styles
-            $(".body:eq(" + newIndex + ") label.error", form).remove();
-            $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-        }
-
-        // Disable validation on fields that are disabled or hidden.
-        form.validate().settings.ignore = ":disabled,:hidden";
-
-        // Start validation; Prevent going forward if false
-        return form.valid();
-    },
-    onFinishing: function (event, currentIndex) {
-        var dataIsValid = true;
-
-        //Get Products and tests and name them correctly
-        var products = $('.product');
-        
-        if (products.length == 0) {
-            dataIsValid = false;
-            //$('.actions').append('<div class="error-msg"><span style="color: red">Необходимо е да въведете поне един продукт!!</span></div>');
-        } else {
-            for (var i = 0; i < products.length; i++) {
-                var product = $(products[i]);
-
-                product.find('.productName').attr('name', 'Products[' + i + '].Name');
-                product.parent().find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
-
-                var tests = product.find('.test');
-                for (var j = 0; j < tests.length; j++) {
-                    var test = $(tests[j]);
-
-                    var testId = test.find('.testId');
-                    testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
-                    var testMethodId = test.find('.testMethodId');
-                    testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
-                    var units = test.find('.units');
-                    units.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Units');
-                    var methodValue = test.find('.methodValue');
-                    methodValue.attr('name', 'Products[' + i + '].ProductTests[' + j + '].MethodValue');
-                    var remark = test.find('.remark');
-                    remark.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Remark');
-                }
-            }
-
-            for (var k = 0; k < products.length; k++) {
-                product = $(products[k]);
-                var tests = product.find('.test');
-                if (tests.length < 1) {
-                    dataIsValid = false;
-                }
-            }
-
-            if (dataIsValid == false) {
-                $('.current').addClass('error');
-            
-                var testListTables = $('.test-list-table tbody');
-
-                for (var i = 0; i < testListTables.length; i++) {
-                    var tableBody = $(testListTables[i]);
-                    var bodyChildren = tableBody.children();
-                    var count = bodyChildren.length;
-                
-                    if (count == 0) {
-                        $(tableBody).append('<tr class="error-msg"><td colspan="2"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></td></tr>');
-                    }
-                }
-            }
-        }
-
-        var form = $(this);
-
-        // Disable validation on fields that are disabled.
-        // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-        form.validate().settings.ignore = ":disabled";
-
-        return dataIsValid;
-    },
-    onFinished: function (event, currentIndex) {
-        var form = $(this);
-
-        // Submit form input
-        form.submit();
-    },
-    onCanceled: function () { 
-        window.location = "/Diary/Index";
-    },
-    labels: {
-        cancel: "Откажи",
-        finish: "Готово",
-        next: "Напред",
-        previous: "Назад"
-    }
-})
-
-$('#data_1 .input-group.date').datepicker({
+﻿$('#data_1 .input-group.date').datepicker({
     format: "dd.m.yyyy",
     todayBtn: "linked",
     keyboardNavigation: false,
@@ -167,6 +19,34 @@ $('#acceptance-date .input-group.date').datepicker({
 $('.input-group.time').clockpicker();
 
 $('.add-product-btn').click(function () {
+    if (validateProductInfo() == false) {
+        return false;
+    }
+
+    var rowCount = $('.product-list-table tr').length;
+
+    var content = '<tr><td class="col-md-2"><span>' + rowCount + '</span></td>' +
+        '<td class="issue-info product" key="' + guid() + '">' +
+            '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
+            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
+        '</td><td class="col-md-2">' +
+            '<div ondblclick="updateVal(this)">' + $('#Quantity').val() + '</div>' +
+            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity" />' +
+        '</td><td class="text-right">' +
+            '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>' +
+        '</td></tr>';
+
+    $('.product-list-table tbody').append(content);
+
+    $(content).find('.product').data('tests', {});
+
+    $('#Products').val('');
+    $('#Products').focus();
+    $('#Quantity').val('');
+    $('.product-list-table tbody .error-msg').remove();
+});
+
+function validateProductInfo() {
     if ($('#Products').val() == '') {
         $('.product-name-validation').removeClass('collapse');
 
@@ -181,40 +61,7 @@ $('.add-product-btn').click(function () {
         $('.product-quantity-validation').removeClass('collapse');
         return false;
     }
-
-    //var html = $('.product-list').html();
-
-    //html += '<li>';
-    //html += '<span>' + $('#Products').val() + '</span>';
-    //html += '<input type="hidden" value="' + $('#Products').val() + '" name="Products[' + count + '].Name">';
-    //html += '<input type="hidden" value="' + $('#Quantity').val() + '" name="Products[' + count + '].Quantity">';
-    //html += '<input type="hidden" value="' + $('#QuantityLabel').val() + '" name="Products[' + count + '].QuantityLabel">';
-    //html += '<input type="hidden" value="' + $('.chosen-select').val() + '" name="Products[' + count + '].Test.Id">';
-    //html += '</li>';
-    //$('.product-list').html(html);
-
-    var content = '<tr><td class="col-md-2"><span class="label label-primary">Добавен</span></td>' +
-        '<td class="issue-info product" key="' + guid() + '">' +
-            $('#Products').val() +
-            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name"></td><td class="col-md-2">' +
-            $('#Quantity').val() +
-            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity"></td><td class="text-right">' +
-            '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a></td></tr>';
-
-    $('.product-list-table tbody').append(content);
-
-    $(content).find('.product').data('tests', {});
-
-    //products.push($('#Products').val());
-    //count++;
-
-    $('#Products').val('');
-    $('#Quantity').val('');
-    //$('.product-list-validation').addClass('collapse');
-    $('.product-list-table tbody .error-msg').remove();
-    $('.current').removeClass('error');
-    $('#Products').focus();
-});
+}
 
 function deleteProduct(e, number) {
     $(e).parent().parent().remove();
@@ -270,5 +117,23 @@ function loadTestMethodValue(dropDown) {
         success: function (methodValue) {
             $(dropDown).parent().parent().find('.methodValueBox').val(methodValue);
         }
+    });
+}
+
+function updateVal(currentEle) {
+    var value = $(currentEle).html();
+
+    $(currentEle).html('');
+    $(currentEle).append('<input class="thVal form-control input-sm" type="text" value="" />');
+    $(".thVal").focus();
+    $(".thVal").val(value);
+    $(".thVal").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $(currentEle).html($(".thVal").val().trim());
+        }
+    });
+
+    $(document).click(function () {
+        $(currentEle).html($(".thVal").val().trim());
     });
 }

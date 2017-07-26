@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RED.Mappings;
 using RED.Models.Account;
 using RED.Models.Admin.Roles;
 using RED.Models.Admin.Users;
@@ -78,38 +79,23 @@ namespace RED.Repositories.Concrete
 
         public UserW GetUser(Guid id)
         {
-            var user = Db.Users.Where(x => x.Id == id)
-                               .Select(x => new UserW()
-                                   {
-                                       Id = x.Id,
-                                       Username = x.Username,
-                                       Password = x.Password,
-                                       FirstName = x.FirstName,
-                                       MiddleName = x.MiddleName,
-                                       LastName = x.LastName,
-                                       Position = x.Position,
-                                       RoleId = x.RoleId,
-                                       Role = x.Role
-                                   })
-                               .FirstOrDefault();
+            var user = Db.Users.Where(x => x.Id == id).Select(UserMappings.ToUserW).FirstOrDefault();
             return user;
         }
 
-        public IEnumerable<UserW> GetUsers()
+        public IEnumerable<object> GetUsers()
         {
-            var users = Db.Users.Where(x => x.Id.ToString() != RvsPrincipal.MasterId && x.Id.ToString() != RvsPrincipal.SuperUserId)
-                .Select(x => new UserW()
-                    {
-                        Id = x.Id,
-                        Username = x.Username,
-                        Password = x.Password,
-                        FirstName = x.FirstName,
-                        MiddleName = x.MiddleName,
-                        LastName = x.LastName,
-                        Position = x.Position,
-                        RoleId = x.RoleId,
-                        Role = x.Role
-                    })
+            var users = Db.Users.Where(x => x.Id != RvsPrincipal.MasterGuid && x.Id != RvsPrincipal.SuperUserGuid)
+                .Select(u => new
+                {
+                    Username = u.Username,
+                    FirstName = u.FirstName,
+                    MiddleName = u.MiddleName,
+                    LastName = u.LastName,
+                    Position = u.Position,
+                    RoleName = u.Role.DisplayName,
+                    Id = u.Id
+                })
                 .OrderBy(u => u.Username);
 
             return users;

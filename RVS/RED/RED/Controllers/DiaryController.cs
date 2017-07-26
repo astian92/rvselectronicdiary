@@ -28,6 +28,12 @@ namespace RED.Controllers
             return View();
         }
 
+        public ActionResult Details(Guid Id)
+        {
+            var diaryW = _rep.GetDiary(Id);
+            return PartialView(diaryW);
+        }
+
         public ActionResult ActiveDiaries()
         {
             var diaryEntries = _rep.GetDiaryEntries();
@@ -59,7 +65,10 @@ namespace RED.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientId = new SelectList(_rep.GetSelectListClients(false), "Id", "Name");
-            return View(new DiaryW());
+            var diary = new DiaryW();
+            diary.AcceptanceDateAndTime = DateTime.Now;
+            diary.LetterDate = DateTime.Now;
+            return View(diary);
         }
 
         [HttpPost]
