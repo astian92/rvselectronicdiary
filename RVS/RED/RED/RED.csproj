@@ -190,7 +190,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\DependencyInjection.cs" />
+    <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -211,6 +211,7 @@
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\BombFilter.cs" />
+    <Compile Include="Filters\RoleAuthorizationFilter.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,9 +220,11 @@
     <Compile Include="Helpers\FeaturesCollection.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Helpers\HttpResponseBaseExtensions.cs" />
     <Compile Include="Mappings\DiaryMappings.cs" />
     <Compile Include="Mappings\ProtocolMappings.cs" />
     <Compile Include="Mappings\RequestMappings.cs" />
+    <Compile Include="Mappings\UserMappings.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
     <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.Entity;
+using System.Linq;
+using RED.Models.Account;
 using RED.Models.DataContext.Logging;
-using RED.Models.ElectronicDiary.Tests;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Requests;
+using RED.Models.ElectronicDiary.Tests;
 
 namespace RED.Models.DataContext
 {
@@ -28,7 +28,7 @@ namespace RED.Models.DataContext
             //Prepare loggs (before commiting because states and oldValues change after commit!
             try
             {
-                string username = HttpContext.Current.User.Identity.Name;
+                string username = RvsPrincipal.User.Username;
                 var user = this.Users.FirstOrDefault(u => u.Username == username);
 
                 if (user == null)

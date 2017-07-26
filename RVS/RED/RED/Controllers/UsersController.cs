@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
-using System.Net;
 using System.Web.Mvc;
-using RED.Models.ControllerBases;
-using RED.Models.Admin.Users;
 using RED.Filters;
-using RED.Repositories.Abstract;
 using RED.Helpers;
+using RED.Models.Admin.Users;
+using RED.Models.ControllerBases;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
@@ -29,19 +26,7 @@ namespace RED.Controllers
         public JsonResult GetUsers()
         {
             var users = _rep.GetUsers();
-
-            var usersUnwrapped = users.Select(u => new
-            {
-                Username = u.Username,
-                FirstName = u.FirstName,
-                MiddleName = u.MiddleName,
-                LastName = u.LastName,
-                Position = u.Position,
-                RoleName = u.Role.DisplayName,
-                Id = u.Id
-            });
-
-            return Json(new { data = usersUnwrapped });
+            return Json(new { data = users });
         }
 
         [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
@@ -67,14 +52,9 @@ namespace RED.Controllers
         }
 
         [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            UserW user = _rep.GetUser(id.Value);
+            var user = _rep.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -100,14 +80,9 @@ namespace RED.Controllers
         }
 
         [RoleFilter(FeaturesCollection.ModifyAdminsNRoles)]
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            UserW user = _rep.GetUser(id.Value);
+            var user = _rep.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();

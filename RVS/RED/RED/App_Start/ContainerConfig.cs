@@ -1,13 +1,14 @@
-﻿using System.Web.Mvc;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using RED.Models.DataContext.Concrete;
+using RED.Filters;
 using RED.Models.DataContext.Abstract;
+using RED.Models.DataContext.Concrete;
 
 namespace RED.App_Start
 {
-    public class DependencyInjection
+    public class ContainerConfig
     {
         public static void Register()
         {
@@ -16,7 +17,12 @@ namespace RED.App_Start
             builder.RegisterControllers(typeof(MvcApplication).Assembly).InstancePerRequest();
             builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
             builder.RegisterModule<AutofacWebTypesModule>();
-            
+
+            builder.RegisterFilterProvider();
+            builder.RegisterType<RoleFilter>().PropertiesAutowired();
+            builder.RegisterType<UserFilter>().PropertiesAutowired();
+            builder.RegisterType<RoleAuthorizationFilter>().PropertiesAutowired();
+
             var dataAccess = Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(dataAccess)

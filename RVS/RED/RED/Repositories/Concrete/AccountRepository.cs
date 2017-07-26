@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using RED.Mappings;
+using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
 using RED.Models.Responses;
 using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
-using RED.Models.DataContext;
 
 namespace RED.Models.Account
 {
@@ -21,10 +22,13 @@ namespace RED.Models.Account
             var response = new ActionResponse();
             try
             {
-                bool hasAny = Db.Users.Any(u => u.Username == username && u.Password == password);
-
-                if (hasAny)
+                if (Db.Users.Any(u => u.Username == username && u.Password == password))
                 {
+                    var user = Db.Users.Where(u => u.Username == username && u.Password == password)
+                                       .Select(UserMappings.ToUserW)
+                                       .FirstOrDefault();
+
+                    response.ResponseObject = user;
                     response.IsSuccess = true;
                 }
                 else
