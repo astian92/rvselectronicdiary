@@ -29,7 +29,7 @@
             var wrappedDiary = Model.Request.Diary.ToDiaryWrapper();
         }
 
-        @foreach (var item in Model.ProtocolResults.OrderBy(x => x.ProductTest.Test.TypeId).ThenBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber))
+        @foreach (var item in Model.ProtocolResults.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.TestType.SortOrder))
         {
             <div class="form-group">
                 <label for="test-method" class="control-label col-md-3">
@@ -114,31 +114,15 @@
             </div>
         </div>
 
-        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB))
-        {
-            <div class="form-group">
-                <label for="Tester" class="control-label col-md-3">
-                    Извършил изпитването (МКБ):
-                </label>
-                <div class="col-md-9">
-                    @Html.TextBoxFor(m => m.TesterMKB, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
-                    @Html.ValidationMessageFor(m => m.TesterMKB, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            <label for="Tester" class="control-label col-md-3">
+                Извършил изпитването (МКБ):
+            </label>
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Tester, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
+                @Html.ValidationMessageFor(m => m.Tester, "", new { @class = "text-danger" })
             </div>
-        }
-
-        @if (Model.ProtocolResults.Any(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH))
-        {
-            <div class="form-group">
-                <label for="Tester" class="control-label col-md-3">
-                    Извършил изпитването (ФЗХ):
-                </label>
-                <div class="col-md-9">
-                    @Html.TextBoxFor(m => m.TesterFZH, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (ФЗХ) е задължително поле!" })
-                    @Html.ValidationMessageFor(m => m.TesterFZH, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
+        </div>
 
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
