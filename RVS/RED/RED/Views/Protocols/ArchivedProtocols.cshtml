@@ -32,17 +32,28 @@
                             {
                                 <div class="table-responsive">
                                     <table class="table">
+                                        <colgroup>
+                                            <col width="60" />
+                                        </colgroup>
                                         <tr>
+                                            <td colspan="5">
+                                                <b>Акредитирани (А):</b>
+                                            </td>
+                                            <td>
+                                                <a href="/Files/GetArchivedProtocolFile?archivedDiaryId=@(item.DiaryId)&category=A">Изтегли протокол</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                №
+                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                            </th>
                                             <th>
                                                 Наименувание на показателя
                                             </th>
                                             <th>
                                                 Методи
                                                 <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                                            </th>
-                                            <th>
-                                                № на образеца
-                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                                             </th>
                                             <th>Резултати от изследването, неопределеност</th>
                                             <th>
@@ -52,57 +63,14 @@
                                             <th>Условия на заобикалящата среда</th>
                                         </tr>
 
-                                        <tr>
-                                            <td colspan="5">
-                                                <b>Акредитирани (А):</b>
-                                            </td>
-                                            <td>
-                                                <a href="/Files/GetArchivedProtocolFile?archivedDiaryId=@(item.DiaryId)&category=A">Изтегли протокол</a>
-                                            </td>
-                                        </tr>
-
-                                        @if (acredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB))
-                                        {
-                                            <tr>
-                                                <td colspan="6">
-                                                    <b>Резултати от микробиологично изпитване:</b>
-                                                </td>
-                                            </tr>
-                                        }
-
                                         @{
-                                            var orderedAcreditedResultsMKB = acredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB)
-                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                            var orderedAcreditedResults = acredited
+                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number)
+                                                .ThenBy(x => x.ArchivedProductTest.TestName)
+                                                .ThenBy(x => x.ResultNumber);
                                         }
 
-                                        @foreach (var result in orderedAcreditedResultsMKB)
-                                        {
-                                            <tr>
-                                                <td>@result.ArchivedProductTest.TestName</td>
-                                                <td>@result.ArchivedProductTest.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.ArchivedProductTest.MethodValue</td>
-                                                <td>@result.ArchivedProductTest.TestTemperature</td>
-                                            </tr>
-                                        }
-
-                                        @if (acredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH))
-                                        {
-                                            <tr>
-                                                <td colspan="6">
-                                                    <b>Резултати от физикохимично и органолептично изпитване:</b>
-                                                </td>
-                                            </tr>
-                                        }
-                                        @{
-                                            var orderedAcreditedResultsFZH = acredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH)
-                                                    .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
-                                        }
-
-                                        @foreach (var result in orderedAcreditedResultsFZH)
+                                        @foreach (var result in orderedAcreditedResults)
                                         {
                                             <tr>
                                                 <td>@result.ArchivedProductTest.TestName</td>
@@ -129,7 +97,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                            }
+                            }
 
                             @{
                                 var notAcredited = item.ProtocolResults.Where(pr => pr.ArchivedProductTest.TestAcredetationLevel.Trim() == AcreditationLevels.NotAcredited);
@@ -139,17 +107,28 @@
                             {
                                 <div class="table-responsive">
                                     <table class="table">
+                                        <colgroup>
+                                            <col width="60" />
+                                        </colgroup>
                                         <tr>
+                                            <td colspan="5">
+                                                <b>Не акредитирани (Б):</b>
+                                            </td>
+                                            <td>
+                                                <a href="/Files/GetArchivedProtocolFile?archivedDiaryId=@(item.DiaryId)&category=B">Изтегли протокол</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                №
+                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                            </th>
                                             <th>
                                                 Наименувание на показателя
                                             </th>
                                             <th>
                                                 Методи
                                                 <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                                            </th>
-                                            <th>
-                                                № на образеца
-                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                                             </th>
                                             <th>Резултати от изследването, неопределеност</th>
                                             <th>
@@ -159,64 +138,21 @@
                                             <th>Условия на заобикалящата среда</th>
                                         </tr>
 
-                                        <tr>
-                                            <td colspan="5">
-                                                <b>Не акредитирани (Б):</b>
-                                            </td>
-                                            <td>
-                                                <a href="/Files/GetArchivedProtocolFile?archivedDiaryId=@(item.DiaryId)&category=B">Изтегли протокол</a>
-                                            </td>
-                                        </tr>
-
-                                        @if (notAcredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB))
-                                        {
-                                            <tr>
-                                                <td colspan="6">
-                                                    <b>Резултати от микробиологично изпитване:</b>
-                                                </td>
-                                            </tr>
-                                        }
-
                                         @{
-                                            var orderedNotAcreditedResultsMKB = notAcredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.MKB)
-                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
+                                            var orderedNotAcreditedResultsMKB = notAcredited
+                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number)
+                                                .ThenBy(x => x.ArchivedProductTest.TestName)
+                                                .ThenBy(x => x.ResultNumber);
                                         }
 
                                         @foreach (var result in orderedNotAcreditedResultsMKB)
                                         {
                                             <tr>
-                                                <td>@result.ArchivedProductTest.TestName</td>
-                                                <td>@result.ArchivedProductTest.TestMethods</td>
                                                 <td>
                                                     @(result.ResultNumber != null ? result.ResultNumber : "")
                                                 </td>
-                                                <td>@result.Results</td>
-                                                <td>@result.ArchivedProductTest.MethodValue</td>
-                                                <td>@result.ArchivedProductTest.TestTemperature</td>
-                                            </tr>
-                                        }
-
-                                        @if (notAcredited.Any(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH))
-                                        {
-                                            <tr>
-                                                <td colspan="6">
-                                                    <b>Резултати от физикохимично и органолептично изпитване:</b>
-                                                </td>
-                                            </tr>
-                                        }
-                                        @{
-                                            var orderedNotAcreditedResultsFZH = notAcredited.Where(a => a.ArchivedProductTest.TestTypeShortName == TestTypes.FZH)
-                                                .OrderBy(x => x.ArchivedProductTest.ArchivedProduct.Number).ThenBy(x => x.ArchivedProductTest.TestName).ThenBy(x => x.ResultNumber);
-                                        }
-
-                                        @foreach (var result in orderedNotAcreditedResultsFZH)
-                                        {
-                                            <tr>
                                                 <td>@result.ArchivedProductTest.TestName</td>
                                                 <td>@result.ArchivedProductTest.TestMethods</td>
-                                                <td>
-                                                    @(result.ResultNumber != null ? result.ResultNumber : "")
-                                                </td>
                                                 <td>@result.Results</td>
                                                 <td>@result.ArchivedProductTest.MethodValue</td>
                                                 <td>@result.ArchivedProductTest.TestTemperature</td>
@@ -236,7 +172,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                            }
+                            }
 
                             <div class="status-container">
                                 <h5>Извършил изпитването (ФЗХ): <strong>@item.Tester</strong></h5>
@@ -249,7 +185,7 @@
                 </div>
             </div>
         </div>
-                                            }
+    }
 
 </div>
 

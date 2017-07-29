@@ -28,7 +28,7 @@
 
             foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
             {
-                foreach (var test in item.ProductTests)
+                foreach (var test in item.ProductTests.OrderBy(pt => pt.Test.TestType.SortOrder))
                 {
                     <div class="form-group">
                         <label for="test-method" class="control-label col-md-3">
@@ -119,32 +119,15 @@
             </div>
         </div>
 
-
-        @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.MKB)))
-        {
-            <div class="form-group">
-                <label for="Tester" class="control-label col-md-3">
-                    Ивършил изпитването (МКБ):
-                </label>
-                <div class="col-md-9">
-                    @Html.TextBox("TesterMKB", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
-                    @Html.ValidationMessage("TesterMKB", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-
-       @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.FZH)))
-       {
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
-                Ивършил изпитването (ФЗХ):
+                Ивършил изпитването:
             </label>
             <div class="col-md-9">
-                @Html.TextBox("TesterFZH", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (ФЗХ) е задължително поле!" })
-                @Html.ValidationMessage("TesterFZH", new { @class = "text-danger" })
+                @Html.TextBox("Tester", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
+                @Html.ValidationMessage("Tester", new { @class = "text-danger" })
             </div>
         </div>
-       }
 
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
@@ -207,6 +190,7 @@
         
     </div>
 }
+
 <script src="~/Scripts/Our/Helpers.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/Our/Protocols.js"></script>
