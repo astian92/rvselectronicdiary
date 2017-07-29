@@ -167,4 +167,5 @@ function loadTestView() {
 }
 
 function addTest() {
+    alert('YES');
 }

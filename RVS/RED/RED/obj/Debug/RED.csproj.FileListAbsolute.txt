@@ -608,6 +608,8 @@ C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.CSharp.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
+D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.dll.config
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.pdb
@@ -640,8 +642,6 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.Helpers.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.Mvc.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.Optimization.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.Razor.dll
-D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.Deployment.dll
-D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.Razor.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\WebGrease.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.dll
@@ -674,4 +674,3 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAcco
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.pdb
-D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
