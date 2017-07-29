@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
 using RED.Filters;
+using RED.Helpers;
 using RED.Models.ControllerBases;
 using RED.Repositories.Abstract;
-using RED.Helpers;
 
 namespace RED.Controllers
 {
@@ -54,7 +54,7 @@ namespace RED.Controllers
             var requests = _rep.GetMyRequests(page, pageSize, number, fromDate, toDate);
             return PartialView("Requests", requests);
         }
-        
+
         public ActionResult FilterCompletedRequests(int page, int pageSize, int number, DateTime? fromDate, DateTime? toDate)
         {
             ViewBag.Label = "completed";

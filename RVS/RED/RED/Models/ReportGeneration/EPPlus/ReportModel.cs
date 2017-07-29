@@ -10,7 +10,7 @@ namespace RED.Models.ReportGeneration.EPPlus
         }
 
         public Dictionary<string, object> ReportParameters { get; set; }
-        
+
         public IEnumerable<IReportable> ReportItems { get; set; }
     }
 }

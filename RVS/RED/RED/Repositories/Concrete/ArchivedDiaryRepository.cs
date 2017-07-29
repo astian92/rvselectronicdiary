@@ -228,7 +228,7 @@ namespace RED.Repositories.Concrete
 
             protocolResult.ResultNumber = aprotocolResult.ResultNumber;
             protocolResult.Results = aprotocolResult.Results;
-            
+
             Db.SaveChanges();
         }
 

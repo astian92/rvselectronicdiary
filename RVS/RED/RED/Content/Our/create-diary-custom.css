@@ -1,9 +1,8 @@
-﻿
-.special-chars-holder {
+﻿.special-chars-holder {
     margin-top: 5px;
 }
 
-.special-chars-holder input { 
+.special-chars-holder input {
     display: inline-block !important;
     width: 60px;
 }

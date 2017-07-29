@@ -18,8 +18,8 @@ namespace RED.Models.ElectronicDiary.Requests
         public DateTime Date { get; set; }
 
         [Display(Name = "Дата")]
-        public string DateStr 
-        { 
+        public string DateStr
+        {
             get
             {
                 return Date.ToString("dd.MM.yyyy");
@@ -42,8 +42,8 @@ namespace RED.Models.ElectronicDiary.Requests
         public virtual Diary Diary { get; set; }
 
         [Display(Name = "Номер")]
-        public int Number 
-        { 
+        public int Number
+        {
             get
             {
                 return Diary.Number;

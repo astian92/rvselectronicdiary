@@ -27,7 +27,7 @@ namespace RED.Models.ElectronicDiary.Converters
             productTest.Product.Number = aproductTest.ArchivedProduct.Number;
             productTest.Product.Name = aproductTest.ArchivedProduct.Name;
             productTest.Product.Quantity = aproductTest.ArchivedProduct.Quantity;
-            
+
             return productTest;
         }
 

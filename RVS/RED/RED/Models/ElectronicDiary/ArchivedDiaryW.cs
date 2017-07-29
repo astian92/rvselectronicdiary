@@ -143,7 +143,7 @@ namespace RED.Models.ElectronicDiary
             }
         }
 
-        public string RequestDateTime 
+        public string RequestDateTime
         {
             get
             {

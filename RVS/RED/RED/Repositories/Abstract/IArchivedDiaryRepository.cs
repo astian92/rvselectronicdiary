@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using RED.Models.DataContext;
-using RED.Models.ElectronicDiary.ArchivedWrappers;
 using RED.Models.ElectronicDiary;
+using RED.Models.ElectronicDiary.ArchivedWrappers;
 
 namespace RED.Repositories.Abstract
 {

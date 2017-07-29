@@ -46,8 +46,6 @@
     left: -999em;
 }
 
-
-
 /*
     Wizard
 */
@@ -184,7 +182,7 @@
     height: 100%;
 }
 
-.wizard > .content > .body input, 
+.wizard > .content > .body input,
 .wizard > .content > .body textarea
 {
     display: block;
@@ -278,8 +276,6 @@
 .wizard > .loading .spinner
 {
 }
-
-
 
 /*
     Tabcontrol

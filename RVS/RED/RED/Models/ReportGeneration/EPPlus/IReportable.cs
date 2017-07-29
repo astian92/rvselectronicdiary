@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.ReportGeneration.EPPlus
+﻿namespace RED.Models.ReportGeneration.EPPlus
 {
     public interface IReportable
     {

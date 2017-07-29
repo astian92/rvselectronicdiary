@@ -8,7 +8,8 @@ namespace RED.Helpers
     {
         public static int SetAuthCookie<T>(this HttpResponseBase responseBase, string name, bool rememberMe, T userData)
         {
-            // In order to pickup the settings from config, we create a default cookie and use its values to create a new one.
+            // In order to pickup the settings from config, we create a default cookie and use its
+            // values to create a new one.
             var cookie = FormsAuthentication.GetAuthCookie(name, rememberMe);
             var ticket = FormsAuthentication.Decrypt(cookie.Value);
 

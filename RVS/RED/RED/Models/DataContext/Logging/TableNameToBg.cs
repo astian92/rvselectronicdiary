@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.DataContext.Logging
+﻿namespace RED.Models.DataContext.Logging
 {
     public static class TableNameToBg
     {
@@ -16,15 +11,19 @@ namespace RED.Models.DataContext.Logging
                 case "User":
                     result = "Потребител";
                     break;
+
                 case "Role":
                     result = "Роля";
                     break;
+
                 case "Test":
                     result = "Изследване";
                     break;
+
                 case "TestCategory":
                     result = "Категория (изследване)";
                     break;
+
                 default:
                     result = string.Empty;
                     break;

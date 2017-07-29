@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.FileModels
+﻿namespace RED.Models.FileModels
 {
     public class FileProperties
     {
@@ -11,7 +6,7 @@ namespace RED.Models.FileModels
 
         public string FileName { get; set; }
 
-        public string FullPath 
+        public string FullPath
         {
             get
             {

@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using RED.Filters;
+using RED.Helpers;
 using RED.Models;
 using RED.Models.ControllerBases;
 using RED.Models.DataContext;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Repositories.Abstract;
-using RED.Helpers;
-using Newtonsoft.Json;
 
 namespace RED.Controllers
 {
@@ -27,7 +27,7 @@ namespace RED.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public string GetClients()
         {
@@ -186,6 +186,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 case 1:
                     if (asc == true)
                     {
@@ -197,6 +198,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 default:
                     break;
             }

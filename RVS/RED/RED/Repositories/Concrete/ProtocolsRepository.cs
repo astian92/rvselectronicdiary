@@ -106,7 +106,7 @@ namespace RED.Repositories.Concrete
 
                 //for some reason the saveChanges doesnt populate the Remark object in the ProtocolsRemark and its
                 //needed inside the protocol generating
-                item.Remark = Db.Remarks.Single(r => r.Id == item.RemarkId); 
+                item.Remark = Db.Remarks.Single(r => r.Id == item.RemarkId);
                 protocol.ProtocolsRemarks.Add(item);
             }
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Globalization;
+using System.Linq;
 using RED.Models.ReportGeneration.EPPlus;
 
 namespace RED.Models.FileModels.RequestList
@@ -57,7 +57,7 @@ namespace RED.Models.FileModels.RequestList
 
             //style the head
             FormatTitleRow(row);
-             
+
             row += 2;
 
             Cells["A" + row].Value = title;

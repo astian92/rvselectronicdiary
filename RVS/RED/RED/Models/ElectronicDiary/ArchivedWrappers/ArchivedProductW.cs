@@ -63,7 +63,7 @@ namespace RED.Models.ElectronicDiary.ArchivedWrappers
             archivedProduct.Name = this.Name;
             archivedProduct.Quantity = this.Quantity;
             archivedProduct.Number = this.Number;
-            
+
             if (this.ArchivedTests != null)
             {
                 archivedProduct.ArchivedProductTests = this.ArchivedTests.Select(a => a.ToBase()).ToList();

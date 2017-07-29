@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using RED.Models.DataContext;
-using RED.Models.Responses;
 using RED.Models.ElectronicDiary.Tests;
+using RED.Models.Responses;
 
 namespace RED.Repositories.Abstract
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using RED.Models.DataContext;
+using RED.Models.ElectronicDiary.Protocols;
 using RED.Models.ElectronicDiary.Remarks;
 using RED.Models.ElectronicDiary.Requests;
-using RED.Models.ElectronicDiary.Protocols;
 
 namespace RED.Repositories.Abstract
 {

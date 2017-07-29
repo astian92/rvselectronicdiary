@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -27,7 +27,7 @@ namespace RED.Repositories.Concrete
             var clients = Db.Clients.AsQueryable();
             return clients;
         }
-        
+
         public void Add(ClientW clientW)
         {
             clientW.Id = Guid.NewGuid();
@@ -41,7 +41,7 @@ namespace RED.Repositories.Concrete
             var client = Db.Clients.Single(c => c.Id == clientW.Id);
             client.Name = clientW.Name;
             client.Mobile = clientW.Mobile;
-            
+
             Db.SaveChanges();
         }
 

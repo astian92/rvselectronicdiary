@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
-using RED.Models.DataContext;
 using RED.Models.ControllerBases;
+using RED.Models.DataContext;
 using RED.Repositories.Abstract;
 
 namespace RED.Controllers

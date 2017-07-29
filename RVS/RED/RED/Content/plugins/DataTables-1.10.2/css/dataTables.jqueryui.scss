@@ -1,5 +1,3 @@
-
-
  //
  // Colour customisation
  //
@@ -26,8 +24,6 @@ $table-paging-button-active: #dcdcdc;
 // Hover colour of paging buttons on mouse over
 $table-paging-button-hover: #111;
 
-
-
 //
 // Functions / mixins
 //
@@ -48,7 +44,6 @@ $table-paging-button-hover: #111;
   background:      -o-linear-gradient(top,     $from 0%, $to 100%); /* Opera 11.10+ */
   background:         linear-gradient(to bottom, $from 0%, $to 100%); /* W3C */
 }
-
 
 /*
  * Table styles
@@ -112,7 +107,6 @@ table.dataTable {
     }
   }
 
-
   /*
    * Body styles
    */
@@ -142,7 +136,6 @@ table.dataTable {
     text-align: right;
   }
 
-
   // Stripe classes - add "row-border" class to the table to activate
   &.row-border tbody,
   &.display tbody {
@@ -155,7 +148,6 @@ table.dataTable {
       border-top: none;
     }
   }
-
 
   // Stripe classes - add "cell-border" class to the table to activate
   &.cell-border tbody {
@@ -175,7 +167,6 @@ table.dataTable {
     }
   }
 
-
   // Stripe classes - add "stripe" class to the table to activate
   &.stripe tbody,
   &.display tbody {
@@ -187,7 +178,6 @@ table.dataTable {
       }
     }
   }
-
 
   // Hover classes - add "hover" class to the table to activate
   &.hover tbody,
@@ -202,7 +192,6 @@ table.dataTable {
       }
     }
   }
-
 
   // Sort column highlighting - add "hover" class to the table to activate
   &.order-column,
@@ -240,7 +229,7 @@ table.dataTable {
       >.sorting_1 { background-color: shade($table-row-background, 2%); } // shade by fa
       >.sorting_2 { background-color: shade($table-row-background, 1.2%); } // shade by fc
       >.sorting_3 { background-color: shade($table-row-background, 0.4%); } // shade by fe
-      
+
       &.selected {
         >.sorting_1 { background-color: shade($table-row-selected, 2%); }
         >.sorting_2 { background-color: shade($table-row-selected, 1.2%); }
@@ -276,8 +265,6 @@ table.dataTable td {
      -moz-box-sizing: content-box;
           box-sizing: content-box;
 }
-
-
 
 /*
  * Control feature layout
@@ -385,7 +372,6 @@ table.dataTable td {
     -webkit-overflow-scrolling: touch;
   }
 
-
   .ui-widget-header {
     font-weight: normal;
   }
@@ -404,5 +390,3 @@ table.dataTable td {
   }
   zoom: 1; // Poor old IE
 }
-
-

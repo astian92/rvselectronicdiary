@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Data.Entity;
-using RED.Repositories.Abstract;
+using System.Linq;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
