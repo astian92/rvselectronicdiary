@@ -5,7 +5,7 @@
  * Language:    Javascript
  * License:     GPL v2 / 3 point BSD
  * Project:     DataTables
- * 
+ *
  * Copyright 2009-2012 Allan Jardine, all rights reserved.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -20,7 +20,6 @@
  *   COLLECTIONS           Drop down list (collection) styles
  *   PRINTING              Print display styles
  */
-
 
 /*
  * CONTAINER
@@ -46,7 +45,6 @@ div.DTTT_container {
 		height: 0;
 	}
 }
-
 
 button.DTTT_button,
 div.DTTT_button,
@@ -83,14 +81,13 @@ a.DTTT_button {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 ); /* IE6-9 */
 }
 
-
 /* Buttons are cunning border-box sizing - we can't just use that for A and DIV due to IE6/7 */
 button.DTTT_button {
 	height: 30px;
 	padding: 3px 8px;
 }
 
-.DTTT_button embed { 
+.DTTT_button embed {
 	outline: none;
 }
 
@@ -120,7 +117,7 @@ div.DTTT_disabled,
 a.DTTT_disabled {
 	color: #999;
 	border: 1px solid #d0d0d0;
-	
+
 	background: #ffffff; /* Old browsers */
 	background: -webkit-linear-gradient(top, #ffffff 0%,#f9f9f9 89%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
 	background:    -moz-linear-gradient(top, #ffffff 0%,#f9f9f9 89%,#fafafa 100%); /* FF3.6+ */
@@ -129,8 +126,6 @@ a.DTTT_disabled {
 	background:         linear-gradient(top, #ffffff 0%,#f9f9f9 89%,#fafafa 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
 }
-
-
 
 /*
  * BUTTON_STYLES
@@ -155,7 +150,6 @@ a.DTTT_button_print span {
 	line-height: 24px;
 	padding-right: 30px;
 }
-
 
 a.DTTT_button_csv span { background: url(../images/csv.png) no-repeat bottom right; }
 a.DTTT_button_csv:hover span { background: url(../images/csv_hover.png) no-repeat center right; }
@@ -184,7 +178,6 @@ button.DTTT_button_collection:hover span {
 	background: #f0f0f0 url(../images/collection_hover.png) no-repeat center right;
 }
 
-
 /*
  * SELECTING
  * Row selection styles
@@ -210,7 +203,6 @@ table.dataTable tr.DTTT_selected.odd td.sorting_3 {
 	background-color: #9FAFD1;
 }
 
-
 table.dataTable tr.DTTT_selected.even {
 	background-color: #B0BED9;
 }
@@ -226,7 +218,6 @@ table.dataTable tr.DTTT_selected.even td.sorting_2 {
 table.dataTable tr.DTTT_selected.even td.sorting_3 {
 	background-color: #B0BED9;
 }
-
 
 /*
  * COLLECTIONS
@@ -248,7 +239,7 @@ div.DTTT_collection {
 	    -ms-border-radius: 5px;
 	     -o-border-radius: 5px;
 	        border-radius: 5px;
-	
+
 	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 	   -moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 	    -ms-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
@@ -271,14 +262,13 @@ div.DTTT_collection a.DTTT_button {
 	display: block;
 	float: none;
 	margin-bottom: 4px;
-	
+
 	-webkit-box-shadow: 1px 1px 3px #999;
 	   -moz-box-shadow: 1px 1px 3px #999;
 	    -ms-box-shadow: 1px 1px 3px #999;
 	     -o-box-shadow: 1px 1px 3px #999;
 	        box-shadow: 1px 1px 3px #999;
 }
-
 
 /*
  * PRINTING
@@ -304,18 +294,18 @@ div.DTTT_collection a.DTTT_button {
 	background:      -o-linear-gradient(top, #ffffff 0%,#f3f3f3 89%,#f9f9f9 100%); /* Opera 11.10+ */
 	background:         linear-gradient(top, #ffffff 0%,#f3f3f3 89%,#f9f9f9 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 ); /* IE6-9 */
-	
+
 	opacity: 0.95;
 
 	border: 1px solid black;
 	border: 1px solid rgba(0, 0, 0, 0.5);
-	
+
 	-webkit-border-radius: 6px;
 	   -moz-border-radius: 6px;
 	    -ms-border-radius: 6px;
 	     -o-border-radius: 6px;
 	        border-radius: 6px;
-	
+
 	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
 	   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
 	    -ms-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
@@ -334,4 +324,3 @@ div.DTTT_collection a.DTTT_button {
 	font-size: 14px;
 	line-height: 20px;
 }
-

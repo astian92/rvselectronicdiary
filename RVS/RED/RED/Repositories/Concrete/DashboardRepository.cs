@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using RED.Models.Dashboard;
-using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -41,8 +41,9 @@ namespace RED.Repositories.Concrete
                                             && x.ArchivedProduct.ArchivedDiary.AcceptanceDateAndTime.Month == DateTime.Now.Month
                                             && x.ArchivedProduct.ArchivedDiary.AcceptanceDateAndTime.Day == DateTime.Now.Day)
                                              .ToList().Select(x => new TestsReferenceW(x)));
-                                            
+
                     return tests.GroupBy(x => x.TestName).ToDictionary(x => x.FirstOrDefault().TestName);
+
                 case 1:
                     tests = Db.ProductTests.Where(x => x.Product.Diary.AcceptanceDateAndTime.Year == DateTime.Now.Year
                                             && x.Product.Diary.AcceptanceDateAndTime.Month == DateTime.Now.Month)
@@ -52,6 +53,7 @@ namespace RED.Repositories.Concrete
                                              .ToList().Select(x => new TestsReferenceW(x)));
 
                     return tests.GroupBy(x => x.TestName).ToDictionary(x => x.FirstOrDefault().TestName);
+
                 case 2:
                     tests = Db.ProductTests.Where(x => x.Product.Diary.AcceptanceDateAndTime.Year == DateTime.Now.Year)
                                             .ToList().Select(x => new TestsReferenceW(x)).ToList();

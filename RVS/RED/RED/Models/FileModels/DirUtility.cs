@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.FileModels
+﻿namespace RED.Models.FileModels
 {
     public static class DirUtility
     {
@@ -20,7 +15,7 @@ namespace RED.Models.FileModels
                 end += 1000;
                 found = start < diaryNumber && diaryNumber < end;
             }
-            
+
             return start.ToString("0000") + "-" + end;
         }
     }

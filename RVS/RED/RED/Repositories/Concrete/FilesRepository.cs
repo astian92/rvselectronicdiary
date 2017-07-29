@@ -25,7 +25,7 @@ namespace RED.Repositories.Concrete
             Db = factory.CreateConcrete();
             this.FileTreePath = ConfigurationManager.AppSettings["FilesDestination"];
         }
-        
+
         public string FileTreePath { get; set; }
 
         public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
@@ -70,7 +70,7 @@ namespace RED.Repositories.Concrete
                         {
                             TestType = pt.Test.TestType.ShortName,
                             TestName = pt.Test.Name,
-                                        Method = pt.TestMethod.Method,
+                            Method = pt.TestMethod.Method,
                             MethodValue = pt.Test.MethodValue,
                             Remark = pt.Remark
                         })
@@ -148,7 +148,7 @@ namespace RED.Repositories.Concrete
             var diary = Db.Diaries.Single(d => d.Id == diaryId);
 
             var fileProp = GetFileProperties(diary.Number, FileNames.RequestListReport, category);
-            
+
             if (Directory.Exists(fileProp.Path))
             {
                 var file = File.ReadAllBytes(fileProp.FullPath);

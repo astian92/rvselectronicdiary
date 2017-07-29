@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RED.Models.Responses
+﻿namespace RED.Models.Responses
 {
     public enum ErrorTypes
     {
         UnkownError = 0,
-        InvalidUsernameOrPassword, 
+        InvalidUsernameOrPassword,
         ConnectingToDatabaseFailure,
         ServerError,
         MethodInUseError

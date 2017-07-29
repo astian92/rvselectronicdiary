@@ -196,11 +196,11 @@ namespace RED.Controllers
 
                 if (!string.IsNullOrEmpty(charGenerated))
                 {
-                    return Json(charGenerated, JsonRequestBehavior.AllowGet);  
+                    return Json(charGenerated, JsonRequestBehavior.AllowGet);
                 }
             }
 
-            return Json("Failed", JsonRequestBehavior.AllowGet);  
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         [RoleFilter(FeaturesCollection.ModifyDiary)]

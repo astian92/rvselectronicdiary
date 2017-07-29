@@ -267,8 +267,8 @@ namespace RED.Controllers
 
             return View(aprotocolResult);
         }
-        
-        [HttpGet]    
+
+        [HttpGet]
         public ActionResult EditProtocolResult(Guid aprotocolResultId)
         {
             var aprotocolResult = _rep.GetArchivedProtocolResultW(aprotocolResultId);

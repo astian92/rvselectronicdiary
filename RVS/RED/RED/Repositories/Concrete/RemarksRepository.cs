@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RED.Models.ElectronicDiary.Remarks;
-using RED.Repositories.Abstract;
 using RED.Models.DataContext;
 using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary.Remarks;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {

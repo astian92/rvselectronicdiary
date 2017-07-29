@@ -20,7 +20,7 @@ namespace RED.Models.FileModels.ProtocolFiles
 
         private bool hasFZH;
 
-        public ProtocolReport(ReportModel model) 
+        public ProtocolReport(ReportModel model)
             : base(model, "ProtocolTemplate.docx")
         {
             this.modelItems = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
@@ -260,7 +260,7 @@ namespace RED.Models.FileModels.ProtocolFiles
                 for (int i = 0; i < table.ColumnCount; i++)
                 {
                     var cell = row.Cells[i];
-                    cell.Width = cellsWidth[i]; //DOESNT FUCKING WORK !!!!!!!!! 
+                    cell.Width = cellsWidth[i]; //DOESNT FUCKING WORK !!!!!!!!!
                     cell.Paragraphs[0].Alignment = Alignment.center;
                     cell.VerticalAlignment = VerticalAlignment.Center;
                 }

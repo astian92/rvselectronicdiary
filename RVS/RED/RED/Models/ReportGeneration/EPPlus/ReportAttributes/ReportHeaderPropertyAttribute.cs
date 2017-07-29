@@ -3,7 +3,7 @@
 namespace RED.Models.ReportGeneration.EPPlus.ReportAttributes
 {
     public class ReportHeaderPropertyAttribute : Attribute
-    {   
+    {
         public string Column;
         public string LastColumn;
         public string Value;

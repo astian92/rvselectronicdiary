@@ -81,7 +81,7 @@ namespace RED.Repositories.Concrete
             diary.LetterDate = diaryW.LetterDate;
             diary.Contractor = diaryW.Contractor;
             diary.ClientId = diaryW.ClientId;
-            
+
             foreach (var item in diary.Products)
             {
                 var pts = Db.ProductTests.Where(pt => pt.ProductId == item.Id);
@@ -108,7 +108,7 @@ namespace RED.Repositories.Concrete
             }
 
             Db.SaveChanges();
-            
+
             var request = diary.Requests.FirstOrDefault();
             if (request != null)
             {
@@ -181,7 +181,7 @@ namespace RED.Repositories.Concrete
         {
             return Db.Clients.ToList().Select(r => new ClientW(r));
         }
-        
+
         public IEnumerable<Client> GetSelectListClients(bool allValue = true)
         {
             var selectList = new List<Client>();
@@ -208,10 +208,10 @@ namespace RED.Repositories.Concrete
         public IEnumerable<TestW> GetSelectListTests()
         {
             var selectList = Db.Tests.OrderBy(x => x.TestCategory.Name).Select(x => new TestW
-                                                                {
-                                                                    FullName = x.Name + " - " + x.TestCategory.Name,
-                                                                    FullValue = x.TestType.ShortName + "_" + x.Id
-                                                                });
+            {
+                FullName = x.Name + " - " + x.TestCategory.Name,
+                FullValue = x.TestType.ShortName + "_" + x.Id
+            });
             return selectList;
         }
 

@@ -27,9 +27,9 @@ namespace RED.Models.ReportGeneration.EPPlus
 
         protected List<TReportModel> ReportData
         {
-            get 
+            get
             {
-                 return this.ReportModel.ReportItems as List<TReportModel>;
+                return this.ReportModel.ReportItems as List<TReportModel>;
             }
         }
 

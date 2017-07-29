@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Web;
 
 namespace RED.Models.DataContext.Logging
 {

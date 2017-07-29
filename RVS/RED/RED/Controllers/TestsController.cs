@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using RED.Filters;
-using RED.Models.ControllerBases;
-using RED.Models.ElectronicDiary.Tests;
-using RED.Repositories.Abstract;
 using RED.Helpers;
 using RED.Models;
+using RED.Models.ControllerBases;
 using RED.Models.DataContext;
-using Newtonsoft.Json;
+using RED.Models.ElectronicDiary.Tests;
+using RED.Repositories.Abstract;
 
 namespace RED.Controllers
 {
@@ -149,7 +149,7 @@ namespace RED.Controllers
             if (dtParams.IsBeingSearched)
             {
                 entities = entities.Where(e => e.Name.ToLower().Contains(dtParams.SearchValue) ||
-                                          e.TestType.ShortName.ToLower().Contains(dtParams.SearchValue) || 
+                                          e.TestType.ShortName.ToLower().Contains(dtParams.SearchValue) ||
                                           e.TestCategory.Name.ToLower().Contains(dtParams.SearchValue));
             }
 
@@ -328,6 +328,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 case 1:
                     if (asc == true)
                     {
@@ -339,6 +340,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 case 2:
                     if (asc == true)
                     {
@@ -350,6 +352,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 case 3:
                     if (asc == true)
                     {
@@ -361,6 +364,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 case 4:
                     if (asc == true)
                     {
@@ -372,6 +376,7 @@ namespace RED.Controllers
                     }
 
                     break;
+
                 default:
                     break;
             }
