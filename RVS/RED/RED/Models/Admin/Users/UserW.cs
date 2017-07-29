@@ -12,19 +12,6 @@ namespace RED.Models.Admin.Users
             this.ActionLogs = new HashSet<ActionLog>();
         }
 
-        public UserW(User user) : this()
-        {
-            this.Id = user.Id;
-            this.Username = user.Username;
-            this.Password = user.Password;
-            this.FirstName = user.FirstName;
-            this.MiddleName = user.MiddleName;
-            this.LastName = user.LastName;
-            this.Position = user.Position;
-            this.RoleId = user.RoleId;
-            this.Role = user.Role;
-        }
-
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Потребителското име е задължително.")]
@@ -54,24 +41,23 @@ namespace RED.Models.Admin.Users
 
         [Required]
         public Guid RoleId { get; set; }
-    
+
         public virtual Role Role { get; set; }
 
         public virtual ICollection<ActionLog> ActionLogs { get; set; }
 
         public User ToBase()
         {
-            User user = new User();
-
-            user.Id = this.Id;
-            user.Username = this.Username;
-            user.Password = this.Password;
-            user.FirstName = this.FirstName;
-            user.MiddleName = this.MiddleName;
-            user.LastName = this.LastName;
-            user.Position = this.Position;
-            user.RoleId = this.RoleId;
-            user.Role = this.Role;
+            var user = new User();
+            user.Id = Id;
+            user.Username = Username;
+            user.Password = Password;
+            user.FirstName = FirstName;
+            user.MiddleName = MiddleName;
+            user.LastName = LastName;
+            user.Position = Position;
+            user.RoleId = RoleId;
+            user.Role = Role;
 
             return user;
         }

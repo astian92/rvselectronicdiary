@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using RED.Models.DataContext;
 
 namespace RED.Models.ElectronicDiary
@@ -11,23 +10,7 @@ namespace RED.Models.ElectronicDiary
     {
         public DiaryW()
         {
-            this.Products = new List<Product>();
-        }
-
-        public DiaryW(Diary diary)
-        {
-            Id = diary.Id;
-            Number = diary.Number;
-            LetterNumber = diary.LetterNumber;
-            LetterDate = diary.LetterDate;
-            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-            Contractor = diary.Contractor;
-            ClientId = diary.ClientId;
-            Comment = diary.Comment;
-
-            Client = diary.Client;
-            Request = diary.Requests.FirstOrDefault();
-            Products = diary.Products;
+            Products = new HashSet<Product>();
         }
 
         public Guid Id { get; set; }
@@ -35,6 +18,8 @@ namespace RED.Models.ElectronicDiary
         [Required]
         public int Number { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Дата на приемане\" е задължително!")]
+        [Display(Name = "Дата на приемане")]
         public DateTime AcceptanceDateAndTime { get; set; }
 
         [Display(Name = "Писмо №")]
@@ -68,13 +53,36 @@ namespace RED.Models.ElectronicDiary
         {
             get
             {
-                if (this.LetterNumber != null)
+                if (LetterNumber != null)
                 {
-                    return "Писмо №" + this.LetterNumber + " от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    return "Писмо №" + LetterNumber + " от " + LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    return "Писмо от " + this.LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    return "Писмо от " + LetterDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
+        [Required(ErrorMessage = "Полето \"Час на приемане\" е задължително!")]
+        [Display(Name = "Час на приемане")]
+        public string AcceptanceTime
+        {
+            get
+            {
+                return AcceptanceDateAndTime.ToString("HH:mm");
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var arguments = value.Split(':');
+                    var hours = int.Parse(arguments[0]);
+                    var minutes = int.Parse(arguments[1]);
+
+                    AcceptanceDateAndTime = AcceptanceDateAndTime.AddHours(hours);
+                    AcceptanceDateAndTime = AcceptanceDateAndTime.AddMinutes(minutes);
                 }
             }
         }
@@ -122,8 +130,7 @@ namespace RED.Models.ElectronicDiary
 
         public Diary ToBase()
         {
-            Diary diary = new Diary();
-
+            var diary = new Diary();
             diary.Id = Id;
             diary.Number = Number;
             diary.LetterNumber = LetterNumber;

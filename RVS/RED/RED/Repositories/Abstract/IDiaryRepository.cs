@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using RED.Models.DataContext;
+using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Models.Responses;
-using RED.Models.ElectronicDiary;
 
 namespace RED.Repositories.Abstract
 {
@@ -31,6 +31,8 @@ namespace RED.Repositories.Abstract
         IEnumerable<ClientW> GetClients();
 
         DiaryW GetDiary(Guid diaryId);
+
+        DiaryW GetDiaryWithProducts(Guid diaryId);
 
         IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10, string number = "-1", int diaryNumber = -1, Guid client = default(Guid), DateTime? from = default(DateTime?), DateTime? to = default(DateTime?));
 

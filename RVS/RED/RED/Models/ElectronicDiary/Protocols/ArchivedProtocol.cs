@@ -8,13 +8,13 @@ namespace RED.Models.ElectronicDiary.Protocols
     {
         public ArchivedProtocol(ArchivedDiary adiary)
         {
-            this.ArchivedDiary = adiary;
-            this.DiaryId = adiary.Id;
-            this.IssuedDate = adiary.ProtocolIssuedDate;
-            this.ProtocolResults = adiary.ArchivedProtocolResults;
-            this.TesterMKB = adiary.ProtocolTesterMKB;
-            this.TesterFZH = adiary.ProtocolTesterFZH;
-            this.LabLeader = adiary.ProtocolLabLeader;
+            ArchivedDiary = adiary;
+            DiaryId = adiary.Id;
+            IssuedDate = adiary.ProtocolIssuedDate;
+            ProtocolResults = adiary.ArchivedProtocolResults;
+            TesterMKB = adiary.ProtocolTesterMKB;
+            TesterFZH = adiary.ProtocolTesterFZH;
+            LabLeader = adiary.ProtocolLabLeader;
         }
 
         public ArchivedDiary ArchivedDiary { get; set; }

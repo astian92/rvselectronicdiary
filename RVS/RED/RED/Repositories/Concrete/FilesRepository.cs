@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using RED.Models.FileModels.RequestList;
-using RED.Models.ReportGeneration.EPPlus;
+using RED.Mappings;
 using RED.Models.DataContext;
-using RED.Models.FileModels.ProtocolFiles;
+using RED.Models.DataContext.Abstract;
 using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Converters;
-using RED.Repositories.Abstract;
 using RED.Models.FileModels;
-using RED.Models.DataContext.Abstract;
+using RED.Models.FileModels.ProtocolFiles;
+using RED.Models.FileModels.RequestList;
+using RED.Models.ReportGeneration.EPPlus;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -29,13 +30,12 @@ namespace RED.Repositories.Concrete
 
         public string GenerateRequestListReport(Guid diaryId, DateTime date, int testingPeriod)
         {
-            var diary = Db.Diaries.Single(d => d.Id == diaryId);
-            var diaryW = new DiaryW(diary);
+            var diaryW = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
 
             var acreditedItems = new List<RequestListModel>();
             var notAcreditedItems = new List<RequestListModel>();
 
-            foreach (var product in diary.Products.OrderBy(dp => dp.Number))
+            foreach (var product in diaryW.Products.OrderBy(dp => dp.Number))
             {
                 if (product.ProductTests.Any(pt => pt.Test.AcredetationLevel.Level == AcreditationLevels.Acredited))
                 {
@@ -95,9 +95,9 @@ namespace RED.Repositories.Concrete
                 var data = report.GenerateReport();
 
                 //this is supposed to create all the necessary directories for the file.
-                CheckAndGenerateDirectories(diary.Number);
+                CheckAndGenerateDirectories(diaryW.Number);
 
-                var fileProps = GetFileProperties(diary.Number, FileNames.RequestListReport, AcreditationLevels.Acredited);
+                var fileProps = GetFileProperties(diaryW.Number, FileNames.RequestListReport, AcreditationLevels.Acredited);
                 if (File.Exists(fileProps.FullPath))
                 {
                     string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
@@ -124,9 +124,9 @@ namespace RED.Repositories.Concrete
                 var data = report.GenerateReport();
 
                 //this is supposed to create all the necessary directories for the file.
-                CheckAndGenerateDirectories(diary.Number);
+                CheckAndGenerateDirectories(diaryW.Number);
 
-                var fileProps = GetFileProperties(diary.Number, FileNames.RequestListReport, AcreditationLevels.NotAcredited);
+                var fileProps = GetFileProperties(diaryW.Number, FileNames.RequestListReport, AcreditationLevels.NotAcredited);
                 if (File.Exists(fileProps.FullPath))
                 {
                     string newDestination = fileProps.FullPath.Substring(0, fileProps.FullPath.Length - 5) + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + ".xlsx";
@@ -259,7 +259,7 @@ namespace RED.Repositories.Concrete
             model.ReportParameters.Add("Client", request.Diary.Client.Name);
             model.ReportParameters.Add("LetterNumber", request.Diary.LetterNumber);
             model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
-            model.ReportParameters.Add("RequestDate", request.Date.ToLocalTime());
+            model.ReportParameters.Add("RequestDate", request.Date);
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
             model.ReportParameters.Add("TesterMKB", protocol.TesterMKB);
             model.ReportParameters.Add("TesterFZH", protocol.TesterFZH);

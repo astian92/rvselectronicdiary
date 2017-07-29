@@ -32,6 +32,6 @@ namespace RED.Repositories.Abstract
 
         UserW GetUser(Guid id);
 
-        IEnumerable<UserW> GetUsers();
+        IEnumerable<object> GetUsers();
     }
 }

@@ -1,8 +1,6 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using RED.Models.Account;
-using RED.Models.DataContext.Concrete;
 
 namespace RED.Filters
 {
@@ -25,11 +23,10 @@ namespace RED.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var principal = new RvsPrincipal(HttpContext.Current.User.Identity, new RvsContextFactory());
-            if (!principal.IsAuthorize(_featureId))
+            if (!RvsPrincipal.IsAuthorize(_featureId))
             {
                 filterContext.Result = new RedirectToRouteResult(
-                            new RouteValueDictionary    
+                            new RouteValueDictionary
                                 {
                                     { "controller", "Home" },
                                     { "action", "Index" }

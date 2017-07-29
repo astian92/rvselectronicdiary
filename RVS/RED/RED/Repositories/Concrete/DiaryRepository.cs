@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using RED.Mappings;
 using RED.Models.DataContext;
+using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary;
 using RED.Models.ElectronicDiary.Clients;
 using RED.Models.ElectronicDiary.Tests;
 using RED.Models.Responses;
-using RED.Models.ElectronicDiary;
 using RED.Repositories.Abstract;
-using RED.Models.DataContext.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -27,32 +29,28 @@ namespace RED.Repositories.Concrete
         public IEnumerable<DiaryW> GetDiaryEntries(int page = 1, int pageSize = 10, string number = "-1", int diaryNumber = -1, Guid client = default(Guid), DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var diaryEntries = Db.Diaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
-            diaryEntries = diaryEntries.Where(d => d.LetterNumber == (number == "-1" ? d.LetterNumber : number));
-            diaryEntries = diaryEntries.Where(d => d.ClientId == (client == Guid.Empty ? d.ClientId : client));
-            diaryEntries = diaryEntries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
+            var diaryEntries = Db.Diaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber))
+                                         .Where(d => d.LetterNumber == (number == "-1" ? d.LetterNumber : number))
+                                         .Where(d => d.ClientId == (client == Guid.Empty ? d.ClientId : client))
+                                         .Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
                                                    d.LetterDate <= (to == null ? d.LetterDate : to.Value));
 
             //Order and paging
-            diaryEntries = diaryEntries.OrderByDescending(d => d.Number);
-            var paged = diaryEntries.Skip((page - 1) * pageSize).Take(pageSize);
-            var wrapped = paged.ToList().Select(d => new DiaryW(d));
-            
-            return wrapped;
+            var activeDiaries = diaryEntries.OrderByDescending(d => d.Number).Skip((page - 1) * pageSize).Take(pageSize).Select(DiaryMappings.ToDiaryW);
+            return activeDiaries;
         }
 
         public IEnumerable<ArchivedDiaryW> GetArchivedDiaryEntries(int page = 1, int pageSize = 10, int number = -1, int diaryNumber = -1, string client = "Всички", DateTime? from = null, DateTime? to = null)
         {
             //Filter
-            var adiaries = Db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber)); 
-            adiaries = adiaries.Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()));
-            adiaries = adiaries.Where(d => d.Client == (client == "Всички" ? d.Client : client));
-            adiaries = adiaries.Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
+            var adiaries = Db.ArchivedDiaries.Where(d => d.Number == (diaryNumber == -1 ? d.Number : diaryNumber))
+                                             .Where(d => d.LetterNumber == (number == -1 ? d.LetterNumber : number.ToString()))
+                                             .Where(d => d.Client == (client == "Всички" ? d.Client : client))
+                                             .Where(d => d.LetterDate >= (from == null ? d.LetterDate : from.Value) &&
                                                    d.LetterDate <= (to == null ? d.LetterDate : to.Value));
 
             //Order and paging
-            adiaries = adiaries.OrderByDescending(d => d.Number);
-            var paged = adiaries.Skip((page - 1) * pageSize).Take(pageSize);
+            var paged = adiaries.OrderByDescending(d => d.Number).Skip((page - 1) * pageSize).Take(pageSize);
             var wrapped = paged.ToList().Select(d => new ArchivedDiaryW(d));
 
             return wrapped;
@@ -60,13 +58,19 @@ namespace RED.Repositories.Concrete
 
         public DiaryW GetDiary(Guid diaryId)
         {
-            var diary = Db.Diaries.Single(c => c.Id == diaryId);
-            return new DiaryW(diary);
+            var diary = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
+            return diary;
+        }
+
+        public DiaryW GetDiaryWithProducts(Guid diaryId)
+        {
+            var diary = Db.Diaries.Where(x => x.Id == diaryId).Include(x => x.Products).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
+            return diary;
         }
 
         public ArchivedDiaryW GetArchivedDiary(Guid adiaryId)
         {
-            var adiary = Db.ArchivedDiaries.Single(c => c.Id == adiaryId);
+            var adiary = Db.ArchivedDiaries.Single(x => x.Id == adiaryId);
             return new ArchivedDiaryW(adiary);
         }
 
@@ -115,13 +119,20 @@ namespace RED.Repositories.Concrete
         public bool Delete(Guid diaryId)
         {
             var diary = Db.Diaries.Single(c => c.Id == diaryId);
+
+            foreach (var product in diary.Products)
+            {
+                Db.ProductTests.RemoveRange(product.ProductTests);
+            }
+
+            Db.Products.RemoveRange(diary.Products);
             Db.Diaries.Remove(diary);
 
             try
             {
                 Db.SaveChanges();
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
@@ -146,7 +157,6 @@ namespace RED.Repositories.Concrete
             }
 
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
-            diary.AcceptanceDateAndTime = DateTime.UtcNow;
 
             int i = 1;
             foreach (var item in diary.Products)
@@ -215,9 +225,10 @@ namespace RED.Repositories.Concrete
         {
             if (Db.Diaries.Any(x => x.Id == diaryId))
             {
-                Request request = new Request();
+                var date = DateTime.Now;
+
+                var request = new Request();
                 request.Id = Guid.NewGuid();
-                var date = DateTime.Now.ToUniversalTime();
                 request.Date = date;
                 request.DiaryId = diaryId;
                 request.TestingPeriod = testingPeriod;
@@ -290,24 +301,24 @@ namespace RED.Repositories.Concrete
 
             try
             {
-                var diary = Db.Diaries.Single(d => d.Id == diaryId);
+                var diaryW = Db.Diaries.Where(x => x.Id == diaryId).Select(DiaryMappings.ToDiaryW).FirstOrDefault();
 
                 var archivedDiary = new ArchivedDiary();
                 archivedDiary.Id = Guid.NewGuid();
-                archivedDiary.Number = diary.Number;
-                archivedDiary.AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
-                archivedDiary.LetterNumber = diary.LetterNumber?.ToString();
-                archivedDiary.LetterDate = diary.LetterDate;
-                archivedDiary.Contractor = diary.Contractor;
-                archivedDiary.Client = diary.Client.Name;
-                archivedDiary.ClientMobile = diary.Client.Mobile;
-                archivedDiary.Comment = diary.Comment;
+                archivedDiary.Number = diaryW.Number;
+                archivedDiary.AcceptanceDateAndTime = diaryW.AcceptanceDateAndTime;
+                archivedDiary.LetterNumber = diaryW.LetterNumber?.ToString();
+                archivedDiary.LetterDate = diaryW.LetterDate;
+                archivedDiary.Contractor = diaryW.Contractor;
+                archivedDiary.Client = diaryW.Client.Name;
+                archivedDiary.ClientMobile = diaryW.Client.Mobile;
+                archivedDiary.Comment = diaryW.Comment;
 
-                var request = diary.Requests.First();
+                var request = diaryW.Request;
                 archivedDiary.RequestDate = request.Date;
                 archivedDiary.RequestAcceptedBy = request.User.FirstName.Substring(0, 1) + ". " + request.User.LastName;
                 archivedDiary.RequestTestingPeriod = request.TestingPeriod;
-                archivedDiary.Remark = new DiaryW(diary).Remark;
+                archivedDiary.Remark = diaryW.Remark;
 
                 var protocol = request.Protocols.First();
                 archivedDiary.ProtocolIssuedDate = protocol.IssuedDate;
@@ -317,55 +328,47 @@ namespace RED.Repositories.Concrete
 
                 foreach (var remark in protocol.ProtocolsRemarks)
                 {
-                    ArchivedProtocolRemark aremark = new ArchivedProtocolRemark();
-                    aremark.Id = Guid.NewGuid();
-                    aremark.ArchivedDiaryId = archivedDiary.Id;
-                    aremark.Remark = remark.Remark.Text;
-                    aremark.AcredetationLevel = remark.AcredetationLevel.Level;
-                    aremark.Number = remark.Number;
+                    var aremark = new ArchivedProtocolRemark()
+                    {
+                        Id = Guid.NewGuid(),
+                        ArchivedDiaryId = archivedDiary.Id,
+                        Remark = remark.Remark.Text,
+                        AcredetationLevel = remark.AcredetationLevel.Level,
+                        Number = remark.Number
+                    };
 
                     Db.ArchivedProtocolRemarks.Add(aremark);
                 }
 
                 Db.ProtocolsRemarks.RemoveRange(protocol.ProtocolsRemarks);
 
-                var products = diary.Products;
+                var products = diaryW.Products;
                 foreach (var product in products)
                 {
-                    ArchivedProduct aproduct = new ArchivedProduct();
-
-                    aproduct.Id = Guid.NewGuid();
-                    aproduct.Name = product.Name;
-                    aproduct.Number = product.Number;
-                    aproduct.Quantity = product.Quantity;
+                    var aproduct = new ArchivedProduct() { Id = Guid.NewGuid(), Name = product.Name, Number = product.Number, Quantity = product.Quantity };
 
                     var productTests = product.ProductTests;
                     foreach (var ptest in productTests)
                     {
-                        ArchivedProductTest aptest = new ArchivedProductTest();
-
-                        aptest.Id = Guid.NewGuid();
-                        aptest.TestName = ptest.Test.Name;
-                        aptest.TestUnitName = ptest.Test.UnitName;
-                        aptest.TestMethods = ptest.TestMethod.Method;
-                        aptest.TestAcredetationLevel = ptest.Test.AcredetationLevel.Level;
-                        aptest.TestTemperature = ptest.Test.Temperature;
-                        aptest.TestCategory = ptest.Test.TestCategory.Name;
-                        aptest.TestType = ptest.Test.TestType.Type;
-                        aptest.TestTypeShortName = ptest.Test.TestType.ShortName;
-                        aptest.MethodValue = ptest.MethodValue;
-                        aptest.Remark = ptest.Remark;
+                        var aptest = new ArchivedProductTest()
+                        {
+                            Id = Guid.NewGuid(),
+                            TestName = ptest.Test.Name,
+                            TestUnitName = ptest.Test.UnitName,
+                            TestMethods = ptest.TestMethod.Method,
+                            TestAcredetationLevel = ptest.Test.AcredetationLevel.Level,
+                            TestTemperature = ptest.Test.Temperature,
+                            TestCategory = ptest.Test.TestCategory.Name,
+                            TestType = ptest.Test.TestType.Type,
+                            TestTypeShortName = ptest.Test.TestType.ShortName,
+                            MethodValue = ptest.MethodValue,
+                            Remark = ptest.Remark
+                        };
 
                         var protocolResults = ptest.ProtocolResults;
                         foreach (var presult in protocolResults)
                         {
-                            ArchivedProtocolResult apresult = new ArchivedProtocolResult();
-
-                            apresult.Id = Guid.NewGuid();
-                            apresult.Results = presult.Results;
-                            apresult.ResultNumber = presult.ResultNumber;
-                            apresult.ArchivedDiaryId = archivedDiary.Id;
-
+                            var apresult = new ArchivedProtocolResult() { Id = Guid.NewGuid(), Results = presult.Results, ResultNumber = presult.ResultNumber, ArchivedDiaryId = archivedDiary.Id };
                             aptest.ArchivedProtocolResults.Add(apresult);
                         }
 
@@ -377,19 +380,20 @@ namespace RED.Repositories.Concrete
                     archivedDiary.ArchivedProducts.Add(aproduct);
                 }
 
-                Db.Products.RemoveRange(diary.Products);
+                Db.Products.RemoveRange(diaryW.Products);
                 Db.ArchivedDiaries.Add(archivedDiary);
 
                 Db.Protocols.RemoveRange(request.Protocols);
                 Db.Requests.Remove(request);
 
+                var diary = Db.Diaries.FirstOrDefault(x => x.Id == diaryW.Id);
                 Db.Diaries.Remove(diary);
 
                 Db.SaveChanges();
 
                 res.IsSuccess = true;
                 res.ResponseObject = archivedDiary.Id;
-                res.SuccessMsg = "Архивирането на дневник: " + diary.Number + " премина успешно.";
+                res.SuccessMsg = "Архивирането на дневник: " + diaryW.Number + " премина успешно.";
             }
             catch (DbEntityValidationException sqlEx)
             {

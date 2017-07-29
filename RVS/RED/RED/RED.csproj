@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RED</RootNamespace>
     <AssemblyName>RED</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -24,6 +24,7 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +83,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -90,11 +92,8 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -136,6 +135,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -190,12 +190,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DependencyInjection.cs" />
+    <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArchivedDiaryController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
@@ -214,6 +211,7 @@
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\BombFilter.cs" />
+    <Compile Include="Filters\RoleAuthorizationFilter.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
     <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -222,6 +220,11 @@
     <Compile Include="Helpers\FeaturesCollection.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Helpers\HttpResponseBaseExtensions.cs" />
+    <Compile Include="Mappings\DiaryMappings.cs" />
+    <Compile Include="Mappings\ProtocolMappings.cs" />
+    <Compile Include="Mappings\RequestMappings.cs" />
+    <Compile Include="Mappings\UserMappings.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
     <Compile Include="Models\DataContext\Concrete\RvsContextFactory.cs" />
@@ -404,9 +407,6 @@
     <Compile Include="Models\Responses\ActionResponse.cs" />
     <Compile Include="Models\Responses\ErrorFactory.cs" />
     <Compile Include="Models\TestTypes.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -416,8 +416,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\RED.dll" />
-    <Content Include="bin\RED.pdb" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -640,7 +638,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Our\ActiveDiaries.js" />
     <Content Include="Scripts\Our\Requests.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
@@ -792,7 +789,6 @@
     <Content Include="Views\Graphs\Peity.cshtml" />
     <Content Include="Views\Graphs\Rickshaw.cshtml" />
     <Content Include="Views\Graphs\Sparkline.cshtml" />
-    <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -827,7 +823,6 @@
     <Content Include="Views\Diary\Delete.cshtml" />
     <Content Include="Views\Requests\Delete.cshtml" />
     <Content Include="Views\Protocols\Create.cshtml" />
-    <Content Include="Views\Diary\ActiveDiaries.cshtml" />
     <Content Include="Views\Protocols\Index.cshtml" />
     <Content Include="Views\Diary\ProductsTests.cshtml" />
     <Content Include="Views\Protocols\Edit.cshtml">
@@ -859,9 +854,10 @@
     <Content Include="Views\ArchivedDiary\EditProtocolResult.cshtml" />
     <Content Include="Views\ArchivedDiary\DeleteProtocolResult.cshtml" />
     <Content Include="Views\Error\ProductExpired.cshtml" />
+    <Content Include="Views\Diary\Details.cshtml" />
+    <Content Include="Views\Diary\ActiveDiaries.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\gritter\" />
     <Folder Include="Views\Files\" />
   </ItemGroup>
@@ -870,7 +866,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -14,27 +14,27 @@ namespace RED.Models.ElectronicDiary
 
         public ArchivedDiaryW(ArchivedDiary diary)
         {
-            this.Id = diary.Id;
-            this.Number = diary.Number;
-            this.LetterNumber = diary.LetterNumber;
-            this.LetterDate = diary.LetterDate.ToLocalTime();
-            this.AcceptanceDateAndTime = diary.AcceptanceDateAndTime.ToLocalTime();
-            this.Contractor = diary.Contractor;
-            this.Client = diary.Client;
-            this.ClientMobile = diary.ClientMobile;
-            this.Comment = diary.Comment;
-            this.RequestDate = diary.RequestDate.ToLocalTime();
-            this.RequestAcceptedBy = diary.RequestAcceptedBy;
-            this.ProtocolIssuedDate = diary.ProtocolIssuedDate.ToLocalTime();
-            this.ProtocolTesterMKB = diary.ProtocolTesterMKB;
-            this.ProtocolTesterFZH = diary.ProtocolTesterFZH;
-            this.ProtocolLabLeader = diary.ProtocolLabLeader;
-            this.Remark = diary.Remark;
-            this.RequestTestingPeriod = diary.RequestTestingPeriod;
+            Id = diary.Id;
+            Number = diary.Number;
+            LetterNumber = diary.LetterNumber;
+            LetterDate = diary.LetterDate.ToLocalTime();
+            AcceptanceDateAndTime = diary.AcceptanceDateAndTime;
+            Contractor = diary.Contractor;
+            Client = diary.Client;
+            ClientMobile = diary.ClientMobile;
+            Comment = diary.Comment;
+            RequestDate = diary.RequestDate.ToLocalTime();
+            RequestAcceptedBy = diary.RequestAcceptedBy;
+            ProtocolIssuedDate = diary.ProtocolIssuedDate;
+            ProtocolTesterMKB = diary.ProtocolTesterMKB;
+            ProtocolTesterFZH = diary.ProtocolTesterFZH;
+            ProtocolLabLeader = diary.ProtocolLabLeader;
+            Remark = diary.Remark;
+            RequestTestingPeriod = diary.RequestTestingPeriod;
 
-            this.ArchivedProducts = diary.ArchivedProducts;
-            this.ArchivedProtocolResults = diary.ArchivedProtocolResults;
-            this.ArchivedProtocolRemarks = diary.ArchivedProtocolRemarks;
+            ArchivedProducts = diary.ArchivedProducts;
+            ArchivedProtocolResults = diary.ArchivedProtocolResults;
+            ArchivedProtocolRemarks = diary.ArchivedProtocolRemarks;
         }
 
         public Guid Id { get; set; }
@@ -172,14 +172,14 @@ namespace RED.Models.ElectronicDiary
             diary.Number = this.Number;
             diary.LetterNumber = this.LetterNumber;
             diary.LetterDate = this.LetterDate.ToUniversalTime();
-            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime.ToUniversalTime();
+            diary.AcceptanceDateAndTime = this.AcceptanceDateAndTime;
             diary.Contractor = this.Contractor;
             diary.Client = this.Client;
             diary.ClientMobile = this.ClientMobile;
             diary.Comment = this.Comment;
             diary.RequestDate = this.RequestDate.ToUniversalTime();
             diary.RequestAcceptedBy = this.RequestAcceptedBy;
-            diary.ProtocolIssuedDate = this.ProtocolIssuedDate.ToUniversalTime();
+            diary.ProtocolIssuedDate = this.ProtocolIssuedDate;
             diary.ProtocolTesterMKB = this.ProtocolTesterMKB;
             diary.ProtocolTesterFZH = this.ProtocolTesterFZH;
             diary.ProtocolLabLeader = this.ProtocolLabLeader;
