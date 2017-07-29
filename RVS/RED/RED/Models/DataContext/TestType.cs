@@ -22,6 +22,7 @@ namespace RED.Models.DataContext
         public System.Guid Id { get; set; }
         public string Type { get; set; }
         public string ShortName { get; set; }
+        public int SortOrder { get; set; }
     
         public virtual ICollection<Test> Tests { get; set; }
     }

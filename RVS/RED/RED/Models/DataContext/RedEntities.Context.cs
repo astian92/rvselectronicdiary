@@ -45,12 +45,12 @@ namespace RED.Models.DataContext
         public virtual DbSet<TestType> TestTypes { get; set; }
         public virtual DbSet<ArchivedProductTest> ArchivedProductTests { get; set; }
         public virtual DbSet<ArchivedProtocolResult> ArchivedProtocolResults { get; set; }
-        public virtual DbSet<Protocol> Protocols { get; set; }
         public virtual DbSet<TestMethod> TestMethods { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<ProtocolResult> ProtocolResults { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
-        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
         public virtual DbSet<ProductTest> ProductTests { get; set; }
+        public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<ArchivedDiary> ArchivedDiaries { get; set; }
     }
 }
