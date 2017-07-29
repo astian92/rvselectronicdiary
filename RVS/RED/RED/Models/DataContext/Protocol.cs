@@ -16,19 +16,18 @@ namespace RED.Models.DataContext
     {
         public Protocol()
         {
-            this.ProtocolsRemarks = new HashSet<ProtocolsRemark>();
             this.ProtocolResults = new HashSet<ProtocolResult>();
+            this.ProtocolsRemarks = new HashSet<ProtocolsRemark>();
         }
     
         public System.Guid Id { get; set; }
         public System.Guid RequestId { get; set; }
         public System.DateTime IssuedDate { get; set; }
-        public string TesterMKB { get; set; }
-        public string TesterFZH { get; set; }
+        public string Tester { get; set; }
         public string LabLeader { get; set; }
     
+        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
         public virtual Request Request { get; set; }
         public virtual ICollection<ProtocolsRemark> ProtocolsRemarks { get; set; }
-        public virtual ICollection<ProtocolResult> ProtocolResults { get; set; }
     }
 }

@@ -34,8 +34,7 @@ namespace RED.Models.DataContext
         public string RequestAcceptedBy { get; set; }
         public Nullable<int> RequestTestingPeriod { get; set; }
         public System.DateTime ProtocolIssuedDate { get; set; }
-        public string ProtocolTesterMKB { get; set; }
-        public string ProtocolTesterFZH { get; set; }
+        public string ProtocolTester { get; set; }
         public string ProtocolLabLeader { get; set; }
         public string Remark { get; set; }
     

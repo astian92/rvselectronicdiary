@@ -20,7 +20,7 @@ namespace RED.Models.DataContext
         public string ResultNumber { get; set; }
         public string Results { get; set; }
     
-        public virtual Protocol Protocol { get; set; }
         public virtual ProductTest ProductTest { get; set; }
+        public virtual Protocol Protocol { get; set; }
     }
 }

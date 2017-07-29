@@ -20,9 +20,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public DateTime IssuedDate { get; set; }
 
-        public string TesterMKB { get; set; }
-
-        public string TesterFZH { get; set; }
+        public string Tester { get; set; }
 
         public string LabLeader { get; set; }
 
@@ -61,8 +59,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             protocol.Id = Id;
             protocol.RequestId = RequestId;
             protocol.IssuedDate = IssuedDate;
-            protocol.TesterMKB = TesterMKB;
-            protocol.TesterFZH = TesterFZH;
+            protocol.Tester = Tester;
             protocol.LabLeader = LabLeader;
 
             protocol.ProtocolResults = ProtocolResults;
