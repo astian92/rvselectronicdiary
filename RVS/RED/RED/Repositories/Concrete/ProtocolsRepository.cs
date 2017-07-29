@@ -122,7 +122,8 @@ namespace RED.Repositories.Concrete
             }
 
             protocol.IssuedDate = protocolW.IssuedDate;
-            protocol.Tester = protocolW.Tester;
+            protocol.TesterMKB = protocolW.TesterMKB;
+            protocol.TesterFZH = protocolW.TesterFZH;
             protocol.LabLeader = protocolW.LabLeader;
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))

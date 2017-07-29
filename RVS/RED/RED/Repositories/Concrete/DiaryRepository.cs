@@ -322,7 +322,8 @@ namespace RED.Repositories.Concrete
 
                 var protocol = request.Protocols.First();
                 archivedDiary.ProtocolIssuedDate = protocol.IssuedDate;
-                archivedDiary.ProtocolTester = protocol.Tester;
+                archivedDiary.ProtocolTesterMKB = protocol.TesterMKB;
+                archivedDiary.ProtocolTesterFZH = protocol.TesterFZH;
                 archivedDiary.ProtocolLabLeader = protocol.LabLeader;
 
                 foreach (var remark in protocol.ProtocolsRemarks)

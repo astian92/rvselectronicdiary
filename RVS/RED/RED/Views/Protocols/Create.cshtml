@@ -28,7 +28,7 @@
 
             foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
             {
-                foreach (var test in item.ProductTests.OrderBy(t => t.Test.TestType.SortOrder))
+                foreach (var test in item.ProductTests)
                 {
                     <div class="form-group">
                         <label for="test-method" class="control-label col-md-3">

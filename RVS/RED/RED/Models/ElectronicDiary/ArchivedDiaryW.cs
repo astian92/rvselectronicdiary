@@ -26,7 +26,8 @@ namespace RED.Models.ElectronicDiary
             RequestDate = diary.RequestDate.ToLocalTime();
             RequestAcceptedBy = diary.RequestAcceptedBy;
             ProtocolIssuedDate = diary.ProtocolIssuedDate;
-            ProtocolTester = diary.ProtocolTester;
+            ProtocolTesterMKB = diary.ProtocolTesterMKB;
+            ProtocolTesterFZH = diary.ProtocolTesterFZH;
             ProtocolLabLeader = diary.ProtocolLabLeader;
             Remark = diary.Remark;
             RequestTestingPeriod = diary.RequestTestingPeriod;
@@ -83,7 +84,11 @@ namespace RED.Models.ElectronicDiary
 
         [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
         [Display(Name = "Извършил изпитването (MKB)")]
-        public string ProtocolTester { get; set; }
+        public string ProtocolTesterMKB { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
+        [Display(Name = "Извършил изпитването (FZH)")]
+        public string ProtocolTesterFZH { get; set; }
 
         [Required(ErrorMessage = "Полето \"Протокол създаден на\" е задължителнo!")]
         [Display(Name = "Ръководител")]
@@ -175,7 +180,8 @@ namespace RED.Models.ElectronicDiary
             diary.RequestDate = this.RequestDate.ToUniversalTime();
             diary.RequestAcceptedBy = this.RequestAcceptedBy;
             diary.ProtocolIssuedDate = this.ProtocolIssuedDate;
-            diary.ProtocolTester = this.ProtocolTester;
+            diary.ProtocolTesterMKB = this.ProtocolTesterMKB;
+            diary.ProtocolTesterFZH = this.ProtocolTesterFZH;
             diary.ProtocolLabLeader = this.ProtocolLabLeader;
             diary.Remark = this.Remark;
             diary.RequestTestingPeriod = this.RequestTestingPeriod;

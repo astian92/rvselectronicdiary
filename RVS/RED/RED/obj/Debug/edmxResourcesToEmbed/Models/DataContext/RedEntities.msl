@@ -183,7 +183,6 @@
     <EntitySetMapping Name="TestTypes">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.TestType">
         <MappingFragment StoreEntitySet="TestTypes">
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -215,6 +214,18 @@
           <ScalarProperty Name="ResultNumber" ColumnName="ResultNumber" />
           <ScalarProperty Name="ArchivedProductTestId" ColumnName="ArchivedProductTestId" />
           <ScalarProperty Name="ArchivedDiaryId" ColumnName="ArchivedDiaryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Protocols">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
+        <MappingFragment StoreEntitySet="Protocols">
+          <ScalarProperty Name="LabLeader" ColumnName="LabLeader" />
+          <ScalarProperty Name="TesterFZH" ColumnName="TesterFZH" />
+          <ScalarProperty Name="TesterMKB" ColumnName="TesterMKB" />
+          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -267,35 +278,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProductTests">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
-        <MappingFragment StoreEntitySet="ProductTests">
-          <ScalarProperty Name="Remark" ColumnName="Remark" />
-          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
-          <ScalarProperty Name="TestMethodId" ColumnName="TestMethodId" />
-          <ScalarProperty Name="TestId" ColumnName="TestId" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Protocols">
-      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.Protocol">
-        <MappingFragment StoreEntitySet="Protocols">
-          <ScalarProperty Name="LabLeader" ColumnName="LabLeader" />
-          <ScalarProperty Name="Tester" ColumnName="Tester" />
-          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ArchivedDiaries">
       <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ArchivedDiary">
         <MappingFragment StoreEntitySet="ArchivedDiary">
           <ScalarProperty Name="Remark" ColumnName="Remark" />
           <ScalarProperty Name="ProtocolLabLeader" ColumnName="ProtocolLabLeader" />
-          <ScalarProperty Name="ProtocolTester" ColumnName="ProtocolTester" />
+          <ScalarProperty Name="ProtocolTesterFZH" ColumnName="ProtocolTesterFZH" />
+          <ScalarProperty Name="ProtocolTesterMKB" ColumnName="ProtocolTesterMKB" />
           <ScalarProperty Name="ProtocolIssuedDate" ColumnName="ProtocolIssuedDate" />
           <ScalarProperty Name="RequestTestingPeriod" ColumnName="RequestTestingPeriod" />
           <ScalarProperty Name="RequestAcceptedBy" ColumnName="RequestAcceptedBy" />
@@ -308,6 +297,18 @@
           <ScalarProperty Name="LetterNumber" ColumnName="LetterNumber" />
           <ScalarProperty Name="AcceptanceDateAndTime" ColumnName="AcceptanceDateAndTime" />
           <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTests">
+      <EntityTypeMapping TypeName="DB_9BCA69_RedDbModel.ProductTest">
+        <MappingFragment StoreEntitySet="ProductTests">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="MethodValue" ColumnName="MethodValue" />
+          <ScalarProperty Name="TestMethodId" ColumnName="TestMethodId" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

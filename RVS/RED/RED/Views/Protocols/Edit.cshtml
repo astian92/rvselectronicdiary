@@ -29,7 +29,7 @@
             var wrappedDiary = Model.Request.Diary.ToDiaryWrapper();
         }
 
-        @foreach (var item in Model.ProtocolResults.OrderBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.TestType.SortOrder)) //.OrderBy(x => x.ProductTest.Test.TypeId).ThenBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber))
+        @foreach (var item in Model.ProtocolResults.OrderBy(x => x.ProductTest.Test.TypeId).ThenBy(x => x.ProductTest.Product.Number).ThenBy(x => x.ProductTest.Test.Name).ThenBy(x => x.ResultNumber))
         {
             <div class="form-group">
                 <label for="test-method" class="control-label col-md-3">
