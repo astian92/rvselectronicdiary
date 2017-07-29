@@ -2217,3 +2217,7 @@ button .fa{
 .no-resize {
     resize: none;
 }
+
+.clickable-row {
+    cursor:pointer;
+}

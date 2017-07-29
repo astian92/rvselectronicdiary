@@ -25,7 +25,7 @@ $('.add-product-btn').click(function () {
 
     var rowCount = $('.product-list-table tr').length;
 
-    var content = '<tr><td class="col-md-2"><span>' + rowCount + '</span></td>' +
+    var content = '<tr class="clickable-row"><td class="col-md-2"><span>' + rowCount + '</span></td>' +
         '<td class="issue-info product" key="' + guid() + '">' +
             '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
             '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
@@ -44,6 +44,18 @@ $('.add-product-btn').click(function () {
     $('#Products').focus();
     $('#Quantity').val('');
     $('.product-list-table tbody .error-msg').remove();
+});
+
+$('.product-list-table').on('click', '.clickable-row', function (event) {
+    if (!window.event.ctrlKey) {
+        $(this).addClass('active').siblings().removeClass('active');
+    }
+});
+
+$('.product-list-table').on('click', '.clickable-row', function (event) {
+    if (window.event.ctrlKey) {
+        $(this).addClass('active');
+    }
 });
 
 function validateProductInfo() {
@@ -125,15 +137,34 @@ function updateVal(currentEle) {
 
     $(currentEle).html('');
     $(currentEle).append('<input class="thVal form-control input-sm" type="text" value="" />');
+
     $(".thVal").focus();
     $(".thVal").val(value);
     $(".thVal").keyup(function (event) {
         if (event.keyCode == 13) {
-            $(currentEle).html($(".thVal").val().trim());
+            var inputValue = $(".thVal").val().trim();
+            $(currentEle).html(inputValue);
+            $(currentEle).parent().find('input').val(inputValue);
         }
     });
 
     $(document).click(function () {
-        $(currentEle).html($(".thVal").val().trim());
+        var inputValue = $(".thVal").val().trim();
+        $(currentEle).html(inputValue);
+        $(currentEle).parent().find('input').val(inputValue);
     });
+}
+
+function loadTestView() {
+    var url = '/Diary/AddTests';
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (view) {
+            $('.modal-content').html(view);
+        }
+    });
+}
+
+function addTest() {
 }
