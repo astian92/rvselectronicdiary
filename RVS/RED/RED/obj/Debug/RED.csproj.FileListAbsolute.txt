@@ -672,6 +672,6 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.Google.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
-D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.pdb
+D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
