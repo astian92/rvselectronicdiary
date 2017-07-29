@@ -55,8 +55,7 @@
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="RequestTestingPeriod" Type="int" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
-    <Property Name="ProtocolTesterMKB" Type="nvarchar" MaxLength="300" />
-    <Property Name="ProtocolTesterFZH" Type="nvarchar" MaxLength="300" />
+    <Property Name="ProtocolTester" Type="nvarchar" MaxLength="600" />
     <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="8" />
   </EntityType>
@@ -189,8 +188,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="IssuedDate" Type="datetime" Nullable="false" />
-    <Property Name="TesterMKB" Type="nvarchar" MaxLength="300" />
-    <Property Name="TesterFZH" Type="nvarchar" MaxLength="300" />
+    <Property Name="Tester" Type="nvarchar" MaxLength="600" />
     <Property Name="LabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
   </EntityType>
   <EntityType Name="ProtocolsRemarks">
@@ -271,6 +269,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Type" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="ShortName" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

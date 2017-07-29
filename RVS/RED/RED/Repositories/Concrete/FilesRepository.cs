@@ -261,8 +261,7 @@ namespace RED.Repositories.Concrete
             model.ReportParameters.Add("LetterDate", request.Diary.LetterDate);
             model.ReportParameters.Add("RequestDate", request.Date);
             model.ReportParameters.Add("LabLeader", protocol.LabLeader);
-            model.ReportParameters.Add("TesterMKB", protocol.TesterMKB);
-            model.ReportParameters.Add("TesterFZH", protocol.TesterFZH);
+            model.ReportParameters.Add("Tester", protocol.Tester);
 
             var remarks = protocol.ProtocolsRemarks.Where(r => r.AcredetationLevel.Level.Trim() == category);
             model.ReportParameters.Add("Remarks", remarks);
@@ -352,8 +351,7 @@ namespace RED.Repositories.Concrete
             model.ReportParameters.Add("LetterDate", adiary.LetterDate);
             model.ReportParameters.Add("RequestDate", adiary.RequestDate.ToLocalTime());
             model.ReportParameters.Add("LabLeader", adiary.ProtocolLabLeader);
-            model.ReportParameters.Add("TesterMKB", adiary.ProtocolTesterMKB);
-            model.ReportParameters.Add("TesterFZH", adiary.ProtocolTesterFZH);
+            model.ReportParameters.Add("Tester", adiary.ProtocolTester);
 
             var remarksConverter = new RemarksConverter();
             var remarks = adiary.ArchivedProtocolRemarks.Where(r => r.AcredetationLevel.Trim() == category)

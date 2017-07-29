@@ -12,8 +12,7 @@ namespace RED.Models.ElectronicDiary.Protocols
             DiaryId = adiary.Id;
             IssuedDate = adiary.ProtocolIssuedDate;
             ProtocolResults = adiary.ArchivedProtocolResults;
-            TesterMKB = adiary.ProtocolTesterMKB;
-            TesterFZH = adiary.ProtocolTesterFZH;
+            Tester = adiary.ProtocolTester;
             LabLeader = adiary.ProtocolLabLeader;
         }
 
@@ -23,9 +22,7 @@ namespace RED.Models.ElectronicDiary.Protocols
 
         public DateTime IssuedDate { get; set; }
 
-        public string TesterMKB { get; set; }
-
-        public string TesterFZH { get; set; }
+        public string Tester { get; set; }
 
         public string LabLeader { get; set; }
 

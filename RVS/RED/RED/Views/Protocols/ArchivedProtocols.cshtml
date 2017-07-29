@@ -34,15 +34,15 @@
                                     <table class="table">
                                         <tr>
                                             <th>
+                                                №
+                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
+                                            </th>
+                                            <th>
                                                 Наименувание на показателя
                                             </th>
                                             <th>
                                                 Методи
                                                 <i class="fa fa-question-circle" title="Методи-стандартизирани, валидирани, вътрешно-лабораторни"></i>
-                                            </th>
-                                            <th>
-                                                № на образеца
-                                                <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                                             </th>
                                             <th>Резултати от изследването, неопределеност</th>
                                             <th>
@@ -239,15 +239,7 @@
                                             }
 
                             <div class="status-container">
-                                @if (item.ProtocolResults.Any(pr => pr.ArchivedProductTest.TestTypeShortName == TestTypes.MKB))
-                                {
-                                    <h5>Извършил изпитването (МКБ): <strong>@item.TesterMKB</strong></h5>
-                                }
-
-                                @if (item.ProtocolResults.Any(pr => pr.ArchivedProductTest.TestTypeShortName == TestTypes.FZH))
-                                {
-                                    <h5>Извършил изпитването (ФЗХ): <strong>@item.TesterFZH</strong></h5>
-                                }
+                                <h5>Извършил изпитването: <strong>@item.Tester</strong></h5>
                                 <h5>Ръководител: <strong>@item.LabLeader</strong></h5>
                             </div>
 
