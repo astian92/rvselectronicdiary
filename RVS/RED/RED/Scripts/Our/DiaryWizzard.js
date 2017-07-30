@@ -43,6 +43,7 @@ $('.add-product-btn').click(function () {
     $('#Products').val('');
     $('#Products').focus();
     $('#Quantity').val('');
+    $('#loadTestViewBtn').removeAttr('disabled');
     $('.product-list-table tbody .error-msg').remove();
 });
 
@@ -77,6 +78,9 @@ function validateProductInfo() {
 
 function deleteProduct(e, number) {
     $(e).parent().parent().remove();
+    if ($('.clickable-row').length == 0) {
+        $('#loadTestViewBtn').attr('disabled', 'disabled');
+    }
 }
 
 function deleteTest(e) { //this function is here so it wont be loaded every time in the partial view
@@ -98,39 +102,7 @@ function hideQuantityValidation() {
     }
 }
 
-function loadTestMethods(dropDown) {
-    var value = $(dropDown).val();
-    var testId = value.substr(4, value.length);
-    $.ajax({
-        type: "GET",
-        url: '/Diary/GetTestMethods?testId=' + testId,
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: function (data) {
-            var methods = JSON.parse(data);
-            var optionsAsString = "";
-            for (var i = 0; i < methods.length; i++) {
-                optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
-            }
 
-            var testMethodsDd = $(dropDown).parent().parent().find('.testMethods');
-            $(testMethodsDd).empty().append(optionsAsString);
-        }
-    });
-}
-
-function loadTestMethodValue(dropDown) {
-    var value = $(dropDown).val();
-    var testId = value.substr(4, value.length);
-    $.ajax({
-        type: "GET",
-        url: '/Diary/GetMethodValueForTest?testId=' + testId,
-        contentType: "application/json; charset=utf-8",
-        success: function (methodValue) {
-            $(dropDown).parent().parent().find('.methodValueBox').val(methodValue);
-        }
-    });
-}
 
 function updateVal(currentEle) {
     var value = $(currentEle).html();
@@ -167,5 +139,10 @@ function loadTestView() {
 }
 
 function addTest() {
-    alert('YES');
+    var test = $('#Tests').val();
+    var testMethod = $('#TestMethodId').val();
+    var methodValue = $('.methodValueBox').val();
+    var remark = $('.remarkBox').val();
+
+    alert(test + ';' + testMethod + ';' + methodValue + ';' + remark);
 }

@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
         <label for="TestMethodId">Метод</label>
-        <select name="TestMethods" class="form-control testMethods"></select>
+        <select id="TestMethodId" name="TestMethods" class="form-control testMethods"></select>
     </div>
 
     <div class="form-group">
@@ -38,10 +38,50 @@
 
 <script>
     $(document).ready(function () {
-        var testDropDowns = $('.tests');
-        testDropDowns.each(function () {
-            loadTestMethods(this);
-            loadTestMethodValue(this);
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "95%" }
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        var dropdown = $('.tests');
+        loadMethods(dropdown);
+        $('.tests').on('change', function () {
+            loadMethods(this);
         });
     });
+
+    function loadMethods(dropdown) {
+        var value = $(dropdown).val();
+        var testId = value.substr(4, value.length);
+        $.ajax({
+            type: "GET",
+            url: '/Diary/GetTestMethods?testId=' + testId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (data) {
+                var methods = JSON.parse(data);
+                var optionsAsString = "";
+                for (var i = 0; i < methods.length; i++) {
+                    optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
+                }
+                $('#TestMethodId').empty().append(optionsAsString);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/Diary/GetMethodValueForTest?testId=' + testId,
+            contentType: "application/json; charset=utf-8",
+            success: function (methodValue) {
+                $('.methodValueBox').val(methodValue);
+            }
+        });
+    }
 </script>

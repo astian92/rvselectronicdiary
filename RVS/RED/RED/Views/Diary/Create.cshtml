@@ -102,11 +102,11 @@
                     <input type="button" value="Добави" class="add-product-btn btn btn-primary btn-block" style="margin-top:24.5px;" tabindex="5" />
                 </div>
             </div>
-            <div class="col-md-12 product-list-table-container">
+            <div class="col-md-12 product-list-table-container" style="margin-top:23px;">
                 <div>
-                    <a class="btn btn-primary" onclick="loadTestView();" data-toggle="modal" data-target="#myModal">Добави Тест</a>
+                    <button id="loadTestViewBtn" class="btn btn-primary" onclick="loadTestView();" data-toggle="modal" data-target="#myModal" disabled="disabled">Добави Тест</button>
                 </div>
-                <table class="table table-hover product-list-table" style="margin-top:23px;">
+                <table class="table table-hover product-list-table">
                     <thead>
                         <tr>
                             <th class="col-sm-3 col-md-2">№</th>

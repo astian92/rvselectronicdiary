@@ -3344,9 +3344,6 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="1546753490">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="ProtocolMappings.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2017.04.08 13:08:01.548</styleCop>
@@ -3669,4 +3666,7 @@
     </timestamps>
     <violations />
   </sourcecode>
+  <project key="1546753490">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
 </stylecopresultscache>

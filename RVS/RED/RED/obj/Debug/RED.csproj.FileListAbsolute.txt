@@ -674,3 +674,4 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAcco
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.pdb
+D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
