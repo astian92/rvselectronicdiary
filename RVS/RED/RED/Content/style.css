@@ -1428,6 +1428,13 @@ video {
 .modal-dialog {
   z-index: 2100;
 }
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width:700px;
+    }
+}
+
 .modal-body {
   padding: 20px 30px 30px 30px;
 }
@@ -2216,4 +2223,8 @@ button .fa{
 
 .no-resize {
     resize: none;
+}
+
+.clickable-row {
+    cursor:pointer;
 }

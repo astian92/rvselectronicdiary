@@ -25,7 +25,7 @@ $('.add-product-btn').click(function () {
 
     var rowCount = $('.product-list-table tr').length;
 
-    var content = '<tr><td class="col-md-2"><span>' + rowCount + '</span></td>' +
+    var content = '<tr class="clickable-row"><td class="col-md-2"><span>' + rowCount + '</span></td>' +
         '<td class="issue-info product" key="' + guid() + '">' +
             '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
             '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
@@ -43,7 +43,20 @@ $('.add-product-btn').click(function () {
     $('#Products').val('');
     $('#Products').focus();
     $('#Quantity').val('');
+    $('#loadTestViewBtn').removeAttr('disabled');
     $('.product-list-table tbody .error-msg').remove();
+});
+
+$('.product-list-table').on('click', '.clickable-row', function (event) {
+    if (!window.event.ctrlKey) {
+        $(this).addClass('active').siblings().removeClass('active');
+    }
+});
+
+$('.product-list-table').on('click', '.clickable-row', function (event) {
+    if (window.event.ctrlKey) {
+        $(this).addClass('active');
+    }
 });
 
 function validateProductInfo() {
@@ -65,6 +78,9 @@ function validateProductInfo() {
 
 function deleteProduct(e, number) {
     $(e).parent().parent().remove();
+    if ($('.clickable-row').length == 0) {
+        $('#loadTestViewBtn').attr('disabled', 'disabled');
+    }
 }
 
 function deleteTest(e) { //this function is here so it wont be loaded every time in the partial view
@@ -86,54 +102,47 @@ function hideQuantityValidation() {
     }
 }
 
-function loadTestMethods(dropDown) {
-    var value = $(dropDown).val();
-    var testId = value.substr(4, value.length);
-    $.ajax({
-        type: "GET",
-        url: '/Diary/GetTestMethods?testId=' + testId,
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: function (data) {
-            var methods = JSON.parse(data);
-            var optionsAsString = "";
-            for (var i = 0; i < methods.length; i++) {
-                optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
-            }
 
-            var testMethodsDd = $(dropDown).parent().parent().find('.testMethods');
-            $(testMethodsDd).empty().append(optionsAsString);
-        }
-    });
-}
-
-function loadTestMethodValue(dropDown) {
-    var value = $(dropDown).val();
-    var testId = value.substr(4, value.length);
-    $.ajax({
-        type: "GET",
-        url: '/Diary/GetMethodValueForTest?testId=' + testId,
-        contentType: "application/json; charset=utf-8",
-        success: function (methodValue) {
-            $(dropDown).parent().parent().find('.methodValueBox').val(methodValue);
-        }
-    });
-}
 
 function updateVal(currentEle) {
     var value = $(currentEle).html();
 
     $(currentEle).html('');
     $(currentEle).append('<input class="thVal form-control input-sm" type="text" value="" />');
+
     $(".thVal").focus();
     $(".thVal").val(value);
     $(".thVal").keyup(function (event) {
         if (event.keyCode == 13) {
-            $(currentEle).html($(".thVal").val().trim());
+            var inputValue = $(".thVal").val().trim();
+            $(currentEle).html(inputValue);
+            $(currentEle).parent().find('input').val(inputValue);
         }
     });
 
     $(document).click(function () {
-        $(currentEle).html($(".thVal").val().trim());
+        var inputValue = $(".thVal").val().trim();
+        $(currentEle).html(inputValue);
+        $(currentEle).parent().find('input').val(inputValue);
     });
+}
+
+function loadTestView() {
+    var url = '/Diary/AddTests';
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (view) {
+            $('.modal-content').html(view);
+        }
+    });
+}
+
+function addTest() {
+    var test = $('#Tests').val();
+    var testMethod = $('#TestMethodId').val();
+    var methodValue = $('.methodValueBox').val();
+    var remark = $('.remarkBox').val();
+
+    alert(test + ';' + testMethod + ';' + methodValue + ';' + remark);
 }

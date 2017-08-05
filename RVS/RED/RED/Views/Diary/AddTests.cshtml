@@ -1,0 +1,87 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Затвори</span></button>
+    <i class="fa fa-area-chart modal-icon"></i>
+    <h4 class="modal-title">Добави Тест</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="Tests">Тест</label>
+        @Html.DropDownList("Tests", null, htmlAttributes: new { @class = "form-control tests chosen-select" })
+    </div>
+    <div class="form-group">
+        <label for="TestMethodId">Метод</label>
+        <select id="TestMethodId" name="TestMethods" class="form-control testMethods"></select>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="methodValueBox">Стойност на показателя</label>
+        <textarea id="methodValueBox" class="form-control no-resize methodValueBox"></textarea>
+        <span class="special-chars-holder pull-right">
+            <input type="button" value="±" class="btn btn-xs btn-info" onclick="addSign(this)" for="methodValueBox" tabindex="-1" />
+            <input type="button" value="°" class="btn btn-xs btn-info" onclick="addSign(this)" for="methodValueBox" tabindex="-1" />
+        </span>
+        <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="methodValue-validation collapse">Стойност на показателя е задължителен!</span></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="">Забележка</label>
+        <textarea class="form-control no-resize remarkBox"></textarea>
+    </div>
+
+    <span class="text-danger field-validation-error" data-valmsg-for="test-list-table" data-valmsg-replace="true"><span class="test-list-validation collapse">Въведете поне един тест!</span></span>
+</div>
+<div class="modal-footer">
+    <div class="form-actions no-color">
+        <button type="button" class="btn btn-white btn-padding-lg" data-dismiss="modal">Отказ</button>
+        <input type="button" value="Добави" class="btn btn-primary btn-padding-lg" onclick="addTest();" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "95%" }
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+        var dropdown = $('.tests');
+        loadMethods(dropdown);
+        $('.tests').on('change', function () {
+            loadMethods(this);
+        });
+    });
+
+    function loadMethods(dropdown) {
+        var value = $(dropdown).val();
+        var testId = value.substr(4, value.length);
+        $.ajax({
+            type: "GET",
+            url: '/Diary/GetTestMethods?testId=' + testId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (data) {
+                var methods = JSON.parse(data);
+                var optionsAsString = "";
+                for (var i = 0; i < methods.length; i++) {
+                    optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
+                }
+                $('#TestMethodId').empty().append(optionsAsString);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/Diary/GetMethodValueForTest?testId=' + testId,
+            contentType: "application/json; charset=utf-8",
+            success: function (methodValue) {
+                $('.methodValueBox').val(methodValue);
+            }
+        });
+    }
+</script>

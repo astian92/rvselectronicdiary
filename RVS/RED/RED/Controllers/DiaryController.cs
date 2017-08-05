@@ -242,6 +242,12 @@ namespace RED.Controllers
             return PartialView(products);
         }
 
+        public ActionResult AddTests()
+        {
+            ViewBag.Tests = new SelectList(_rep.GetSelectListTests(), "FullValue", "FullName");
+            return PartialView();
+        }
+
         [RoleFilter(FeaturesCollection.ModifyDiary)]
         public JsonResult GetTestMethods(Guid testId)
         {
