@@ -238,6 +238,11 @@ namespace RED.Repositories.Concrete
         private void WriteProtocolReport(Protocol protocol, int diaryNumber, string category, IEnumerable<Product> products, Request request)
         {
             var model = new ReportModel();
+            model.ReportParameters.Add("category", category);
+
+            var acreditationRegistry = Db.AcreditationMetas.First();
+            model.ReportParameters.Add("AcreditationRegisteredDate", acreditationRegistry.Registered);
+            model.ReportParameters.Add("AcreditationValidToDate", acreditationRegistry.ValidTo);
 
             model.ReportParameters.Add("AcredetationLevel", category);
 

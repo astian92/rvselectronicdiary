@@ -1,0 +1,99 @@
+﻿@model RED.Models.ElectronicDiary.AcreditationMetaW
+@using System.Globalization;
+
+@{
+    ViewBag.Title = "AcreditationRegistry";
+}
+
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+
+<h2>Промени</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Акредитация - Сертификат</h4>
+        <hr />
+        @foreach (ModelState modelState in ViewData.ModelState.Values)
+        {
+            foreach (ModelError error in modelState.Errors)
+            {
+                <div class="alert alert-danger alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    @error.ErrorMessage
+                </div>
+            }
+        }
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Registered, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на регистрация е задължителна" id="Registered" name="Registered" type="datetime" value="@Model.Registered.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.Registered, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ValidTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Датата на валидност е задължителна" id="ValidTo" name="ValidTo" type="datetime" value="@Model.ValidTo.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.ValidTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2" style="color: #1ab394">
+                @ViewBag.Success
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Запази" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#Registered').datepicker({
+            format: "dd.m.yyyy",
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('#ValidTo').datepicker({
+            format: "dd.m.yyyy",
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        //$('#data_1 .input-group.date').datepicker({
+        //    format: "dd.m.yyyy",
+        //    todayBtn: "linked",
+        //    keyboardNavigation: false,
+        //    forceParse: false,
+        //    calendarWeeks: true,
+        //    autoclose: true
+        //});
+    });
+</script>

@@ -60,6 +60,7 @@
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" />
         <AssociationConnector Association="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" />
+        <EntityTypeShape EntityType="DB_9BCA69_RedDbModel.AcreditationMeta" Width="1.5" PointX="5.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

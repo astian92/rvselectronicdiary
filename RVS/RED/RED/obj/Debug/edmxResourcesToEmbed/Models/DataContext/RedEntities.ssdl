@@ -8,6 +8,14 @@
     <Property Name="Level" Type="nvarchar" MaxLength="2" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
+  <EntityType Name="AcreditationMeta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Registered" Type="datetime" Nullable="false" />
+    <Property Name="ValidTo" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="ActionLogProperties">
     <Key>
       <PropertyRef Name="Id" />
@@ -648,6 +656,7 @@
   </Association>
   <EntityContainer Name="DB_9BCA69_RedDbModelStoreContainer">
     <EntitySet Name="AcredetationLevels" EntityType="Self.AcredetationLevels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AcreditationMeta" EntityType="Self.AcreditationMeta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />

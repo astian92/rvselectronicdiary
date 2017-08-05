@@ -57,5 +57,7 @@
         public const string ViewRemarks = "54471a7f-866f-4ccd-8501-ec6e08c7f052";
 
         public const string ModifyRemarks = "95342ca3-d105-4e5e-9b37-d7205afd463e";
+
+        public const string ModifyMisc = "ed4acd0b-07b5-43df-96d3-a0c741703d8d";
     }
 }

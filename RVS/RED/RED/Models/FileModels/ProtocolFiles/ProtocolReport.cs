@@ -59,45 +59,47 @@ namespace RED.Models.FileModels.ProtocolFiles
             InsertMethodsAndQuantities();
             InsertLists();
 
-            var secondDocument = CreateLandscapePart();
-            var protocolResults = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
+            //var secondDocument = CreateLandscapePart();
+            //var protocolResults = ReportModel.ReportParameters["ProtocolResults"] as IOrderedEnumerable<ProtocolResult>;
 
-            string tableTitle = string.Empty;
-            if (this.hasMKB)
-            {
-                var tester = ReportModel.ReportParameters["TesterMKB"] as string;
-                tableTitle = "7.1 РЕЗУЛТАТИ ОТ МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ:";
-                var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
-                CreateResultsTable(secondDocument, tableTitle, data);
-                InsertTesterSignature(secondDocument, tester);
-            }
+            //string tableTitle = string.Empty;
+            //if (this.hasMKB)
+            //{
+            //    var tester = ReportModel.ReportParameters["TesterMKB"] as string;
+            //    tableTitle = "7.1 РЕЗУЛТАТИ ОТ МИКРОБИОЛОГИЧНО ИЗПИТВАНЕ:";
+            //    var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.MKB);
+            //    CreateResultsTable(secondDocument, tableTitle, data);
+            //    InsertTesterSignature(secondDocument, tester);
+            //}
 
-            if (this.hasFZH)
-            {
-                string number = "1";
-                if (this.HasBoth)
-                {
-                    number = "2";
-                }
+            //if (this.hasFZH)
+            //{
+            //    string number = "1";
+            //    if (this.HasBoth)
+            //    {
+            //        number = "2";
+            //    }
 
-                var tester = ReportModel.ReportParameters["TesterFZH"] as string;
-                tableTitle = "7." + number + " РЕЗУЛТАТИ ОТ ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ:";
-                var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
-                CreateResultsTable(secondDocument, tableTitle, data);
-                InsertTesterSignature(secondDocument, tester);
-            }
+            //    var tester = ReportModel.ReportParameters["TesterFZH"] as string;
+            //    tableTitle = "7." + number + " РЕЗУЛТАТИ ОТ ФИЗИКОХИМИЧНО И ОРГАНОЛЕПТИЧНО ИЗПИТВАНЕ:";
+            //    var data = protocolResults.Where(pr => pr.ProductTest.Test.TestType.ShortName == TestTypes.FZH);
+            //    CreateResultsTable(secondDocument, tableTitle, data);
+            //    InsertTesterSignature(secondDocument, tester);
+            //}
 
-            InsertRemarks(secondDocument);
-            InsertLabLeaderSignature(secondDocument);
+            //InsertRemarks(secondDocument);
+            //InsertLabLeaderSignature(secondDocument);
 
-            secondDocument.Save();
+            //secondDocument.Save();
 
-            this.Document.InsertSection();
-            this.Document.InsertDocument(secondDocument);
+            //this.Document.InsertSection();
+            //this.Document.InsertDocument(secondDocument);
         }
 
         private void ReplaceItems()
         {
+            var acreditationRegisteredDate = (DateTime)ReportModel.ReportParameters["AcreditationRegisteredDate"];
+            var acreditationValidToDate = (DateTime)ReportModel.ReportParameters["AcreditationValidToDate"];
             var protocolNumber = ReportModel.ReportParameters["ProtocolNumber"] as string;
             var protocolIssuedDate = (DateTime)ReportModel.ReportParameters["ProtocolIssuedDate"];
             var contractor = ReportModel.ReportParameters["Contractor"] as string;
@@ -113,6 +115,8 @@ namespace RED.Models.FileModels.ProtocolFiles
                 acredetationString = ReportModel.ReportParameters["AcredetationString"] as string;
             }
 
+            Document.ReplaceText("#REGDATE", acreditationRegisteredDate.ToString("dd.MM.yyyy"));
+            Document.ReplaceText("#VALIDDATE", acreditationValidToDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#PROTOCOLNUMBER", protocolNumber);
             Document.ReplaceText("#PROTOCOLISSUEDDATE", protocolIssuedDate.ToString("dd.MM.yyyy"));
             Document.ReplaceText("#CONTRACTOR", contractor);
@@ -155,12 +159,24 @@ namespace RED.Models.FileModels.ProtocolFiles
             //set styles
             var productsStyle = new Formatting();
             productsStyle.Size = 14;
+            var acreditationLevel = ReportModel.ReportParameters["category"].ToString();
+
+            var tests = products.SelectMany(p => p.ProductTests);
+            var categories = tests.Select(t => t.Test.TestCategory);
 
             var builder = new StringBuilder();
 
-            foreach (var product in products.OrderBy(p => p.Number))
+            foreach (var category in categories.Distinct())
             {
-                builder.AppendLine(product.Number + ". " + product.Name); //continue with " - " product category ? (not one category, but many ...) TALK WITH IVO
+                builder.AppendLine(category.Name);
+
+                var pr = products.Where(p => p.ProductTests.Any(pt => pt.Test.TestCategoryId == category.Id))
+                    .OrderBy(p => p.Number);
+
+                foreach (var product in pr)
+                {
+                    builder.AppendLine(acreditationLevel + product.Diary.Number + "-" + product.Number + " - " + product.Name);
+                }
             }
 
             Document.ReplaceText("#PRODUCTSLIST", builder.ToString());

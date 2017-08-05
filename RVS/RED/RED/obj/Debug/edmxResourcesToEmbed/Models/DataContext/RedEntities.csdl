@@ -334,6 +334,7 @@
       <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
       <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
+    <EntitySet Name="AcreditationMetas" EntityType="DB_9BCA69_RedDbModel.AcreditationMeta" />
   </EntityContainer>
   <EntityType Name="Request">
     <Key>
@@ -843,4 +844,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="AcreditationMeta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Registered" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ValidTo" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
 </Schema>
