@@ -136,9 +136,9 @@
         var selectedTestValue = testsDd.val();
         var selectedTestMethodValue = testMethodDd.val();
         var array = selectedTestValue.split('_');
+        var selectedTestType = array[0];
         var selectedTestId = array[1];
         var selectedTestMethodId = selectedTestMethodValue;
-        var selectedTestType = array[0];
         var selectedTestText = testsDd.text();
         //console.log(selectedTestId, selectedTestText);
 
