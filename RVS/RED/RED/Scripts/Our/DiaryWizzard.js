@@ -102,8 +102,6 @@ function hideQuantityValidation() {
     }
 }
 
-
-
 function updateVal(currentEle) {
     var value = $(currentEle).html();
 
@@ -139,10 +137,28 @@ function loadTestView() {
 }
 
 function addTest() {
-    var test = $('#Tests').val();
+    var selectedTestValue = $('#Tests').val();
+    var array = selectedTestValue.split('_');
+    var selectedTestType = array[0];
+    var selectedTestId = array[1];
+
     var testMethod = $('#TestMethodId').val();
     var methodValue = $('.methodValueBox').val();
     var remark = $('.remarkBox').val();
 
-    alert(test + ';' + testMethod + ';' + methodValue + ';' + remark);
+    var content = '<tr>' +
+                '<td><span class="label label-primary">' + selectedTestType + '</span></td>' +
+                '<td colspan="2">' + 
+                    '<div class="col-md-11 test">' + selectedTestText + '</div>' +
+                    '<div class="col-md-6"><p style="margin-top:10px;">' + methodValue + '</p></div>' +
+                    '<div class="col-md-6"><p style="margin-top:10px;">' + remark + '</p></div>' +
+                '</td>' +
+                '<td class="text-right">' +
+                    '<a class="delete-product" key="' + testKey + '" onclick="deleteTest(this)">' +
+                        '<h3 style="margin: 0px">x</h3>' +
+                    '</a>' +
+                '</td></tr>';
+
+    $('.product-list-table tbody').append(content);
+    $('.btn-close').click();
 }

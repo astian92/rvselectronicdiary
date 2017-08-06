@@ -864,6 +864,7 @@
     <Content Include="Views\Diary\Details.cshtml" />
     <Content Include="Views\Diary\ActiveDiaries.cshtml" />
     <Content Include="Views\Misc\AcreditationRegistry.cshtml" />
+    <Content Include="Views\Diary\AddTests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\plugins\gritter\" />
