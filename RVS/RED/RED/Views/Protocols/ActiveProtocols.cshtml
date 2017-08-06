@@ -65,8 +65,7 @@
                                     @{ 
                                         var orderedAcreditedResults = acredited
                                             .OrderBy(x => x.ProductTest.Product.Number)
-                                            .ThenBy(x => x.ProductTest.Test.Name)
-                                            .ThenBy(x => x.ResultNumber);
+                                            .ThenBy(x => x.ProductTest.Test.TestType.SortOrder);
                                     }
                                     @foreach (var result in orderedAcreditedResults)
                                     {
@@ -138,8 +137,7 @@
                                     @{
                                         var orderedNotAcreditedResultsMKB = notAcredited
                                             .OrderBy(x => x.ProductTest.Product.Number)
-                                            .ThenBy(x => x.ProductTest.Test.Name)
-                                            .ThenBy(x => x.ResultNumber);
+                                            .ThenBy(x => x.ProductTest.Test.TestType.SortOrder);
                                     }
 
                                     @foreach (var result in orderedNotAcreditedResultsMKB)
