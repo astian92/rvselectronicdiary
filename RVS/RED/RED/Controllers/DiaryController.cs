@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using RED.Filters;
 using RED.Helpers;
@@ -249,9 +248,10 @@ namespace RED.Controllers
         }
 
         [RoleFilter(FeaturesCollection.ModifyDiary)]
-        public JsonResult GetTestMethods(Guid testId)
+        public JsonResult GetTestDetails(Guid testId)
         {
-            return Json(_rep.GetTestMethods(testId), JsonRequestBehavior.AllowGet);
+            var values = _rep.GetTestMethodDetails(testId);
+            return Json(new { Methods = values.Item1, MethodValue = values.Item2 }, JsonRequestBehavior.AllowGet);
         }
 
         [RoleFilter(FeaturesCollection.ModifyDiary)]
@@ -268,20 +268,6 @@ namespace RED.Controllers
             var response = _rep.RegenerateArchivedProtocol(adiary);
 
             return Json(response, JsonRequestBehavior.AllowGet);
-        }
-
-        public string GetMethodValueForTest(Guid testId)
-        {
-            var tests = _rep.GetTests();
-            if (tests.Any(t => t.Id == testId))
-            {
-                var test = tests.Single(t => t.Id == testId);
-
-                //because FZH is forbidden to take MethodValue just return the method value directly
-                return test.MethodValue;
-            }
-
-            return string.Empty;
         }
     }
 }

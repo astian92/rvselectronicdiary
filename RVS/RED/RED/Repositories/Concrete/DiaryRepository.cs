@@ -199,26 +199,18 @@ namespace RED.Repositories.Concrete
             return selectList;
         }
 
-        public IEnumerable<TestW> GetTests()
+        public Tuple<IEnumerable<TestMethodW>, string> GetTestMethodDetails(Guid testId)
         {
-            var tests = Db.Tests.ToList();
-            return tests.Select(x => new TestW(x)).OrderBy(x => x.TestCategory.Name);
+            var test = Db.Tests.Where(x => x.Id == testId).Include(x => x.TestMethods).FirstOrDefault();
+            var methods = test.TestMethods.AsQueryable().Select(TestMappings.ToTestMethodW);
+
+            return new Tuple<IEnumerable<TestMethodW>, string>(methods, test.MethodValue);
         }
 
         public IEnumerable<TestW> GetSelectListTests()
         {
-            var selectList = Db.Tests.OrderBy(x => x.TestCategory.Name).Select(x => new TestW
-            {
-                FullName = x.Name + " - " + x.TestCategory.Name,
-                FullValue = x.TestType.ShortName + "_" + x.Id
-            });
+            var selectList = Db.Tests.OrderBy(x => x.TestCategory.Name).Select(TestMappings.ToTestSelectList);
             return selectList;
-        }
-
-        public IEnumerable<TestMethodW> GetTestMethods(Guid testId)
-        {
-            var methods = Db.TestMethods.Where(x => x.TestId == testId).ToList().Select(x => new TestMethodW(x));
-            return methods;
         }
 
         public string GenerateRequest(Guid diaryId, int testingPeriod)

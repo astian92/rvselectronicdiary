@@ -5,11 +5,8 @@ namespace RED.Models.ElectronicDiary.Tests
 {
     public class TestMethodW
     {
-        public TestMethodW(TestMethod method)
+        public TestMethodW()
         {
-            this.Id = method.Id;
-            this.TestId = method.TestId;
-            this.Method = method.Method;
         }
 
         public Guid Id { get; set; }

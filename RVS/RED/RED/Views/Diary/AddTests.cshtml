@@ -62,25 +62,20 @@
         var testId = value.substr(4, value.length);
         $.ajax({
             type: "GET",
-            url: '/Diary/GetTestMethods?testId=' + testId,
+            url: '/Diary/GetTestDetails?testId=' + testId,
             contentType: "application/json; charset=utf-8",
             dataType: "html",
             success: function (data) {
-                var methods = JSON.parse(data);
+                var test = JSON.parse(data);
+                var methods = test.Methods;
+
                 var optionsAsString = "";
                 for (var i = 0; i < methods.length; i++) {
                     optionsAsString += "<option value='" + methods[i].Id + "'>" + methods[i].Method + "</option>";
                 }
                 $('#TestMethodId').empty().append(optionsAsString);
-            }
-        });
 
-        $.ajax({
-            type: "GET",
-            url: '/Diary/GetMethodValueForTest?testId=' + testId,
-            contentType: "application/json; charset=utf-8",
-            success: function (methodValue) {
-                $('.methodValueBox').val(methodValue);
+                $('.methodValueBox').val(test.MethodValue);
             }
         });
     }

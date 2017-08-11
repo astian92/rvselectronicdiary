@@ -40,9 +40,7 @@ namespace RED.Repositories.Abstract
 
         IEnumerable<TestW> GetSelectListTests();
 
-        IEnumerable<TestMethodW> GetTestMethods(Guid testId);
-
-        IEnumerable<TestW> GetTests();
+        Tuple<IEnumerable<TestMethodW>, string> GetTestMethodDetails(Guid testId);
 
         ActionResponse RegenerateArchivedProtocol(ArchivedDiaryW adiary);
     }

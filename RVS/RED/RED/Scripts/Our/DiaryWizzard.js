@@ -18,6 +18,18 @@ $('#acceptance-date .input-group.date').datepicker({
 
 $('.input-group.time').clockpicker();
 
+$('#Quantity').keyup(function (e) {
+    if (e.which == 13) {
+        $('.add-product-btn').click();
+    }
+})
+
+$('#Products').keyup(function (e) {
+    if (e.which == 13) {
+        $('.add-product-btn').click();
+    }
+})
+
 $('.add-product-btn').click(function () {
     if (validateProductInfo() == false) {
         return false;
@@ -43,19 +55,20 @@ $('.add-product-btn').click(function () {
     $('#Products').val('');
     $('#Products').focus();
     $('#Quantity').val('');
-    $('#loadTestViewBtn').removeAttr('disabled');
     $('.product-list-table tbody .error-msg').remove();
 });
 
 $('.product-list-table').on('click', '.clickable-row', function (event) {
     if (!window.event.ctrlKey) {
         $(this).addClass('active').siblings().removeClass('active');
+        $('#loadTestViewBtn').removeAttr('disabled');
     }
 });
 
 $('.product-list-table').on('click', '.clickable-row', function (event) {
     if (window.event.ctrlKey) {
         $(this).addClass('active');
+        $('#loadTestViewBtn').removeAttr('disabled');
     }
 });
 
@@ -137,7 +150,10 @@ function loadTestView() {
 }
 
 function addTest() {
-    var selectedTestValue = $('#Tests').val();
+    var testKey = guid();
+    var testDd = $('#Tests option:selected');
+    var selectedTestValue = testDd.val();
+    var selectedTestText = testDd.text();
     var array = selectedTestValue.split('_');
     var selectedTestType = array[0];
     var selectedTestId = array[1];
@@ -146,7 +162,7 @@ function addTest() {
     var methodValue = $('.methodValueBox').val();
     var remark = $('.remarkBox').val();
 
-    var content = '<tr>' +
+    var content = '<tr class="test-row">' +
                 '<td><span class="label label-primary">' + selectedTestType + '</span></td>' +
                 '<td colspan="2">' + 
                     '<div class="col-md-11 test">' + selectedTestText + '</div>' +
@@ -159,6 +175,14 @@ function addTest() {
                     '</a>' +
                 '</td></tr>';
 
-    $('.product-list-table tbody').append(content);
+    $.each($('.product-list-table tbody .clickable-row.active'), function (index, item) {
+        if ($(item).siblings('.test-row').length == 0) {
+            $(item).after(content);
+        } else {
+            $(item).siblings('.test-row').after(content);
+        }
+
+    });
+
     $('.btn-close').click();
 }

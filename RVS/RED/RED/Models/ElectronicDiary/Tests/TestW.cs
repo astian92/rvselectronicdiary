@@ -9,25 +9,7 @@ namespace RED.Models.ElectronicDiary.Tests
     {
         public TestW()
         {
-        }
-
-        public TestW(Test test)
-        {
-            this.Id = test.Id;
-            this.TestCategoryId = test.TestCategoryId;
-            this.Name = test.Name;
-            this.FullName = test.Name + " - " + test.TestCategory.Name;
-            this.FullValue = test.TestType.ShortName + "_" + test.Id;
-            this.AcredetationLevelId = test.AcredetationLevelId;
-            this.Temperature = test.Temperature;
-            this.UnitName = test.UnitName;
-            this.TypeId = test.TypeId;
-            this.MethodValue = test.MethodValue;
-
-            this.AcredetationLevel = test.AcredetationLevel;
-            this.TestCategory = test.TestCategory;
-            this.TestType = test.TestType;
-            this.TestMethods = test.TestMethods;
+            TestMethods = new HashSet<TestMethod>();
         }
 
         public Guid Id { get; set; }
@@ -71,21 +53,21 @@ namespace RED.Models.ElectronicDiary.Tests
 
         public Test ToBase()
         {
-            Test test = new Test();
+            var test = new Test();
 
-            test.Id = this.Id;
-            test.TestCategoryId = this.TestCategoryId;
-            test.Name = this.Name;
-            test.AcredetationLevelId = this.AcredetationLevelId;
-            test.Temperature = this.Temperature;
-            test.UnitName = this.UnitName;
-            test.TypeId = this.TypeId;
-            test.MethodValue = this.MethodValue;
+            test.Id = Id;
+            test.TestCategoryId = TestCategoryId;
+            test.Name = Name;
+            test.AcredetationLevelId = AcredetationLevelId;
+            test.Temperature = Temperature;
+            test.UnitName = UnitName;
+            test.TypeId = TypeId;
+            test.MethodValue = MethodValue;
 
-            test.AcredetationLevel = this.AcredetationLevel;
-            test.TestCategory = this.TestCategory;
-            test.TestType = this.TestType;
-            test.TestMethods = this.TestMethods;
+            test.AcredetationLevel = AcredetationLevel;
+            test.TestCategory = TestCategory;
+            test.TestType = TestType;
+            test.TestMethods = TestMethods;
 
             return test;
         }

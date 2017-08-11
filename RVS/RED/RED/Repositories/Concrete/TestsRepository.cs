@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
+using RED.Mappings;
 using RED.Models.DataContext;
-using RED.Models.Responses;
-using RED.Models.ElectronicDiary.Tests;
-using RED.Repositories.Abstract;
 using RED.Models.DataContext.Abstract;
+using RED.Models.ElectronicDiary.Tests;
+using RED.Models.Responses;
+using RED.Repositories.Abstract;
 
 namespace RED.Repositories.Concrete
 {
@@ -85,8 +86,8 @@ namespace RED.Repositories.Concrete
 
         public TestW GetTest(Guid Id)
         {
-            var test = Db.Tests.Single(t => t.Id == Id);
-            return new TestW(test);
+            var test = Db.Tests.Where(x => x.Id == Id).Select(TestMappings.ToTestW).FirstOrDefault();
+            return test;
         }
 
         public IQueryable<Test> GetTests()

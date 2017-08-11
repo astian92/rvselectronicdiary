@@ -73,6 +73,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StyleCop, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
       <HintPath>..\packages\StyleCop.4.7.55\lib\net35\StyleCop.dll</HintPath>
       <Private>True</Private>
@@ -146,9 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -225,6 +225,7 @@
     <Compile Include="Mappings\DiaryMappings.cs" />
     <Compile Include="Mappings\ProtocolMappings.cs" />
     <Compile Include="Mappings\RequestMappings.cs" />
+    <Compile Include="Mappings\TestMappings.cs" />
     <Compile Include="Mappings\UserMappings.cs" />
     <Compile Include="Models\DataContext\Abstract\IDbFactory.cs" />
     <Compile Include="Models\DataContext\Abstract\IRvsContextFactory.cs" />
