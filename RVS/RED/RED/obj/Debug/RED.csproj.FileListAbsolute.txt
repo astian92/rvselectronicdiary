@@ -553,7 +553,6 @@ D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Micro
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Web.Infrastructure.dll
-D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Newtonsoft.Json.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Owin.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.CSharp.dll
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.dll
