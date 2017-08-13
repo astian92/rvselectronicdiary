@@ -18,15 +18,21 @@ $('#acceptance-date .input-group.date').datepicker({
 
 $('.input-group.time').clockpicker();
 
-$('#Quantity').keyup(function (e) {
+$('#Quantity').keydown(function (e) {
     if (e.which == 13) {
+        e.preventDefault();
+        e.stopPropagation();
         $('.add-product-btn').click();
+        return false;
     }
 })
 
-$('#Products').keyup(function (e) {
+$('#Products').keydown(function (e) {
     if (e.which == 13) {
+        e.preventDefault();
+        e.stopPropagation();
         $('.add-product-btn').click();
+        return false;
     }
 })
 
@@ -35,16 +41,19 @@ $('.add-product-btn').click(function () {
         return false;
     }
 
-    var rowCount = $('.product-list-table tr').length;
+    var rowCount = $('.product-list-table .product').length;
 
-    var content = '<tr class="clickable-row"><td class="col-md-2"><span>' + rowCount + '</span></td>' +
-        '<td class="issue-info product" key="' + guid() + '">' +
+    var content = '<tr class="clickable-row product" key="' + guid() + '">' +
+        '<td><span>' + rowCount + '</span></td>' +
+        '<td colspan="2" class="issue-info">' +
             '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
             '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
-        '</td><td class="col-md-2">' +
+        '</td>' +
+        '<td colspan="2">' +
             '<div ondblclick="updateVal(this)">' + $('#Quantity').val() + '</div>' +
             '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity" />' +
-        '</td><td class="text-right">' +
+        '</td>' +
+        '<td class="text-right">' +
             '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>' +
         '</td></tr>';
 
@@ -56,6 +65,7 @@ $('.add-product-btn').click(function () {
     $('#Products').focus();
     $('#Quantity').val('');
     $('.product-list-table tbody .error-msg').remove();
+    $('.table-error').html('');
 });
 
 $('.product-list-table').on('click', '.clickable-row', function (event) {
@@ -70,6 +80,50 @@ $('.product-list-table').on('click', '.clickable-row', function (event) {
         $(this).addClass('active');
         $('#loadTestViewBtn').removeAttr('disabled');
     }
+});
+
+$("#form").submit(function (e) {
+    e.preventDefault();
+
+    //Get Products and tests and name them correctly
+    var dataIsValid = true;
+    var products = $('.product');
+
+    if (products.length < 1) {
+        dataIsValid = false;
+        $('.table-error').html('<div class="error-msg"><span style="color: red">Необходимо е да въведете поне един продукт!!</span></div>');
+        return false;
+    }
+    for (var i = 0; i < products.length; i++) {
+        var product = $(products[i]);
+
+        product.find('.productName').attr('name', 'Products[' + i + '].Name');
+        product.find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
+
+        var productKey = product.attr('key');
+        var tests = $('.test[for="' + productKey + '"]');
+        if (tests.length < 1) {
+            dataIsValid = false;
+            $('.table-error').html('<div class="error-msg"><span style="color: red">Необходимо е да въведете поне по едно изследване на продукт!!</span></div>');
+            return false;
+        }
+
+        for (var j = 0; j < tests.length; j++) {
+            var test = $(tests[j]);
+
+            var testId = test.find('.testId');
+            testId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestId');
+            var testMethodId = test.find('.testMethodId');
+            testMethodId.attr('name', 'Products[' + i + '].ProductTests[' + j + '].TestMethodId');
+            var methodValue = test.find('.methodValue');
+            methodValue.attr('name', 'Products[' + i + '].ProductTests[' + j + '].MethodValue');
+            var remark = test.find('.remark');
+            remark.attr('name', 'Products[' + i + '].ProductTests[' + j + '].Remark');
+        }
+    }
+
+    var form = this;
+    form.submit(); // submit bypassing the jQuery bound event
 });
 
 function validateProductInfo() {
@@ -90,16 +144,18 @@ function validateProductInfo() {
 }
 
 function deleteProduct(e, number) {
-    $(e).parent().parent().remove();
-    if ($('.clickable-row').length == 0) {
+    var product = $(e).parent().parent();
+
+    var productKey = product.attr('key');
+    $('.test[for="' + productKey + '"]').remove();
+    product.remove();
+
+    if ($('.clickable-row.active').length == 0) {
         $('#loadTestViewBtn').attr('disabled', 'disabled');
     }
 }
 
 function deleteTest(e) { //this function is here so it wont be loaded every time in the partial view
-    var testKey = $(e).attr('key');
-    $('#' + testKey).remove();
-
     $(e).parent().parent().remove();
 }
 
@@ -150,7 +206,22 @@ function loadTestView() {
 }
 
 function addTest() {
-    var testKey = guid();
+    $('.product.active').each(function (index, item) {
+        var testId = guid();
+        var productId = $(item).attr('key');
+        var content = createTestRow(productId, testId);
+
+        if ($(item).next('.test').length == 0) {
+            $(item).after(content);
+        } else {
+            $('.test[for="' + productId + '"]').last().after(content);
+        }
+    });
+
+    $('.btn-close').click();
+}
+
+function createTestRow(productId, testId) {
     var testDd = $('#Tests option:selected');
     var selectedTestValue = testDd.val();
     var selectedTestText = testDd.text();
@@ -162,27 +233,27 @@ function addTest() {
     var methodValue = $('.methodValueBox').val();
     var remark = $('.remarkBox').val();
 
-    var content = '<tr class="test-row">' +
-                '<td><span class="label label-primary">' + selectedTestType + '</span></td>' +
-                '<td colspan="2">' + 
-                    '<div class="col-md-11 test">' + selectedTestText + '</div>' +
-                    '<div class="col-md-6"><p style="margin-top:10px;">' + methodValue + '</p></div>' +
-                    '<div class="col-md-6"><p style="margin-top:10px;">' + remark + '</p></div>' +
-                '</td>' +
-                '<td class="text-right">' +
-                    '<a class="delete-product" key="' + testKey + '" onclick="deleteTest(this)">' +
-                        '<h3 style="margin: 0px">x</h3>' +
-                    '</a>' +
-                '</td></tr>';
+    var content = '<tr class="test" key="' + testId + '" for="' + productId + '">'+
+                    '<td><input type="hidden" class="testId" value="' + selectedTestId + '"></td>' +
+                    '<td><span class="label label-default">' + selectedTestType + '</span><input type="hidden" class="type" value="' + selectedTestType + '"></td>' +
+                    '<td>' +
+                        '<div>' + selectedTestText + '</div>' +
+                        '<input type="hidden" class="name" value="' + selectedTestText + '">' +
+                    '</td>' +
+                    '<td>' +
+                        '<div>' + methodValue + '</div>' +
+                        '<input type="hidden" class="testMethodId" value="' + testMethod + '">' +
+                        '<input type="hidden" class="methodValue" value="' + methodValue + '">' +
+                    '</td>' +
+                    '<td>' +
+                        '<div>' + remark + '</div>' +
+                        '<input type="hidden" class="remark" value="' + remark + '">' +
+                    '</td>' +
+                    '<td class="text-right">' +
+                        '<a class="delete-test" onclick="deleteTest(this)">' +
+                            '<h3 style="margin: 0px">x</h3>' +
+                        '</a>' +
+                    '</td></tr>';
 
-    $.each($('.product-list-table tbody .clickable-row.active'), function (index, item) {
-        if ($(item).siblings('.test-row').length == 0) {
-            $(item).after(content);
-        } else {
-            $(item).siblings('.test-row').after(content);
-        }
-
-    });
-
-    $('.btn-close').click();
+    return content;
 }

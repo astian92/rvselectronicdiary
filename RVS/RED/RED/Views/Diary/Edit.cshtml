@@ -1,5 +1,7 @@
 ﻿@model RED.Models.ElectronicDiary.DiaryW
 @using System.Globalization;
+@using RED.Models.DataContext;
+
 <link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
 <link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 @{
@@ -7,32 +9,29 @@
 }
 
 <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
-<link href="~/Content/plugins/wizzard/jquery.steps.css" rel="stylesheet" />
 <link href="~/Content/Our/create-diary-custom.css" rel="stylesheet" />
-
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<link href="~/Content/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
 
 <h2>Промени писмо</h2>
 
-@using (Html.BeginForm("Edit", "Diary", FormMethod.Post, new { @class = "wizard-big", @id = "form" }))
+@using (Html.BeginForm("Edit", "Diary", FormMethod.Post, new { @id = "form" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
 
-    @Html.HiddenFor(m => m.Id)
-    <h1>Писмо</h1>
-    <fieldset>
-        <h2>Информация за писмото</h2>
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="form-group">
-                    <label for="ClientId">Клиент</label>
-                    @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control chosen-select" })
-                    @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
-                </div>
-
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Информация за писмото</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.LetterNumber)
-                    <input class="form-control text-box single-line" id="LetterNumber" name="LetterNumber" type="number" value="@Model.LetterNumber">
+                    <input class="form-control text-box single-line" id="LetterNumber" name="LetterNumber" value="@Model.LetterNumber">
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group" id="data_1">
                     @Html.LabelFor(model => model.LetterDate)
                     <div class="input-group date">
@@ -41,96 +40,151 @@
                     </div>
                     @Html.ValidationMessageFor(model => model.LetterDate, "", new { @class = "text-danger" })
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClientId)
+                    @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control chosen-select" })
+                    @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Contractor)
                     @Html.EditorFor(model => model.Contractor, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Contractor, "", new { @class = "text-danger" })
                 </div>
-
             </div>
-            <div class="col-lg-4">
-                <div class="text-center">
-                    <div style="margin-top: 20px">
-                        <i class="fa fa-book" style="font-size: 180px;color: #e5e5e5 "></i>
+            <div class="col-md-6">
+                <div class="form-group" id="acceptance-date">
+                    @Html.LabelFor(model => model.AcceptanceDateAndTime)
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Дата на приемане&quot; е задължително!" id="AcceptanceDateAndTime" name="AcceptanceDateAndTime" type="datetime" value="@Model.AcceptanceDateAndTime.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
                     </div>
+                    @Html.ValidationMessageFor(model => model.AcceptanceDateAndTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AcceptanceTime)
+                    <div class="input-group time" data-autoclose="true">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                        <input type="text" class="form-control" id="AcceptanceTime" name="AcceptanceTime" value="@Model.AcceptanceTime">
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AcceptanceTime, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </fieldset>
-    <h1>Продукти</h1>
-    <fieldset>
-        <h2>Информация за продуктите</h2>
-        <div class="row">
-            <div class="col-lg-6">
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Информация за продуктите</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-5 col-md-5">
                 <div class="form-group">
-                    <label class="control-label" for="Products">Наименование</label>
-                    <input type="text" id="Products" onchange="hideNameValidation()" class="form-control text-box single-line" tabindex="1">
+                    <label for="Products">Наименование</label>
+                    <input type="text" id="Products" onchange="hideNameValidation()" class="form-control text-box single-line" tabindex="1" />
                     <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-name-validation collapse">Наименованието е задължително</span></span>
                 </div>
+            </div>
+            <div class="col-sm-4 col-md-5">
                 <div class="form-group">
-                    <label class="control-label" for="Quantity">Количество</label>
-                    <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2">
+                    <label for="Quantity">Количество</label>
+                    <input class="form-control text-box single-line" onchange="hideQuantityValidation()" id="Quantity" name="Quantity" type="text" tabindex="2" />
                     <span class="text-danger field-validation-error" data-valmsg-replace="true"><span class="product-quantity-validation collapse">Количеството е задължително</span></span>
                 </div>
+            </div>
+            <div class="col-sm-3 col-md-2">
                 <div class="form-group">
-                    <input type="button" value="Добави" class="add-product-btn btn btn-primary" tabindex="5" />
+                    <input type="button" value="Добави" class="add-product-btn btn btn-primary btn-block" style="margin-top:24.5px;" tabindex="5" />
                 </div>
             </div>
-            <div class="col-lg-6 product-list-table-container">
-                <table class="table table-hover product-list-table" style="margin-top:23px;">
-                    <tbody>
-                        @foreach (var product in Model.Products.OrderBy(p => p.Number))
-                        {
+            <div class="panel">
+                <div class="col-md-12 product-list-table-container" style="margin-top:23px;">
+                    <div>
+                        <a id="loadTestViewBtn" class="btn btn-primary" onclick="loadTestView();" data-toggle="modal" data-target="#myModal" disabled="disabled">Добави Тест</a>
+                    </div>
+                    <table class="table table-hover product-list-table">
+                        <thead>
                             <tr>
-                                <td class="col-md-2">
-                                    <span class="label label-primary">Добавен</span>
-                                </td>
-                                <td class="issue-info product" key="@Guid.NewGuid()">
-                                    @product.Name
-                                    <input class="productName" type="hidden" value="@product.Name">
-                                    <input type="hidden" name="Product[].Id" value="@product.Id" />
-
-                                    @foreach (var test in product.ProductTests)
-                                    {
-                                        <span class="test" id="@test.Id">
-                                            <input type="hidden" class="testId" value="@test.TestId" />
-                                            <input type="hidden" class="testMethodId" value="@test.TestMethodId" />
-                                            <input type="hidden" class="name" value="@test.Test.Name" />
-                                            <input type="hidden" class="type" value="@test.Test.TestType.ShortName" />
-                                            <input type="hidden" class="methodValue" value="@test.MethodValue" />
-                                            <input type="hidden" class="remark" value="@test.Remark" />
-                                        </span>
-                                    }
-                                </td>
-                                <td class="col-md-2">
-                                    @product.Quantity
-                                    <input class="productQuantity" type="hidden" value="@product.Quantity">
-                                </td>
-                                <td class="text-right">
-                                    <a class="delete-product" onclick="deleteProduct(this)">
-                                        <h3 style="margin: 0px">x</h3>
-                                    </a>
-                                </td>
+                                <th class="col-sm-2 col-md-1">№</th>
+                                <th colspan="2" class="col-sm-5 col-md-6">Наименование</th>
+                                <th colspan="2" class="col-sm-5 col-md-5">Количество</th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var product in Model.Products.Select((value, i) => new { i, value }))
+                            {
+                                var item = product.value;
+
+                                <tr class="clickable-row product" key="@item.Id">
+                                    <td><span>@product.i</span></td>
+                                    <td colspan="2" class="issue-info">
+                                        <div ondblclick="updateVal(this)">@item.Name</div>
+                                        <input class="productName" type="hidden" value="@item.Name" name="Products[].Name" />
+                                    </td>
+                                    <td colspan="2">
+                                        <div ondblclick="updateVal(this)">@item.Quantity</div>
+                                        <input class="productQuantity" type="hidden" value="@item.Quantity" name="Products[].Quantity" />
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>
+                                    </td>
+                                </tr>
+                                foreach (var test in item.ProductTests)
+                                {
+                                    <tr class="test" key="@test.Id" for="@item.Id">
+                                        <td><input type="hidden" name="Products[].ProductTests[].TestId" value="@test.TestId"></td>
+                                        <td>
+                                            <span class="label label-default">@test.Test.TestType.ShortName</span>
+                                        </td>
+                                        <td>
+                                            <div>@test.Test.Name</div>
+                                            <input type="hidden" class="name" value="@test.Test.Name">
+                                        </td>
+                                        <td>
+                                            <div>@test.MethodValue</div>
+                                            <input type="hidden" class="testMethodId" name="Products[].ProductTests[].TestMethodId" value="@test.TestMethodId">
+                                            <input type="hidden" class="methodValue" name="Products[].ProductTests[].MethodValue" value="@test.MethodValue">
+                                        </td>
+                                        <td>
+                                            <div>@test.Remark</div>
+                                            <input type="hidden" class="remark" name="Products[].ProductTests[].Remark" value="@test.Remark">
+                                        </td>
+                                        <td class="text-right">
+                                            <a class="delete-test" onclick="deleteTest(this)">
+                                                <h3 style="margin: 0px">x</h3>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 table-error"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <hr />
+                <input type="submit" value="Създай" class="btn btn-primary pull-right" />
+                <a href="~/Diary" class="btn btn-default pull-right" style="margin-right:10px;">Отказ</a>
             </div>
         </div>
-    </fieldset>
-    <h1>Тестове</h1>
-    <fieldset>
-        <h2>Тестове на продуктите</h2>
-        <div class="products-tests">
-
-        </div>
-    </fieldset>
+    </div>
 }
 
 <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
-<script src="~/Scripts/plugins/staps/jquery.steps.min.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 <script src="~/Scripts/Our/Helpers.js"></script>
 <script src="~/Scripts/Our/DiaryWizzard.js"></script>
 
@@ -146,5 +200,4 @@
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
-
 </script>

@@ -607,6 +607,7 @@ C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.CSharp.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\StyleCop.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.dll
 C:\Helpers\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
+D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.dll.config
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\RED.pdb
@@ -631,7 +632,6 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.MicrosoftAcco
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Owin.Security.Twitter.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Web.Infrastructure.dll
-D:\Projects\rvs.repository\RVS\RED\RED\bin\Newtonsoft.Json.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Owin.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\StyleCop.CSharp.dll
 D:\Projects\rvs.repository\RVS\RED\RED\bin\StyleCop.dll
@@ -657,7 +657,6 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.Deployment.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\System.Web.WebPages.Razor.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Antlr3.Runtime.pdb
-D:\Projects\rvs.repository\RVS\RED\RED\bin\Newtonsoft.Json.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Core.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Owin.xml
 D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.AspNet.Identity.EntityFramework.xml
@@ -674,4 +673,3 @@ D:\Projects\rvs.repository\RVS\RED\RED\bin\Microsoft.Build.Utilities.v3.5.xml
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.dll
 D:\Projects\rvs.repository\RVS\RED\RED\obj\Debug\RED.pdb
-D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\obj\Debug\RED.csprojResolveAssemblyReference.cache
