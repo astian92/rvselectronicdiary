@@ -578,7 +578,6 @@ D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Deployment.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\System.Web.WebPages.Razor.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Antlr3.Runtime.pdb
-D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Newtonsoft.Json.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Core.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.Owin.xml
 D:\Projects\RVS\rvselectronicdiary\RVS\RED\RED\bin\Microsoft.AspNet.Identity.EntityFramework.xml
