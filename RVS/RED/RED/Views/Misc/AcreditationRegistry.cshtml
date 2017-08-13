@@ -29,7 +29,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
+        <div class="form-group" id="registered-date">
             @Html.LabelFor(model => model.Registered, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="input-group date">
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="valid-date">
             @Html.LabelFor(model => model.ValidTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="input-group date">
@@ -68,32 +68,21 @@
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#Registered').datepicker({
-            format: "dd.m.yyyy",
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        });
+    $('#registered-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
 
-        $('#ValidTo').datepicker({
-            format: "dd.m.yyyy",
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        });
-
-        //$('#data_1 .input-group.date').datepicker({
-        //    format: "dd.m.yyyy",
-        //    todayBtn: "linked",
-        //    keyboardNavigation: false,
-        //    forceParse: false,
-        //    calendarWeeks: true,
-        //    autoclose: true
-        //});
+    $('#valid-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
     });
 </script>
