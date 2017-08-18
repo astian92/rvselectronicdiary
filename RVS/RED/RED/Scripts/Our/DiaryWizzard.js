@@ -41,17 +41,20 @@ $('.add-product-btn').click(function () {
         return false;
     }
 
-    var rowCount = $('.product-list-table .product').length;
+    var rowCount = $('.product-list-table .product').length + 1;
 
     var content = '<tr class="clickable-row product" key="' + guid() + '">' +
-        '<td><span>' + rowCount + '</span></td>' +
+        '<td>' +
+            '<span>' + rowCount + '</span>' +
+            '<input type="hidden" class="productNumber" value="' + rowCount + '" />' +
+        '</td>' +
         '<td colspan="2" class="issue-info">' +
-            '<div ondblclick="updateVal(this)">' + $('#Products').val() + '</div>' +
-            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" name="Products[].Name" />' +
+            '<div ondblclick="updateVal(this)" for="productName">' + $('#Products').val() + '</div>' +
+            '<input class="productName" type="hidden" value="' + $('#Products').val() + '" />' +
         '</td>' +
         '<td colspan="2">' +
-            '<div ondblclick="updateVal(this)">' + $('#Quantity').val() + '</div>' +
-            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" name="Products[].Quantity" />' +
+            '<div ondblclick="updateVal(this)" for="productQuantity">' + $('#Quantity').val() + '</div>' +
+            '<input class="productQuantity" type="hidden" value="' + $('#Quantity').val() + '" />' +
         '</td>' +
         '<td class="text-right">' +
             '<a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>' +
@@ -97,6 +100,7 @@ $("#form").submit(function (e) {
     for (var i = 0; i < products.length; i++) {
         var product = $(products[i]);
 
+        product.find('.productNumber').attr('name', 'Products[' + i + '].Number');
         product.find('.productName').attr('name', 'Products[' + i + '].Name');
         product.find('.productQuantity').attr('name', 'Products[' + i + '].Quantity');
 
@@ -153,6 +157,15 @@ function deleteProduct(e, number) {
     if ($('.clickable-row.active').length == 0) {
         $('#loadTestViewBtn').attr('disabled', 'disabled');
     }
+
+    var products = $('.product');
+    if (products.length > 0) {
+        for (var i = 0; i < products.length; i++) {
+            var html = '<span>' + (i + 1) + '</span><input type="hidden" class="productNumber" value="' + (i + 1) + '" />';
+            $(products[i]).children().first().html(html);
+        }
+    }
+
 }
 
 function deleteTest(e) { //this function is here so it wont be loaded every time in the partial view
@@ -179,18 +192,26 @@ function updateVal(currentEle) {
 
     $(".thVal").focus();
     $(".thVal").val(value);
-    $(".thVal").keyup(function (event) {
+    $(".thVal").keydown(function (event) {
         if (event.keyCode == 13) {
+            event.preventDefault();
+            event.stopPropagation();
             var inputValue = $(".thVal").val().trim();
             $(currentEle).html(inputValue);
-            $(currentEle).parent().find('input').val(inputValue);
+            var className = $(currentEle).attr('for');
+            $(currentEle).closest('.' + className).val(inputValue);
+            return false;
         }
     });
 
-    $(document).click(function () {
+    $(".thVal").blur(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
         var inputValue = $(".thVal").val().trim();
         $(currentEle).html(inputValue);
-        $(currentEle).parent().find('input').val(inputValue);
+        var className = $(currentEle).attr('for');
+        $(currentEle).closest('.' + className).val(inputValue);
+        return false;
     });
 }
 
@@ -219,6 +240,7 @@ function addTest() {
     });
 
     $('.btn-close').click();
+    $('.table-error').html('');
 }
 
 function createTestRow(productId, testId) {

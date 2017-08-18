@@ -182,11 +182,13 @@ function GetDiary(id)
         url: '/Diary/Details',
         data: { Id: id },
         success: function (result) {
+            $('#' + id + ' .ibox-content').html('');
             $('#' + id + ' .ibox-content').append(result);
             $('a[href=#' + id + ']').click();
         },
         error: function () {
             var errorMsg = $("<div class='req-error-msg'>Възникна проблем при зареждането на заявките</div>");
+            $('#' + id + ' .ibox-content').html('');
             $('#' + id + ' .ibox-content').append(errorMsg);
         }
     });

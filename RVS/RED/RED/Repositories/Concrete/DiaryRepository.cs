@@ -81,6 +81,7 @@ namespace RED.Repositories.Concrete
             diary.LetterDate = diaryW.LetterDate;
             diary.Contractor = diaryW.Contractor;
             diary.ClientId = diaryW.ClientId;
+            diary.AcceptanceDateAndTime = diaryW.AcceptanceDateAndTime;
 
             foreach (var item in diary.Products)
             {
@@ -90,13 +91,10 @@ namespace RED.Repositories.Concrete
 
             Db.Products.RemoveRange(diary.Products);
 
-            int i = 1;
             foreach (var item in diaryW.Products)
             {
                 item.Id = Guid.NewGuid();
                 item.DiaryId = diary.Id;
-                item.Number = i;
-                i++;
 
                 foreach (var test in item.ProductTests)
                 {
@@ -158,13 +156,10 @@ namespace RED.Repositories.Concrete
 
             diary.Number = activeMax > archivedMax ? activeMax + 1 : archivedMax + 1;
 
-            int i = 1;
             foreach (var item in diary.Products)
             {
                 item.Id = Guid.NewGuid();
-                item.Number = i;
                 item.DiaryId = diary.Id;
-                i++;
 
                 foreach (var pt in item.ProductTests)
                 {

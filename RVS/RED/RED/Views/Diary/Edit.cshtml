@@ -120,19 +120,22 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var product in Model.Products.Select((value, i) => new { i, value }))
+                            @foreach (var product in Model.Products.OrderBy(x => x.Number).Select((value, i) => new { i, value }))
                             {
                                 var item = product.value;
 
                                 <tr class="clickable-row product" key="@item.Id">
-                                    <td><span>@product.i</span></td>
+                                    <td>
+                                        <span>@(product.i + 1)</span>
+                                        <input class="productNumber" type="hidden" value="@item.Number" />
+                                    </td>
                                     <td colspan="2" class="issue-info">
                                         <div ondblclick="updateVal(this)">@item.Name</div>
-                                        <input class="productName" type="hidden" value="@item.Name" name="Products[].Name" />
+                                        <input class="productName" type="hidden" value="@item.Name" />
                                     </td>
                                     <td colspan="2">
                                         <div ondblclick="updateVal(this)">@item.Quantity</div>
-                                        <input class="productQuantity" type="hidden" value="@item.Quantity" name="Products[].Quantity" />
+                                        <input class="productQuantity" type="hidden" value="@item.Quantity" />
                                     </td>
                                     <td class="text-right">
                                         <a class="delete-product" onclick="deleteProduct(this)"><h3 style="margin: 0px">x</h3></a>
@@ -141,22 +144,23 @@
                                 foreach (var test in item.ProductTests)
                                 {
                                     <tr class="test" key="@test.Id" for="@item.Id">
-                                        <td><input type="hidden" name="Products[].ProductTests[].TestId" value="@test.TestId"></td>
+                                        <td><input type="hidden" class="testId" value="@test.TestId"></td>
                                         <td>
                                             <span class="label label-default">@test.Test.TestType.ShortName</span>
+                                            <input type="hidden" class="type" value="@test.Test.TestType.ShortName" />
                                         </td>
                                         <td>
                                             <div>@test.Test.Name</div>
-                                            <input type="hidden" class="name" value="@test.Test.Name">
+                                            <input type="hidden" class="name" value="@test.Test.Name" />
                                         </td>
                                         <td>
                                             <div>@test.MethodValue</div>
-                                            <input type="hidden" class="testMethodId" name="Products[].ProductTests[].TestMethodId" value="@test.TestMethodId">
-                                            <input type="hidden" class="methodValue" name="Products[].ProductTests[].MethodValue" value="@test.MethodValue">
+                                            <input type="hidden" class="testMethodId" value="@test.TestMethodId">
+                                            <input type="hidden" class="methodValue" value="@test.MethodValue">
                                         </td>
                                         <td>
                                             <div>@test.Remark</div>
-                                            <input type="hidden" class="remark" name="Products[].ProductTests[].Remark" value="@test.Remark">
+                                            <input type="hidden" class="remark" value="@test.Remark">
                                         </td>
                                         <td class="text-right">
                                             <a class="delete-test" onclick="deleteTest(this)">
@@ -174,7 +178,7 @@
             <div class="clearfix"></div>
             <div class="col-md-12">
                 <hr />
-                <input type="submit" value="Създай" class="btn btn-primary pull-right" />
+                <input type="submit" value="Промени" class="btn btn-primary pull-right" />
                 <a href="~/Diary" class="btn btn-default pull-right" style="margin-right:10px;">Отказ</a>
             </div>
         </div>
