@@ -130,11 +130,11 @@
                                         <input class="productNumber" type="hidden" value="@item.Number" />
                                     </td>
                                     <td colspan="2" class="issue-info">
-                                        <div ondblclick="updateVal(this)">@item.Name</div>
+                                        <div ondblclick="updateVal(this)" for="productName">@item.Name</div>
                                         <input class="productName" type="hidden" value="@item.Name" />
                                     </td>
                                     <td colspan="2">
-                                        <div ondblclick="updateVal(this)">@item.Quantity</div>
+                                        <div ondblclick="updateVal(this)" for="productQuantity">@item.Quantity</div>
                                         <input class="productQuantity" type="hidden" value="@item.Quantity" />
                                     </td>
                                     <td class="text-right">
