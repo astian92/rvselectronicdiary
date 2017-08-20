@@ -198,8 +198,7 @@ function updateVal(currentEle) {
             event.stopPropagation();
             var inputValue = $(".thVal").val().trim();
             $(currentEle).html(inputValue);
-            var className = $(currentEle).attr('for');
-            $(currentEle).closest('.' + className).val(inputValue);
+            $(currentEle).next().val(inputValue);
             return false;
         }
     });
@@ -209,8 +208,7 @@ function updateVal(currentEle) {
         event.stopPropagation();
         var inputValue = $(".thVal").val().trim();
         $(currentEle).html(inputValue);
-        var className = $(currentEle).attr('for');
-        $(currentEle).closest('.' + className).val(inputValue);
+        $(currentEle).next().val(inputValue);
         return false;
     });
 }
