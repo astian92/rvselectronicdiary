@@ -100,8 +100,9 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus(this)" for="Temperature" />
-                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees(this)" for="Temperature" />
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="Temperature" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="Temperature" />
+                <input type="button" value="²" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="Temperature" />
             </div>
         </div>
 
@@ -123,8 +124,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addPlusMinus(this)" for="MethodValue" />
-                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addDegrees(this)" for="MethodValue" />
+                <input type="button" value="±" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="MethodValue" />
+                <input type="button" value="°" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="MethodValue" />
+                <input type="button" value="²" class="btn btn-xs btn-info" style="padding:0 22px;" onclick="addSign(this)" for="MethodValue" />
             </div>
         </div>
 
@@ -164,26 +166,7 @@
             }
         });
     }
-
-    function addPlusMinus(e) {
-        var Id = $(e).attr('for');
-        var value = $('#' + Id).val();
-
-        value += '±';
-
-        $('#' + Id).val(value);
-    }
-
-    function addDegrees(e) {
-        var Id = $(e).attr('for');
-        var value = $('#' + Id).val();
-
-        value += '°';
-
-        $('#' + Id).val(value);
-    }
-
-
+    
     function addMethod() {
         var methodsBox = $('#methods-box');
         var methodText = methodsBox.val();

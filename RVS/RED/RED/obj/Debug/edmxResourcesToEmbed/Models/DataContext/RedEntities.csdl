@@ -321,6 +321,7 @@
       <End Role="Protocol" EntitySet="Protocols" />
       <End Role="ProtocolsRemark" EntitySet="ProtocolsRemarks" />
     </AssociationSet>
+    <EntitySet Name="AcreditationMetas" EntityType="DB_9BCA69_RedDbModel.AcreditationMeta" />
     <EntitySet Name="ArchivedDiaries" EntityType="DB_9BCA69_RedDbModel.ArchivedDiary" />
     <AssociationSet Name="FK_ArchivedProducts_ArchivedDiary" Association="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary">
       <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
@@ -334,7 +335,6 @@
       <End Role="ArchivedDiary" EntitySet="ArchivedDiaries" />
       <End Role="ArchivedProtocolResult" EntitySet="ArchivedProtocolResults" />
     </AssociationSet>
-    <EntitySet Name="AcreditationMetas" EntityType="DB_9BCA69_RedDbModel.AcreditationMeta" />
   </EntityContainer>
   <EntityType Name="Request">
     <Key>
@@ -780,6 +780,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="AcreditationMeta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Registered" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ValidTo" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
   <EntityType Name="ArchivedDiary">
     <Key>
       <PropertyRef Name="Id" />
@@ -800,6 +808,8 @@
     <Property Name="ProtocolTester" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
     <Property Name="ProtocolLabLeader" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
     <Property Name="Remark" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="AcreditationRegisteredDate" Type="DateTime" Precision="3" />
+    <Property Name="AcreditationValidDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="ArchivedProducts" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProducts_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProduct" />
     <NavigationProperty Name="ArchivedProtocolRemarks" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolRemarks_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolRemark" />
     <NavigationProperty Name="ArchivedProtocolResults" Relationship="DB_9BCA69_RedDbModel.FK_ArchivedProtocolResults_ArchivedDiary" FromRole="ArchivedDiary" ToRole="ArchivedProtocolResult" />
@@ -844,12 +854,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="AcreditationMeta">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Registered" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="ValidTo" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
 </Schema>

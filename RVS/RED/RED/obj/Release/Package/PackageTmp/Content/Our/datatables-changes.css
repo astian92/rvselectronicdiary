@@ -9,11 +9,11 @@
     margin-left: 0px;
 }
 
-input[type="search"] { 
+input[type="search"] {
     vertical-align: top !important;
 }
 
-.group { 
+.group {
     font-weight: bold;
     background-color: rgb(230,230,230) !important;
 }

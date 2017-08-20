@@ -13,6 +13,7 @@ namespace RED.Models.ElectronicDiary.Converters
             product.Number = aproduct.Number;
             product.Name = aproduct.Name;
             product.Quantity = aproduct.Quantity;
+            product.Diary = new Diary() { Number = aproduct.ArchivedDiary.Number }; //HACK!!! (like the rest is not but still..)
             product.ProductTests = new List<ProductTest>();
 
             var converter = new ProductTestsConverter();

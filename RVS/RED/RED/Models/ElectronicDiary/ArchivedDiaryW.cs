@@ -95,6 +95,14 @@ namespace RED.Models.ElectronicDiary
         [Display(Name = "Срок на изпитването")]
         public int? RequestTestingPeriod { get; set; }
 
+        [Required(ErrorMessage = "Полето \"Сертификат регистриран на\" е задължителнo!")]
+        [Display(Name = "Сертификат регистриран на")]
+        public DateTime AcreditationRegisteredDate { get; set; }
+
+        [Required(ErrorMessage = "Полето \"Сертификат валиден до\" е задължителнo!")]
+        [Display(Name = "Сертификат валиден до")]
+        public DateTime AcreditationValidToDate { get; set; }
+
         [Display(Name = "Продукти")]
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
 

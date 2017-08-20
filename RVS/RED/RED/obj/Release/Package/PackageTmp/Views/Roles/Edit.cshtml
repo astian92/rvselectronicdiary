@@ -26,7 +26,7 @@
         <div class="form-group">
             <div class="col-md-11 col-md-offset-1">
                 @{
-                    var features = ViewBag.Features as List<Feature>;
+                    var features = ViewBag.Features as IEnumerable<Feature>;
                     var visualFeatures = features.Where(x => x.DisplayName.Contains("Визуализация"));
                     var editFeatures = features.Where(x => x.DisplayName.Contains("Обработка"));
                 }

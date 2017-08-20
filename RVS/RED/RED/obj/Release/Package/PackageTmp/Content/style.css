@@ -1,4 +1,4 @@
-a { 
+a {
     color: #1ab394;
 }
 
@@ -10,7 +10,7 @@ a:focus {
     color: #18a689;
 }
 
-a:focus { 
+a:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
@@ -1262,7 +1262,7 @@ table.dataTable thead .sorting:after {
   padding: 6px 12px;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   width: 100%;
-  font-size: 14px;
+  font-size: 13px;
 }
 .form-control:focus,
 .single-line:focus {
@@ -1428,6 +1428,13 @@ video {
 .modal-dialog {
   z-index: 2100;
 }
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width:700px;
+    }
+}
+
 .modal-body {
   padding: 20px 30px 30px 30px;
 }
@@ -2216,4 +2223,8 @@ button .fa{
 
 .no-resize {
     resize: none;
+}
+
+.clickable-row {
+    cursor:pointer;
 }

@@ -6,9 +6,6 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                         <span class="clear">@Html.GetProfile()</span>
-                    @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>*@
                 </div>
                 <div class="logo-element">
                     РВС
@@ -95,6 +92,19 @@
                         <i class="fa fa-bookmark">
                         </i> <span class="nav-label">Забележки</span>
                     </a>
+                </li>
+            }
+            @if (Html.IsAuthorized(FeaturesCollection.ModifyMisc))
+            {
+                <li class="">
+                    <a href="#">
+                        <i class="fa fa-asterisk">
+                        </i> <span class="nav-label">Общи</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/Misc/AcreditationRegistry">Акредитация - Сертификат</a></li>
+                    </ul>
                 </li>
             }
         </ul>

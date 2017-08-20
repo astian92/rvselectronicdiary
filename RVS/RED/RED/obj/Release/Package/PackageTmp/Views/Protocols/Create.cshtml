@@ -1,7 +1,7 @@
 ﻿@model RED.Models.ElectronicDiary.Requests.RequestW
-@using RED.Models.ElectronicDiary
+@using RED.Models.ElectronicDiary;
 @using RED.Models;
-@using System.Collections.Generic
+@using RED.Mappings;
 
 @{
     ViewBag.Title = "Create";
@@ -24,21 +24,23 @@
 
         @{
             int i = 1;
-            var wrappedDiary = new DiaryW(Model.Diary);
-        }
+            var wrappedDiary = Model.Diary.ToDiaryWrapper();
 
-        @foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
-        {
-            foreach (var test in item.ProductTests)
+            foreach (var item in Model.Diary.Products.OrderBy(p => p.Number))
             {
-                for (int j = 0; j < test.Units; j++)
+                foreach (var test in item.ProductTests.OrderBy(pt => pt.Test.TestType.SortOrder))
                 {
                     <div class="form-group">
-                        <label class="control-label col-md-3">
-                            Име на продукта
+                        <label for="test-method" class="control-label col-md-3">
+                            № на образеца
+                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
                         </label>
                         <label class="col-md-9 modified-label">
-                            @test.Product.Name
+                            @{
+                                var number = test.Test.AcredetationLevel.Level.Trim() + wrappedDiary.Number + "-" + item.Number;
+                            }
+                            @number
+                            <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number">
                         </label>
                     </div>
                     <div class="form-group">
@@ -49,12 +51,6 @@
                             @test.Test.Name
                         </label>
                     </div>
-                    @*<div class="form-group">
-                            @Html.Label("unit", "Единица на величината", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-
-                            </div>
-                        </div>*@
                     <div class="form-group">
                         <label class="control-label col-md-3">
                             Методи
@@ -64,28 +60,20 @@
                             @test.TestMethod.Method
                         </label>
                     </div>
-                    <div class="form-group">
-                        <label for="test-method" class="control-label col-md-3">
-                            № на образеца
-                            <i class="fa fa-question-circle" title="№ на образеца по входящо-изходящия дневник"></i>
-                        </label>
-                        <label class="col-md-9 modified-label">
-                            @{
-                                //var number = wrappedDiary.Remark + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j+1) : "");
-                                var number = test.Test.AcredetationLevel.Level.Trim() + wrappedDiary.Number + "-" + item.Number + (test.Units > 1 ? "-N" + (j + 1) : ""); 
-                            }
-                            @number
-                            <input type="hidden" name="ProtocolResults[@(i - 1)].ResultNumber" value="@number"></label>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="ProtocolResults[@(i - 1)].Results" class="control-label col-md-3">
                             Резултати от изследването, неопределеност
                         </label>
                         <div class="col-md-9">
-                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
+                            @{  
+                                var uId = Guid.NewGuid();
+                            }
+                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].Results", null, new { id = uId, @class = "form-control tarea", data_val = "true", data_val_required = "Резултатът е задължителен!" })
                             <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1"/>
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
+                                <input type="button" value="±" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1"/>
+                                <input type="button" value="°" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
+                                <input type="button" value="²" for="@uId" class="btn btn-xs btn-info" onclick="addSign(this)" tabindex="-1" />
                             </span>
                             @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].Results", new { @class = "text-danger" })
                         </div>
@@ -98,20 +86,7 @@
                             @test.MethodValue
                         </label>
                     </div>
-                    @*<div class="form-group">
-                        <label for="ProtocolResults[@(i - 1)].MethodValue" class="control-label col-md-3">
-                            Стойност на показателя
-                            <i class="fa fa-question-circle" title="Стойност и допуск на показателя по метода"></i>
-                        </label>
-                        <div class="col-md-9">
-                            @Html.TextArea("ProtocolResults[" + (i - 1) + "].MethodValue", null, new { @class = "form-control tarea", data_val = "true", data_val_required = "Стойността е задължителна!" })
-                            <span class="special-chars-holder">
-                                <input type="button" value="±" class="btn btn-xs btn-info" onclick="addPlusMinus(this)" tabindex="-1" />
-                                <input type="button" value="°" class="btn btn-xs btn-info" onclick="addDegrees(this)" tabindex="-1" />
-                            </span>
-                            @Html.ValidationMessage("ProtocolResults[" + (i - 1) + "].MethodValue", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
+
                     <div class="form-group">
                         <label for="test-method" class="control-label col-md-3">
                             Условия на заобикалящата среда
@@ -126,8 +101,8 @@
 
                     <hr />
                     i++;
-                }
-	        }
+	            }
+            }
         }
 
         <div class="form-group" id="issued-date">
@@ -139,49 +114,20 @@
                            data-val="true" data-val-required="Полето &quot;Издаден на (дата)&quot; е задължително!">
                 </div>
             </div>
-            @*<div class="col-md-4">
-                <div class="input-group clockpicker" data-autoclose="true">
-                    <input type="text" class="form-control" id="IssuedTime" name="IssuedTime" value=""
-                           data-val="true" data-val-required="Полето &quot;Издаден на (час)&quot; е задължително!">
-                    <span class="input-group-addon">
-                        <span class="fa fa-clock-o"></span>
-                    </span>
-                </div>
-            </div>*@
             <div class="col-md-9 col-md-offset-3">
                 @Html.ValidationMessage("IssuedDate", new { @class = "text-danger" })
             </div>
-            @*<div class="col-md-9 col-md-offset-3">
-                @Html.ValidationMessage("IssuedTime", new { @class = "text-danger" })
-            </div>*@
         </div>
 
-
-        @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.MKB)))
-        {
-            <div class="form-group">
-                <label for="Tester" class="control-label col-md-3">
-                    Ивършил изпитването (МКБ):
-                </label>
-                <div class="col-md-9">
-                    @Html.TextBox("TesterMKB", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (МКБ) е задължително поле!" })
-                    @Html.ValidationMessage("TesterMKB", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-
-       @if (Model.Diary.Products.Any(pr => pr.ProductTests.Any(pt => pt.Test.TestType.ShortName == TestTypes.FZH)))
-       {
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
-                Ивършил изпитването (ФЗХ):
+                Ивършил изпитването:
             </label>
             <div class="col-md-9">
-                @Html.TextBox("TesterFZH", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването (ФЗХ) е задължително поле!" })
-                @Html.ValidationMessage("TesterFZH", new { @class = "text-danger" })
+                @Html.TextBox("Tester", null, new { @class = "form-control text-box single-line", data_val = "true", data_val_required = "Извършил изпитването е задължително поле!" })
+                @Html.ValidationMessage("Tester", new { @class = "text-danger" })
             </div>
         </div>
-       }
 
         <div class="form-group">
             <label for="Tester" class="control-label col-md-3">
@@ -244,6 +190,7 @@
         
     </div>
 }
+
 <script src="~/Scripts/Our/Helpers.js"></script>
 <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
 <script src="~/Scripts/Our/Protocols.js"></script>
@@ -251,8 +198,6 @@
 <script src="~/Scripts/plugins/clockpicker/clockpicker.js"></script>
 
 <script>
-    //$('.clockpicker').clockpicker();
-
     $('#issued-date .input-group.date').datepicker({
         format: "dd.m.yyyy",
         todayBtn: "linked",

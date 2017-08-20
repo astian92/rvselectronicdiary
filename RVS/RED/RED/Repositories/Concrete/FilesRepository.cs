@@ -350,6 +350,9 @@ namespace RED.Repositories.Concrete
 
             model.ReportParameters.Add("ProtocolResults", protocolResults);
 
+            model.ReportParameters.Add("category", category);
+            model.ReportParameters.Add("AcreditationRegisteredDate", adiary.AcreditationRegisteredDate);
+            model.ReportParameters.Add("AcreditationValidToDate", adiary.AcreditationValidToDate);
             model.ReportParameters.Add("Contractor", adiary.Contractor);
             model.ReportParameters.Add("Client", adiary.Client);
             model.ReportParameters.Add("LetterNumber", adiary.LetterNumber);

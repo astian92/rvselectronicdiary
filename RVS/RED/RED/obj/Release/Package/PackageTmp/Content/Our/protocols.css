@@ -1,6 +1,7 @@
 ﻿.tarea {
     width: calc(100% - 70px);
     display: inline-block;
+    height: 85px !important;
 }
 
 .special-chars-holder {

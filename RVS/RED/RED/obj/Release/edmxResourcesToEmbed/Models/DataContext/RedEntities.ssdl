@@ -8,6 +8,14 @@
     <Property Name="Level" Type="nvarchar" MaxLength="2" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
+  <EntityType Name="AcreditationMeta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Registered" Type="datetime" Nullable="false" />
+    <Property Name="ValidTo" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="ActionLogProperties">
     <Key>
       <PropertyRef Name="Id" />
@@ -55,8 +63,7 @@
     <Property Name="RequestAcceptedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="RequestTestingPeriod" Type="int" />
     <Property Name="ProtocolIssuedDate" Type="datetime" Nullable="false" />
-    <Property Name="ProtocolTesterMKB" Type="nvarchar" MaxLength="300" />
-    <Property Name="ProtocolTesterFZH" Type="nvarchar" MaxLength="300" />
+    <Property Name="ProtocolTester" Type="nvarchar" MaxLength="600" />
     <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="8" />
   </EntityType>
@@ -122,7 +129,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Number" Type="int" Nullable="false" />
     <Property Name="AcceptanceDateAndTime" Type="datetime" Nullable="false" />
-    <Property Name="LetterNumber" Type="nvarchar" MaxLength="40" />
+    <Property Name="LetterNumber" Type="nvarchar" MaxLength="50" />
     <Property Name="LetterDate" Type="date" Nullable="false" />
     <Property Name="Contractor" Type="nvarchar" MaxLength="50" />
     <Property Name="ClientId" Type="uniqueidentifier" Nullable="false" />
@@ -169,7 +176,6 @@
     <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TestMethodId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Units" Type="int" Nullable="false" />
     <Property Name="MethodValue" Type="nvarchar" MaxLength="400" />
     <Property Name="Remark" Type="nvarchar" MaxLength="400" />
   </EntityType>
@@ -190,8 +196,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RequestId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="IssuedDate" Type="datetime" Nullable="false" />
-    <Property Name="TesterMKB" Type="nvarchar" MaxLength="300" />
-    <Property Name="TesterFZH" Type="nvarchar" MaxLength="300" />
+    <Property Name="Tester" Type="nvarchar" MaxLength="600" />
     <Property Name="LabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
   </EntityType>
   <EntityType Name="ProtocolsRemarks">
@@ -272,6 +277,7 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Type" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="ShortName" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -650,6 +656,7 @@
   </Association>
   <EntityContainer Name="DB_9BCA69_RedDbModelStoreContainer">
     <EntitySet Name="AcredetationLevels" EntityType="Self.AcredetationLevels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AcreditationMeta" EntityType="Self.AcreditationMeta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionLogProperties" EntityType="Self.ActionLogProperties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ActionTypes" EntityType="Self.ActionTypes" Schema="dbo" store:Type="Tables" />

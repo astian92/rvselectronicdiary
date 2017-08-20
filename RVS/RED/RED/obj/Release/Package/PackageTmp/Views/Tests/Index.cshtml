@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RED.Models.ElectronicDiary.Tests.TestW>
+﻿@*@model IEnumerable<RED.Models.ElectronicDiary.Tests.TestW>*@
 @using RED.Helpers
 
 @{
@@ -50,6 +50,7 @@
 
 <script>
     Tables.CreateTable("#TestsTable", {
+        serverSide: true,
         order: [],
         lengthChange: false,
         selectable: false,
@@ -101,13 +102,22 @@
                                 Изтрий\
                             </a>'
                 },
-                class: "text-center"
+                class: "text-center",
+                width: "170px"
             },
                 </text>
             }
             {
                 targets: -2,
                 visible: false
+            },
+            {
+                targets: 1,
+                width: "400px"
+            },
+            {
+                targets: 3, 
+                width: "100px"
             }
         ],
         "drawCallback": function (settings) {

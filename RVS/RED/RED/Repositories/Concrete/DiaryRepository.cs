@@ -300,6 +300,9 @@ namespace RED.Repositories.Concrete
                 archivedDiary.Client = diaryW.Client.Name;
                 archivedDiary.ClientMobile = diaryW.Client.Mobile;
                 archivedDiary.Comment = diaryW.Comment;
+                var meta = Db.AcreditationMetas.First();
+                archivedDiary.AcreditationRegisteredDate = meta.Registered;
+                archivedDiary.AcreditationValidDate = meta.ValidTo;
 
                 var request = diaryW.Request;
                 archivedDiary.RequestDate = request.Date;

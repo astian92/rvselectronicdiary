@@ -66,6 +66,8 @@
     <Property Name="ProtocolTester" Type="nvarchar" MaxLength="600" />
     <Property Name="ProtocolLabLeader" Type="nvarchar" MaxLength="300" Nullable="false" />
     <Property Name="Remark" Type="nvarchar" MaxLength="8" />
+    <Property Name="AcreditationRegisteredDate" Type="datetime" />
+    <Property Name="AcreditationValidDate" Type="datetime" />
   </EntityType>
   <EntityType Name="ArchivedProducts">
     <Key>

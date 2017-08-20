@@ -37,6 +37,8 @@ namespace RED.Models.DataContext
         public string ProtocolTester { get; set; }
         public string ProtocolLabLeader { get; set; }
         public string Remark { get; set; }
+        public Nullable<System.DateTime> AcreditationRegisteredDate { get; set; }
+        public Nullable<System.DateTime> AcreditationValidDate { get; set; }
     
         public virtual ICollection<ArchivedProduct> ArchivedProducts { get; set; }
         public virtual ICollection<ArchivedProtocolRemark> ArchivedProtocolRemarks { get; set; }
