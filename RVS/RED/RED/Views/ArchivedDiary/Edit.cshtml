@@ -108,6 +108,8 @@
                     </span>
                 </div>
 
+            </div>
+            <div class="col-md-9 col-md-offset-3">
                 @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -133,7 +135,7 @@
             <div class="col-md-9">
                 <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input id="ProtocolIssuedDate" name="ProtocolIssuedDate" class="form-control text-box single-line" type="datetime" value="@Model.ProtocolIssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                    <input id="ProtocolIssuedDate" name="ProtocolIssuedDate" class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Протокол създаден на&quot; е задължително!" type="datetime" value="@Model.ProtocolIssuedDate.ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
                 </div>
                 @Html.ValidationMessageFor(model => model.ProtocolIssuedDate, "", new { @class = "text-danger" })
             </div>
@@ -152,6 +154,28 @@
             <div class="col-md-9">
                 @Html.EditorFor(model => model.ProtocolLabLeader)
                 @Html.ValidationMessageFor(model => model.ProtocolLabLeader, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="acreditation-registered-date">
+            @Html.LabelFor(model => model.AcreditationRegisteredDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input id="AcreditationRegisteredDate" name="AcreditationRegisteredDate" class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Сертификат регистриран на&quot; е задължително!" type="datetime" value="@Model.AcreditationRegisteredDate.ToLocalTime().ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.AcreditationRegisteredDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="acreditation-valid-date">
+            @Html.LabelFor(model => model.AcreditationValidToDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input id="AcreditationValidToDate" name="AcreditationValidToDate" class="form-control text-box single-line" data-val="true" data-val-required="Полето &quot;Сертификат валиден до&quot; е задължително!" type="datetime" value="@Model.AcreditationValidToDate.ToLocalTime().ToString("dd.M.yyyy", CultureInfo.InvariantCulture)">
+                </div>
+                @Html.ValidationMessageFor(model => model.AcreditationValidToDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -195,6 +219,24 @@
     });
 
     $('#request-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#acreditation-registered-date .input-group.date').datepicker({
+        format: "dd.m.yyyy",
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+
+    $('#acreditation-valid-date .input-group.date').datepicker({
         format: "dd.m.yyyy",
         todayBtn: "linked",
         keyboardNavigation: false,

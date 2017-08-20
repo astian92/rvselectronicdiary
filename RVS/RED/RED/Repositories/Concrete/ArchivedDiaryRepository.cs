@@ -49,6 +49,8 @@ namespace RED.Repositories.Concrete
             archivedDiary.ProtocolLabLeader = adiary.ProtocolLabLeader;
             archivedDiary.Remark = adiary.Remark;
             archivedDiary.RequestTestingPeriod = adiary.RequestTestingPeriod;
+            archivedDiary.AcreditationRegisteredDate = adiary.AcreditationRegisteredDate;
+            archivedDiary.AcreditationValidDate = adiary.AcreditationValidToDate;
 
             Db.SaveChanges();
         }

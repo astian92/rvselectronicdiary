@@ -30,6 +30,8 @@ namespace RED.Models.ElectronicDiary
             ProtocolLabLeader = diary.ProtocolLabLeader;
             Remark = diary.Remark;
             RequestTestingPeriod = diary.RequestTestingPeriod;
+            AcreditationRegisteredDate = diary.AcreditationRegisteredDate ?? DateTime.Now;
+            AcreditationValidToDate = diary.AcreditationValidDate ?? DateTime.Now;
 
             ArchivedProducts = diary.ArchivedProducts;
             ArchivedProtocolResults = diary.ArchivedProtocolResults;
@@ -191,6 +193,9 @@ namespace RED.Models.ElectronicDiary
             diary.ArchivedProducts = this.ArchivedProducts;
             diary.ArchivedProtocolResults = this.ArchivedProtocolResults;
             diary.ArchivedProtocolRemarks = this.ArchivedProtocolRemarks;
+
+            diary.AcreditationRegisteredDate = this.AcreditationRegisteredDate;
+            diary.AcreditationValidDate = this.AcreditationValidToDate;
 
             return diary;
         }
